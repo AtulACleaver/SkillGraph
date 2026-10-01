@@ -10,4 +10,5 @@ node_modules/
 .venv/
 venv/
 *.py[cod]
-.pytest_cache/*.xlsx
+.pytest_cache/
+*.xlsx

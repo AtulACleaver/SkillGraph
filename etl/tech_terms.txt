@@ -1,0 +1,32 @@
+software
+developer
+engineer
+data
+backend
+frontend
+fullstack
+full-stack
+devops
+machine learning
+artificial intelligence
+ai
+cloud
+aws
+azure
+gcp
+python
+java
+javascript
+typescript
+golang
+c++
+react
+angular
+vue
+node
+sql
+nosql
+kubernetes
+docker
+programmer
+scientist
