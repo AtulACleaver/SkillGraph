@@ -1,0 +1,84 @@
+{
+    "Software Engineer": {
+        "n_postings": 4721,
+        "top_skills": [
+            "Google Cloud",
+            "Scikit-Learn",
+            "PostgreSQL",
+            "Flask",
+            "Pandas",
+            "Azure"
+        ]
+    },
+    "Data Scientist": {
+        "n_postings": 3615,
+        "top_skills": [
+            "Spring Boot",
+            "Bash",
+            "Scikit-Learn",
+            "Data Engineering",
+            "Apache Spark",
+            "Vue.js",
+            "AWS",
+            "Data Analysis",
+            "Elasticsearch"
+        ]
+    },
+    "Data Engineer": {
+        "n_postings": 4777,
+        "top_skills": [
+            "Data Analysis",
+            "Angular",
+            "Redis",
+            "Vue.js",
+            "Jenkins",
+            "AWS",
+            "Django",
+            "Scikit-Learn"
+        ]
+    },
+    "Frontend Developer": {
+        "n_postings": 2095,
+        "top_skills": [
+            "Redis",
+            "AWS",
+            "Pandas",
+            "Bash",
+            "Jenkins",
+            "Flask",
+            "Angular",
+            "Data Engineering",
+            "TensorFlow"
+        ]
+    },
+    "Backend Developer": {
+        "n_postings": 1234,
+        "top_skills": [
+            "Terraform",
+            "NumPy",
+            "Linux",
+            "SQL",
+            "Django",
+            "Java",
+            "Node.js",
+            "Apache Spark",
+            "C++",
+            "Flask"
+        ]
+    },
+    "DevOps Engineer": {
+        "n_postings": 4095,
+        "top_skills": [
+            "PyTorch",
+            "Scikit-Learn",
+            "Apache Kafka",
+            "Data Analysis",
+            "Node.js",
+            "Azure",
+            "MongoDB",
+            "Django",
+            "NumPy",
+            "Machine Learning"
+        ]
+    }
+}
