@@ -49,15 +49,18 @@ def create_fixtures(output_dir="fixtures"):
     with open(os.path.join(output_dir, "skill_vocab.json"), "w") as f:
         json.dump(skill_vocab, f, indent=4)
         
-    # 2. role_profiles.json - 6 role families and their top skills
-    role_families = [
-        "Software Engineer", 
-        "Data Scientist", 
-        "Data Engineer", 
-        "Frontend Developer", 
-        "Backend Developer", 
-        "DevOps Engineer"
-    ]
+    # 2. role_profiles.json - Role families from Aryan's list
+    # Read the role families from data/role_families.csv if it exists
+    csv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "role_families.csv")
+    if os.path.exists(csv_path):
+        df_roles = pd.read_csv(csv_path)
+        role_families = df_roles["role_family"].tolist()
+    else:
+        role_families = [
+            "Data Science / ML", "Data / BI Analyst", "DevOps / Cloud", 
+            "QA / Test", "ERP / Enterprise", "Mobile", "Full Stack", 
+            "Frontend", "Backend", "Support / IT Ops", "Software Engineer (generic)"
+        ]
     
     role_profiles = {}
     for role in role_families:
@@ -96,8 +99,6 @@ def create_fixtures(output_dir="fixtures"):
     label_encoder = FakeLabelEncoder(role_families)
     with open(os.path.join(output_dir, "label_encoder.pkl"), "wb") as f:
         pickle.dump(label_encoder, f)
-
-    print("✅ Fixtures generated successfully in 'fixtures/' directory!")
-
+    print("Fixtures generated successfully in 'fixtures/' directory!")
 if __name__ == "__main__":
     create_fixtures()

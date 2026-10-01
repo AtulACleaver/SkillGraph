@@ -1,84 +1,140 @@
 {
-    "Software Engineer": {
-        "n_postings": 4721,
+    "Data Science / ML": {
+        "n_postings": 2927,
         "top_skills": [
-            "Google Cloud",
-            "Scikit-Learn",
-            "PostgreSQL",
-            "Flask",
-            "Pandas",
-            "Azure"
+            "React",
+            "MySQL",
+            "Node.js",
+            "Docker",
+            "TypeScript",
+            "Kubernetes",
+            "Machine Learning"
         ]
     },
-    "Data Scientist": {
-        "n_postings": 3615,
+    "Data / BI Analyst": {
+        "n_postings": 3980,
         "top_skills": [
+            "Terraform",
             "Spring Boot",
-            "Bash",
-            "Scikit-Learn",
-            "Data Engineering",
+            "Machine Learning",
+            "Docker",
+            "Jenkins"
+        ]
+    },
+    "DevOps / Cloud": {
+        "n_postings": 988,
+        "top_skills": [
+            "Data Analysis",
+            "MySQL",
+            "Kubernetes",
+            "SQL",
+            "Google Cloud",
+            "Python",
+            "Spring Boot",
             "Apache Spark",
-            "Vue.js",
-            "AWS",
-            "Data Analysis",
-            "Elasticsearch"
+            "NumPy"
         ]
     },
-    "Data Engineer": {
-        "n_postings": 4777,
+    "QA / Test": {
+        "n_postings": 1179,
         "top_skills": [
+            "Scikit-Learn",
+            "Spring Boot",
             "Data Analysis",
-            "Angular",
-            "Redis",
-            "Vue.js",
-            "Jenkins",
-            "AWS",
-            "Django",
-            "Scikit-Learn"
-        ]
-    },
-    "Frontend Developer": {
-        "n_postings": 2095,
-        "top_skills": [
-            "Redis",
-            "AWS",
-            "Pandas",
-            "Bash",
-            "Jenkins",
-            "Flask",
-            "Angular",
+            "PyTorch",
             "Data Engineering",
+            "Bash",
+            "SQL"
+        ]
+    },
+    "ERP / Enterprise": {
+        "n_postings": 2414,
+        "top_skills": [
+            "FastAPI",
+            "SQL",
+            "NumPy",
+            "MongoDB",
+            "Pandas",
+            "Terraform",
+            "MySQL",
+            "Docker",
+            "Deep Learning",
             "TensorFlow"
         ]
     },
-    "Backend Developer": {
-        "n_postings": 1234,
+    "Mobile": {
+        "n_postings": 3072,
         "top_skills": [
-            "Terraform",
-            "NumPy",
-            "Linux",
             "SQL",
-            "Django",
-            "Java",
-            "Node.js",
-            "Apache Spark",
-            "C++",
-            "Flask"
+            "Kubernetes",
+            "Linux",
+            "NumPy",
+            "MySQL",
+            "Flask",
+            "Scikit-Learn",
+            "MongoDB",
+            "Java"
         ]
     },
-    "DevOps Engineer": {
-        "n_postings": 4095,
+    "Full Stack": {
+        "n_postings": 3831,
         "top_skills": [
-            "PyTorch",
-            "Scikit-Learn",
-            "Apache Kafka",
-            "Data Analysis",
-            "Node.js",
-            "Azure",
-            "MongoDB",
-            "Django",
             "NumPy",
-            "Machine Learning"
+            "PostgreSQL",
+            "Google Cloud",
+            "Deep Learning",
+            "FastAPI"
+        ]
+    },
+    "Frontend": {
+        "n_postings": 918,
+        "top_skills": [
+            "NumPy",
+            "Git",
+            "Apache Spark",
+            "Azure",
+            "TensorFlow",
+            "MySQL"
+        ]
+    },
+    "Backend": {
+        "n_postings": 1628,
+        "top_skills": [
+            "MySQL",
+            "Redis",
+            "Pandas",
+            "TensorFlow",
+            "Bash",
+            "Kubernetes",
+            "React",
+            "Java",
+            "Git",
+            "Apache Spark"
+        ]
+    },
+    "Support / IT Ops": {
+        "n_postings": 4232,
+        "top_skills": [
+            "Angular",
+            "AWS",
+            "PostgreSQL",
+            "Node.js",
+            "Data Engineering",
+            "Terraform",
+            "Apache Kafka",
+            "Linux"
+        ]
+    },
+    "Software Engineer (generic)": {
+        "n_postings": 1845,
+        "top_skills": [
+            "MongoDB",
+            "TensorFlow",
+            "Terraform",
+            "Azure",
+            "Data Engineering",
+            "NumPy",
+            "PyTorch"
         ]
     }
 }
