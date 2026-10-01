@@ -1,0 +1,12 @@
+/etl/                     @atul @aditya
+/taxonomy/                @aryan @atul
+/mining/                  @aryan @aditya
+/ml/                      @aditya @aryan
+/api/                     @archit @sashang
+/fixtures/                @archit @sashang
+/scripts/                 @archit @sashang
+/api/routes/match.py      @atul @archit
+/api/routes/readiness.py  @atul @archit
+/api/routes/gap.py        @atul @archit
+/frontend/                @sashang @archit
+/docs/contracts.md        @atul @aditya @aryan @archit @sashang

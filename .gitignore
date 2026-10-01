@@ -1,24 +1,13 @@
-# Generated artifacts and datasets
-artifacts/
 data/
-
-# Python cache
-__pycache__/
-*.py[cod]
-
-# Python virtual environment
-.venv/
-venv/
-
-# Environment variables / secrets
-.env
-
-# Model/data files
+artifacts/
 *.pkl
 *.parquet
-
-# Node.js dependencies
+!fixtures/*
+__pycache__/
+.ipynb_checkpoints/
+.env
 node_modules/
-
-# Test cache
-.pytest_cache/
+.venv/
+venv/
+*.py[cod]
+.pytest_cache/*.xlsx
