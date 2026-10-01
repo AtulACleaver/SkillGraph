@@ -1,0 +1,4 @@
+*.xlsx
+.venv/
+__pycache__/
+data/*.parquet
