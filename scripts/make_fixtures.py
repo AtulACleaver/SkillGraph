@@ -1,9 +1,11 @@
-import os
 import json
-import random
+import os
 import pickle
-import pandas as pd
+import random
+
 import numpy as np
+import pandas as pd
+
 
 class FakePredictor:
     def __init__(self, classes):

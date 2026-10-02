@@ -1,7 +1,7 @@
-import os
 import json
-from fastapi import FastAPI, Query
-from typing import Optional
+import os
+
+from fastapi import FastAPI
 
 app = FastAPI(
     title="SkillGraph API",
