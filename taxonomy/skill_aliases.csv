@@ -1,0 +1,801 @@
+alias,canonical,family
+Sales,sales,domain
+Management,management,soft
+project management,project management,soft
+python,python,language
+css,css,language
+Development,development,domain
+sap,sap,tooling
+sales,sales,domain
+Communication Skills,communication,soft
+c#,c#,language
+English,english,soft
+sql,sql,language
+Automation,automation,tooling
+customer service,customer service,domain
+java,java,language
+Customer Service,customer service,domain
+Analytical,analytical,soft
+business development,sales,domain
+Java,java,language
+Python,python,language
+Operations,operations,domain
+SAP,sap,tooling
+rest,rest,unknown
+SQL,sql,language
+Consulting,consulting,unknown
+continuous integration,continuous integration,unknown
+software testing,qa,unknown
+Agile,agile,soft
+Marketing,marketing,domain
+c++,c++,language
+Voice Process,voice process,domain
+B2B Sales,sales,domain
+BPO,bpo,domain
+Javascript,javascript,language
+software development,software development,domain
+Business Development,sales,domain
+oracle,oracle,database
+Accounting,accounting,unknown
+javascript,javascript,language
+web services,web services,unknown
+team management,team management,soft
+Recruitment,recruitment,unknown
+Training,training,data
+troubleshooting,troubleshooting,unknown
+Lead Generation,lead generation,unknown
+application development,application development,domain
+Finance,finance,unknown
+kubernetes,kubernetes,cloud
+Networking,networking,unknown
+Troubleshooting,troubleshooting,unknown
+Customer Support,customer support,unknown
+Computer science,computer science,unknown
+International Voice Process,international voice process,domain
+Compliance,compliance,unknown
+Hindi,hindi,unknown
+Field Sales,field sales,domain
+AWS,aws,cloud
+Project management,project management,soft
+Relationship,relationship,unknown
+data analysis,data analysis,data
+Excel,excel,unknown
+Telesales,telesales,domain
+accounting,accounting,unknown
+Customer service,customer service,domain
+Data,data,data
+Coding,coding,unknown
+Spring Boot,spring boot,framework
+marketing,marketing,domain
+Microservices,microservices,unknown
+agile,agile,soft
+Team Handling,team handling,unknown
+Senior,senior,unknown
+networking,networking,unknown
+ERP,erp,unknown
+channel sales,channel sales,domain
+Healthcare,healthcare,unknown
+International Call Center,international call center,unknown
+Linux,linux,unknown
+screening,screening,unknown
+accounts payable,accounts payable,unknown
+AutoCAD,autocad,unknown
+business analysis,business analysis,domain
+Process,process,unknown
+Administration,administration,unknown
+microsoft azure,microsoft azure,cloud
+html,html,language
+application design,application design,unknown
+Architecture,architecture,unknown
+Cloud,cloud,cloud
+HTML,html,language
+Banking,banking,unknown
+Procurement,procurement,unknown
+development methodologies,development methodologies,domain
+presentation skills,presentation skills,unknown
+aws,aws,cloud
+hr generalist activities,hr generalist activities,unknown
+Design,design,unknown
+B2C Sales,b2c sales,domain
+Hiring,hiring,unknown
+International BPO,international bpo,domain
+Sales And Marketing,sales and marketing,domain
+Inside Sales,inside sales,domain
+Oracle,oracle,database
+MS Office,ms office,unknown
+React.Js,react,framework
+Telecalling,telecalling,unknown
+Engineering,engineering,unknown
+Backend,backend,unknown
+Calling,calling,unknown
+GCP,gcp,cloud
+Monitoring,monitoring,unknown
+risk management,risk management,soft
+accounts receivable,accounts receivable,unknown
+Insurance Sales,insurance sales,domain
+ci/cd,ci/cd,tooling
+automation testing,qa,unknown
+Debugging,debugging,unknown
+hibernate,hibernate,unknown
+Angular,angular,framework
+design principles,design principles,unknown
+Analytics,analytics,data
+market research,market research,unknown
+sap hana,sap hana,tooling
+Manager Technology,manager technology,unknown
+Artificial Intelligence,ai,data
+Data analysis,data analysis,data
+documentation,documentation,unknown
+Negotiation,negotiation,unknown
+digital marketing,digital marketing,domain
+B2B,b2b,unknown
+GIT,git,unknown
+Communication skills,communication,soft
+production,production,unknown
+microservices,microservices,unknown
+Assistance,assistance,unknown
+Blended Process,blended process,unknown
+erp,erp,unknown
+Life Insurance,life insurance,unknown
+root cause analysis,root cause analysis,unknown
+Cold Calling,cold calling,unknown
+Direct Sales,direct sales,domain
+Voice,voice,unknown
+devops,devops,unknown
+MIS,mis,unknown
+algorithms,algorithms,unknown
+MySQL,mysql,language
+Project,project,unknown
+Relationship management,relationship management,soft
+US Process,us process,unknown
+C#,c#,language
+training,training,data
+Convincing Power,convincing power,unknown
+operations management,operations management,soft
+Continuous improvement,continuous improvement,unknown
+program management,program management,soft
+joining formalities,joining formalities,unknown
+Billing,billing,unknown
+financial analysis,financial analysis,unknown
+hive,hive,unknown
+Handling,handling,unknown
+jsp,jsp,unknown
+Client Acquisition,client acquisition,unknown
+TDS,tds,unknown
+API,api,unknown
+Usage,usage,unknown
+Software,software,unknown
+Inbound Process,inbound process,unknown
+Research,research,unknown
+spring boot,spring boot,framework
+Production,production,unknown
+service operations,service operations,domain
+Talent Acquisition,talent acquisition,unknown
+Retail,retail,data
+Team Management,team management,soft
+Voice Support,voice support,unknown
+Technical,technical,unknown
+Tally,tally,tooling
+Documentation,documentation,unknown
+Supply chain,supply chain,data
+data warehousing,data warehousing,data
+Customer Care,customer care,unknown
+debugging,debugging,unknown
+performance tuning,performance tuning,unknown
+software development life cycle,software development life cycle,domain
+Bpo Voice,bpo voice,domain
+Social media,social media,unknown
+C++,c++,language
+data modeling,data modeling,data
+power bi,power bi,unknown
+Acquisition,acquisition,unknown
+Planning,planning,unknown
+Interpersonal skills,interpersonal skills,unknown
+.Net,.net,unknown
+Hospitality,hospitality,unknown
+Maintenance,maintenance,data
+Taxation,taxation,unknown
+Gst,gst,unknown
+recruitment,recruitment,unknown
+technical leadership,technical leadership,soft
+SEO,seo,unknown
+Leadership,leadership,soft
+Analysis,analysis,unknown
+Project Management,project management,soft
+dbms,dbms,unknown
+content writing,content writing,unknown
+data analytics,data analytics,data
+Selenium,selenium,unknown
+Office,office,unknown
+Bpo Customer Service,bpo customer service,domain
+Postgresql,postgresql,language
+Generation,generation,unknown
+Reconciliation,reconciliation,unknown
+Front end,front end,unknown
+Target Achievement,target achievement,unknown
+machine learning,ml,data
+Corporate,corporate,unknown
+Spring,spring,framework
+Payroll,payroll,unknown
+quality control,quality control,unknown
+etl,etl,unknown
+sap abap,sap abap,tooling
+Sales management,sales management,soft
+Fluent English,fluent english,soft
+Teaching,teaching,unknown
+spring,spring,framework
+Manager Quality Assurance,manager quality assurance,unknown
+sap s hana,sap s hana,tooling
+Data management,data management,soft
+Change management,change management,soft
+Budgeting,budgeting,unknown
+Scheduling,scheduling,unknown
+react.js,react,framework
+docker,docker,cloud
+Team management,team management,soft
+Sourcing,sourcing,unknown
+End To End Recruitment,end to end recruitment,unknown
+Product management,product management,soft
+Channel Sales,channel sales,domain
+technical support,technical support,unknown
+Field,field,unknown
+vendor management,vendor management,soft
+Reporting,reporting,unknown
+HR,hr,unknown
+corporate sales,corporate sales,domain
+CSS,css,language
+International Sales,international sales,domain
+Insurance,insurance,unknown
+Software testing,qa,unknown
+data management,data management,soft
+Business development,sales,domain
+Branch banking,branch banking,unknown
+Lead generation,lead generation,unknown
+Quality,quality,unknown
+Digital Marketing,digital marketing,domain
+Customer satisfaction,customer satisfaction,unknown
+teaching,teaching,unknown
+Full Stack,full stack,unknown
+Hibernate,hibernate,unknown
+distribution,distribution,unknown
+Cross Selling,cross selling,unknown
+stress analysis,stress analysis,unknown
+auditing,auditing,unknown
+Tally ERP,tally erp,tooling
+communication skills,communication,soft
+non voice process,non voice process,domain
+International,international,unknown
+Inbound Calls,inbound calls,unknown
+Machine learning,ml,data
+Assurance,assurance,unknown
+Process improvement,process improvement,unknown
+Outbound Sales,outbound sales,domain
+customer support,customer support,unknown
+git,git,unknown
+sap sd,sap sd,tooling
+regression testing,regression testing,unknown
+hrsd,hrsd,unknown
+jquery,jquery,unknown
+Loans,loans,unknown
+Outbound,outbound,unknown
+Risk management,risk management,soft
+salesforce,salesforce,domain
+Hrsd,hrsd,unknown
+Coordination,coordination,unknown
+JIRA,jira,unknown
+manual testing,qa,unknown
+Inbound Voice Process,inbound voice process,domain
+Focus,focus,unknown
+Relationship building,relationship building,unknown
+Auditing,auditing,unknown
+Non Voice Process,non voice process,domain
+Node.Js,node,framework
+moderation,moderation,unknown
+Boot,boot,unknown
+supply chain,supply chain,data
+Agency Channel,agency channel,unknown
+Scrum,scrum,unknown
+github,github,unknown
+Bfsi Sales,bfsi sales,domain
+ETL,etl,unknown
+artificial intelligence,ai,data
+.Net Core,.net core,unknown
+retail sales,retail sales,data
+customer relationship,customer relationship,unknown
+stakeholder management,stakeholder management,soft
+sap abap development,sap abap development,tooling
+CRM,crm,unknown
+Chat Support,chat support,unknown
+Devops,devops,unknown
+Financial services,financial services,unknown
+New Client Acquisition,new client acquisition,unknown
+microsoft,microsoft,unknown
+test cases,test cases,unknown
+Microsoft Azure,microsoft azure,cloud
+Machine Learning,ml,data
+Customer Handling,customer handling,unknown
+autocad,autocad,unknown
+Medical,medical,unknown
+Forecasting,forecasting,unknown
+bootstrap,bootstrap,unknown
+Jenkins,jenkins,unknown
+Cross Sales,cross sales,domain
+linux,linux,unknown
+Stakeholder management,stakeholder management,soft
+customer care,customer care,unknown
+Outbound Calling,outbound calling,unknown
+Excellent Communication In English,excellent communication in english,soft
+US Healthcare,us healthcare,unknown
+Pyspark,pyspark,unknown
+Azure,azure,cloud
+Performance tuning,performance tuning,unknown
+team handling,team handling,unknown
+HR Operations,hr operations,domain
+Workflow,workflow,unknown
+Mechanical,mechanical,unknown
+agile methodology,agile methodology,soft
+Legal,legal,unknown
+General,general,unknown
+quality assurance,quality assurance,unknown
+International Voice,international voice,unknown
+Real Estate Sales,real estate sales,domain
+Docker,docker,cloud
+Advanced Excel,advanced excel,unknown
+Control,control,unknown
+Inventory Management,inventory management,soft
+Team,team,unknown
+forecasting,forecasting,unknown
+switching,switching,unknown
+Photoshop,photoshop,unknown
+SR,sr,unknown
+Problem Solving,problem solving,unknown
+Counselling,counselling,unknown
+Electricals,electricals,unknown
+Us Voice Process,us voice process,domain
+Presales,presales,domain
+Bank Reconciliation,bank reconciliation,unknown
+Kubernetes,kubernetes,cloud
+database management,database management,database
+Pharma,pharma,unknown
+angular,angular,framework
+content management,content management,soft
+Packaging,packaging,unknown
+Version control,version control,unknown
+ISO,iso,unknown
+Web technologies,web technologies,unknown
+administration,administration,unknown
+Content,content,unknown
+Power Bi,power bi,unknown
+Windows,windows,unknown
+Data Engineering,data engineering,data
+bpo,bpo,domain
+Illustrator,illustrator,unknown
+Education,education,unknown
+Application development,application development,domain
+Information technology,information technology,unknown
+balance sheet,balance sheet,unknown
+Chat Process,chat process,unknown
+Outbound Process,outbound process,unknown
+ado.net,ado.net,unknown
+Solving Queries,solving queries,unknown
+Unix,unix,unknown
+natural language processing,natural language processing,unknown
+Typescript,typescript,unknown
+procurement,procurement,unknown
+Staffing,staffing,unknown
+Programming,programming,unknown
+Client Relationship Management,client relationship management,soft
+visualforce,visualforce,unknown
+pharmaceutical,pharmaceutical,unknown
+tds,tds,unknown
+Email Support,email support,data
+sql server,sql server,language
+content editing,content editing,unknown
+cyber security,cyber security,unknown
+Purchase,purchase,unknown
+.net,.net,unknown
+Home Loans,home loans,unknown
+Kafka,kafka,unknown
+logistics,logistics,unknown
+Data modeling,data modeling,data
+SCALA,scala,unknown
+Good English Communication,good english communication,soft
+Fabrication,fabrication,unknown
+Construction,construction,unknown
+business loan,business loan,domain
+full stack,full stack,unknown
+Google Analytics,google analytics,data
+Revenue Generation,revenue generation,unknown
+Retail Sales,retail sales,data
+android,android,unknown
+Presentation Skills,presentation skills,unknown
+MongoDB,mongodb,database
+Tamil,tamil,unknown
+Graphics,graphics,unknown
+creative writing,creative writing,unknown
+CAD,cad,unknown
+US Sales,us sales,domain
+Malayalam,malayalam,unknown
+Inbound Customer Service,inbound customer service,domain
+Integration,integration,unknown
+Marathi,marathi,unknown
+data integration,data integration,data
+Inbound Sales,inbound sales,domain
+Hadoop,hadoop,unknown
+Analytical skills,analytical skills,soft
+selenium,selenium,unknown
+Ci/Cd,ci/cd,tooling
+Sales executive activities,sales executive activities,domain
+IT Recruitment,it recruitment,unknown
+Medical Coding,medical coding,unknown
+Collections,collections,unknown
+Customer support,customer support,unknown
+Terraform,terraform,unknown
+international bpo,international bpo,domain
+Credit Card Sales,credit card sales,domain
+Interpersonal Skills,interpersonal skills,unknown
+finance,finance,unknown
+Core,core,unknown
+employee relations,employee relations,unknown
+SAP FICO,sap fico,tooling
+Site,site,unknown
+Operational excellence,operational excellence,unknown
+Performance management,performance management,soft
+Statutory Compliance,statutory compliance,unknown
+XML,xml,data
+Accounts Receivable,accounts receivable,unknown
+Salesforce,salesforce,domain
+Social Media Marketing,social media marketing,domain
+Claims,claims,data
+excel,excel,unknown
+management skills,management skills,soft
+it services,it services,unknown
+Basic,basic,unknown
+relationship management,relationship management,soft
+IT recruitment,it recruitment,unknown
+Field Marketing,field marketing,domain
+snowflake,snowflake,unknown
+api,api,unknown
+AR Calling,ar calling,unknown
+Wellness,wellness,unknown
+Supervisor,supervisor,unknown
+Data quality,data quality,data
+Direct,direct,unknown
+photoshop,photoshop,unknown
+Automation Testing,qa,unknown
+cold calling,cold calling,unknown
+Django,django,framework
+HR Generalist Activities,hr generalist activities,unknown
+Security,security,unknown
+SAP MM,sap mm,tooling
+Admission Counselling,admission counselling,unknown
+scala,scala,unknown
+Sales Management,sales management,soft
+Customer Relationship,customer relationship,unknown
+version control,version control,unknown
+Logistics,logistics,unknown
+investment banking,investment banking,unknown
+sap fi,sap fi,tooling
+Market research,market research,unknown
+Application,application,unknown
+workday,workday,unknown
+Accounts Payable,accounts payable,unknown
+C,c,unknown
+crm,crm,unknown
+Costing,costing,unknown
+International Process,international process,unknown
+JSON,json,unknown
+E-commerce,e-commerce,unknown
+Video Editing,video editing,unknown
+Upselling,upselling,unknown
+insurance,insurance,unknown
+ux,ux,unknown
+Kannada,kannada,unknown
+sourcing,sourcing,unknown
+Leadership Skills,leadership skills,soft
+Automotive,automotive,unknown
+servicenow,servicenow,unknown
+Quality Control,quality control,unknown
+Certified,certified,unknown
+Airflow,airflow,data
+purchase,purchase,unknown
+Java Development,java development,language
+Machine,machine,unknown
+plsql,plsql,language
+Corporate Sales,corporate sales,domain
+Stack,stack,unknown
+Telugu,telugu,unknown
+PPC,ppc,unknown
+NoSQL,nosql,language
+sap fiori,sap fiori,tooling
+Non IT Recruitment,non it recruitment,unknown
+Inbound,inbound,unknown
+Channel,channel,unknown
+analytical,analytical,soft
+Spark,spark,unknown
+risk assessment,risk assessment,unknown
+record to report,record to report,unknown
+Bfsi,bfsi,unknown
+ASP.Net,asp.net,unknown
+problem solving,problem solving,unknown
+tableau,tableau,unknown
+Vendor Management,vendor management,soft
+Career development,career development,domain
+Sales Executive Activities,sales executive activities,domain
+System,system,unknown
+change management,change management,soft
+Voice process,voice process,domain
+Educational Sales,educational sales,domain
+Revenue Cycle Management,revenue cycle management,soft
+Supervision,supervision,unknown
+engineering,engineering,unknown
+Client,client,unknown
+Azure Cloud,azure cloud,cloud
+IT Sales,it sales,domain
+Test cases,test cases,unknown
+MVC,mvc,unknown
+Financial reporting,financial reporting,unknown
+Data structures,data structures,data
+pyspark,pyspark,unknown
+Semi Voice,semi voice,unknown
+Civil,civil,unknown
+Customer engagement,customer engagement,unknown
+Electrical Maintenance,electrical maintenance,data
+Trade,trade,unknown
+Media,media,unknown
+abap,abap,unknown
+Front Desk,front desk,unknown
+Receptionist Activities,receptionist activities,unknown
+Technical Support,technical support,unknown
+Manufacturing,manufacturing,unknown
+Bancassurance,bancassurance,unknown
+Stakeholder Management,stakeholder management,soft
+Risk,risk,unknown
+SAAS,saas,unknown
+Broking,broking,unknown
+Servicenow,servicenow,unknown
+PMP,pmp,unknown
+cms,cms,unknown
+Content Writing,content writing,unknown
+unit testing,unit testing,unknown
+journal entries,journal entries,unknown
+mechanical engineering,mechanical engineering,unknown
+Housekeeping,housekeeping,unknown
+Real Estate,real estate,unknown
+gcp,gcp,cloud
+Loan Against Property,loan against property,data
+Territory Sales,territory sales,domain
+financial services,financial services,unknown
+banking operations,banking operations,domain
+scrum,scrum,unknown
+performance testing,performance testing,unknown
+variance analysis,variance analysis,unknown
+Spoken English,spoken english,soft
+Instrumentation,instrumentation,unknown
+Deployment,deployment,unknown
+Industrial Sales,industrial sales,domain
+Inspection,inspection,unknown
+Sales Strategy,sales strategy,domain
+Graphic Designing,graphic designing,unknown
+gap analysis,gap analysis,unknown
+B2C,b2c,unknown
+SAP ABAP,sap abap,tooling
+FICO,fico,unknown
+service management,service management,soft
+DBMS,dbms,unknown
+Telecom,telecom,unknown
+Unit testing,unit testing,unknown
+Mutual Funds,mutual funds,unknown
+PLSQL,plsql,language
+Microsoft,microsoft,unknown
+inbound,inbound,unknown
+DNS,dns,unknown
+Operating,operating,unknown
+Servicing,servicing,unknown
+incident management,incident management,soft
+IT services,it services,unknown
+CMS,cms,unknown
+MM,mm,unknown
+itil,itil,unknown
+Business analysis,business analysis,domain
+Relationship Management,relationship management,soft
+PHP,php,language
+Housing Finance,housing finance,unknown
+mathematics,mathematics,unknown
+Account management,account management,soft
+Quality Assurance,quality assurance,unknown
+data visualization,data visualization,data
+Data Modeling,data modeling,data
+System design,system design,unknown
+Saps,saps,tooling
+tcp,tcp,unknown
+Education Counseling,education counseling,unknown
+End,end,unknown
+Quality standards,quality standards,unknown
+HL,hl,unknown
+Snowflake,snowflake,unknown
+confluence,confluence,unknown
+Customer experience,customer experience,unknown
+Infrastructure,infrastructure,unknown
+Nursing,nursing,unknown
+Business intelligence,business intelligence,domain
+Banca,banca,unknown
+Content Creation,content creation,unknown
+Store Operations,store operations,domain
+Non Voice,non voice,unknown
+Vendor,vendor,unknown
+Internal Audit,internal audit,unknown
+PLC,plc,unknown
+Key Account Management,key account management,soft
+US Recruitment,us recruitment,unknown
+QC,qc,unknown
+Rest,rest,unknown
+jira,jira,unknown
+Commercial,commercial,unknown
+bi,bi,unknown
+Talent acquisition,talent acquisition,unknown
+Data Entry,data entry,data
+Technical support,technical support,unknown
+Civil Engineering,civil engineering,unknown
+Stores,stores,unknown
+International Chat Process,international chat process,unknown
+data science,data science,data
+Book Keeping,book keeping,unknown
+International voice,international voice,unknown
+Diagnostics,diagnostics,unknown
+HVAC,hvac,unknown
+data engineering,data engineering,data
+Edtech,edtech,unknown
+Payments,payments,unknown
+Property Sales,property sales,domain
+Employee Engagement,employee engagement,unknown
+Digital,digital,unknown
+Mortgage Loans,mortgage loans,unknown
+Automobile,automobile,unknown
+Field Work,field work,unknown
+strategic sourcing,strategic sourcing,unknown
+Banking Process,banking process,unknown
+Resource,resource,unknown
+redux,redux,unknown
+Estate,estate,unknown
+Denial Management,denial management,soft
+Excellent Verbal And Written Communication Skills,excellent verbal and written communication skills,soft
+Digital marketing,digital marketing,domain
+hiring,hiring,unknown
+editing,editing,unknown
+cloud security,cloud security,cloud
+data validation,data validation,data
+FMCG,fmcg,unknown
+Materials,materials,unknown
+spark,spark,unknown
+Front,front,unknown
+Agency Sales,agency sales,domain
+API Testing,api testing,unknown
+Penetration,penetration,unknown
+Pharmacy,pharmacy,unknown
+business process outsourcing,business process outsourcing,domain
+design patterns,design patterns,unknown
+Financial Reporting,financial reporting,unknown
+International Calling,international calling,unknown
+ITSM,itsm,unknown
+Quality assurance,quality assurance,unknown
+software engineering,software engineering,unknown
+Time Management,time management,soft
+billing,billing,unknown
+Data Analysis,data analysis,data
+Functional,functional,unknown
+Github,github,unknown
+research,research,unknown
+Inventory,inventory,unknown
+Portfolio Management,portfolio management,soft
+Pressure Handling,pressure handling,unknown
+Loan Sales,loan sales,domain
+HNI,hni,unknown
+Adobe,adobe,unknown
+Financial planning,financial planning,unknown
+SDLC,sdlc,unknown
+problem management,problem management,soft
+Forex,forex,unknown
+Tableau,tableau,unknown
+talent acquisition,talent acquisition,unknown
+business development management,business development management,soft
+area sales management,area sales management,soft
+Maven,maven,unknown
+client relationship management,client relationship management,soft
+tensorflow,tensorflow,unknown
+dns,dns,unknown
+aml,aml,data
+application lifecycle management,application lifecycle management,soft
+web application,web application,unknown
+Human Resource Management,human resource management,soft
+image processing,image processing,unknown
+budgeting,budgeting,unknown
+data services,data services,data
+FMCG Sales,fmcg sales,domain
+electrical engineering,electrical engineering,unknown
+Good Communication In English,good communication in english,soft
+operations,operations,domain
+DNB,dnb,unknown
+Business process,business process,domain
+c,c,unknown
+Time management,time management,soft
+Solid Works,solid works,unknown
+Sales Lead Generation,sales lead generation,domain
+Client Onboarding,client onboarding,unknown
+Program,program,unknown
+JavaScript,javascript,language
+Product design,product design,unknown
+Warehouse,warehouse,unknown
+Vendor Development,vendor development,domain
+repair,repair,data
+Google Ads,google ads,unknown
+Sales Process,sales process,domain
+Joining Formalities,joining formalities,unknown
+Health insurance,health insurance,unknown
+information technology,information technology,unknown
+Store Management,store management,soft
+Editing,editing,unknown
+RCM,rcm,unknown
+Underwriting,underwriting,unknown
+Installation,installation,unknown
+automation framework,automation framework,tooling
+ajax,ajax,unknown
+Automation testing,qa,unknown
+Sheet Metal,sheet metal,unknown
+warehouse management,warehouse management,soft
+Site Execution,site execution,unknown
+J2Ee,java,language
+Invoice Processing,invoice processing,domain
+W2,w2,unknown
+C2C,c2c,unknown
+us healthcare,us healthcare,unknown
+Gst Return,gst return,unknown
+Screening,screening,unknown
+Cd,cd,unknown
+regulatory,regulatory,unknown
+Writing,writing,unknown
+Safety,safety,unknown
+SOC,soc,unknown
+sales management,sales management,soft
+network security,network security,unknown
+Asset management,asset management,soft
+ansible,ansible,unknown
+macros,macros,unknown
+sap bi,sap bi,tooling
+vmware,vmware,unknown
+Data Science,data science,data
+B2B Marketing,b2b marketing,domain
+direct selling,direct selling,unknown
+Sketchup,sketchup,unknown
+transformers,transformers,unknown
+Generative Ai,generative ai,data
+MIS Reporting,mis reporting,unknown
+Cca,cca,unknown
+REVIT,revit,unknown
+Open source,open source,unknown
+management consulting,management consulting,soft
+Inventory Control,inventory control,unknown
+3D,3d,unknown
+salesforce lightning,salesforce lightning,domain
+bde,bde,unknown
+Database,database,database
+Information security,information security,unknown
+MEP,mep,unknown
+Drawing,drawing,unknown
+Contracts,contracts,unknown
+Operations Management,operations management,soft
+Selling Skills,selling skills,unknown
+Cost,cost,unknown
+Java Fullstack,java fullstack,language
+VMware,vmware,unknown
+Financial statements,financial statements,unknown
+Gst Filing,gst filing,unknown
+Computer,computer,unknown
+Housing Loan,housing loan,unknown
+Site Supervision,site supervision,unknown
+Social Media,social media,unknown
+Senior Executive,senior executive,unknown
+architectural design,architectural design,unknown
+Office Administration,office administration,unknown
+Languages,languages,unknown
+Onboarding,onboarding,unknown
