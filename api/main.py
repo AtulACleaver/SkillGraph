@@ -22,15 +22,34 @@ app.add_middleware(
 
 ARTIFACTS_DIR = os.getenv("ARTIFACTS_DIR", "fixtures")
 
+_ROLES_CACHE = None
+_SKILLS_CACHE = None
+
+def get_roles_data():
+    global _ROLES_CACHE
+    if _ROLES_CACHE is None:
+        roles_path = os.path.join(ARTIFACTS_DIR, "role_profiles.json")
+        if not os.path.exists(roles_path):
+            return {}
+        with open(roles_path, "r") as f:
+            _ROLES_CACHE = json.load(f)
+    return _ROLES_CACHE
+
+def get_skills_data():
+    global _SKILLS_CACHE
+    if _SKILLS_CACHE is None:
+        vocab_path = os.path.join(ARTIFACTS_DIR, "skill_vocab.json")
+        if not os.path.exists(vocab_path):
+            return {}
+        with open(vocab_path, "r") as f:
+            _SKILLS_CACHE = json.load(f)
+    return _SKILLS_CACHE
+
 def get_valid_roles() -> list[str]:
-    roles_path = os.path.join(ARTIFACTS_DIR, "role_profiles.json")
-    if not os.path.exists(roles_path):
-        return []
-    with open(roles_path, "r") as f:
-        data = json.load(f)
+    data = get_roles_data()
     return list(data.keys())
 
-def validate_request(skills: list[str], desired_role: str = None):
+def validate_request(skills: list[str], desired_role: str | None = None):
     if not skills:
         raise HTTPException(status_code=400, detail="skills list cannot be empty")
     if desired_role is not None:
@@ -51,11 +70,7 @@ def health():
 
 @app.get("/roles", response_model=list[schemas.RoleResponse])
 def get_roles():
-    roles_path = os.path.join(ARTIFACTS_DIR, "role_profiles.json")
-    if not os.path.exists(roles_path):
-        return []
-    with open(roles_path, "r") as f:
-        data = json.load(f)
+    data = get_roles_data()
     
     result = []
     for role, details in data.items():
@@ -68,11 +83,7 @@ def get_roles():
 
 @app.get("/skills", response_model=list[schemas.SkillResponse])
 def get_skills(q: str = ""):
-    vocab_path = os.path.join(ARTIFACTS_DIR, "skill_vocab.json")
-    if not os.path.exists(vocab_path):
-        return []
-    with open(vocab_path, "r") as f:
-        data = json.load(f)
+    data = get_skills_data()
     
     result = []
     q_lower = q.lower()
