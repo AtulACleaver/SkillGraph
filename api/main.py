@@ -1,14 +1,21 @@
-import json
-import os
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from api import schemas
+from api.artifacts import artifacts
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    artifacts.load()
+    yield
 
 app = FastAPI(
     title="SkillGraph API",
-    version="0.1.0"
+    version="0.1.0",
+    lifespan=lifespan
 )
 
 # CORS Middleware (Local dev origin for now)
@@ -20,34 +27,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-ARTIFACTS_DIR = os.getenv("ARTIFACTS_DIR", "fixtures")
-
-_ROLES_CACHE = None
-_SKILLS_CACHE = None
-
-def get_roles_data():
-    global _ROLES_CACHE
-    if _ROLES_CACHE is None:
-        roles_path = os.path.join(ARTIFACTS_DIR, "role_profiles.json")
-        if not os.path.exists(roles_path):
-            return {}
-        with open(roles_path, "r") as f:
-            _ROLES_CACHE = json.load(f)
-    return _ROLES_CACHE
-
-def get_skills_data():
-    global _SKILLS_CACHE
-    if _SKILLS_CACHE is None:
-        vocab_path = os.path.join(ARTIFACTS_DIR, "skill_vocab.json")
-        if not os.path.exists(vocab_path):
-            return {}
-        with open(vocab_path, "r") as f:
-            _SKILLS_CACHE = json.load(f)
-    return _SKILLS_CACHE
-
 def get_valid_roles() -> list[str]:
-    data = get_roles_data()
-    return list(data.keys())
+    return list(artifacts.role_profiles.keys())
 
 def validate_request(skills: list[str], desired_role: str | None = None):
     if not skills:
@@ -62,18 +43,16 @@ def validate_request(skills: list[str], desired_role: str | None = None):
 def health():
     return schemas.HealthResponse(
         status="ok",
-        artifacts_loaded=True,
-        n_postings=1000,
-        n_skills=1000,
+        artifacts_loaded=artifacts.artifacts_loaded,
+        n_postings=artifacts.n_postings,
+        n_skills=artifacts.n_skills,
         built_at="2026-10-02T00:00:00Z"
     )
 
 @app.get("/roles", response_model=list[schemas.RoleResponse])
 def get_roles():
-    data = get_roles_data()
-    
     result = []
-    for role, details in data.items():
+    for role, details in artifacts.role_profiles.items():
         result.append(schemas.RoleResponse(
             role_family=role,
             n_postings=details.get("n_postings", 0),
@@ -83,11 +62,9 @@ def get_roles():
 
 @app.get("/skills", response_model=list[schemas.SkillResponse])
 def get_skills(q: str = ""):
-    data = get_skills_data()
-    
     result = []
     q_lower = q.lower()
-    for name, skill_id in data.items():
+    for name, skill_id in artifacts.vocab.items():
         if q_lower in name:
             result.append(schemas.SkillResponse(
                 skill_id=skill_id,
