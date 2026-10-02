@@ -4,7 +4,7 @@ import RoleSelect from './components/RoleSelect'
 import MatchPanel from './components/MatchPanel'
 import ReadinessPanel from './components/ReadinessPanel'
 import GapPanel from './components/GapPanel'
-import { checkApiHealth, fetchMatch, API_BASE_URL } from './api/client'
+import { checkApiHealth, fetchMatch, fetchReadiness, API_BASE_URL } from './api/client'
 
 // Fallback fixture generator to ensure Sashang is NEVER blocked
 function generateFallbackMatches(skills, desiredRole) {
@@ -60,12 +60,53 @@ function generateFallbackMatches(skills, desiredRole) {
   }
 }
 
+// Fallback readiness evaluator matching Day 5 OpenAPI specification
+function generateFallbackReadiness(skills, desiredRole) {
+  const roleVocab = {
+    'DevOps Engineer': ['Docker', 'Kubernetes', 'AWS', 'CI/CD', 'Linux', 'Terraform', 'Jenkins', 'Bash', 'Git', 'Ansible', 'Python', 'Prometheus', 'Grafana', 'Nginx', 'GCP', 'Azure', 'Security', 'YAML', 'Networking', 'Monitoring'],
+    'Frontend Developer': ['JavaScript', 'TypeScript', 'React', 'HTML/CSS', 'Tailwind CSS', 'Next.js', 'Vite', 'Redux', 'Vue.js', 'REST APIs', 'Webpack', 'Jest', 'Git', 'GraphQL', 'Responsive Design', 'Sass', 'Figma', 'UI/UX', 'CI/CD', 'Node.js'],
+    'Backend Developer': ['Python', 'Node.js', 'FastAPI', 'Java', 'SQL', 'PostgreSQL', 'MongoDB', 'Redis', 'Django', 'Express.js', 'Go', 'Docker', 'REST APIs', 'Microservices', 'Git', 'AWS', 'Linux', 'Kafka', 'GraphQL', 'CI/CD'],
+    'Full Stack Engineer': ['React', 'JavaScript', 'Node.js', 'SQL', 'MongoDB', 'TypeScript', 'REST APIs', 'Express.js', 'HTML/CSS', 'Git', 'Tailwind CSS', 'Docker', 'PostgreSQL', 'Python', 'AWS', 'Next.js', 'Redis', 'CI/CD', 'Linux', 'Microservices'],
+    'Data Engineer': ['Python', 'SQL', 'PostgreSQL', 'Apache Kafka', 'Pandas', 'NumPy', 'AWS', 'Redis', 'Apache Spark', 'Airflow', 'Docker', 'ETL Pipelines', 'BigQuery', 'Linux', 'Git', 'Data Warehousing', 'Snowflake', 'Hadoop', 'Scala', 'Bash'],
+    'Machine Learning Engineer': ['Python', 'PyTorch', 'TensorFlow', 'Pandas', 'NumPy', 'Scikit-learn', 'SQL', 'Machine Learning', 'Deep Learning', 'Docker', 'NLP', 'Computer Vision', 'Git', 'MLOps', 'FastAPI', 'AWS', 'Data Modeling', 'Linux', 'Jupyter', 'Statistics'],
+    'Cloud Architect': ['AWS', 'Google Cloud (GCP)', 'Microsoft Azure', 'Terraform', 'Kubernetes', 'Docker', 'Microservices', 'Linux', 'Networking', 'Security', 'CI/CD', 'Cloud Architecture', 'Python', 'Bash', 'IAM', 'Cost Optimization', 'Disaster Recovery', 'Serverless', 'Monitoring', 'Git']
+  }
+
+  const roleSkills = roleVocab[desiredRole] || [
+    'Python', 'SQL', 'Docker', 'Git', 'Linux', 'REST APIs', 'Cloud Computing', 'Data Structures', 'Algorithms', 'CI/CD', 'Testing', 'Databases', 'Monitoring', 'Security', 'System Design'
+  ]
+
+  const covered = skills.filter(userSkill =>
+    roleSkills.some(rk => rk.toLowerCase() === userSkill.toLowerCase())
+  )
+
+  const missing_count = Math.max(0, roleSkills.length - covered.length)
+  const coverage = Math.round((covered.length / roleSkills.length) * 100) / 100
+
+  // Realistic probability calculation
+  const rawProb = Math.min(0.95, Math.max(0.20, (covered.length / Math.min(roleSkills.length, 12)) * 0.75 + 0.15))
+  const probability = Math.round(rawProb * 100) / 100
+
+  // Band: Ready (>=0.70), Close (>=0.45), Not yet (<0.45)
+  const band = probability >= 0.70 ? 'Ready' : probability >= 0.45 ? 'Close' : 'Not yet'
+
+  return {
+    probability,
+    band,
+    coverage,
+    covered,
+    missing_count
+  }
+}
+
 function App() {
   const [selectedSkills, setSelectedSkills] = useState([])
   const [desiredRole, setDesiredRole] = useState('')
   const [viewMode, setViewMode] = useState('input') // 'input' | 'result'
   const [matchData, setMatchData] = useState({ matches: [], unrecognized: [] })
+  const [readinessData, setReadinessData] = useState(null)
   const [isLoadingMatch, setIsLoadingMatch] = useState(false)
+  const [isLoadingReadiness, setIsLoadingReadiness] = useState(false)
   const [apiStatus, setApiStatus] = useState('checking') // 'online' | 'offline'
 
   // Probe API health on mount
@@ -118,39 +159,47 @@ function App() {
     return ''
   }
 
-  // Submit and transition to Result State (Day 4)
+  // Submit and transition to Result State (Day 4 & Day 5)
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!isFormValid) return
 
     setIsLoadingMatch(true)
+    setIsLoadingReadiness(true)
     setViewMode('result')
 
     const payload = {
       skills: selectedSkills,
       desired_role: desiredRole
     }
-    console.log('Analyzing job fit with payload:', payload)
+    console.log('Analyzing job fit and readiness with payload:', payload)
 
-    try {
-      // 1. Call POST /match on API
-      const res = await fetchMatch(selectedSkills)
-      if (res && res.matches) {
-        setMatchData({
-          matches: res.matches,
-          unrecognized: res.unrecognized || []
-        })
-      } else {
-        // Fallback if API returned empty/unexpected structure
-        setMatchData(generateFallbackMatches(selectedSkills, desiredRole))
-      }
-    } catch (err) {
-      // 2. Local realistic fixture fallback so Sashang is NEVER blocked
-      console.warn('API /match unavailable, using realistic local fixtures:', err.message)
+    // Call POST /match and POST /readiness concurrently
+    const [matchResult, readinessResult] = await Promise.allSettled([
+      fetchMatch(selectedSkills),
+      fetchReadiness(selectedSkills, desiredRole)
+    ])
+
+    // Process Match results
+    if (matchResult.status === 'fulfilled' && matchResult.value?.matches) {
+      setMatchData({
+        matches: matchResult.value.matches,
+        unrecognized: matchResult.value.unrecognized || []
+      })
+    } else {
+      console.warn('API /match unavailable or error, using realistic fallback fixtures')
       setMatchData(generateFallbackMatches(selectedSkills, desiredRole))
-    } finally {
-      setIsLoadingMatch(false)
     }
+    setIsLoadingMatch(false)
+
+    // Process Readiness results
+    if (readinessResult.status === 'fulfilled' && readinessResult.value) {
+      setReadinessData(readinessResult.value)
+    } else {
+      console.warn('API /readiness unavailable or error, using realistic fallback evaluation')
+      setReadinessData(generateFallbackReadiness(selectedSkills, desiredRole))
+    }
+    setIsLoadingReadiness(false)
   }
 
   return (
@@ -159,7 +208,7 @@ function App() {
       <header className="max-w-3xl mx-auto w-full text-center pt-4 sm:pt-6 pb-6">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-4">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          Day 4 · Result Layout & MatchPanel
+          Day 5 · ReadinessPanel & Market Coverage
         </div>
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-400 via-teal-200 to-cyan-400 bg-clip-text text-transparent">
           SkillGraph
@@ -278,7 +327,8 @@ function App() {
               {/* Card 1: Readiness Panel (Day 5 target) */}
               <ReadinessPanel
                 desiredRole={desiredRole}
-                selectedSkills={selectedSkills}
+                readinessData={readinessData}
+                isLoading={isLoadingReadiness}
               />
 
               {/* Card 2: What to Learn Next (Day 6 target) */}

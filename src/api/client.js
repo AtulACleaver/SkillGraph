@@ -36,4 +36,13 @@ export async function checkApiHealth() {
   return response.data
 }
 
+// Fetch readiness evaluation (POST /readiness)
+export async function fetchReadiness(skills = [], desiredRole = '') {
+  const response = await client.post('/readiness', {
+    skills,
+    desired_role: desiredRole
+  })
+  return response.data
+}
+
 export default client
