@@ -1,6 +1,7 @@
-import pandas as pd
 import os
+
 import matplotlib.pyplot as plt
+import pandas as pd
 
 os.makedirs('data', exist_ok=True)
 os.makedirs('docs', exist_ok=True)
@@ -39,7 +40,7 @@ with open('docs/data_audit.md', 'w') as f:
                 break
                 
     empty_skills = df[df[skills_col].isnull() | (df[skills_col].astype(str).str.strip() == '')]
-    f.write(f"## Skills\n")
+    f.write("## Skills\n")
     f.write(f"- Rows with empty/null skills: {len(empty_skills):,}\n")
     
     # Split skills

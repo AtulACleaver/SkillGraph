@@ -1,7 +1,7 @@
-import pandas as pd
-import re
 import string
-from rapidfuzz import process, fuzz
+
+import pandas as pd
+from rapidfuzz import fuzz, process
 
 # Canonical list and aliases
 # We will build it on module load to keep the API clean.
@@ -22,12 +22,11 @@ def _clean_token(t):
     return t.translate(str.maketrans('', '', string.punctuation))
 
 def init_registry():
-    global _canonical, _exact_map, _clean_map
     if _canonical: return # already init
     
     try:
         df = pd.read_csv('data/top_tokens.csv')
-    except Exception:
+    except (FileNotFoundError, pd.errors.EmptyDataError):
         return
         
     next_id = 1
