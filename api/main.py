@@ -1,4 +1,3 @@
-import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
@@ -6,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from api import schemas
 from api.artifacts import artifacts
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

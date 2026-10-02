@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 
 from api.main import app
 
+
 def test_get_roles():
     with TestClient(app) as client:
         response = client.get("/roles")

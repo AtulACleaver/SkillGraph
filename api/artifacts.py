@@ -1,9 +1,11 @@
 import json
 import os
 import pickle
-import pandas as pd
 import sys
-from typing import Any, Dict
+from typing import Any
+
+import pandas as pd
+
 
 class FakePredictor:
     pass
@@ -16,8 +18,8 @@ sys.modules["__main__"].FakeLabelEncoder = FakeLabelEncoder
 
 class ArtifactsManager:
     def __init__(self):
-        self.vocab: Dict[str, Any] = {}
-        self.role_profiles: Dict[str, Any] = {}
+        self.vocab: dict[str, Any] = {}
+        self.role_profiles: dict[str, Any] = {}
         self.rules: pd.DataFrame = None
         self.classifier: Any = None
         self.label_encoder: Any = None
