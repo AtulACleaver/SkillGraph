@@ -1,7 +1,15 @@
+import logging
+import time
+import uuid
 from contextlib import asynccontextmanager
+from functools import lru_cache
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 from api import schemas
 from api.artifacts import artifacts
@@ -17,6 +25,23 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan
 )
+
+@app.middleware("http")
+async def add_process_time_and_logging(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    logger.info(f"{request.method} {request.url.path} completed in {process_time*1000:.2f}ms")
+    return response
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    request_id = str(uuid.uuid4())
+    logger.error(f"[{request_id}] Unhandled exception at {request.method} {request.url.path}: {exc}", exc_info=exc)
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Internal Server Error", "request_id": request_id}
+    )
 
 # CORS Middleware (Local dev origin for now)
 app.add_middleware(
@@ -106,16 +131,22 @@ def gap(request: schemas.GapRequest):
         ]
     )
 
-@app.post("/analyze", response_model=schemas.AnalyzeResponse)
-def analyze(request: schemas.AnalyzeRequest):
-    validate_request(request.skills, request.desired_role)
-    
-    match_resp = match(schemas.MatchRequest(skills=request.skills))
-    read_resp = readiness(schemas.ReadinessRequest(skills=request.skills, desired_role=request.desired_role))
-    gap_resp = gap(schemas.GapRequest(skills=request.skills, desired_role=request.desired_role))
+@lru_cache(maxsize=500)
+def _analyze_cached(skills_tuple: tuple[str, ...], desired_role: str | None) -> schemas.AnalyzeResponse:
+    skills = list(skills_tuple)
+    match_resp = match(schemas.MatchRequest(skills=skills))
+    read_resp = readiness(schemas.ReadinessRequest(skills=skills, desired_role=desired_role))
+    gap_resp = gap(schemas.GapRequest(skills=skills, desired_role=desired_role))
     
     return schemas.AnalyzeResponse(
         match=match_resp,
         readiness=read_resp,
         gap=gap_resp
     )
+
+@app.post("/analyze", response_model=schemas.AnalyzeResponse)
+def analyze(request: schemas.AnalyzeRequest):
+    validate_request(request.skills, request.desired_role)
+    
+    skills_tuple = tuple(sorted(request.skills))
+    return _analyze_cached(skills_tuple, request.desired_role)
