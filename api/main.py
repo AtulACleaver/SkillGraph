@@ -3,10 +3,14 @@ import os
 
 from fastapi import FastAPI
 
+from api.routes.gap import router as gap_router
+
 app = FastAPI(
     title="SkillGraph API",
     version="0.1.0"
 )
+
+app.include_router(gap_router)
 
 # Use env var, default to fixtures
 ARTIFACTS_DIR = os.getenv("ARTIFACTS_DIR", "fixtures")
@@ -22,7 +26,7 @@ def get_roles():
     roles_path = os.path.join(ARTIFACTS_DIR, "role_profiles.json")
     if not os.path.exists(roles_path):
         return []
-    with open(roles_path, "r") as f:
+    with open(roles_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     
     # Expected: [{role_family, n_postings, top_skills: [...]}]
@@ -40,7 +44,7 @@ def get_skills(q: str = ""):
     vocab_path = os.path.join(ARTIFACTS_DIR, "skill_vocab.json")
     if not os.path.exists(vocab_path):
         return []
-    with open(vocab_path, "r") as f:
+    with open(vocab_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     
     # Expected: [{skill_id, name, aliases: [...]}]
@@ -53,5 +57,4 @@ def get_skills(q: str = ""):
                 "name": name.title(),
                 "aliases": []
             })
-    # Day 4 requires capping at 20 results, but for Day 2 it's fine. We'll cap at 20.
     return result[:20]
