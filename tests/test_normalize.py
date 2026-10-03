@@ -21,6 +21,10 @@ def test_skills_to_vector_empty():
     assert vec.sum() == 0
     assert not unmapped
 
+def test_skills_to_vector_type_error():
+    with pytest.raises(TypeError):
+        norm.skills_to_vector("python, sql")
+
 def test_skills_to_vector_unknown():
     vec, unmapped = norm.skills_to_vector(["unknown_skill_xyz", ""])
     assert vec.sum() == 0
