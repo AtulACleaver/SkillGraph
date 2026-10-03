@@ -6,7 +6,13 @@ from mining.gap import rank_gap
 router = APIRouter()
 
 
-@router.post("/gap", response_model=GapResponse)
+@router.post(
+    "/gap",
+    response_model=GapResponse,
+    tags=["Mining"],
+    summary="Recommend Missing Skills",
+    description="Returns the top 5 ranked skills a candidate should learn next to bridge the gap to their desired role.",
+)
 def post_gap(request: GapRequest):
     """
     POST /gap endpoint: returns top 5 ranked skills to learn next for the desired role.

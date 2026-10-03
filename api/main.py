@@ -7,7 +7,13 @@ from api.routes.gap import router as gap_router
 
 app = FastAPI(
     title="SkillGraph API",
-    version="0.1.0"
+    description="India Job Market Mining Engine. Powers the frontend application with matching, readiness, and gap recommendation features.",
+    version="0.1.0",
+    openapi_tags=[
+        {"name": "Mining", "description": "Association rule mining and gap analysis"},
+        {"name": "ML", "description": "Machine learning prediction and matching features"},
+        {"name": "System", "description": "Health checks and vocabulary listings"},
+    ]
 )
 
 app.include_router(gap_router)
@@ -15,13 +21,13 @@ app.include_router(gap_router)
 # Use env var, default to fixtures
 ARTIFACTS_DIR = os.getenv("ARTIFACTS_DIR", "fixtures")
 
-@app.get("/health")
+@app.get("/health", tags=["System"], summary="Health Check")
 def health():
     return {
         "status": "ok"
     }
 
-@app.get("/roles")
+@app.get("/roles", tags=["System"], summary="List available role families")
 def get_roles():
     roles_path = os.path.join(ARTIFACTS_DIR, "role_profiles.json")
     if not os.path.exists(roles_path):
@@ -39,7 +45,7 @@ def get_roles():
         })
     return result
 
-@app.get("/skills")
+@app.get("/skills", tags=["System"], summary="Search skill vocabulary")
 def get_skills(q: str = ""):
     vocab_path = os.path.join(ARTIFACTS_DIR, "skill_vocab.json")
     if not os.path.exists(vocab_path):
