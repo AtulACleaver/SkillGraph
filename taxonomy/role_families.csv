@@ -1,0 +1,12 @@
+pattern,role_family,priority
+\b(machine learning|ml|data sci|ai|artificial intelligence|deep learning|nlp|computer vision)\b,Data Science / ML,1
+\b(data analyst|bi |business intelligence|data engineer|database|dba|sql developer)\b,Data / BI Analyst,2
+\b(devops|cloud|aws|azure|site reliability|sre|platform|infrastructure)\b,DevOps / Cloud,3
+\b(qa|test|quality|automation tester|sdet)\b,QA / Test,4
+\b(erp|sap|salesforce|workday|oracle apps|servicenow|crm)\b,ERP / Enterprise,5
+\b(mobile|ios|android|flutter|react native|swift)\b,Mobile,6
+\b(full stack|fullstack|full-stack)\b,Full Stack,7
+\b(front end|frontend|ui|ux|react|angular|javascript developer)\b,Frontend,8
+\b(back end|backend|java developer|python developer|node|golang)\b,Backend,9
+\b(support|it ops|helpdesk|system admin|network|sysadmin)\b,Support / IT Ops,10
+\b(software engineer|sde|developer|programmer|application developer)\b,Software Engineer (generic),11
