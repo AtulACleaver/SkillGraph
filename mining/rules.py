@@ -85,34 +85,58 @@ def save_rules(rules_df: pd.DataFrame, output_path: str = "artifacts/rules.parqu
 
 
 def run_rule_mining(
-    baskets_file: str = "data/baskets.parquet",
+    baskets_file: str = "data/dataset.parquet",
     output_rules_file: str = "artifacts/rules.parquet",
     min_sup_pct: float = 0.005,
-    min_confidence: float = 0.2,
-    min_lift: float = 1.0,
+    min_confidence: float = 0.3,
+    min_lift: float = 1.2,
+    max_rules: int = 50000,
 ) -> pd.DataFrame:
     """
-    Full pipeline to mine frequent itemsets and generate association rules from baskets.parquet.
+    Full pipeline to mine frequent itemsets and generate association rules.
+    Uses FP-growth for speed and aggressively prunes to keep artifacts lean.
     """
-    from mining.apriori import run_apriori
+    import time
+
+    from mlxtend.frequent_patterns import fpgrowth
+    from mlxtend.preprocessing import TransactionEncoder
 
     print(f"Loading baskets from {baskets_file}...")
     df = pd.read_parquet(baskets_file)
     baskets = [list(skill_ids) for skill_ids in df["skill_ids"] if len(skill_ids) > 0]
     total_baskets = len(baskets)
 
-    print(f"Mining frequent itemsets with min_sup={min_sup_pct*100:.2f}%...")
-    frequent_itemsets, _ = run_apriori(baskets, min_sup_pct, verbose=True)
+    print("Encoding transactions for FP-Growth...")
+    te = TransactionEncoder()
+    te_ary = te.fit(baskets).transform(baskets)
+    df_encoded = pd.DataFrame(te_ary, columns=te.columns_)
+
+    print(f"Mining frequent itemsets with min_sup={min_sup_pct*100:.2f}% using FP-growth...")
+    t0 = time.time()
+    fpgrowth_res = fpgrowth(df_encoded, min_support=min_sup_pct, use_colnames=True)
+    t1 = time.time()
+    print(f"Found {len(fpgrowth_res):,} frequent itemsets in {t1-t0:.2f}s.")
+
+    # Convert to dict format expected by our generate_rules: {frozenset: count}
+    frequent_itemsets = {
+        frozenset(row["itemsets"]): round(row["support"] * total_baskets)
+        for _, row in fpgrowth_res.iterrows()
+    }
 
     print(f"Generating rules with min_confidence={min_confidence}, min_lift={min_lift}...")
     rules_df = generate_rules(frequent_itemsets, total_baskets, min_confidence, min_lift)
+
+    # Hard pruning step to prevent bloated artifacts
+    if len(rules_df) > max_rules:
+        print(f"Pruning {len(rules_df):,} rules down to top {max_rules:,} by lift & confidence...")
+        rules_df = rules_df.head(max_rules)
 
     save_rules(rules_df, output_rules_file)
     return rules_df
 
 
 if __name__ == "__main__":
-    if os.path.exists("data/baskets.parquet"):
+    if os.path.exists("data/dataset.parquet"):
         run_rule_mining()
     else:
-        print("data/baskets.parquet not found. Run ETL pipeline first.")
+        print("data/dataset.parquet not found. Run ETL pipeline first.")
