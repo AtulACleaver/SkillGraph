@@ -27,3 +27,17 @@ def test_post_gap_endpoint():
     data = response.json()
     assert "recommendations" in data
     assert isinstance(data["recommendations"], list)
+
+
+def test_post_gap_endpoint_not_found():
+    response = client.post(
+        "/gap",
+        json={
+            "skills": ["python", "fastapi"],
+            "desired_role": "Astronaut",
+        },
+    )
+    assert response.status_code == 404
+    data = response.json()
+    assert "detail" in data
+    assert "not found" in data["detail"].lower()

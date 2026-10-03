@@ -138,8 +138,9 @@ def test_gap_ranking():
         assert r["skill"].lower() not in user_skills
 
     # Cold case 1: unknown role
-    empty_role = rank_gap(user_skills, desired_role="Nonexistent Role", top_n=5)
-    assert empty_role == []
+    import pytest
+    with pytest.raises(ValueError, match="not found"):
+        rank_gap(user_skills, desired_role="Nonexistent Role", top_n=5)
 
     # Cold case 2: user already has all skills in profile
     all_frontend_skills = ["NumPy", "Git", "Apache Spark", "Azure", "TensorFlow", "MySQL"]

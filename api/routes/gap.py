@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 from api.schemas import GapRequest, GapResponse, GapSkill
 from mining.gap import rank_gap
@@ -17,11 +17,16 @@ def post_gap(request: GapRequest):
     """
     POST /gap endpoint: returns top 5 ranked skills to learn next for the desired role.
     """
-    recs = rank_gap(
-        vector=request.skills,
-        desired_role=request.desired_role,
-        top_n=5,
-    )
+    try:
+        recs = rank_gap(
+            vector=request.skills,
+            desired_role=request.desired_role,
+            top_n=5,
+        )
+    except ValueError as e:
+        # If it's a missing artifact or unknown role, return a 404
+        raise HTTPException(status_code=404, detail=str(e))
+    
     formatted = [
         GapSkill(
             skill=r["skill"],

@@ -9,11 +9,16 @@ import pandas as pd
 def _get_artifacts_dir() -> str:
     """Get artifacts directory with fallback to fixtures."""
     env_dir = os.getenv("ARTIFACTS_DIR", "artifacts")
-    if os.path.exists(env_dir):
+    
+    # If env_dir exists and contains role_profiles, use it
+    if os.path.exists(env_dir) and os.path.exists(os.path.join(env_dir, "role_profiles.json")):
         return env_dir
+        
+    # Otherwise fallback to fixtures
     if os.path.exists("fixtures"):
         return "fixtures"
-    return "artifacts"
+        
+    return env_dir
 
 
 def load_gap_artifacts(artifacts_dir: str | None = None) -> dict[str, Any]:
@@ -157,6 +162,9 @@ def rank_gap(
     id_to_skill = artifacts.get("id_to_skill", {})
     rules_df = artifacts.get("rules_df")
 
+    if not role_profiles:
+        raise ValueError("System artifacts (role profiles) are missing or not loaded.")
+
     # Handle unknown or empty role
     if not desired_role or desired_role not in role_profiles:
         # Match case-insensitively
@@ -166,7 +174,7 @@ def rank_gap(
                 matched_role = role_name
                 break
         if not matched_role:
-            return []
+            raise ValueError(f"Role '{desired_role}' not found in role profiles.")
         desired_role = matched_role
 
     profile = role_profiles[desired_role]
