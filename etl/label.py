@@ -1,7 +1,10 @@
-import pandas as pd
-import re
 import json
+import re
+
+import pandas as pd
+
 import etl.normalize as norm
+
 
 def load_families(csv_path):
     df = pd.read_csv(csv_path)
@@ -13,7 +16,7 @@ def load_families(csv_path):
         try:
             pat = re.compile(row['pattern'], re.IGNORECASE)
             patterns.append((pat, row['role_family']))
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(f"Failed to compile pattern {row['pattern']}: {e}")
     return patterns
 
