@@ -52,9 +52,13 @@ with open('docs/data_audit.md', 'w') as f:
     
     f.write(f"- Distinct raw tokens: {len(token_counts):,}\n")
     
-    # Export top 1500
-    top_1500 = token_counts.head(1500)
-    top_1500.to_csv('data/top_tokens.csv', header=['count'])
+    # Export every token seen at least MIN_TOKEN_COUNT times.
+    # (A fixed top-1500 cut covered only ~58% of skill mentions.)
+    MIN_TOKEN_COUNT = 5
+    top_tokens = token_counts[token_counts >= MIN_TOKEN_COUNT]
+    top_tokens.to_csv('data/top_tokens.csv', header=['count'])
+    f.write(f"- Tokens exported (count >= {MIN_TOKEN_COUNT}): {len(top_tokens):,} "
+            f"covering {top_tokens.sum() / token_counts.sum():.1%} of mentions\n")
     
     # Plot frequency curve
     plt.figure(figsize=(10, 6))

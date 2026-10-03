@@ -1,128 +1,153 @@
 import string
-
+import os
+import json
 import pandas as pd
+import numpy as np
 from rapidfuzz import fuzz, process
 
-# Canonical list and aliases
-# We will build it on module load to keep the API clean.
-_canonical = {}  # id -> string
-_exact_map = {}  # string -> id
-_clean_map = {}  # string -> id
-_initialized = False
-_aliases = {
-    # "Aryan's alias table" mock - you can add to this
-    'reactjs': 'react',
-    'react.js': 'react',
-    'react js': 'react',
-    'node.js': 'node',
-    'nodejs': 'node'
-}
+_STRIP = str.maketrans('', '', string.punctuation.replace('+', '').replace('#', ''))
 
 def _clean_token(t):
+    if pd.isna(t): return ""
     t = str(t).lower().strip()
-    return t.translate(str.maketrans('', '', string.punctuation))
+    return ' '.join(t.translate(_STRIP).split())
 
-def init_registry():
-    global _initialized
-    if _initialized:
-        return
-    
+_aliases = {}
+def load_aliases():
+    global _aliases
+    if _aliases: return
     try:
-        df = pd.read_csv('data/top_tokens.csv')
-    except FileNotFoundError:
-        return
-        
-    next_id = 1
-    for token in df['tagsAndSkills'].dropna():
-        cleaned = _clean_token(token)
-        if cleaned not in _clean_map.values():
-            # register new canonical
-            _canonical[next_id] = cleaned
-            _exact_map[token] = next_id
-            _clean_map[cleaned] = next_id
-            next_id += 1
-        else:
-            # map exact variant to existing cleaned ID
-            _exact_map[token] = _clean_map[cleaned]
+        df = pd.read_csv('taxonomy/skill_aliases.csv')
+        for _, row in df.iterrows():
+            if pd.isna(row['alias']) or pd.isna(row['canonical']): continue
+            _aliases[_clean_token(row['alias'])] = _clean_token(row['canonical'])
+    except Exception as e:
+        print(f"Failed to load aliases: {e}")
 
-    # map aliases to ids if target exists
-    for alias, target in _aliases.items():
-        ct = _clean_token(target)
-        if ct in _clean_map:
-            _exact_map[alias] = _clean_map[ct]
-            _clean_map[_clean_token(alias)] = _clean_map[ct]
-
-    _initialized = True
-
-init_registry()
-
-# Cache for rapidfuzz to avoid re-searching
+_vocab = []
+_clean_map = {}
+_exact_map = {}
 _fuzzy_cache = {}
 
+def load_vocab(vocab_list=None):
+    global _vocab, _clean_map, _exact_map, _fuzzy_cache
+    if vocab_list is None:
+        path = os.environ.get('ARTIFACTS_DIR', 'artifacts')
+        vocab_path = os.path.join(path, 'skill_vocab.json')
+        if not os.path.exists(vocab_path):
+            return
+        with open(vocab_path, 'r') as f:
+            _vocab = json.load(f)
+    else:
+        _vocab = vocab_list
+        
+    _clean_map = {name: i for i, name in enumerate(_vocab)}
+    _exact_map = {}
+    _fuzzy_cache = {}
+    load_aliases()
+
+def skills_to_vector(raw: list[str]) -> tuple[np.ndarray, list[str]]:
+    if not _vocab:
+        load_vocab()
+    vec = np.zeros(len(_vocab), dtype=int)
+    unmapped = []
+    
+    if not raw:
+        return vec, unmapped
+        
+    seen_ids = set()
+    for t in raw:
+        i = normalize_skill(t)
+        if i is not None:
+            seen_ids.add(i)
+        else:
+            if str(t).strip():
+                unmapped.append(str(t).strip())
+                
+    for i in seen_ids:
+        vec[i] = 1
+                
+    return vec, unmapped
+
 def normalize_skill(raw: str) -> int | None:
-    if pd.isna(raw):
-        return None
-    
+    if not _vocab:
+        load_vocab()
+    if pd.isna(raw): return None
     raw = str(raw).strip()
+    if not raw: return None
     
-    # 1. Exact match
     if raw in _exact_map:
         return _exact_map[raw]
         
-    # 2. Lowercase and strip punctuation
     cleaned = _clean_token(raw)
+    if not cleaned: return None
+    
     if cleaned in _clean_map:
+        _exact_map[raw] = _clean_map[cleaned]
         return _clean_map[cleaned]
         
-    # 3. Alias table (handled during init if exact/cleaned, but just in case)
     if cleaned in _aliases:
         target = _aliases[cleaned]
-        tc = _clean_token(target)
-        if tc in _clean_map:
-            return _clean_map[tc]
+        if target in _clean_map:
+            _exact_map[raw] = _clean_map[target]
+            return _clean_map[target]
             
-    # 4. Fuzzy match with rapidfuzz
     if cleaned in _fuzzy_cache:
         return _fuzzy_cache[cleaned]
         
-    choices = list(_canonical.values())
+    if len(cleaned) < 4:
+        _fuzzy_cache[cleaned] = None
+        return None
+        
+    choices = [c for c in _vocab if len(c) >= 4]
     if not choices:
         return None
         
-    # Extract one best match above threshold 85
-    match = process.extractOne(cleaned, choices, scorer=fuzz.WRatio, score_cutoff=85)
+    match = process.extractOne(cleaned, choices, scorer=fuzz.ratio, score_cutoff=88)
     if match:
         matched_str = match[0]
         match_id = _clean_map[matched_str]
         _fuzzy_cache[cleaned] = match_id
+        _exact_map[raw] = match_id
         return match_id
         
-    # 5. Give up
+    _fuzzy_cache[cleaned] = None
     return None
 
-def normalize_many(tokens: list[str]) -> list[int]:
-    result = []
-    for t in tokens:
-        i = normalize_skill(t)
-        if i is not None:
-            result.append(i)
-    return list(set(result)) # deduplicate
+def build_vocab(tech_series) -> list[str]:
+    load_aliases()
+    counts = {}
+    
+    for tags in tech_series.dropna():
+        tokens = [t.strip() for t in str(tags).split(',') if t.strip()]
+        for t in tokens:
+            cleaned = _clean_token(t)
+            if not cleaned: continue
+            canonical = _aliases.get(cleaned, cleaned)
+            counts[canonical] = counts.get(canonical, 0) + 1
+            
+    total_mass = sum(counts.values())
+    sorted_counts = sorted(counts.items(), key=lambda x: x[1], reverse=True)
+    
+    cumulative = 0
+    vocab = []
+    for name, count in sorted_counts:
+        cumulative += count
+        vocab.append(name)
+        if len(vocab) >= 800 and (cumulative / total_mass) >= 0.75:
+            break
+        if len(vocab) == 1200:
+            break
+            
+    print(f"Vocab size: {len(vocab)}")
+    print(f"Mapped mass: {cumulative:,} / {total_mass:,} ({cumulative/total_mass:.1%})")
+    return vocab
 
-def _run_script():
-    # Only run when executed as a script
-    print("Normalizing tokens in dataset...")
-    df = pd.read_parquet('data/clean.parquet')
-    
-    unmapped_counts = {}
-    total_mass = 0
-    mapped_mass = 0
-    
+def build_baskets(clean_df) -> pd.DataFrame:
     baskets = []
-    
-    # We will process each row
-    for idx, row in df.iterrows():
+    for idx, row in clean_df.iterrows():
         skills_str = row['tagsAndSkills']
-        posting_id = row.get('jobId', idx) # use jobId or index
+        posting_id = str(row.get('jobId', idx))
         
         if pd.isna(skills_str):
             baskets.append({'posting_id': posting_id, 'skill_ids': []})
@@ -130,32 +155,11 @@ def _run_script():
             
         tokens = [t.strip() for t in str(skills_str).split(',') if t.strip()]
         skill_ids = set()
-        
         for t in tokens:
-            total_mass += 1
             i = normalize_skill(t)
             if i is not None:
                 skill_ids.add(i)
-                mapped_mass += 1
-            else:
-                unmapped_counts[t] = unmapped_counts.get(t, 0) + 1
-                
+        
         baskets.append({'posting_id': posting_id, 'skill_ids': list(skill_ids)})
         
-    # 5. Write baskets.parquet
-    out_df = pd.DataFrame(baskets)
-    out_df.to_parquet('data/baskets.parquet', index=False)
-    
-    # 4. Write unmapped.csv
-    unmapped_df = pd.DataFrame(list(unmapped_counts.items()), columns=['token', 'count'])
-    unmapped_df = unmapped_df.sort_values('count', ascending=False)
-    unmapped_df.to_csv('data/unmapped.csv', index=False)
-    
-    # 6. Measure and print token mass
-    pct = (mapped_mass / total_mass) * 100 if total_mass > 0 else 0
-    print(f"Total token mass: {total_mass:,}")
-    print(f"Mapped token mass: {mapped_mass:,}")
-    print(f"Coverage: {pct:.2f}% (Target: >70%)")
-
-if __name__ == '__main__':
-    _run_script()
+    return pd.DataFrame(baskets)
