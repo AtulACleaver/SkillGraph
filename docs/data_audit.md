@@ -108,3 +108,4 @@ Total Rows: 97,929
 ## Skills
 - Rows with empty/null skills: 571
 - Distinct raw tokens: 59,479
+- Tokens exported (count >= 5): 14,843 covering 91.3% of mentions

@@ -18,9 +18,12 @@ _aliases = {
     'nodejs': 'node'
 }
 
+# Keep '+' and '#' so C, C++ and C# stay distinct skills.
+_STRIP = str.maketrans('', '', string.punctuation.replace('+', '').replace('#', ''))
+
 def _clean_token(t):
     t = str(t).lower().strip()
-    return t.translate(str.maketrans('', '', string.punctuation))
+    return ' '.join(t.translate(_STRIP).split())
 
 def init_registry():
     global _initialized
@@ -35,7 +38,9 @@ def init_registry():
     next_id = 1
     for token in df['tagsAndSkills'].dropna():
         cleaned = _clean_token(token)
-        if cleaned not in _clean_map.values():
+        if not cleaned:
+            continue
+        if cleaned not in _clean_map:
             # register new canonical
             _canonical[next_id] = cleaned
             _exact_map[token] = next_id
@@ -81,24 +86,23 @@ def normalize_skill(raw: str) -> int | None:
         if tc in _clean_map:
             return _clean_map[tc]
             
-    # 4. Fuzzy match with rapidfuzz
+    # 4. Fuzzy match with rapidfuzz (typos / spelling variants only).
+    # WRatio does partial matching, which mapped junk onto 1-2 letter skills
+    # ("asdfgh" -> "s"). Use plain ratio and ignore very short strings.
     if cleaned in _fuzzy_cache:
         return _fuzzy_cache[cleaned]
-        
-    choices = list(_canonical.values())
+    if len(cleaned) < 4:
+        _fuzzy_cache[cleaned] = None
+        return None
+
+    choices = [c for c in _canonical.values() if len(c) >= 4]
     if not choices:
         return None
-        
-    # Extract one best match above threshold 85
-    match = process.extractOne(cleaned, choices, scorer=fuzz.WRatio, score_cutoff=85)
-    if match:
-        matched_str = match[0]
-        match_id = _clean_map[matched_str]
-        _fuzzy_cache[cleaned] = match_id
-        return match_id
-        
-    # 5. Give up
-    return None
+
+    match = process.extractOne(cleaned, choices, scorer=fuzz.ratio, score_cutoff=88)
+    match_id = _clean_map[match[0]] if match else None
+    _fuzzy_cache[cleaned] = match_id  # cache misses too
+    return match_id
 
 def normalize_many(tokens: list[str]) -> list[int]:
     result = []
