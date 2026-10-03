@@ -60,13 +60,13 @@ For production rules, we use `mlxtend`'s FP-growth (`mining.rules`) which avoids
 
 | Min Support | Frequent Itemsets | Apriori (s) | FP-growth (s) | Speedup (FP/Ap) |
 |-------------|-------------------|-------------|---------------|-----------------|
-| 5.0%        | 22                | 0.053       | 0.029         | 1.86x           |
-| 3.0%        | 48                | 0.161       | 0.089         | 1.81x           |
-| 2.0%        | 102               | 0.597       | 0.037         | 16.19x          |
-| 1.0%        | 322               | 10.464      | 0.069         | 152.56x         |
-| 0.5%        | 971               | 47.564      | 0.086         | 552.29x         |
+| 5.0%        | 19                | 0.202       | 0.122         | 1.65x           |
+| 3.0%        | 43                | 0.587       | 0.100         | 5.86x           |
+| 2.0%        | 95                | 1.790       | 0.112         | 15.96x          |
+| 1.0%        | 284               | 11.111      | 0.153         | 72.52x          |
+| 0.5%        | 835               | 126.495     | 0.201         | 628.10x         |
 
-*(Benchmark on 5,000 sample baskets from full dataset)*
+*(Benchmark on full dataset of ~18,000 baskets)*
 
 ### Gap Recommendation Formula
 The `POST /gap` endpoint ranks the highest-impact missing skills for a desired role using the following scoring formula:
