@@ -1,8 +1,9 @@
-import string
-import os
 import json
-import pandas as pd
+import os
+import string
+
 import numpy as np
+import pandas as pd
 from rapidfuzz import fuzz, process
 
 _STRIP = str.maketrans('', '', string.punctuation.replace('+', '').replace('#', ''))
@@ -14,15 +15,11 @@ def _clean_token(t):
 
 _aliases = {}
 def load_aliases():
-    global _aliases
     if _aliases: return
-    try:
-        df = pd.read_csv('taxonomy/skill_aliases.csv')
-        for _, row in df.iterrows():
-            if pd.isna(row['alias']) or pd.isna(row['canonical']): continue
-            _aliases[_clean_token(row['alias'])] = _clean_token(row['canonical'])
-    except Exception as e:
-        print(f"Failed to load aliases: {e}")
+    df = pd.read_csv('taxonomy/skill_aliases.csv')
+    for _, row in df.iterrows():
+        if pd.isna(row['alias']) or pd.isna(row['canonical']): continue
+        _aliases[_clean_token(row['alias'])] = _clean_token(row['canonical'])
 
 _vocab = []
 _clean_map = {}
@@ -35,7 +32,7 @@ def load_vocab(vocab_list=None):
         path = os.environ.get('ARTIFACTS_DIR', 'artifacts')
         vocab_path = os.path.join(path, 'skill_vocab.json')
         if not os.path.exists(vocab_path):
-            return
+            raise FileNotFoundError(f"Missing {vocab_path}")
         with open(vocab_path, 'r') as f:
             _vocab = json.load(f)
     else:

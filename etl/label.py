@@ -5,6 +5,7 @@ import pandas as pd
 
 import etl.normalize as norm
 
+
 def load_families(csv_path):
     df = pd.read_csv(csv_path)
     if 'priority' in df.columns:
@@ -66,7 +67,11 @@ def main():
     norm.load_vocab(vocab)
     
     print("Building skills_autocomplete.json...")
-    display_map = {'sql': 'SQL', 'aws': 'AWS', 'power bi': 'Power BI', 'node': 'Node.js'}
+    display_map = {
+        'sql': 'SQL', 'aws': 'AWS', 'power bi': 'Power BI', 'node': 'Node.js',
+        'qa': 'QA', 'ml': 'ML', 'css': 'CSS', 'javascript': 'JavaScript',
+        'html': 'HTML', 'cicd': 'CI/CD'
+    }
     
     reverse_aliases = {}
     for alias, canonical in norm._aliases.items():

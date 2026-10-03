@@ -1,9 +1,12 @@
-import os
 import json
+import os
+
 import numpy as np
 import pandas as pd
 import pytest
+
 import etl.normalize as norm
+
 
 def setup_module(module):
     # For CI tests, use the mock vocab
@@ -59,7 +62,7 @@ def test_real_artifacts():
         else:
             raw = [t.strip() for t in str(skills_str).split(',') if t.strip()]
             
-        vec, unmapped = norm.skills_to_vector(raw)
+        vec, _unmapped = norm.skills_to_vector(raw)
         
         expected_ids = set(baskets_map.get(posting_id, []))
         actual_ids = set(np.where(vec == 1)[0])
