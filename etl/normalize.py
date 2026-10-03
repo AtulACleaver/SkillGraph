@@ -8,6 +8,7 @@ from rapidfuzz import fuzz, process
 _canonical = {}  # id -> string
 _exact_map = {}  # string -> id
 _clean_map = {}  # string -> id
+_initialized = False
 _aliases = {
     # "Aryan's alias table" mock - you can add to this
     'reactjs': 'react',
@@ -22,11 +23,13 @@ def _clean_token(t):
     return t.translate(str.maketrans('', '', string.punctuation))
 
 def init_registry():
-    if _canonical: return # already init
+    global _initialized
+    if _initialized:
+        return
     
     try:
         df = pd.read_csv('data/top_tokens.csv')
-    except (FileNotFoundError, pd.errors.EmptyDataError):
+    except FileNotFoundError:
         return
         
     next_id = 1
@@ -48,6 +51,8 @@ def init_registry():
         if ct in _clean_map:
             _exact_map[alias] = _clean_map[ct]
             _clean_map[_clean_token(alias)] = _clean_map[ct]
+
+    _initialized = True
 
 init_registry()
 
