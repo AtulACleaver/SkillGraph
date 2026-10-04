@@ -59,3 +59,44 @@ def test_readiness_unrecognized():
     with TestClient(app) as client:
         response = client.post("/readiness", json={"skills": ["asdfgh"], "desired_role": "Frontend"})
         assert response.status_code == 400
+
+
+@pytest.mark.skipif(os.environ.get("CI") == "true", reason="Fake fixtures cannot drive real model in CI")
+def test_gap():
+    with TestClient(app) as client:
+        response = client.post(
+            "/gap",
+            json={"skills": ["react", "javascript", "typescript", "html", "css"], "desired_role": "Frontend"},
+        )
+        assert response.status_code == 200
+        data = response.json()
+        assert "recommendations" in data
+        assert len(data["recommendations"]) == 5
+        for rec in data["recommendations"]:
+            assert rec["coverage_pct"] < 0.5
+            assert rec["skill"] not in ["Frontend", "Front End"]
+
+
+@pytest.mark.skipif(os.environ.get("CI") == "true", reason="Fake fixtures cannot drive real model in CI")
+def test_gap_unknown_role():
+    with TestClient(app) as client:
+        response = client.post(
+            "/gap",
+            json={"skills": ["react"], "desired_role": "Astronaut"},
+        )
+        assert response.status_code == 400
+
+
+@pytest.mark.skipif(os.environ.get("CI") == "true", reason="Fake fixtures cannot drive real model in CI")
+def test_analyze():
+    with TestClient(app) as client:
+        response = client.post(
+            "/analyze",
+            json={"skills": ["react", "javascript", "typescript", "html", "css"], "desired_role": "Frontend"},
+        )
+        assert response.status_code == 200
+        data = response.json()
+        assert len(data["match"]["matches"]) > 0
+        assert data["readiness"]["band"] == "Ready"
+        assert len(data["gap"]["recommendations"]) == 5
+
