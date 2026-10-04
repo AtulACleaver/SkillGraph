@@ -1,88 +1,64 @@
-from pydantic import BaseModel, ConfigDict
+
+from pydantic import BaseModel, Field
 
 
-class GapRequest(BaseModel):
-    skills: list[str]
-    desired_role: str
+class HealthResponse(BaseModel):
+    status: str = "ok"
+    artifacts_loaded: bool = False
+    n_postings: int = 0
+    n_skills: int = 0
+    built_at: str | None = None
 
-    model_config = ConfigDict(
-        json_schema_extra={
-            "example": {
-                "skills": ["python", "sql", "pandas"],
-                "desired_role": "Data Science / ML"
-            }
-        }
-    )
+class RoleResponse(BaseModel):
+    role_family: str
+    n_postings: int
+    top_skills: list[str]
 
-
-class GapSkill(BaseModel):
-    skill: str
-    coverage_pct: float
-    readiness_gain: float
-    learn_with: list[str]
-
-    model_config = ConfigDict(
-        json_schema_extra={
-            "example": {
-                "skill": "Scikit-Learn",
-                "coverage_pct": 0.85,
-                "readiness_gain": 0.125,
-                "learn_with": ["Numpy", "Tensorflow"]
-            }
-        }
-    )
-
-
-class GapResponse(BaseModel):
-    recommendations: list[GapSkill]
-
-    model_config = ConfigDict(
-        json_schema_extra={
-            "example": {
-                "recommendations": [
-                    {
-                        "skill": "Scikit-Learn",
-                        "coverage_pct": 0.85,
-                        "readiness_gain": 0.125,
-                        "learn_with": ["Numpy", "Tensorflow"]
-                    }
-                ]
-            }
-        }
-    )
-
+class SkillResponse(BaseModel):
+    skill_id: int
+    name: str
+    aliases: list[str] = Field(default_factory=list)
 
 class MatchRequest(BaseModel):
     skills: list[str]
-    desired_role: str | None = None
 
-    model_config = ConfigDict(
-        json_schema_extra={
-            "example": {
-                "skills": ["react", "typescript", "css"],
-                "desired_role": "Frontend"
-            }
-        }
-    )
-
-
-class MatchRole(BaseModel):
-    role_family: str
+class MatchDetail(BaseModel):
+    role: str
     probability: float
 
-
 class MatchResponse(BaseModel):
-    top_roles: list[MatchRole]
-    unrecognized_skills: list[str]
-
+    matches: list[MatchDetail]
+    unrecognized: list[str] = Field(default_factory=list)
 
 class ReadinessRequest(BaseModel):
     skills: list[str]
     desired_role: str
 
-
 class ReadinessResponse(BaseModel):
-    desired_role: str
     probability: float
-    readiness_band: str
-    coverage_score: float
+    band: str
+    coverage: float
+    covered: list[str]
+    missing_count: int
+
+class GapRequest(BaseModel):
+    skills: list[str]
+    desired_role: str
+
+class GapRecommendation(BaseModel):
+    skill: str
+    coverage_pct: float
+    readiness_gain: float
+    learn_with: list[str] = Field(default_factory=list)
+
+class GapResponse(BaseModel):
+    recommendations: list[GapRecommendation]
+
+class AnalyzeRequest(BaseModel):
+    skills: list[str]
+    desired_role: str
+
+class AnalyzeResponse(BaseModel):
+    match: MatchResponse
+    readiness: ReadinessResponse
+    gap: GapResponse
