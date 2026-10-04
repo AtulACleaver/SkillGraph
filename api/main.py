@@ -15,9 +15,21 @@ from api import schemas
 from api.artifacts import artifacts
 
 
+cached_roles: list[schemas.RoleResponse] = []
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     artifacts.load()
+    
+    # Cache roles at startup
+    cached_roles.clear()
+    for role, details in artifacts.role_profiles.items():
+        cached_roles.append(schemas.RoleResponse(
+            role_family=role,
+            n_postings=details.get("n_postings", 0),
+            top_skills=details.get("top_skills", [])
+        ))
+        
     yield
 
 app = FastAPI(
@@ -76,27 +88,23 @@ def health():
 
 @app.get("/roles", response_model=list[schemas.RoleResponse])
 def get_roles():
-    result = []
-    for role, details in artifacts.role_profiles.items():
-        result.append(schemas.RoleResponse(
-            role_family=role,
-            n_postings=details.get("n_postings", 0),
-            top_skills=details.get("top_skills", [])
-        ))
-    return result
+    return cached_roles
 
 @app.get("/skills", response_model=list[schemas.SkillResponse])
 def get_skills(q: str = ""):
     result = []
     q_lower = q.lower()
-    for name, skill_id in artifacts.vocab.items():
-        if q_lower in name:
+    for item in artifacts.autocomplete:
+        names = [item["name"], item["display"], *item.get("aliases", [])]
+        if any(q_lower in n.lower() for n in names):
             result.append(schemas.SkillResponse(
-                skill_id=skill_id,
-                name=name.title(),
-                aliases=[]
+                skill_id=item["id"],
+                name=item["display"],
+                aliases=item.get("aliases", [])
             ))
-    return result[:20]
+            if len(result) == 20:
+                break
+    return result
 
 @app.post("/match", response_model=schemas.MatchResponse)
 def match(request: schemas.MatchRequest):
