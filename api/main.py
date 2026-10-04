@@ -130,19 +130,18 @@ def readiness(request: schemas.ReadinessRequest):
         raise HTTPException(status_code=400, detail=str(e))
     return schemas.ReadinessResponse(**result)
 
+from mining.gap import rank_gap
+
+
 @app.post("/gap", response_model=schemas.GapResponse)
 def gap(request: schemas.GapRequest):
     validate_request(request.skills, request.desired_role)
-    return schemas.GapResponse(
-        recommendations=[
-            schemas.GapRecommendation(
-                skill="sql",
-                coverage_pct=0.8,
-                readiness_gain=0.15,
-                learn_with=[]
-            )
-        ]
-    )
+    vector, _ = _to_vector(request.skills)
+    try:
+        recs = rank_gap(vector, request.desired_role, top_n=5)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    return schemas.GapResponse(recommendations=[schemas.GapRecommendation(**r) for r in recs])
 
 @lru_cache(maxsize=500)
 def _analyze_cached(skills_tuple: tuple[str, ...], desired_role: str | None) -> schemas.AnalyzeResponse:
