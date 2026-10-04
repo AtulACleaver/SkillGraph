@@ -19,6 +19,7 @@ sys.modules["__main__"].FakeLabelEncoder = FakeLabelEncoder
 class ArtifactsManager:
     def __init__(self):
         self.vocab: dict[str, Any] = {}
+        self.autocomplete: list[dict[str, Any]] = []
         self.role_profiles: dict[str, Any] = {}
         self.rules: pd.DataFrame = None
         self.classifier: Any = None
@@ -36,6 +37,12 @@ class ArtifactsManager:
             with open(vocab_path, "r") as f:
                 self.vocab = json.load(f)
                 self.n_skills = len(self.vocab)
+        
+        # /skills reads skills_autocomplete.json, not skill_vocab.json (contract)
+        autocomplete_path = os.path.join(artifacts_dir, "skills_autocomplete.json")
+        if os.path.exists(autocomplete_path):
+            with open(autocomplete_path, "r") as f:
+                self.autocomplete = json.load(f)
         
         roles_path = os.path.join(artifacts_dir, "role_profiles.json")
         if os.path.exists(roles_path):
