@@ -1,0 +1,242 @@
+[
+  {
+    "id": 0,
+    "name": "python",
+    "display": "Python",
+    "aliases": []
+  },
+  {
+    "id": 1,
+    "name": "java",
+    "display": "Java",
+    "aliases": []
+  },
+  {
+    "id": 2,
+    "name": "c++",
+    "display": "C++",
+    "aliases": []
+  },
+  {
+    "id": 3,
+    "name": "javascript",
+    "display": "Javascript",
+    "aliases": []
+  },
+  {
+    "id": 4,
+    "name": "typescript",
+    "display": "Typescript",
+    "aliases": []
+  },
+  {
+    "id": 5,
+    "name": "react",
+    "display": "React",
+    "aliases": []
+  },
+  {
+    "id": 6,
+    "name": "angular",
+    "display": "Angular",
+    "aliases": []
+  },
+  {
+    "id": 7,
+    "name": "vue.js",
+    "display": "Vue.Js",
+    "aliases": []
+  },
+  {
+    "id": 8,
+    "name": "node.js",
+    "display": "Node.Js",
+    "aliases": []
+  },
+  {
+    "id": 9,
+    "name": "django",
+    "display": "Django",
+    "aliases": []
+  },
+  {
+    "id": 10,
+    "name": "flask",
+    "display": "Flask",
+    "aliases": []
+  },
+  {
+    "id": 11,
+    "name": "fastapi",
+    "display": "Fastapi",
+    "aliases": []
+  },
+  {
+    "id": 12,
+    "name": "spring boot",
+    "display": "Spring Boot",
+    "aliases": []
+  },
+  {
+    "id": 13,
+    "name": "sql",
+    "display": "Sql",
+    "aliases": []
+  },
+  {
+    "id": 14,
+    "name": "postgresql",
+    "display": "Postgresql",
+    "aliases": []
+  },
+  {
+    "id": 15,
+    "name": "mysql",
+    "display": "Mysql",
+    "aliases": []
+  },
+  {
+    "id": 16,
+    "name": "mongodb",
+    "display": "Mongodb",
+    "aliases": []
+  },
+  {
+    "id": 17,
+    "name": "redis",
+    "display": "Redis",
+    "aliases": []
+  },
+  {
+    "id": 18,
+    "name": "elasticsearch",
+    "display": "Elasticsearch",
+    "aliases": []
+  },
+  {
+    "id": 19,
+    "name": "aws",
+    "display": "Aws",
+    "aliases": []
+  },
+  {
+    "id": 20,
+    "name": "azure",
+    "display": "Azure",
+    "aliases": []
+  },
+  {
+    "id": 21,
+    "name": "google cloud",
+    "display": "Google Cloud",
+    "aliases": []
+  },
+  {
+    "id": 22,
+    "name": "docker",
+    "display": "Docker",
+    "aliases": []
+  },
+  {
+    "id": 23,
+    "name": "kubernetes",
+    "display": "Kubernetes",
+    "aliases": []
+  },
+  {
+    "id": 24,
+    "name": "terraform",
+    "display": "Terraform",
+    "aliases": []
+  },
+  {
+    "id": 25,
+    "name": "jenkins",
+    "display": "Jenkins",
+    "aliases": []
+  },
+  {
+    "id": 26,
+    "name": "git",
+    "display": "Git",
+    "aliases": []
+  },
+  {
+    "id": 27,
+    "name": "linux",
+    "display": "Linux",
+    "aliases": []
+  },
+  {
+    "id": 28,
+    "name": "bash",
+    "display": "Bash",
+    "aliases": []
+  },
+  {
+    "id": 29,
+    "name": "machine learning",
+    "display": "Machine Learning",
+    "aliases": []
+  },
+  {
+    "id": 30,
+    "name": "deep learning",
+    "display": "Deep Learning",
+    "aliases": []
+  },
+  {
+    "id": 31,
+    "name": "tensorflow",
+    "display": "Tensorflow",
+    "aliases": []
+  },
+  {
+    "id": 32,
+    "name": "pytorch",
+    "display": "Pytorch",
+    "aliases": []
+  },
+  {
+    "id": 33,
+    "name": "scikit-learn",
+    "display": "Scikit-Learn",
+    "aliases": []
+  },
+  {
+    "id": 34,
+    "name": "pandas",
+    "display": "Pandas",
+    "aliases": []
+  },
+  {
+    "id": 35,
+    "name": "numpy",
+    "display": "Numpy",
+    "aliases": []
+  },
+  {
+    "id": 36,
+    "name": "data analysis",
+    "display": "Data Analysis",
+    "aliases": []
+  },
+  {
+    "id": 37,
+    "name": "data engineering",
+    "display": "Data Engineering",
+    "aliases": []
+  },
+  {
+    "id": 38,
+    "name": "apache spark",
+    "display": "Apache Spark",
+    "aliases": []
+  },
+  {
+    "id": 39,
+    "name": "apache kafka",
+    "display": "Apache Kafka",
+    "aliases": []
+  }
+]

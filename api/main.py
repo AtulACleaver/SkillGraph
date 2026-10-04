@@ -64,14 +64,17 @@ def get_roles():
 def get_skills(q: str = ""):
     result = []
     q_lower = q.lower()
-    for name, skill_id in artifacts.vocab.items():
-        if q_lower in name:
+    for item in artifacts.autocomplete:
+        names = [item["name"], item["display"], *item.get("aliases", [])]
+        if any(q_lower in n.lower() for n in names):
             result.append(schemas.SkillResponse(
-                skill_id=skill_id,
-                name=name.title(),
-                aliases=[]
+                skill_id=item["id"],
+                name=item["display"],
+                aliases=item.get("aliases", [])
             ))
-    return result[:20]
+            if len(result) == 20:
+                break
+    return result
 
 @app.post("/match", response_model=schemas.MatchResponse)
 def match(request: schemas.MatchRequest):

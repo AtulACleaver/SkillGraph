@@ -85,7 +85,7 @@ def save_rules(rules_df: pd.DataFrame, output_path: str = "artifacts/rules.parqu
 
 
 def run_rule_mining(
-    baskets_file: str = "data/dataset.parquet",
+    baskets_file: str = "data/baskets.parquet",
     output_rules_file: str = "artifacts/rules.parquet",
     min_sup_pct: float = 0.005,
     min_confidence: float = 0.3,
@@ -136,7 +136,7 @@ def run_rule_mining(
 
 
 if __name__ == "__main__":
-    if os.path.exists("data/dataset.parquet"):
+    if os.path.exists("data/baskets.parquet"):
         run_rule_mining()
     else:
-        print("data/dataset.parquet not found. Run ETL pipeline first.")
+        print("data/baskets.parquet not found. Run ETL pipeline first.")

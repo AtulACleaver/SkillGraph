@@ -5,6 +5,9 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+# Generic words that appear in top_skills but are not something you can learn.
+NON_SKILLS = {"data", "development"}
+
 
 def _get_artifacts_dir() -> str:
     """Get artifacts directory with fallback to fixtures."""
@@ -19,6 +22,17 @@ def _get_artifacts_dir() -> str:
         return "fixtures"
         
     return env_dir
+
+
+_CACHE: dict[str, Any] | None = None
+
+
+def get_gap_artifacts() -> dict[str, Any]:
+    """Load artifacts once, reading ARTIFACTS_DIR at first call (not import)."""
+    global _CACHE
+    if _CACHE is None:
+        _CACHE = load_gap_artifacts()
+    return _CACHE
 
 
 def load_gap_artifacts(artifacts_dir: str | None = None) -> dict[str, Any]:
@@ -38,8 +52,9 @@ def load_gap_artifacts(artifacts_dir: str | None = None) -> dict[str, Any]:
     id_to_skill = {}
     if os.path.exists(vocab_path):
         with open(vocab_path, "r", encoding="utf-8") as f:
-            skill_to_id = json.load(f)
-            id_to_skill = {int(v): k for k, v in skill_to_id.items()}
+            vocab = json.load(f)
+            skill_to_id = {name: i for i, name in enumerate(vocab)}
+            id_to_skill = dict(enumerate(vocab))
 
     # 3. Association rules
     rules_path = os.path.join(base_dir, "rules.parquet")
@@ -95,38 +110,34 @@ def _extract_user_skills(
 
 
 def _find_companions(
-    candidate_skill: str,
-    all_candidate_skills: set[str],
+    candidate_id: int,
+    candidate_ids: set[int],
     rules_df: pd.DataFrame | None,
+    id_to_skill: dict[int, str],
     min_lift: float = 1.5,
 ) -> list[str]:
-    """Find companion skills that co-occur with high lift."""
+    """Other gap skills that co-occur with candidate_id at lift >= min_lift.
+
+    rules.parquet stores antecedent/consequent as lists of skill IDs.
+    """
     if rules_df is None or rules_df.empty:
         return []
 
-    companions = []
-    cand_lower = candidate_skill.lower()
-
-    for _, row in rules_df.iterrows():
-        lift = row.get("lift", 0.0)
-        if lift < min_lift:
+    companion_ids: list[int] = []
+    strong = rules_df[rules_df["lift"] >= min_lift]
+    for ant, consq in zip(strong["antecedent"], strong["consequent"]):
+        ant, consq = {int(x) for x in ant}, {int(x) for x in consq}
+        if candidate_id in ant:
+            others = consq
+        elif candidate_id in consq:
+            others = ant
+        else:
             continue
+        for other in sorted(others):
+            if other != candidate_id and other in candidate_ids and other not in companion_ids:
+                companion_ids.append(other)
 
-        ant = [str(x).lower() for x in row.get("antecedent", [])]
-        consq = [str(x).lower() for x in row.get("consequent", [])]
-
-        # If candidate is in antecedent, check consequents
-        if cand_lower in ant:
-            for item in consq:
-                if item != cand_lower and item in all_candidate_skills and item not in companions:
-                    companions.append(item.title())
-        # If candidate is in consequent, check antecedents
-        elif cand_lower in consq:
-            for item in ant:
-                if item != cand_lower and item in all_candidate_skills and item not in companions:
-                    companions.append(item.title())
-
-    return companions[:2]
+    return [id_to_skill[i].title() for i in companion_ids[:2]]
 
 
 def rank_gap(
@@ -155,7 +166,7 @@ def rank_gap(
         ]
     """
     if artifacts is None:
-        artifacts = load_gap_artifacts()
+        artifacts = get_gap_artifacts()
 
     role_profiles = artifacts.get("role_profiles", {})
     skill_to_id = artifacts.get("skill_to_id", {})
@@ -179,52 +190,44 @@ def rank_gap(
 
     profile = role_profiles[desired_role]
     top_role_skills: list[str] = profile.get("top_skills", [])
+    skill_freq = dict(profile.get("skill_freq", []))
 
     # Identify user's current skills
     user_skills = _extract_user_skills(vector, skill_to_id, id_to_skill)
 
     # Candidate set: Role's top skills minus what user already has
-    candidates = [s for s in top_role_skills if s.lower() not in user_skills]
+    candidates = [
+        s for s in top_role_skills
+        if s.lower() not in user_skills and s.lower() not in NON_SKILLS
+    ]
 
     # Cold case: User already has all top skills
     if not candidates:
         return []
 
-    candidate_skills_lower = {s.lower() for s in candidates}
+    candidate_ids = {skill_to_id[s.lower()] for s in candidates if s.lower() in skill_to_id}
 
-    # Try importing real delta_readiness from ml.predict if available
-    delta_readiness_fn = None
-    try:
-        from ml.predict import delta_readiness
-        delta_readiness_fn = delta_readiness
-    except (ImportError, AttributeError):
-        pass
+    from ml.predict import delta_readiness
 
     scored_recommendations: list[dict[str, Any]] = []
-    total_role_skills = max(len(top_role_skills), 1)
 
-    for rank_idx, skill in enumerate(candidates):
+    for skill in candidates:
         skill_lower = skill.lower()
         skill_id = skill_to_id.get(skill_lower)
 
-        # Coverage in role postings
-        base_coverage = max(0.20, 0.85 - (rank_idx / total_role_skills) * 0.65)
+        # Coverage = share of the role's train postings listing this skill
+        base_coverage = skill_freq[skill_lower]
 
         # Calculate readiness gain
-        if delta_readiness_fn and skill_id is not None:
-            try:
-                gain = delta_readiness_fn(vector, desired_role, skill_id)
-            except (ValueError, TypeError, KeyError, AttributeError):
-                gain = base_coverage * 0.35
-        else:
-            # Fallback heuristic: weighted by role rank and co-occurrence
-            gain = round(base_coverage * 0.28 + (1.0 / (rank_idx + 1)) * 0.05, 4)
+        if skill_id is None:
+            raise KeyError(f"Skill '{skill}' from role_profiles is not in skill_vocab.json")
+        gain = delta_readiness(vector, desired_role, skill_id)
 
         # Score = readiness_gain * coverage
         score = gain * base_coverage
 
         # Companion skills with high lift (>1.5)
-        learn_with = _find_companions(skill, candidate_skills_lower, rules_df, min_lift=1.5)
+        learn_with = _find_companions(skill_id, candidate_ids, rules_df, id_to_skill, min_lift=1.5)
 
         scored_recommendations.append(
             {
