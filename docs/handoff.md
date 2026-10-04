@@ -1,3 +1,345 @@
+# Gate 3 Handoff
+
+## 1. For Archit (api)
+Update `/skills` to use the autocomplete JSON.
+**Diff for `api/main.py` and `api/artifacts.py`:**
+```diff
+diff --git a/api/artifacts.py b/api/artifacts.py
+index 87a6d08..4c4c4da 100644
+--- a/api/artifacts.py
++++ b/api/artifacts.py
+@@ -19,6 +19,7 @@ sys.modules["__main__"].FakeLabelEncoder = FakeLabelEncoder
+ class ArtifactsManager:
+     def __init__(self):
+         self.vocab: dict[str, Any] = {}
++        self.autocomplete: list[dict[str, Any]] = []
+         self.role_profiles: dict[str, Any] = {}
+         self.rules: pd.DataFrame = None
+         self.classifier: Any = None
+@@ -37,6 +38,12 @@ class ArtifactsManager:
+                 self.vocab = json.load(f)
+                 self.n_skills = len(self.vocab)
+         
++        # /skills reads skills_autocomplete.json, not skill_vocab.json (contract)
++        autocomplete_path = os.path.join(artifacts_dir, "skills_autocomplete.json")
++        if os.path.exists(autocomplete_path):
++            with open(autocomplete_path, "r") as f:
++                self.autocomplete = json.load(f)
++
+         roles_path = os.path.join(artifacts_dir, "role_profiles.json")
+         if os.path.exists(roles_path):
+             with open(roles_path, "r") as f:
+diff --git a/api/main.py b/api/main.py
+index 7294ead..159898c 100644
+--- a/api/main.py
++++ b/api/main.py
+@@ -89,14 +89,17 @@ def get_roles():
+ def get_skills(q: str = ""):
+     result = []
+     q_lower = q.lower()
+-    for name, skill_id in artifacts.vocab.items():
+-        if q_lower in name:
++    for item in artifacts.autocomplete:
++        names = [item["name"], item["display"], *item.get("aliases", [])]
++        if any(q_lower in n.lower() for n in names):
+             result.append(schemas.SkillResponse(
+-                skill_id=skill_id,
+-                name=name.title(),
+-                aliases=[]
++                skill_id=item["id"],
++                name=item["display"],
++                aliases=item.get("aliases", [])
+             ))
+-    return result[:20]
++            if len(result) == 20:
++                break
++    return result
+ 
+ @app.post("/match", response_model=schemas.MatchResponse)
+ def match(request: schemas.MatchRequest):
+diff --git a/fixtures/skills_autocomplete.json b/fixtures/skills_autocomplete.json
+new file mode 100644
+index 0000000..a3357c6
+--- /dev/null
++++ b/fixtures/skills_autocomplete.json
+@@ -0,0 +1,242 @@
++[
++  {
++    "id": 0,
++    "name": "python",
++    "display": "Python",
++    "aliases": []
++  },
++  {
++    "id": 1,
++    "name": "java",
++    "display": "Java",
++    "aliases": []
++  },
++  {
++    "id": 2,
++    "name": "c++",
++    "display": "C++",
++    "aliases": []
++  },
++  {
++    "id": 3,
++    "name": "javascript",
++    "display": "Javascript",
++    "aliases": []
++  },
++  {
++    "id": 4,
++    "name": "typescript",
++    "display": "Typescript",
++    "aliases": []
++  },
++  {
++    "id": 5,
++    "name": "react",
++    "display": "React",
++    "aliases": []
++  },
++  {
++    "id": 6,
++    "name": "angular",
++    "display": "Angular",
++    "aliases": []
++  },
++  {
++    "id": 7,
++    "name": "vue.js",
++    "display": "Vue.Js",
++    "aliases": []
++  },
++  {
++    "id": 8,
++    "name": "node.js",
++    "display": "Node.Js",
++    "aliases": []
++  },
++  {
++    "id": 9,
++    "name": "django",
++    "display": "Django",
++    "aliases": []
++  },
++  {
++    "id": 10,
++    "name": "flask",
++    "display": "Flask",
++    "aliases": []
++  },
++  {
++    "id": 11,
++    "name": "fastapi",
++    "display": "Fastapi",
++    "aliases": []
++  },
++  {
++    "id": 12,
++    "name": "spring boot",
++    "display": "Spring Boot",
++    "aliases": []
++  },
++  {
++    "id": 13,
++    "name": "sql",
++    "display": "Sql",
++    "aliases": []
++  },
++  {
++    "id": 14,
++    "name": "postgresql",
++    "display": "Postgresql",
++    "aliases": []
++  },
++  {
++    "id": 15,
++    "name": "mysql",
++    "display": "Mysql",
++    "aliases": []
++  },
++  {
++    "id": 16,
++    "name": "mongodb",
++    "display": "Mongodb",
++    "aliases": []
++  },
++  {
++    "id": 17,
++    "name": "redis",
++    "display": "Redis",
++    "aliases": []
++  },
++  {
++    "id": 18,
++    "name": "elasticsearch",
++    "display": "Elasticsearch",
++    "aliases": []
++  },
++  {
++    "id": 19,
++    "name": "aws",
++    "display": "Aws",
++    "aliases": []
++  },
++  {
++    "id": 20,
++    "name": "azure",
++    "display": "Azure",
++    "aliases": []
++  },
++  {
++    "id": 21,
++    "name": "google cloud",
++    "display": "Google Cloud",
++    "aliases": []
++  },
++  {
++    "id": 22,
++    "name": "docker",
++    "display": "Docker",
++    "aliases": []
++  },
++  {
++    "id": 23,
++    "name": "kubernetes",
++    "display": "Kubernetes",
++    "aliases": []
++  },
++  {
++    "id": 24,
++    "name": "terraform",
++    "display": "Terraform",
++    "aliases": []
++  },
++  {
++    "id": 25,
++    "name": "jenkins",
++    "display": "Jenkins",
++    "aliases": []
++  },
++  {
++    "id": 26,
++    "name": "git",
++    "display": "Git",
++    "aliases": []
++  },
++  {
++    "id": 27,
++    "name": "linux",
++    "display": "Linux",
++    "aliases": []
++  },
++  {
++    "id": 28,
++    "name": "bash",
++    "display": "Bash",
++    "aliases": []
++  },
++  {
++    "id": 29,
++    "name": "machine learning",
++    "display": "Machine Learning",
++    "aliases": []
++  },
++  {
++    "id": 30,
++    "name": "deep learning",
++    "display": "Deep Learning",
++    "aliases": []
++  },
++  {
++    "id": 31,
++    "name": "tensorflow",
++    "display": "Tensorflow",
++    "aliases": []
++  },
++  {
++    "id": 32,
++    "name": "pytorch",
++    "display": "Pytorch",
++    "aliases": []
++  },
++  {
++    "id": 33,
++    "name": "scikit-learn",
++    "display": "Scikit-Learn",
++    "aliases": []
++  },
++  {
++    "id": 34,
++    "name": "pandas",
++    "display": "Pandas",
++    "aliases": []
++  },
++  {
++    "id": 35,
++    "name": "numpy",
++    "display": "Numpy",
++    "aliases": []
++  },
++  {
++    "id": 36,
++    "name": "data analysis",
++    "display": "Data Analysis",
++    "aliases": []
++  },
++  {
++    "id": 37,
++    "name": "data engineering",
++    "display": "Data Engineering",
++    "aliases": []
++  },
++  {
++    "id": 38,
++    "name": "apache spark",
++    "display": "Apache Spark",
++    "aliases": []
++  },
++  {
++    "id": 39,
++    "name": "apache kafka",
++    "display": "Apache Kafka",
++    "aliases": []
++  }
++]
+```
+**Apply check (on `origin/archit/6-caching-error`):**
+```bash
+$ git apply --check archit_skills.patch
+# Returns 0 (success)
+```
+
+## 2. For Aryan (taxonomy & mining)
+**Six aliases that collapse distant concepts to fix:**
+1. ai/ml/generative ai
+2. ui/ux
+3. frontend/backend/full stack
+4. qa/automation
+5. cloud/aws/azure
+6. devops/ci-cd
+
+**Suspicious Aliases in `taxonomy/skill_aliases.csv`:**
+- `business development` -> `sales`
+- `automation testing` -> `qa`
+- `machine learning` -> `ml`
+- `artificial intelligence` -> `ai`
+
+**Unmatched Tech Titles (>25%):**
+We have 16,142 unmatched rows out of the dataset. Many tech titles were missed by the current patterns. Here are some of the top missed titles that you should write patterns for:
+- Application Lead
+- Software Development Lead
+- Application Designer
+- Security Architect
+- Business Analyst
+- Technical Lead
+- Solution Architect
+- Scrum Master
+
+**Diff for `mining/gap.py` and `mining/rules.py`:**
+```diff
 diff --git a/mining/gap.py b/mining/gap.py
 index 6b0ed2b..a55d4c0 100644
 --- a/mining/gap.py
@@ -251,4 +593,4 @@ index a12ebeb..acd06dc 100644
 ```bash
 $ git apply --check aryan.patch
 # Returns 0 (success)
-``
+```

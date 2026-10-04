@@ -43,7 +43,7 @@ class ArtifactsManager:
         if os.path.exists(autocomplete_path):
             with open(autocomplete_path, "r") as f:
                 self.autocomplete = json.load(f)
-
+        
         roles_path = os.path.join(artifacts_dir, "role_profiles.json")
         if os.path.exists(roles_path):
             with open(roles_path, "r") as f:

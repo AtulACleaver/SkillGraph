@@ -1,139 +1,140 @@
 {
     "Data Science / ML": {
-        "n_postings": 4397,
-        "top_skills": [
-            "Pandas",
-            "Jenkins",
-            "Java",
-            "SQL",
-            "Apache Kafka",
-            "Git"
-        ]
-    },
-    "Data / BI Analyst": {
-        "n_postings": 695,
-        "top_skills": [
-            "Deep Learning",
-            "Python",
-            "Angular",
-            "Spring Boot",
-            "Docker",
-            "Redis",
-            "Apache Spark"
-        ]
-    },
-    "DevOps / Cloud": {
-        "n_postings": 4762,
+        "n_postings": 2927,
         "top_skills": [
             "React",
-            "Data Analysis",
-            "SQL",
-            "JavaScript",
-            "Spring Boot",
-            "NumPy",
-            "Apache Kafka"
-        ]
-    },
-    "QA / Test": {
-        "n_postings": 3007,
-        "top_skills": [
-            "MongoDB",
-            "Linux",
-            "Git",
-            "Angular",
-            "Apache Spark",
-            "React",
-            "Jenkins",
-            "JavaScript",
-            "FastAPI"
-        ]
-    },
-    "ERP / Enterprise": {
-        "n_postings": 544,
-        "top_skills": [
             "MySQL",
-            "C++",
-            "Linux",
-            "Google Cloud",
-            "Azure",
-            "Terraform",
-            "React",
-            "Elasticsearch",
-            "Data Engineering"
-        ]
-    },
-    "Mobile": {
-        "n_postings": 4137,
-        "top_skills": [
-            "Elasticsearch",
-            "Python",
-            "Data Engineering",
-            "JavaScript",
-            "Kubernetes",
-            "Deep Learning",
-            "MySQL"
-        ]
-    },
-    "Full Stack": {
-        "n_postings": 703,
-        "top_skills": [
-            "Spring Boot",
-            "C++",
+            "Node.js",
+            "Docker",
             "TypeScript",
-            "Data Analysis",
-            "SQL"
-        ]
-    },
-    "Frontend": {
-        "n_postings": 679,
-        "top_skills": [
             "Kubernetes",
-            "Apache Spark",
-            "Spring Boot",
-            "TypeScript",
-            "TensorFlow",
-            "Redis",
-            "Java",
-            "Django",
-            "FastAPI",
-            "AWS"
-        ]
-    },
-    "Backend": {
-        "n_postings": 4466,
-        "top_skills": [
-            "Elasticsearch",
-            "AWS",
-            "Terraform",
-            "Azure",
-            "NumPy",
-            "Data Analysis",
-            "Spring Boot",
             "Machine Learning"
         ]
     },
-    "Support / IT Ops": {
-        "n_postings": 2187,
+    "Data / BI Analyst": {
+        "n_postings": 3980,
         "top_skills": [
-            "Apache Kafka",
-            "Data Engineering",
-            "PostgreSQL",
-            "SQL",
-            "Java",
+            "Terraform",
+            "Spring Boot",
+            "Machine Learning",
+            "Docker",
+            "Jenkins"
+        ]
+    },
+    "DevOps / Cloud": {
+        "n_postings": 988,
+        "top_skills": [
             "Data Analysis",
+            "MySQL",
+            "Kubernetes",
+            "SQL",
+            "Google Cloud",
+            "Python",
+            "Spring Boot",
+            "Apache Spark",
+            "NumPy"
+        ]
+    },
+    "QA / Test": {
+        "n_postings": 1179,
+        "top_skills": [
+            "Scikit-Learn",
+            "Spring Boot",
+            "Data Analysis",
+            "PyTorch",
+            "Data Engineering",
+            "Bash",
+            "SQL"
+        ]
+    },
+    "ERP / Enterprise": {
+        "n_postings": 2414,
+        "top_skills": [
+            "FastAPI",
+            "SQL",
+            "NumPy",
             "MongoDB",
+            "Pandas",
+            "Terraform",
+            "MySQL",
+            "Docker",
+            "Deep Learning",
+            "TensorFlow"
+        ]
+    },
+    "Mobile": {
+        "n_postings": 3072,
+        "top_skills": [
+            "SQL",
+            "Kubernetes",
+            "Linux",
+            "NumPy",
+            "MySQL",
+            "Flask",
+            "Scikit-Learn",
+            "MongoDB",
+            "Java"
+        ]
+    },
+    "Full Stack": {
+        "n_postings": 3831,
+        "top_skills": [
+            "NumPy",
+            "PostgreSQL",
+            "Google Cloud",
+            "Deep Learning",
+            "FastAPI"
+        ]
+    },
+    "Frontend": {
+        "n_postings": 918,
+        "top_skills": [
+            "NumPy",
+            "Git",
+            "Apache Spark",
+            "Azure",
+            "TensorFlow",
+            "MySQL"
+        ]
+    },
+    "Backend": {
+        "n_postings": 1628,
+        "top_skills": [
+            "MySQL",
+            "Redis",
+            "Pandas",
+            "TensorFlow",
+            "Bash",
+            "Kubernetes",
             "React",
+            "Java",
+            "Git",
+            "Apache Spark"
+        ]
+    },
+    "Support / IT Ops": {
+        "n_postings": 4232,
+        "top_skills": [
+            "Angular",
+            "AWS",
+            "PostgreSQL",
+            "Node.js",
+            "Data Engineering",
+            "Terraform",
+            "Apache Kafka",
             "Linux"
         ]
     },
     "Software Engineer (generic)": {
-        "n_postings": 2152,
+        "n_postings": 1845,
         "top_skills": [
-            "React",
-            "JavaScript",
+            "MongoDB",
+            "TensorFlow",
+            "Terraform",
             "Azure",
+            "Data Engineering",
             "NumPy",
-            "Apache Kafka"
+            "PyTorch"
         ]
     }
 }
