@@ -1,5 +1,6 @@
-import urllib.request
 import os
+import urllib.error
+import urllib.request
 
 os.makedirs('artifacts', exist_ok=True)
 
@@ -17,10 +18,9 @@ for release, filenames in files.items():
         print(f"Downloading {filename} from {release}...")
         try:
             req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-            with urllib.request.urlopen(req) as response:
-                with open(os.path.join('artifacts', filename), 'wb') as f:
-                    f.write(response.read())
-        except Exception as e:
+            with urllib.request.urlopen(req) as response, open(os.path.join('artifacts', filename), 'wb') as f:
+                f.write(response.read())
+        except urllib.error.URLError as e:
             print(f"Failed to download {filename}: {e}")
 
 print("Done fetching artifacts!")
