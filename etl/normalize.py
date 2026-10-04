@@ -44,6 +44,8 @@ def load_vocab(vocab_list=None):
     load_aliases()
 
 def skills_to_vector(raw: list[str]) -> tuple[np.ndarray, list[str]]:
+    if isinstance(raw, str):
+        raise TypeError("skills_to_vector expects a list of strings")
     if not _vocab:
         load_vocab()
     vec = np.zeros(len(_vocab), dtype=int)
