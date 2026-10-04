@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 from api import schemas
 from api.artifacts import artifacts
 
-
 cached_roles: list[schemas.RoleResponse] = []
 
 @asynccontextmanager
