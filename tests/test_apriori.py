@@ -1,5 +1,9 @@
+import os
+
+import pytest
+
 from mining.apriori import run_apriori, run_apriori_l2
-from mining.gap import rank_gap
+from mining.gap import load_gap_artifacts, rank_gap
 from mining.rules import generate_rules
 
 
@@ -123,6 +127,10 @@ def test_association_rules_and_lift():
     assert rule_cd.iloc[0]["lift"] >= 2.0
 
 
+@pytest.mark.skipif(
+    os.environ.get("CI") == "true" and not os.path.exists("artifacts/classifier.pkl"),
+    reason="Real model not available in CI environment",
+)
 def test_gap_ranking():
     # Test gap ranking for Backend role
     user_skills = ["python", "fastapi"]
@@ -138,13 +146,12 @@ def test_gap_ranking():
         assert r["skill"].lower() not in user_skills
 
     # Cold case 1: unknown role
-    import pytest
     with pytest.raises(ValueError, match="not found"):
         rank_gap(user_skills, desired_role="Nonexistent Role", top_n=5)
 
     # Cold case 2: user already has all skills in profile
-    all_frontend_skills = ["NumPy", "Git", "Apache Spark", "Azure", "TensorFlow", "MySQL"]
-    all_have = rank_gap(all_frontend_skills, desired_role="Frontend", top_n=5)
+    profile_top_skills = load_gap_artifacts()["role_profiles"]["Frontend"]["top_skills"]
+    all_have = rank_gap(profile_top_skills, desired_role="Frontend", top_n=5)
     assert all_have == []
 
 

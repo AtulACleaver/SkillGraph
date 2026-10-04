@@ -6,7 +6,19 @@ import numpy as np
 import pandas as pd
 
 # Generic words that appear in top_skills but are not something you can learn.
-NON_SKILLS = {"data", "development"}
+NON_SKILLS = {
+    "data",
+    "development",
+    "backend",
+    "devops",
+    "cloud",
+    "front end",
+    "frontend development",
+    "ui development",
+    "java development",
+    "python development",
+    "automation",
+}
 
 
 def _get_artifacts_dir() -> str:
@@ -41,19 +53,22 @@ def load_gap_artifacts(artifacts_dir: str | None = None) -> dict[str, Any]:
 
     # 1. Role profiles
     role_profiles_path = os.path.join(base_dir, "role_profiles.json")
-    role_profiles = {}
-    if os.path.exists(role_profiles_path):
-        with open(role_profiles_path, "r", encoding="utf-8") as f:
-            role_profiles = json.load(f)
+    if not os.path.exists(role_profiles_path):
+        raise FileNotFoundError(f"Missing required artifact: {role_profiles_path}")
+    with open(role_profiles_path, "r", encoding="utf-8") as f:
+        role_profiles = json.load(f)
 
     # 2. Skill vocabulary
     vocab_path = os.path.join(base_dir, "skill_vocab.json")
-    skill_to_id = {}
-    id_to_skill = {}
-    if os.path.exists(vocab_path):
-        with open(vocab_path, "r", encoding="utf-8") as f:
-            vocab = json.load(f)
-            skill_to_id = {name: i for i, name in enumerate(vocab)}
+    if not os.path.exists(vocab_path):
+        raise FileNotFoundError(f"Missing required artifact: {vocab_path}")
+    with open(vocab_path, "r", encoding="utf-8") as f:
+        vocab = json.load(f)
+        if isinstance(vocab, dict):
+            skill_to_id = {k.lower(): int(v) for k, v in vocab.items()}
+            id_to_skill = {int(v): k for k, v in vocab.items()}
+        else:
+            skill_to_id = {name.lower(): i for i, name in enumerate(vocab)}
             id_to_skill = dict(enumerate(vocab))
 
     # 3. Association rules
@@ -207,7 +222,14 @@ def rank_gap(
 
     candidate_ids = {skill_to_id[s.lower()] for s in candidates if s.lower() in skill_to_id}
 
-    from ml.predict import delta_readiness
+    if isinstance(vector, np.ndarray):
+        predict_vector = vector
+    elif len(vector) > 0 and isinstance(next(iter(vector)), (int, np.integer)):
+        predict_vector = [int(x) for x in vector]
+    else:
+        predict_vector = sorted({skill_to_id[s] for s in user_skills if s in skill_to_id})
+
+    import ml.predict
 
     scored_recommendations: list[dict[str, Any]] = []
 
@@ -216,12 +238,12 @@ def rank_gap(
         skill_id = skill_to_id.get(skill_lower)
 
         # Coverage = share of the role's train postings listing this skill
-        base_coverage = skill_freq[skill_lower]
+        base_coverage = skill_freq.get(skill_lower, 0.0)
 
         # Calculate readiness gain
         if skill_id is None:
             raise KeyError(f"Skill '{skill}' from role_profiles is not in skill_vocab.json")
-        gain = delta_readiness(vector, desired_role, skill_id)
+        gain = ml.predict.delta_readiness(predict_vector, desired_role, skill_id)
 
         # Score = readiness_gain * coverage
         score = gain * base_coverage
@@ -232,7 +254,7 @@ def rank_gap(
         scored_recommendations.append(
             {
                 "skill": skill.title() if not skill.isupper() else skill,
-                "coverage_pct": round(base_coverage, 2),
+                "coverage_pct": base_coverage,
                 "readiness_gain": round(gain, 4),
                 "learn_with": learn_with,
                 "_score": score,
