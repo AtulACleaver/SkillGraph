@@ -13,6 +13,8 @@ logger = logging.getLogger(__name__)
 
 from api import schemas
 from api.artifacts import artifacts
+from etl.normalize import skills_to_vector
+from ml import predict as ml_predict
 
 cached_roles: list[schemas.RoleResponse] = []
 
@@ -105,24 +107,28 @@ def get_skills(q: str = ""):
                 break
     return result
 
+def _to_vector(skills: list[str]):
+    vector, unrecognized = skills_to_vector(skills)
+    if not vector.any():
+        raise HTTPException(status_code=400, detail={"message": "None of these skills are recognized", "unrecognized": unrecognized})
+    return vector, unrecognized
+
 @app.post("/match", response_model=schemas.MatchResponse)
 def match(request: schemas.MatchRequest):
     validate_request(request.skills)
-    return schemas.MatchResponse(
-        matches=[schemas.MatchDetail(role="Software Engineer", probability=0.8)],
-        unrecognized=[]
-    )
+    vector, unrecognized = _to_vector(request.skills)
+    top = ml_predict.predict_roles(vector)[:3]
+    return schemas.MatchResponse(matches=[schemas.MatchDetail(**m) for m in top], unrecognized=unrecognized)
 
 @app.post("/readiness", response_model=schemas.ReadinessResponse)
 def readiness(request: schemas.ReadinessRequest):
     validate_request(request.skills, request.desired_role)
-    return schemas.ReadinessResponse(
-        probability=0.75,
-        band="High",
-        coverage=0.6,
-        covered=["python"],
-        missing_count=2
-    )
+    vector, _ = _to_vector(request.skills)
+    try:
+        result = ml_predict.readiness(vector, request.desired_role)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    return schemas.ReadinessResponse(**result)
 
 @app.post("/gap", response_model=schemas.GapResponse)
 def gap(request: schemas.GapRequest):
