@@ -62,9 +62,9 @@ def band_for(p: float, coverage: float = 1.0) -> str:
     else:
         p_band = 0 # Not yet
         
-    if coverage >= 0.60:
+    if coverage >= 0.20:
         c_band = 2
-    elif coverage >= 0.30:
+    elif coverage >= 0.10:
         c_band = 1
     else:
         c_band = 0
