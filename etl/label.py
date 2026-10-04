@@ -30,59 +30,84 @@ def label_title(title, patterns):
 
 def main():
     print("Labeling dataset...")
-    # Load data
     clean_df = pd.read_parquet('data/clean.parquet')
-    baskets_df = pd.read_parquet('data/baskets.parquet')
     
-    # Ensure posting_id matches type
     if 'jobId' in clean_df.columns:
         clean_df['posting_id'] = clean_df['jobId'].astype(str)
-        
-    baskets_df['posting_id'] = baskets_df['posting_id'].astype(str)
     
-    # Apply role families
     patterns = load_families('taxonomy/role_families.csv')
-    clean_df['role_family'] = clean_df['title'].apply(lambda x: label_title(x, patterns))
     
-    # Print distribution
+    clean_df['role_family_raw'] = clean_df['title'].apply(lambda x: label_title(x, patterns))
+    clean_df['role_family'] = clean_df['role_family_raw'].replace({'Database / DBA': 'Data / BI Analyst'})
+    
     dist = clean_df['role_family'].value_counts(dropna=False)
-    print("\nRole family distribution (before dropping < 500):")
+    print("\nRole family distribution (all rows):")
     print(dist)
     
-    # Drop families under 500 rows
-    valid_families = dist[dist >= 500].index.tolist()
-    # Remove NaN from valid_families if present
-    valid_families = [f for f in valid_families if pd.notna(f)]
+    valid_families = [f for f in dist.index if pd.notna(f) and f != "Software Engineer (generic)"]
     
-    # Unmatched
-    unmatched = clean_df[clean_df['role_family'].isna()]
-    unmatched_pct = len(unmatched) / len(clean_df) * 100
-    print(f"\nRows matching no family: {len(unmatched)} ({unmatched_pct:.1f}%)")
+    for f in valid_families:
+        if dist[f] < 400:
+            raise ValueError(f"STOP: Family '{f}' has under 400 rows ({dist[f]}).")
+
+    tech_df = clean_df[clean_df['role_family'].isin(valid_families)].copy()
     
-    # Join with baskets
-    df = pd.merge(clean_df, baskets_df, on='posting_id', how='left')
+    unmatched = clean_df[clean_df['role_family_raw'].isna()]
+    if len(unmatched) > 0.25 * len(tech_df):
+        print(f"WARNING: Unmatched rows ({len(unmatched)}) exceed 25% of tech rows ({len(tech_df)}).")
+        
+    print(f"\nExcluded rows: {len(unmatched)} (unmatched)")
+    print(f"Excluded rows: {dist.get('Software Engineer (generic)', 0)} (Software Engineer (generic))")
+
+    print("\nBuilding vocab...")
+    vocab = norm.build_vocab(tech_df['tagsAndSkills'])
+    with open('artifacts/skill_vocab.json', 'w') as f:
+        json.dump(vocab, f, indent=2)
+        
+    norm.load_vocab(vocab)
     
-    dataset_df = df[df['role_family'].isin(valid_families)].copy()
+    print("Building skills_autocomplete.json...")
+    display_map = {
+        'sql': 'SQL', 'aws': 'AWS', 'power bi': 'Power BI', 'node': 'Node.js',
+        'qa': 'QA', 'ml': 'ML', 'css': 'CSS', 'javascript': 'JavaScript',
+        'html': 'HTML', 'cicd': 'CI/CD'
+    }
     
-    print(f"\nFinal labelled rows for dataset.parquet: {len(dataset_df)}")
-    print(f"Role families included: {len(valid_families)}")
+    reverse_aliases = {}
+    for alias, canonical in norm._aliases.items():
+        if canonical not in reverse_aliases:
+            reverse_aliases[canonical] = []
+        reverse_aliases[canonical].append(alias)
+        
+    autocomplete = []
+    for i, name in enumerate(vocab):
+        display = display_map.get(name, name.title())
+        aliases = reverse_aliases.get(name, [])
+        autocomplete.append({
+            "id": i,
+            "name": name,
+            "display": display,
+            "aliases": aliases
+        })
+        
+    with open('artifacts/skills_autocomplete.json', 'w') as f:
+        json.dump(autocomplete, f, indent=2)
+
+    print("Building baskets...")
+    baskets_df = norm.build_baskets(clean_df)
     
-    # Select columns for dataset.parquet
+    assert clean_df['posting_id'].is_unique, "posting_id is not unique in clean_df"
+    assert baskets_df['posting_id'].is_unique, "posting_id is not unique in baskets_df"
+    assert set(clean_df['posting_id']) == set(baskets_df['posting_id']), "posting_ids differ"
+    
+    baskets_df.to_parquet('data/baskets.parquet', index=False)
+    
+    dataset_df = pd.merge(tech_df, baskets_df, on='posting_id', how='left')
     cols = ['posting_id', 'skill_ids', 'role_family', 'experience_band', 'companyName', 'location']
     dataset_df = dataset_df[cols].rename(columns={'companyName': 'company', 'location': 'location_raw'})
     
-    # Save dataset.parquet
+    print(f"\nFinal labelled rows for dataset.parquet: {len(dataset_df)}")
     dataset_df.to_parquet('data/dataset.parquet', index=False)
-    
-    # Write artifacts/skill_vocab.json
-    vocab = norm._canonical
-    # _canonical is {id: string}. Sort by id to maintain deterministic order
-    sorted_vocab = [vocab[k] for k in sorted(vocab.keys())]
-    
-    with open('artifacts/skill_vocab.json', 'w') as f:
-        json.dump(sorted_vocab, f, indent=2)
-    
-    print(f"Wrote skill_vocab.json with {len(sorted_vocab)} skills.")
 
 if __name__ == '__main__':
     main()
