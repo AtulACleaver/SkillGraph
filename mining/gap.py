@@ -1,9 +1,9 @@
 import json
-import os
 from typing import Any
 
 import numpy as np
-import pandas as pd
+
+from etl.paths import ARTIFACTS_DIR
 
 # Generic words that appear in top_skills but are not something you can learn.
 NON_SKILLS = {
@@ -21,46 +21,30 @@ NON_SKILLS = {
 }
 
 
-def _get_artifacts_dir() -> str:
-    """Get artifacts directory with fallback to fixtures."""
-    env_dir = os.getenv("ARTIFACTS_DIR", "artifacts")
-    
-    # If env_dir exists and contains role_profiles, use it
-    if os.path.exists(env_dir) and os.path.exists(os.path.join(env_dir, "role_profiles.json")):
-        return env_dir
-        
-    # Otherwise fallback to fixtures
-    if os.path.exists("fixtures"):
-        return "fixtures"
-        
-    return env_dir
-
-
 _CACHE: dict[str, Any] | None = None
 
 
 def get_gap_artifacts() -> dict[str, Any]:
-    """Load artifacts once, reading ARTIFACTS_DIR at first call (not import)."""
+    """Load artifacts once."""
     global _CACHE
     if _CACHE is None:
         _CACHE = load_gap_artifacts()
     return _CACHE
 
 
-def load_gap_artifacts(artifacts_dir: str | None = None) -> dict[str, Any]:
+def load_gap_artifacts() -> dict[str, Any]:
     """Load role profiles, skill vocab, and association rules."""
-    base_dir = artifacts_dir or _get_artifacts_dir()
-
+    
     # 1. Role profiles
-    role_profiles_path = os.path.join(base_dir, "role_profiles.json")
-    if not os.path.exists(role_profiles_path):
+    role_profiles_path = ARTIFACTS_DIR / "role_profiles.json"
+    if not role_profiles_path.exists():
         raise FileNotFoundError(f"Missing required artifact: {role_profiles_path}")
     with open(role_profiles_path, "r", encoding="utf-8") as f:
         role_profiles = json.load(f)
 
     # 2. Skill vocabulary
-    vocab_path = os.path.join(base_dir, "skill_vocab.json")
-    if not os.path.exists(vocab_path):
+    vocab_path = ARTIFACTS_DIR / "skill_vocab.json"
+    if not vocab_path.exists():
         raise FileNotFoundError(f"Missing required artifact: {vocab_path}")
     with open(vocab_path, "r", encoding="utf-8") as f:
         vocab = json.load(f)
@@ -72,19 +56,21 @@ def load_gap_artifacts(artifacts_dir: str | None = None) -> dict[str, Any]:
             id_to_skill = dict(enumerate(vocab))
 
     # 3. Association rules
-    rules_path = os.path.join(base_dir, "rules.parquet")
-    rules_df = None
-    if os.path.exists(rules_path):
+    rules_path = ARTIFACTS_DIR / "rules.json"
+    rules_list = []
+    if rules_path.exists():
         try:
-            rules_df = pd.read_parquet(rules_path)
+            with open(rules_path, "r", encoding="utf-8") as f:
+                rules_data = json.load(f)
+                rules_list = rules_data.get("rules", [])
         except (FileNotFoundError, ValueError, OSError):
-            rules_df = None
+            rules_list = []
 
     return {
         "role_profiles": role_profiles,
         "skill_to_id": skill_to_id,
         "id_to_skill": id_to_skill,
-        "rules_df": rules_df,
+        "rules_list": rules_list,
     }
 
 
@@ -127,27 +113,29 @@ def _extract_user_skills(
 def _find_companions(
     candidate_id: int,
     candidate_ids: set[int],
-    rules_df: pd.DataFrame | None,
+    rules_list: list[dict[str, Any]],
     id_to_skill: dict[int, str],
     min_lift: float = 1.5,
 ) -> list[str]:
-    """Other gap skills that co-occur with candidate_id at lift >= min_lift.
-
-    rules.parquet stores antecedent/consequent as lists of skill IDs.
-    """
-    if rules_df is None or rules_df.empty:
+    """Other gap skills that co-occur with candidate_id at lift >= min_lift."""
+    if not rules_list:
         return []
 
     companion_ids: list[int] = []
-    strong = rules_df[rules_df["lift"] >= min_lift]
-    for ant, consq in zip(strong["antecedent"], strong["consequent"]):
-        ant, consq = {int(x) for x in ant}, {int(x) for x in consq}
+    for rule in rules_list:
+        if rule.get("lift", 0) < min_lift:
+            continue
+            
+        ant = set(rule["antecedent"])
+        consq = set(rule["consequent"])
+        
         if candidate_id in ant:
             others = consq
         elif candidate_id in consq:
             others = ant
         else:
             continue
+            
         for other in sorted(others):
             if other != candidate_id and other in candidate_ids and other not in companion_ids:
                 companion_ids.append(other)
@@ -163,22 +151,6 @@ def rank_gap(
 ) -> list[dict[str, Any]]:
     """
     Rank top skills to learn next for a desired role using counterfactual gain and association rules.
-    
-    Args:
-        vector: User's current skills (binary numpy vector, skill ID list, or list of skill names).
-        desired_role: Target role family name (e.g., 'Backend', 'Data Science / ML').
-        top_n: Number of recommendations to return (default 5).
-        artifacts: Preloaded artifacts dict. If None, loaded on-the-fly.
-        
-    Returns:
-        List of dicts: [
-            {
-                "skill": str,
-                "coverage_pct": float,
-                "readiness_gain": float,
-                "learn_with": List[str]
-            }
-        ]
     """
     if artifacts is None:
         artifacts = get_gap_artifacts()
@@ -186,14 +158,12 @@ def rank_gap(
     role_profiles = artifacts.get("role_profiles", {})
     skill_to_id = artifacts.get("skill_to_id", {})
     id_to_skill = artifacts.get("id_to_skill", {})
-    rules_df = artifacts.get("rules_df")
+    rules_list = artifacts.get("rules_list", [])
 
     if not role_profiles:
         raise ValueError("System artifacts (role profiles) are missing or not loaded.")
 
-    # Handle unknown or empty role
     if not desired_role or desired_role not in role_profiles:
-        # Match case-insensitively
         matched_role = None
         for role_name in role_profiles:
             if role_name.lower() == str(desired_role).lower():
@@ -207,16 +177,13 @@ def rank_gap(
     top_role_skills: list[str] = profile.get("top_skills", [])
     skill_freq = dict(profile.get("skill_freq", []))
 
-    # Identify user's current skills
     user_skills = _extract_user_skills(vector, skill_to_id, id_to_skill)
 
-    # Candidate set: Role's top skills minus what user already has
     candidates = [
         s for s in top_role_skills
         if s.lower() not in user_skills and s.lower() not in NON_SKILLS
     ]
 
-    # Cold case: User already has all top skills
     if not candidates:
         return []
 
@@ -237,19 +204,15 @@ def rank_gap(
         skill_lower = skill.lower()
         skill_id = skill_to_id.get(skill_lower)
 
-        # Coverage = share of the role's train postings listing this skill
         base_coverage = skill_freq.get(skill_lower, 0.0)
 
-        # Calculate readiness gain
         if skill_id is None:
             raise KeyError(f"Skill '{skill}' from role_profiles is not in skill_vocab.json")
         gain = ml.predict.delta_readiness(predict_vector, desired_role, skill_id)
 
-        # Score = readiness_gain * coverage
         score = gain * base_coverage
 
-        # Companion skills with high lift (>1.5)
-        learn_with = _find_companions(skill_id, candidate_ids, rules_df, id_to_skill, min_lift=1.5)
+        learn_with = _find_companions(skill_id, candidate_ids, rules_list, id_to_skill, min_lift=1.5)
 
         scored_recommendations.append(
             {
@@ -261,10 +224,8 @@ def rank_gap(
             }
         )
 
-    # Sort by score descending
     scored_recommendations.sort(key=lambda x: x["_score"], reverse=True)
 
-    # Clean up internal fields and truncate to top_n
     results = []
     for rec in scored_recommendations[:top_n]:
         results.append(

@@ -6,15 +6,15 @@ artifacts/skill_vocab.json is a list where vocab[i] is the name of ID i.
 The feature width is len(vocab).
 """
 import json
-import os
 
 import numpy as np
-from scipy import sparse
+
+from etl.paths import ARTIFACTS_DIR
 
 
 def load_vocab(path: str | None = None) -> list[str]:
     if path is None:
-        path = os.path.join(os.environ.get("ARTIFACTS_DIR", "artifacts"), "skill_vocab.json")
+        path = str(ARTIFACTS_DIR / "skill_vocab.json")
     with open(path) as f:
         vocab = json.load(f)
     return vocab
@@ -24,8 +24,9 @@ def n_features(vocab: list[str]) -> int:
     return len(vocab)
 
 
-def to_matrix(skill_id_lists, width: int) -> sparse.csr_matrix:
+def to_matrix(skill_id_lists, width: int):
     """Multi-hot encode an iterable of skill-id lists into a CSR matrix."""
+    from scipy import sparse
     skill_id_lists = list(skill_id_lists)
     rows, cols = [], []
     for r, ids in enumerate(skill_id_lists):

@@ -1,5 +1,6 @@
 data/
-artifacts/
+artifacts/*
+!artifacts/*.json
 *.pkl
 *.parquet
 !fixtures/*

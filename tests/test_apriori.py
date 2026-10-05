@@ -1,4 +1,3 @@
-import os
 
 import pytest
 
@@ -127,10 +126,7 @@ def test_association_rules_and_lift():
     assert rule_cd.iloc[0]["lift"] >= 2.0
 
 
-@pytest.mark.skipif(
-    os.environ.get("CI") == "true" and not os.path.exists("artifacts/classifier.pkl"),
-    reason="Real model not available in CI environment",
-)
+
 def test_gap_ranking():
     # Test gap ranking for Backend role
     user_skills = ["python", "fastapi"]

@@ -1,10 +1,12 @@
+import json
 import logging
+import os
 import time
 import uuid
 from contextlib import asynccontextmanager
 from functools import lru_cache
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import APIRouter, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -14,6 +16,7 @@ logger = logging.getLogger(__name__)
 from api import schemas
 from api.artifacts import artifacts
 from etl.normalize import skills_to_vector
+from etl.paths import ARTIFACTS_DIR
 from ml import predict as ml_predict
 
 cached_roles: list[schemas.RoleResponse] = []
@@ -39,6 +42,8 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+api_router = APIRouter(prefix="/api")
+
 @app.middleware("http")
 async def add_process_time_and_logging(request: Request, call_next):
     start_time = time.time()
@@ -56,17 +61,18 @@ async def global_exception_handler(request: Request, exc: Exception):
         content={"detail": "Internal Server Error", "request_id": request_id}
     )
 
-import os
-
-frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
-# CORS Middleware
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_url],
-    allow_credentials=True,
+    allow_origins=[o.strip() for o in allowed_origins.split(",") if o.strip()],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/")
+def root():
+    return {"name": "SkillGraph API", "docs": "/docs"}
 
 def get_valid_roles() -> list[str]:
     return list(artifacts.role_profiles.keys())
@@ -74,27 +80,47 @@ def get_valid_roles() -> list[str]:
 def validate_request(skills: list[str], desired_role: str | None = None):
     if not skills:
         raise HTTPException(status_code=400, detail="skills list cannot be empty")
+    
+    if len(skills) > 30:
+        raise HTTPException(status_code=400, detail={"message": "Too many skills provided. Maximum allowed is 30."})
+        
+    for skill in skills:
+        if len(skill) > 60:
+            raise HTTPException(status_code=400, detail={"message": f"Skill name too long: {skill[:20]}... Maximum allowed is 60 characters."})
+
     if desired_role is not None:
         valid_roles = get_valid_roles()
         if valid_roles and desired_role not in valid_roles:
             raise HTTPException(status_code=400, detail=f"Unknown role. Valid roles are: {valid_roles}")
 
 
-@app.get("/health", response_model=schemas.HealthResponse)
+@api_router.get("/health", response_model=schemas.HealthResponse)
 def health():
+    built_at = "2026-10-02T00:00:00Z"
+    metrics_path = ARTIFACTS_DIR / "metrics.json"
+    if metrics_path.exists():
+        try:
+            with open(metrics_path, "r") as f:
+                metrics = json.load(f)
+            built_at = metrics.get("built_at") or time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(metrics_path.stat().st_mtime))
+        except OSError:
+            pass
+
     return schemas.HealthResponse(
         status="ok",
         artifacts_loaded=artifacts.artifacts_loaded,
         n_postings=artifacts.n_postings,
         n_skills=artifacts.n_skills,
-        built_at="2026-10-02T00:00:00Z"
+        built_at=built_at,
+        model=artifacts.model_version,
+        rules=artifacts.rules_version
     )
 
-@app.get("/roles", response_model=list[schemas.RoleResponse])
+@api_router.get("/roles", response_model=list[schemas.RoleResponse])
 def get_roles():
     return cached_roles
 
-@app.get("/skills", response_model=list[schemas.SkillResponse])
+@api_router.get("/skills", response_model=list[schemas.SkillResponse])
 def get_skills(q: str = ""):
     result = []
     q_lower = q.lower()
@@ -116,14 +142,14 @@ def _to_vector(skills: list[str]):
         raise HTTPException(status_code=400, detail={"message": "None of these skills are recognized", "unrecognized": unrecognized})
     return vector, unrecognized
 
-@app.post("/match", response_model=schemas.MatchResponse)
+@api_router.post("/match", response_model=schemas.MatchResponse)
 def match(request: schemas.MatchRequest):
     validate_request(request.skills)
     vector, unrecognized = _to_vector(request.skills)
     top = ml_predict.predict_roles(vector)[:3]
     return schemas.MatchResponse(matches=[schemas.MatchDetail(**m) for m in top], unrecognized=unrecognized)
 
-@app.post("/readiness", response_model=schemas.ReadinessResponse)
+@api_router.post("/readiness", response_model=schemas.ReadinessResponse)
 def readiness(request: schemas.ReadinessRequest):
     validate_request(request.skills, request.desired_role)
     vector, _ = _to_vector(request.skills)
@@ -136,7 +162,7 @@ def readiness(request: schemas.ReadinessRequest):
 from mining.gap import rank_gap
 
 
-@app.post("/gap", response_model=schemas.GapResponse)
+@api_router.post("/gap", response_model=schemas.GapResponse)
 def gap(request: schemas.GapRequest):
     validate_request(request.skills, request.desired_role)
     vector, _ = _to_vector(request.skills)
@@ -159,9 +185,13 @@ def _analyze_cached(skills_tuple: tuple[str, ...], desired_role: str | None) -> 
         gap=gap_resp
     )
 
-@app.post("/analyze", response_model=schemas.AnalyzeResponse)
+@api_router.post("/analyze", response_model=schemas.AnalyzeResponse)
 def analyze(request: schemas.AnalyzeRequest):
     validate_request(request.skills, request.desired_role)
     
-    skills_tuple = tuple(sorted(request.skills))
+    # skills stripped, lowercased, de-duplicated and sorted
+    cleaned_skills = sorted({s.strip().lower() for s in request.skills})
+    skills_tuple = tuple(cleaned_skills)
     return _analyze_cached(skills_tuple, request.desired_role)
+
+app.include_router(api_router)

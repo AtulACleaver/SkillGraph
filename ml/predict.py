@@ -1,9 +1,8 @@
 import json
-import os
-import pickle
 
 import numpy as np
 
+from etl.paths import ARTIFACTS_DIR
 from ml import features
 
 _predictor = None
@@ -16,22 +15,24 @@ def get_predictor():
 
 class Predictor:
     def __init__(self):
-        artifacts_dir = os.environ.get("ARTIFACTS_DIR", "artifacts")
-        self.vocab = features.load_vocab(os.path.join(artifacts_dir, "skill_vocab.json"))
+        self.vocab = features.load_vocab(str(ARTIFACTS_DIR / "skill_vocab.json"))
         self.width = features.n_features(self.vocab)
         
-        with open(os.path.join(artifacts_dir, "classifier.pkl"), "rb") as f:
-            self.clf = pickle.load(f)
-        with open(os.path.join(artifacts_dir, "label_encoder.pkl"), "rb") as f:
-            self.le = pickle.load(f)
-        with open(os.path.join(artifacts_dir, "role_profiles.json")) as f:
+        with open(ARTIFACTS_DIR / "model.json", "r") as f:
+            model_data = json.load(f)
+            
+        self.classes = model_data["classes"]
+        self.coef = np.array(model_data["coef"], dtype=np.float32)
+        self.intercept = np.array(model_data["intercept"], dtype=np.float32)
+        self.n_features_in = model_data["n_features"]
+        
+        with open(ARTIFACTS_DIR / "role_profiles.json", "r") as f:
             self.profiles = json.load(f)
 
-        if self.width != self.clf.n_features_in_:
-            raise ValueError(f"Vocab size {self.width} does not match model features {self.clf.n_features_in_}")
+        if self.width != self.n_features_in:
+            raise ValueError(f"Vocab size {self.width} does not match model features {self.n_features_in}")
         
-        # classes can be numpy array or list
-        classes_set = set(self.le.classes_)
+        classes_set = set(self.classes)
         profiles_set = set(self.profiles.keys())
         if classes_set != profiles_set:
             raise ValueError("Label classes do not match role_profiles keys")
@@ -43,18 +44,23 @@ class Predictor:
                 vec = vec.reshape(1, -1)
         else:
             # Assuming it's a list of IDs or list of names? "vector" could be list of int.
-            # "ml/predict.py takes vectors" - let's convert list of IDs to matrix
-            vec = features.to_matrix([vector], self.width)
+            # Convert to dense since we are only doing inference
+            vec = np.zeros((1, self.width), dtype=np.float32)
+            for i in set(vector):
+                if 0 <= int(i) < self.width:
+                    vec[0, int(i)] = 1.0
 
         if vec.sum() == 0:
             raise ValueError("All-zero vector")
 
-        return self.clf.predict_proba(vec)[0]
+        # Stable softmax
+        logits = vec @ self.coef.T + self.intercept
+        e_x = np.exp(logits - np.max(logits, axis=1, keepdims=True))
+        probs = e_x / e_x.sum(axis=1, keepdims=True)
+        return probs[0]
 
 
 def band_for(p: float, coverage: float = 1.0) -> str:
-    # "Start at Ready >= 0.60, Close 0.30 to 0.60, Not yet below 0.30."
-    # "Coverage = share of the role's top 20 skills the user has. Band = the lower of the two."
     if p >= 0.60:
         p_band = 2 # Ready
     elif p >= 0.30:
@@ -78,7 +84,7 @@ def predict_roles(vector) -> list[dict]:
     p = get_predictor()
     prob = p.proba(vector)
     order = np.argsort(-prob)
-    roles = p.le.inverse_transform(p.clf.classes_[order])
+    roles = [p.classes[i] for i in order]
     return [{"role": str(r), "probability": round(float(prob[j]), 4)} for r, j in zip(roles, order)]
 
 def readiness(vector, desired_role: str) -> dict:
@@ -87,13 +93,11 @@ def readiness(vector, desired_role: str) -> dict:
         raise ValueError(f"Unknown role: {desired_role}")
     
     prob_array = p.proba(vector)
-    cls = int(p.le.transform([desired_role])[0])
-    prob = float(prob_array[list(p.clf.classes_).index(cls)])
+    cls_idx = p.classes.index(desired_role)
+    prob = float(prob_array[cls_idx])
     
-    # "share of the role's top 20 skills the user has"
     top = list(dict.fromkeys(s.lower() for s in p.profiles[desired_role].get("top_skills", [])[:20]))
     
-    # extract user skills from vector
     if isinstance(vector, np.ndarray):
         if len(vector.shape) == 2:
             indices = np.where(vector[0] > 0)[0]
@@ -119,7 +123,6 @@ def delta_readiness(vector, desired_role: str, candidate_skill_id: int) -> float
     if desired_role not in p.profiles:
         raise ValueError(f"Unknown role: {desired_role}")
         
-    # Check if user already has it
     if isinstance(vector, np.ndarray):
         if len(vector.shape) == 2:
             if vector[0, candidate_skill_id] > 0: return 0.0

@@ -1,25 +1,35 @@
+import csv
 import json
-import os
 import string
 
 import numpy as np
-import pandas as pd
 from rapidfuzz import fuzz, process
+
+from etl.paths import ARTIFACTS_DIR, TAXONOMY_DIR
 
 _STRIP = str.maketrans('', '', string.punctuation.replace('+', '').replace('#', ''))
 
 def _clean_token(t):
-    if pd.isna(t): return ""
+    if t is None: return ""
     t = str(t).lower().strip()
+    if t == 'nan': return ""
     return ' '.join(t.translate(_STRIP).split())
 
 _aliases = {}
 def load_aliases():
     if _aliases: return
-    df = pd.read_csv('taxonomy/skill_aliases.csv')
-    for _, row in df.iterrows():
-        if pd.isna(row['alias']) or pd.isna(row['canonical']): continue
-        _aliases[_clean_token(row['alias'])] = _clean_token(row['canonical'])
+    alias_path = TAXONOMY_DIR / 'skill_aliases.csv'
+    if not alias_path.exists():
+        return
+    with open(alias_path, 'r', newline='', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            alias = row.get('alias')
+            canonical = row.get('canonical')
+            if not alias or not canonical: continue
+            cleaned_alias = _clean_token(alias)
+            if cleaned_alias:
+                _aliases[cleaned_alias] = _clean_token(canonical)
 
 _vocab = []
 _clean_map = {}
@@ -29,9 +39,8 @@ _fuzzy_cache = {}
 def load_vocab(vocab_list=None):
     global _vocab, _clean_map, _exact_map, _fuzzy_cache
     if vocab_list is None:
-        path = os.environ.get('ARTIFACTS_DIR', 'artifacts')
-        vocab_path = os.path.join(path, 'skill_vocab.json')
-        if not os.path.exists(vocab_path):
+        vocab_path = ARTIFACTS_DIR / 'skill_vocab.json'
+        if not vocab_path.exists():
             raise FileNotFoundError(f"Missing {vocab_path}")
         with open(vocab_path, 'r') as f:
             _vocab = json.load(f)
@@ -71,9 +80,9 @@ def skills_to_vector(raw: list[str]) -> tuple[np.ndarray, list[str]]:
 def normalize_skill(raw: str) -> int | None:
     if not _vocab:
         load_vocab()
-    if pd.isna(raw): return None
+    if raw is None: return None
     raw = str(raw).strip()
-    if not raw: return None
+    if not raw or raw.lower() == 'nan': return None
     
     if raw in _exact_map:
         return _exact_map[raw]
@@ -142,7 +151,8 @@ def build_vocab(tech_series) -> list[str]:
     print(f"Mapped mass: {cumulative:,} / {total_mass:,} ({cumulative/total_mass:.1%})")
     return vocab
 
-def build_baskets(clean_df) -> pd.DataFrame:
+def build_baskets(clean_df):
+    import pandas as pd
     baskets = []
     for idx, row in clean_df.iterrows():
         skills_str = row['tagsAndSkills']
