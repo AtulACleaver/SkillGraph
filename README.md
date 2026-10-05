@@ -28,7 +28,7 @@ skillgraph/
 ├── mining/        # Aryan — Apriori, FP-growth, gap ranking
 ├── taxonomy/      # Aryan — hand-edited skill aliases & role families
 ├── api/           # Archit — FastAPI serving layer
-├── frontend/      # Sashang — Vite + React UI
+├── frontend/      # Shashank — Vite + React UI
 ├── fixtures/      # Archit — fake artifacts for dev
 ├── tests/         # each person owns their module's tests
 ├── docs/          # data audit, contracts, model writeup
