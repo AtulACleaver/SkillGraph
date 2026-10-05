@@ -28,7 +28,7 @@ function disabledReason(count, role) {
   if (need && !role) {
     return count === 0 ? 'Add at least 2 skills and choose a target role to continue.' : 'Add 1 more skill and choose a target role to continue.';
   }
-  if (need) return count === 0 ? 'Add at least 2 skills to continue.' : 'Add 1 more skill to continue — one skill isn’t enough to compare against postings.';
+  if (need) return count === 0 ? 'Add at least 2 skills to continue.' : 'Add 1 more skill to continue, one skill isn’t enough to compare against postings.';
   if (!role) return 'Choose the role you’re aiming for to continue.';
   return null;
 }
@@ -43,7 +43,7 @@ function Header() {
           </span>
           <span className="text-xl font-bold tracking-[-0.035em]">SkillGraph</span>
         </div>
-        <span className="ml-auto hidden text-[13px] font-medium text-ink-2 sm:block">Built from patterns in 30,000+ Indian tech postings</span>
+        <span className="ml-auto hidden text-[13px] font-medium text-ink-2 sm:block">Built from 12,872 labelled Indian tech job postings</span>
       </div>
     </header>
   );
@@ -53,7 +53,7 @@ function Footer() {
   return (
     <footer className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-t border-line pb-8 pt-5 text-xs leading-normal text-ink-3">
       <span>Estimates from posting data, not hiring guarantees.</span>
-      <span>30,000+ postings · 10 role families · India</span>
+      <span>12,872 labelled Indian tech job postings · 10 role families · India</span>
     </footer>
   );
 }
@@ -217,7 +217,7 @@ export default function App() {
                 <span className="text-gradient pb-[0.06em]">before you apply.</span>
               </h1>
               <p className="mt-5 max-w-[40ch] text-[clamp(16px,2.6vw,19px)] leading-[1.55] text-ink-2 text-pretty">
-                See how your current skills line up with the roles Indian tech companies are hiring for — based on 30,000+ real postings.
+                See how your current skills line up with the roles Indian tech companies are hiring for, based on 12,872 labelled Indian tech job postings.
               </p>
             </section>
 
@@ -227,11 +227,11 @@ export default function App() {
                 <div>
                   <h2 className="mb-1.5 text-[19px] font-bold tracking-[-0.02em]">We can't reach SkillGraph right now</h2>
                   <p className="mb-1.5 max-w-[58ch] text-[15px] leading-[1.55] text-ink-2 text-pretty">
-                    The roles load from our server, which is either waking up or briefly offline. Nothing you did caused this — your skills are kept.
+                    The roles load from our server, which is either waking up or briefly offline. Nothing you did caused this. Your skills are kept.
                   </p>
                   <p className="mb-4 text-sm text-ink-3">
                     {retryIn > 0
-                      ? `We'll try again automatically in ${retryIn} s. Free servers can take up to 30 seconds to wake up.`
+                      ? `We'll try again automatically in ${retryIn} s. Free servers can take up to 25 seconds to wake up.`
                       : 'Trying again…'}
                   </p>
                   <button type="button" onClick={loadRoles} className={primaryBtn.replace('min-h-[46px]', 'min-h-11')}>
@@ -306,16 +306,16 @@ export default function App() {
                     </h2>
                     <p className="mb-5 max-w-[60ch] text-[15px] leading-[1.55] text-ink-2 text-pretty">
                       {!waking
-                        ? 'Comparing your skills with 30,000+ postings. This usually takes a few seconds.'
-                        : 'This can take up to 30 seconds. SkillGraph runs on a free server that sleeps when nobody is using it, so the first check after a quiet spell is slower. Waiting is normal — no need to refresh, and your answers are kept.'}
+                        ? 'Comparing your skills with 12,872 labelled Indian tech job postings. This usually takes a few seconds.'
+                        : 'This can take up to 25 seconds. SkillGraph runs on a free server that sleeps when nobody is using it, so the first check after a quiet spell is slower. Waiting is normal, no need to refresh, and your answers are kept.'}
                     </p>
                     <div className="max-w-[520px]" aria-hidden="true">
                       <div className="h-1.5 bg-accent-track">
-                        <div className="h-full bg-accent transition-[width] duration-200 ease-linear" style={{ width: `${Math.min(96, (elapsed / 30) * 100)}%` }} />
+                        <div className="h-full bg-accent transition-[width] duration-200 ease-linear" style={{ width: `${Math.min(96, (elapsed / 25) * 100)}%` }} />
                       </div>
                       <div className="mt-2 flex justify-between gap-3 text-[13px] tabular-nums text-ink-3">
                         <span>{Math.floor(elapsed)} s elapsed</span>
-                        <span>Cold starts take up to 30 s</span>
+                        <span>Cold starts take up to 25 s</span>
                       </div>
                     </div>
                   </div>
@@ -373,8 +373,8 @@ export default function App() {
                     <span className="[overflow-wrap:anywhere]">
                       We didn't recognise: <strong className="font-semibold text-ink">{unrecognized.join(', ')}</strong>.{' '}
                       {unrecognized.length === 1
-                        ? 'It wasn’t counted — check the spelling or pick from the suggestions.'
-                        : 'They weren’t counted — check the spelling or pick from the suggestions.'}
+                        ? 'It wasn’t counted. Check the spelling or pick from the suggestions.'
+                        : 'They weren’t counted. Check the spelling or pick from the suggestions.'}
                     </span>
                   </p>
                 )}

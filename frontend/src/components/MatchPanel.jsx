@@ -24,7 +24,7 @@ export default function MatchPanel({ matches = [], desiredRole, onSwitchRole, cl
             Best fit is {best}.
           </p>
           <p className="mb-4 text-sm leading-[1.55] text-ink-2 text-pretty">
-            Not a dead end — it shows where you'd be competitive today. Section 02 shows what {desiredRole} would take.
+            Not a dead end. It shows where you'd be competitive today. Section 02 shows what {desiredRole} would take.
           </p>
           {onSwitchRole && (
             <button
@@ -41,7 +41,7 @@ export default function MatchPanel({ matches = [], desiredRole, onSwitchRole, cl
 
       {chosenInTop && (
         <p className="mb-1.5 border-l-[3px] border-fit bg-fit-tint px-4 py-3 text-sm leading-normal text-fit-ink">
-          Based on the overlap between your skills and common role requirements.
+          Model probability for each role family, given your skills.
         </p>
       )}
 
@@ -74,7 +74,7 @@ export default function MatchPanel({ matches = [], desiredRole, onSwitchRole, cl
             {(!chosenInTop && desiredRole) && (
               <li className="grid grid-cols-[24px_minmax(0,1fr)] gap-x-2.5 pb-1 pt-4">
                 <span aria-hidden="true" className="pt-px text-sm text-ink-3">
-                  —
+                  -
                 </span>
                 <div className="flex flex-wrap justify-between gap-x-3 gap-y-1 text-[15px]">
                   <span className="text-ink-2">

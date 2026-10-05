@@ -274,7 +274,7 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
       )}
 
       <p id={hintId} className="mb-5 mt-2.5 text-[13px] leading-normal text-ink-3">
-        Aliases work — “reactjs”, “k8s”, “sklearn”. ↑ ↓ to move, Enter to add, Esc to clear, Backspace removes the last skill.
+        Aliases work, like “reactjs”, “k8s”, “sklearn”. ↑ ↓ to move, Enter to add, Esc to clear, Backspace removes the last skill.
       </p>
 
       {searchStatus === 'error' && (
@@ -325,7 +325,7 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
         </>
       ) : (
         <p className="text-[15px] leading-normal text-ink-3">
-          Your selected skills will appear here. Add at least 2 — languages, frameworks, tools and coursework like DBMS all count.
+          Your selected skills will appear here. Add at least 2. Languages, frameworks, tools and coursework like DBMS all count.
         </p>
       )}
     </section>

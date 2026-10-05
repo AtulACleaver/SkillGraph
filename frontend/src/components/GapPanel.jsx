@@ -18,7 +18,7 @@ export default function GapPanel({ recommendations = [], probability = 0, role, 
 
       {recs.length > 0 ? (
         <>
-          <p className="mb-[18px] ml-[42px] text-[13px] text-ink-3">Ranked by how much each would raise your readiness.</p>
+          <p className="mb-[18px] ml-[42px] text-[13px] text-ink-3">Ranked by readiness gain weighted by how often the role asks for it.</p>
           <ol className="border-t border-line">
             {recs.map((rec, i) => {
               const after = Math.round(Math.min(1, probability + (rec.readiness_gain || 0)) * 100);
@@ -69,7 +69,7 @@ export default function GapPanel({ recommendations = [], probability = 0, role, 
           <div>
             <p className="mb-1.5 text-lg font-bold tracking-[-0.015em]">You already have every skill this role commonly asks for.</p>
             <p className="max-w-[46ch] text-sm leading-[1.6] text-ink-2">
-              From here, depth counts more than breadth — projects and interview practice will move you further than another skill.
+              From here, depth counts more than breadth. Projects and interview practice will move you further than another skill.
             </p>
           </div>
         </div>

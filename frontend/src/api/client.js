@@ -41,7 +41,7 @@ function normalizeError(err) {
     }
   } else if (err?.code === 'ECONNABORTED' || err?.code === 'ETIMEDOUT' || /timeout/i.test(err?.message || '')) {
     title = 'Request timed out';
-    message = "The server didn't respond within 25 seconds. This sometimes happens right after it wakes up — trying again usually works.";
+    message = "The server didn't respond within 25 seconds. This sometimes happens right after it wakes up, trying again usually works.";
   } else if (!err?.response) {
     title = 'Connection problem';
     message = "The request didn't reach the server. Check your internet connection.";
