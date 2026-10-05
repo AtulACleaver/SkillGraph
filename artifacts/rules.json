@@ -2,1621 +2,545 @@
   "rules": [
     {
       "antecedent": [
-        209,
-        424
+        204,
+        407
       ],
       "consequent": [
-        529
+        507
       ],
-      "support": 0.007436,
+      "support": 0.007419,
       "confidence": 1.0,
-      "lift": 125.2814
+      "lift": 125.5665
     },
     {
       "antecedent": [
-        529
+        507
       ],
       "consequent": [
-        209,
-        424
+        204,
+        407
       ],
-      "support": 0.007436,
+      "support": 0.007419,
       "confidence": 0.931559,
-      "lift": 125.2814
+      "lift": 125.5665
     },
     {
       "antecedent": [
-        209,
-        529
+        204,
+        507
       ],
       "consequent": [
-        424
+        407
       ],
-      "support": 0.007436,
+      "support": 0.007419,
       "confidence": 1.0,
-      "lift": 112.0714
+      "lift": 112.3265
     },
     {
       "antecedent": [
-        424
+        407
       ],
       "consequent": [
-        209,
-        529
+        204,
+        507
       ],
-      "support": 0.007436,
+      "support": 0.007419,
       "confidence": 0.833333,
-      "lift": 112.0714
+      "lift": 112.3265
     },
     {
       "antecedent": [
-        529
+        507
       ],
       "consequent": [
-        424
+        407
       ],
-      "support": 0.0078,
+      "support": 0.007782,
       "confidence": 0.977186,
-      "lift": 109.5147
+      "lift": 109.7639
     },
     {
       "antecedent": [
-        424
+        407
       ],
       "consequent": [
-        529
+        507
       ],
-      "support": 0.0078,
+      "support": 0.007782,
       "confidence": 0.87415,
-      "lift": 109.5147
+      "lift": 109.7639
     },
     {
       "antecedent": [
-        424,
-        529
+        407,
+        507
       ],
       "consequent": [
-        209
+        204
       ],
-      "support": 0.007436,
+      "support": 0.007419,
       "confidence": 0.953307,
-      "lift": 91.8436
+      "lift": 92.0527
     },
     {
       "antecedent": [
-        209
+        204
       ],
       "consequent": [
-        424,
-        529
+        407,
+        507
       ],
-      "support": 0.007436,
+      "support": 0.007419,
       "confidence": 0.716374,
-      "lift": 91.8436
+      "lift": 92.0527
     },
     {
       "antecedent": [
-        529
+        507
       ],
       "consequent": [
-        209
+        204
       ],
-      "support": 0.007436,
+      "support": 0.007419,
       "confidence": 0.931559,
-      "lift": 89.7483
+      "lift": 89.9526
     },
     {
       "antecedent": [
-        209
+        204
       ],
       "consequent": [
-        529
+        507
       ],
-      "support": 0.007436,
+      "support": 0.007419,
       "confidence": 0.716374,
-      "lift": 89.7483
+      "lift": 89.9526
     },
     {
       "antecedent": [
-        424
+        407
       ],
       "consequent": [
-        209
+        204
       ],
-      "support": 0.007436,
+      "support": 0.007419,
       "confidence": 0.833333,
-      "lift": 80.2851
+      "lift": 80.4678
     },
     {
       "antecedent": [
-        209
+        204
       ],
       "consequent": [
-        424
+        407
       ],
-      "support": 0.007436,
+      "support": 0.007419,
       "confidence": 0.716374,
-      "lift": 80.2851
+      "lift": 80.4678
     },
     {
       "antecedent": [
-        1,
-        5,
-        9
+        49,
+        201
       ],
       "consequent": [
-        56
+        207
       ],
-      "support": 0.00607,
-      "confidence": 0.682594,
-      "lift": 64.0763
+      "support": 0.005057,
+      "confidence": 0.719828,
+      "lift": 62.3926
     },
     {
       "antecedent": [
-        56
+        207
       ],
       "consequent": [
-        1,
-        5,
-        9
+        49,
+        201
       ],
-      "support": 0.00607,
-      "confidence": 0.569801,
-      "lift": 64.0763
-    },
-    {
-      "antecedent": [
-        5,
-        9
-      ],
-      "consequent": [
-        1,
-        56
-      ],
-      "support": 0.00607,
-      "confidence": 0.653595,
-      "lift": 63.7139
-    },
-    {
-      "antecedent": [
-        1,
-        56
-      ],
-      "consequent": [
-        5,
-        9
-      ],
-      "support": 0.00607,
-      "confidence": 0.591716,
-      "lift": 63.7139
-    },
-    {
-      "antecedent": [
-        5,
-        9
-      ],
-      "consequent": [
-        56
-      ],
-      "support": 0.006252,
-      "confidence": 0.673203,
-      "lift": 63.1947
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        5,
-        9
-      ],
-      "support": 0.006252,
-      "confidence": 0.586895,
-      "lift": 63.1947
-    },
-    {
-      "antecedent": [
-        67,
-        206
-      ],
-      "consequent": [
-        212
-      ],
-      "support": 0.005068,
-      "confidence": 0.729258,
-      "lift": 63.0664
-    },
-    {
-      "antecedent": [
-        212
-      ],
-      "consequent": [
-        67,
-        206
-      ],
-      "support": 0.005068,
+      "support": 0.005057,
       "confidence": 0.43832,
-      "lift": 63.0664
+      "lift": 62.3926
     },
     {
       "antecedent": [
-        1,
-        9,
-        12,
-        25
+        95
       ],
       "consequent": [
-        56
+        116
       ],
-      "support": 0.005159,
-      "confidence": 0.613718,
-      "lift": 57.6108
+      "support": 0.005299,
+      "confidence": 0.553797,
+      "lift": 56.4463
     },
     {
       "antecedent": [
-        56
+        116
       ],
       "consequent": [
-        1,
-        9,
-        12,
-        25
+        95
       ],
-      "support": 0.005159,
-      "confidence": 0.48433,
-      "lift": 57.6108
+      "support": 0.005299,
+      "confidence": 0.540123,
+      "lift": 56.4463
     },
     {
       "antecedent": [
-        9,
-        12,
-        25
+        49,
+        207
       ],
       "consequent": [
-        1,
-        56
+        201
       ],
-      "support": 0.005159,
-      "confidence": 0.586207,
-      "lift": 57.1448
+      "support": 0.005057,
+      "confidence": 0.95977,
+      "lift": 54.3661
     },
     {
       "antecedent": [
-        1,
-        56
+        428
       ],
       "consequent": [
-        9,
-        12,
-        25
+        662
       ],
-      "support": 0.005159,
-      "confidence": 0.502959,
-      "lift": 57.1448
-    },
-    {
-      "antecedent": [
-        9,
-        12,
-        25
-      ],
-      "consequent": [
-        56
-      ],
-      "support": 0.00519,
-      "confidence": 0.589655,
-      "lift": 55.352
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        9,
-        12,
-        25
-      ],
-      "support": 0.00519,
-      "confidence": 0.487179,
-      "lift": 55.352
-    },
-    {
-      "antecedent": [
-        67,
-        212
-      ],
-      "consequent": [
-        206
-      ],
-      "support": 0.005068,
-      "confidence": 0.965318,
-      "lift": 54.5562
-    },
-    {
-      "antecedent": [
-        12,
-        56
-      ],
-      "consequent": [
-        1,
-        9,
-        25
-      ],
-      "support": 0.005159,
-      "confidence": 0.669291,
-      "lift": 51.6452
-    },
-    {
-      "antecedent": [
-        1,
-        9,
-        25
-      ],
-      "consequent": [
-        12,
-        56
-      ],
-      "support": 0.005159,
-      "confidence": 0.398126,
-      "lift": 51.6452
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        1,
-        9,
-        25
-      ],
-      "support": 0.007011,
-      "confidence": 0.65812,
-      "lift": 50.7831
-    },
-    {
-      "antecedent": [
-        1,
-        9,
-        25
-      ],
-      "consequent": [
-        56
-      ],
-      "support": 0.007011,
-      "confidence": 0.540984,
-      "lift": 50.7831
-    },
-    {
-      "antecedent": [
-        1,
-        56
-      ],
-      "consequent": [
-        9,
-        25
-      ],
-      "support": 0.007011,
-      "confidence": 0.683432,
-      "lift": 50.2643
-    },
-    {
-      "antecedent": [
-        9,
-        25
-      ],
-      "consequent": [
-        1,
-        56
-      ],
-      "support": 0.007011,
-      "confidence": 0.515625,
-      "lift": 50.2643
-    },
-    {
-      "antecedent": [
-        1,
-        12,
-        56
-      ],
-      "consequent": [
-        9,
-        25
-      ],
-      "support": 0.005159,
-      "confidence": 0.677291,
-      "lift": 49.8126
-    },
-    {
-      "antecedent": [
-        9,
-        25
-      ],
-      "consequent": [
-        1,
-        12,
-        56
-      ],
-      "support": 0.005159,
-      "confidence": 0.379464,
-      "lift": 49.8126
-    },
-    {
-      "antecedent": [
-        12,
-        56
-      ],
-      "consequent": [
-        9,
-        25
-      ],
-      "support": 0.00519,
-      "confidence": 0.673228,
-      "lift": 49.5138
-    },
-    {
-      "antecedent": [
-        9,
-        25
-      ],
-      "consequent": [
-        12,
-        56
-      ],
-      "support": 0.00519,
-      "confidence": 0.381696,
-      "lift": 49.5138
-    },
-    {
-      "antecedent": [
-        1,
-        12,
-        25
-      ],
-      "consequent": [
-        9,
-        56
-      ],
-      "support": 0.005159,
-      "confidence": 0.513595,
-      "lift": 49.3366
-    },
-    {
-      "antecedent": [
-        9,
-        56
-      ],
-      "consequent": [
-        1,
-        12,
-        25
-      ],
-      "support": 0.005159,
-      "confidence": 0.495627,
-      "lift": 49.3366
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        9,
-        25
-      ],
-      "support": 0.007072,
-      "confidence": 0.663818,
-      "lift": 48.8217
-    },
-    {
-      "antecedent": [
-        9,
-        25
-      ],
-      "consequent": [
-        56
-      ],
-      "support": 0.007072,
-      "confidence": 0.520089,
-      "lift": 48.8217
-    },
-    {
-      "antecedent": [
-        1,
-        12,
-        25
-      ],
-      "consequent": [
-        56
-      ],
-      "support": 0.005159,
-      "confidence": 0.513595,
-      "lift": 48.2121
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        1,
-        12,
-        25
-      ],
-      "support": 0.005159,
-      "confidence": 0.48433,
-      "lift": 48.2121
-    },
-    {
-      "antecedent": [
-        1,
-        9,
-        56
-      ],
-      "consequent": [
-        12,
-        25
-      ],
-      "support": 0.005159,
-      "confidence": 0.507463,
-      "lift": 45.0684
-    },
-    {
-      "antecedent": [
-        12,
-        25
-      ],
-      "consequent": [
-        1,
-        9,
-        56
-      ],
-      "support": 0.005159,
-      "confidence": 0.458221,
-      "lift": 45.0684
-    },
-    {
-      "antecedent": [
-        1,
-        56
-      ],
-      "consequent": [
-        12,
-        25
-      ],
-      "support": 0.005159,
-      "confidence": 0.502959,
-      "lift": 44.6684
-    },
-    {
-      "antecedent": [
-        12,
-        25
-      ],
-      "consequent": [
-        1,
-        56
-      ],
-      "support": 0.005159,
-      "confidence": 0.458221,
-      "lift": 44.6684
-    },
-    {
-      "antecedent": [
-        9,
-        56
-      ],
-      "consequent": [
-        12,
-        25
-      ],
-      "support": 0.00519,
-      "confidence": 0.498542,
-      "lift": 44.2762
-    },
-    {
-      "antecedent": [
-        12,
-        25
-      ],
-      "consequent": [
-        9,
-        56
-      ],
-      "support": 0.00519,
-      "confidence": 0.460916,
-      "lift": 44.2762
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        12,
-        25
-      ],
-      "support": 0.00519,
-      "confidence": 0.487179,
-      "lift": 43.2671
-    },
-    {
-      "antecedent": [
-        12,
-        25
-      ],
-      "consequent": [
-        56
-      ],
-      "support": 0.00519,
-      "confidence": 0.460916,
-      "lift": 43.2671
-    },
-    {
-      "antecedent": [
-        446
-      ],
-      "consequent": [
-        690
-      ],
-      "support": 0.005858,
+      "support": 0.005844,
       "confidence": 0.539106,
-      "lift": 40.2789
+      "lift": 40.3706
     },
     {
       "antecedent": [
-        690
+        662
       ],
       "consequent": [
-        446
+        428
       ],
-      "support": 0.005858,
+      "support": 0.005844,
       "confidence": 0.437642,
-      "lift": 40.2789
+      "lift": 40.3706
     },
     {
       "antecedent": [
-        9,
-        56
+        207
       ],
       "consequent": [
-        1,
-        5
+        201
       ],
-      "support": 0.00607,
-      "confidence": 0.58309,
-      "lift": 38.8126
-    },
-    {
-      "antecedent": [
-        1,
-        5
-      ],
-      "consequent": [
-        9,
-        56
-      ],
-      "support": 0.00607,
-      "confidence": 0.40404,
-      "lift": 38.8126
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        1,
-        5
-      ],
-      "support": 0.0061,
-      "confidence": 0.57265,
-      "lift": 38.1176
-    },
-    {
-      "antecedent": [
-        1,
-        5
-      ],
-      "consequent": [
-        56
-      ],
-      "support": 0.0061,
-      "confidence": 0.406061,
-      "lift": 38.1176
-    },
-    {
-      "antecedent": [
-        25,
-        56
-      ],
-      "consequent": [
-        1,
-        9,
-        12
-      ],
-      "support": 0.005159,
-      "confidence": 0.723404,
-      "lift": 35.9509
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        1,
-        9,
-        12
-      ],
-      "support": 0.007618,
-      "confidence": 0.7151,
-      "lift": 35.5382
-    },
-    {
-      "antecedent": [
-        1,
-        9,
-        12
-      ],
-      "consequent": [
-        56
-      ],
-      "support": 0.007618,
-      "confidence": 0.378582,
-      "lift": 35.5382
-    },
-    {
-      "antecedent": [
-        1,
-        56
-      ],
-      "consequent": [
-        9,
-        12
-      ],
-      "support": 0.007618,
-      "confidence": 0.742604,
-      "lift": 32.9314
-    },
-    {
-      "antecedent": [
-        9,
-        12
-      ],
-      "consequent": [
-        1,
-        56
-      ],
-      "support": 0.007618,
-      "confidence": 0.33782,
-      "lift": 32.9314
-    },
-    {
-      "antecedent": [
-        1,
-        25,
-        56
-      ],
-      "consequent": [
-        9,
-        12
-      ],
-      "support": 0.005159,
-      "confidence": 0.729614,
-      "lift": 32.3554
-    },
-    {
-      "antecedent": [
-        25,
-        56
-      ],
-      "consequent": [
-        9,
-        12
-      ],
-      "support": 0.00519,
-      "confidence": 0.72766,
-      "lift": 32.2687
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        9,
-        12
-      ],
-      "support": 0.007709,
-      "confidence": 0.723647,
-      "lift": 32.0908
-    },
-    {
-      "antecedent": [
-        9,
-        12
-      ],
-      "consequent": [
-        56
-      ],
-      "support": 0.007709,
-      "confidence": 0.341857,
-      "lift": 32.0908
-    },
-    {
-      "antecedent": [
-        9,
-        56
-      ],
-      "consequent": [
-        1,
-        25
-      ],
-      "support": 0.007011,
-      "confidence": 0.673469,
-      "lift": 31.8824
-    },
-    {
-      "antecedent": [
-        1,
-        25
-      ],
-      "consequent": [
-        9,
-        56
-      ],
-      "support": 0.007011,
-      "confidence": 0.331897,
-      "lift": 31.8824
-    },
-    {
-      "antecedent": [
-        12,
-        56
-      ],
-      "consequent": [
-        1,
-        25
-      ],
-      "support": 0.005159,
-      "confidence": 0.669291,
-      "lift": 31.6846
-    },
-    {
-      "antecedent": [
-        9,
-        12,
-        56
-      ],
-      "consequent": [
-        1,
-        25
-      ],
-      "support": 0.005159,
-      "confidence": 0.669291,
-      "lift": 31.6846
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        1,
-        25
-      ],
-      "support": 0.007072,
-      "confidence": 0.663818,
-      "lift": 31.4255
-    },
-    {
-      "antecedent": [
-        1,
-        25
-      ],
-      "consequent": [
-        56
-      ],
-      "support": 0.007072,
-      "confidence": 0.33477,
-      "lift": 31.4255
-    },
-    {
-      "antecedent": [
-        12,
-        25,
-        56
-      ],
-      "consequent": [
-        1,
-        9
-      ],
-      "support": 0.005159,
-      "confidence": 0.994152,
-      "lift": 29.0909
-    },
-    {
-      "antecedent": [
-        1,
-        9,
-        56
-      ],
-      "consequent": [
-        25
-      ],
-      "support": 0.007011,
-      "confidence": 0.689552,
-      "lift": 28.9427
-    },
-    {
-      "antecedent": [
-        1,
-        56
-      ],
-      "consequent": [
-        25
-      ],
-      "support": 0.007072,
-      "confidence": 0.689349,
-      "lift": 28.9342
-    },
-    {
-      "antecedent": [
-        12,
-        56
-      ],
-      "consequent": [
-        1,
-        9
-      ],
-      "support": 0.007618,
-      "confidence": 0.988189,
-      "lift": 28.9164
-    },
-    {
-      "antecedent": [
-        25,
-        56
-      ],
-      "consequent": [
-        1,
-        9
-      ],
-      "support": 0.007011,
-      "confidence": 0.982979,
-      "lift": 28.7639
-    },
-    {
-      "antecedent": [
-        9,
-        56
-      ],
-      "consequent": [
-        25
-      ],
-      "support": 0.007072,
-      "confidence": 0.6793,
-      "lift": 28.5124
-    },
-    {
-      "antecedent": [
-        212
-      ],
-      "consequent": [
-        206
-      ],
-      "support": 0.005827,
+      "support": 0.005814,
       "confidence": 0.503937,
-      "lift": 28.4807
+      "lift": 28.5455
     },
     {
       "antecedent": [
-        206
+        201
       ],
       "consequent": [
-        212
+        207
       ],
-      "support": 0.005827,
+      "support": 0.005814,
       "confidence": 0.329331,
-      "lift": 28.4807
+      "lift": 28.5455
     },
     {
       "antecedent": [
         1,
-        12,
-        56
-      ],
-      "consequent": [
-        25
-      ],
-      "support": 0.005159,
-      "confidence": 0.677291,
-      "lift": 28.4281
-    },
-    {
-      "antecedent": [
-        1,
-        9,
-        12,
-        56
-      ],
-      "consequent": [
-        25
-      ],
-      "support": 0.005159,
-      "confidence": 0.677291,
-      "lift": 28.4281
-    },
-    {
-      "antecedent": [
-        5,
-        56
-      ],
-      "consequent": [
-        1,
-        9
-      ],
-      "support": 0.00607,
-      "confidence": 0.966184,
-      "lift": 28.2725
-    },
-    {
-      "antecedent": [
-        12,
-        56
-      ],
-      "consequent": [
-        25
-      ],
-      "support": 0.00519,
-      "confidence": 0.673228,
-      "lift": 28.2576
-    },
-    {
-      "antecedent": [
-        9,
-        12,
-        56
-      ],
-      "consequent": [
-        25
-      ],
-      "support": 0.00519,
-      "confidence": 0.673228,
-      "lift": 28.2576
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        25
-      ],
-      "support": 0.007132,
-      "confidence": 0.669516,
-      "lift": 28.1017
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        1,
-        9
-      ],
-      "support": 0.010167,
-      "confidence": 0.954416,
-      "lift": 27.9281
-    },
-    {
-      "antecedent": [
-        0,
-        103
-      ],
-      "consequent": [
-        7,
-        29
-      ],
-      "support": 0.005766,
-      "confidence": 0.666667,
-      "lift": 27.5955
-    },
-    {
-      "antecedent": [
-        9,
-        56
-      ],
-      "consequent": [
-        1,
-        12
-      ],
-      "support": 0.007618,
-      "confidence": 0.731778,
-      "lift": 27.3372
-    },
-    {
-      "antecedent": [
-        9,
-        25,
-        56
-      ],
-      "consequent": [
-        1,
-        12
-      ],
-      "support": 0.005159,
-      "confidence": 0.729614,
-      "lift": 27.2563
-    },
-    {
-      "antecedent": [
-        25,
-        56
-      ],
-      "consequent": [
-        1,
-        12
-      ],
-      "support": 0.005159,
-      "confidence": 0.723404,
-      "lift": 27.0243
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        1,
-        12
-      ],
-      "support": 0.007618,
-      "confidence": 0.7151,
-      "lift": 26.7141
-    },
-    {
-      "antecedent": [
-        73
-      ],
-      "consequent": [
-        0,
-        15
-      ],
-      "support": 0.005251,
-      "confidence": 0.44473,
-      "lift": 25.6627
-    },
-    {
-      "antecedent": [
-        0,
-        15
-      ],
-      "consequent": [
-        73
-      ],
-      "support": 0.005251,
-      "confidence": 0.302977,
-      "lift": 25.6627
-    },
-    {
-      "antecedent": [
-        5,
-        9
-      ],
-      "consequent": [
-        1,
-        12
-      ],
-      "support": 0.006252,
-      "confidence": 0.673203,
-      "lift": 25.1489
-    },
-    {
-      "antecedent": [
-        12,
-        56
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.007709,
-      "confidence": 1.0,
-      "lift": 25.0753
-    },
-    {
-      "antecedent": [
-        1,
-        12,
-        56
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.007618,
-      "confidence": 1.0,
-      "lift": 25.0753
-    },
-    {
-      "antecedent": [
-        12,
-        25,
-        56
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.00519,
-      "confidence": 1.0,
-      "lift": 25.0753
-    },
-    {
-      "antecedent": [
-        1,
-        12,
-        25,
-        56
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.005159,
-      "confidence": 1.0,
-      "lift": 25.0753
-    },
-    {
-      "antecedent": [
-        5,
-        56
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.006252,
-      "confidence": 0.995169,
-      "lift": 24.9542
-    },
-    {
-      "antecedent": [
-        1,
-        5,
-        56
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.00607,
-      "confidence": 0.995025,
-      "lift": 24.9506
-    },
-    {
-      "antecedent": [
-        25,
-        56
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.007072,
-      "confidence": 0.991489,
-      "lift": 24.8619
-    },
-    {
-      "antecedent": [
-        1,
-        25,
-        56
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.007011,
-      "confidence": 0.991416,
-      "lift": 24.8601
-    },
-    {
-      "antecedent": [
-        1,
-        56
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.010167,
-      "confidence": 0.991124,
-      "lift": 24.8528
-    },
-    {
-      "antecedent": [
-        29,
-        103
-      ],
-      "consequent": [
-        0,
-        7
-      ],
-      "support": 0.005766,
-      "confidence": 0.393375,
-      "lift": 24.7826
-    },
-    {
-      "antecedent": [
-        0,
-        7
-      ],
-      "consequent": [
-        29,
-        103
-      ],
-      "support": 0.005766,
-      "confidence": 0.363289,
-      "lift": 24.7826
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.01041,
-      "confidence": 0.977208,
-      "lift": 24.5038
-    },
-    {
-      "antecedent": [
-        9,
-        38
-      ],
-      "consequent": [
-        1,
-        12
-      ],
-      "support": 0.006373,
-      "confidence": 0.648148,
-      "lift": 24.213
-    },
-    {
-      "antecedent": [
-        5,
-        12
-      ],
-      "consequent": [
-        1,
-        9
-      ],
-      "support": 0.006252,
-      "confidence": 0.81746,
-      "lift": 23.9205
-    },
-    {
-      "antecedent": [
-        9,
-        25
-      ],
-      "consequent": [
-        1,
-        12
-      ],
-      "support": 0.008407,
-      "confidence": 0.618304,
-      "lift": 23.0981
-    },
-    {
-      "antecedent": [
-        1,
-        12
-      ],
-      "consequent": [
-        9,
-        25
-      ],
-      "support": 0.008407,
-      "confidence": 0.314059,
-      "lift": 23.0981
-    },
-    {
-      "antecedent": [
-        1,
-        5,
-        12
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.006252,
-      "confidence": 0.899563,
-      "lift": 22.5569
-    },
-    {
-      "antecedent": [
-        12,
-        25
-      ],
-      "consequent": [
-        1,
-        9
-      ],
-      "support": 0.008407,
-      "confidence": 0.746631,
-      "lift": 21.8479
-    },
-    {
-      "antecedent": [
-        1,
-        12,
-        38
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.006373,
-      "confidence": 0.860656,
-      "lift": 21.5812
-    },
-    {
-      "antecedent": [
-        1,
-        38
-      ],
-      "consequent": [
-        25
-      ],
-      "support": 0.007436,
-      "confidence": 0.505155,
-      "lift": 21.203
-    },
-    {
-      "antecedent": [
-        25
-      ],
-      "consequent": [
-        1,
-        38
-      ],
-      "support": 0.007436,
-      "confidence": 0.312102,
-      "lift": 21.203
-    },
-    {
-      "antecedent": [
-        5,
-        12
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.006434,
-      "confidence": 0.84127,
-      "lift": 21.0951
-    },
-    {
-      "antecedent": [
-        1,
-        12,
-        25
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.008407,
-      "confidence": 0.836858,
-      "lift": 20.9845
-    },
-    {
-      "antecedent": [
         72
       ],
       "consequent": [
-        57
+        8,
+        31
       ],
-      "support": 0.006495,
+      "support": 0.005753,
+      "confidence": 0.671378,
+      "lift": 27.8538
+    },
+    {
+      "antecedent": [
+        75
+      ],
+      "consequent": [
+        1,
+        16
+      ],
+      "support": 0.005329,
+      "confidence": 0.452442,
+      "lift": 25.9851
+    },
+    {
+      "antecedent": [
+        1,
+        16
+      ],
+      "consequent": [
+        75
+      ],
+      "support": 0.005329,
+      "confidence": 0.306087,
+      "lift": 25.9851
+    },
+    {
+      "antecedent": [
+        31,
+        72
+      ],
+      "consequent": [
+        1,
+        8
+      ],
+      "support": 0.005753,
+      "confidence": 0.39916,
+      "lift": 25.1083
+    },
+    {
+      "antecedent": [
+        1,
+        8
+      ],
+      "consequent": [
+        31,
+        72
+      ],
+      "support": 0.005753,
+      "confidence": 0.361905,
+      "lift": 25.1083
+    },
+    {
+      "antecedent": [
+        5,
+        6
+      ],
+      "consequent": [
+        0,
+        12
+      ],
+      "support": 0.006298,
+      "confidence": 0.66881,
+      "lift": 24.678
+    },
+    {
+      "antecedent": [
+        5,
+        38
+      ],
+      "consequent": [
+        0,
+        12
+      ],
+      "support": 0.00642,
+      "confidence": 0.648318,
+      "lift": 23.9218
+    },
+    {
+      "antecedent": [
+        6,
+        12
+      ],
+      "consequent": [
+        0,
+        5
+      ],
+      "support": 0.006298,
+      "confidence": 0.825397,
+      "lift": 23.4982
+    },
+    {
+      "antecedent": [
+        5,
+        27
+      ],
+      "consequent": [
+        0,
+        12
+      ],
+      "support": 0.008448,
+      "confidence": 0.617257,
+      "lift": 22.7757
+    },
+    {
+      "antecedent": [
+        0,
+        12
+      ],
+      "consequent": [
+        5,
+        27
+      ],
+      "support": 0.008448,
+      "confidence": 0.311732,
+      "lift": 22.7757
+    },
+    {
+      "antecedent": [
+        0,
+        6,
+        12
+      ],
+      "consequent": [
+        5
+      ],
+      "support": 0.006298,
+      "confidence": 0.900433,
+      "lift": 22.2241
+    },
+    {
+      "antecedent": [
+        12,
+        27
+      ],
+      "consequent": [
+        0,
+        5
+      ],
+      "support": 0.008448,
+      "confidence": 0.752022,
+      "lift": 21.4093
+    },
+    {
+      "antecedent": [
+        6,
+        12
+      ],
+      "consequent": [
+        5
+      ],
+      "support": 0.00648,
+      "confidence": 0.849206,
+      "lift": 20.9598
+    },
+    {
+      "antecedent": [
+        0,
+        38
+      ],
+      "consequent": [
+        27
+      ],
+      "support": 0.00751,
+      "confidence": 0.497992,
+      "lift": 20.9499
+    },
+    {
+      "antecedent": [
+        27
+      ],
+      "consequent": [
+        0,
+        38
+      ],
+      "support": 0.00751,
+      "confidence": 0.315924,
+      "lift": 20.9499
+    },
+    {
+      "antecedent": [
+        74
+      ],
+      "consequent": [
+        59
+      ],
+      "support": 0.00648,
       "confidence": 0.44958,
-      "lift": 20.8343
+      "lift": 20.8818
     },
     {
       "antecedent": [
-        57
+        59
+      ],
+      "consequent": [
+        74
+      ],
+      "support": 0.00648,
+      "confidence": 0.300985,
+      "lift": 20.8818
+    },
+    {
+      "antecedent": [
+        0,
+        12,
+        38
+      ],
+      "consequent": [
+        5
+      ],
+      "support": 0.00642,
+      "confidence": 0.844622,
+      "lift": 20.8466
+    },
+    {
+      "antecedent": [
+        1,
+        31
+      ],
+      "consequent": [
+        8,
+        72
+      ],
+      "support": 0.005753,
+      "confidence": 0.357815,
+      "lift": 20.8404
+    },
+    {
+      "antecedent": [
+        8,
+        72
+      ],
+      "consequent": [
+        1,
+        31
+      ],
+      "support": 0.005753,
+      "confidence": 0.335097,
+      "lift": 20.8404
+    },
+    {
+      "antecedent": [
+        0,
+        12,
+        27
+      ],
+      "consequent": [
+        5
+      ],
+      "support": 0.008448,
+      "confidence": 0.832836,
+      "lift": 20.5557
+    },
+    {
+      "antecedent": [
+        12,
+        38
+      ],
+      "consequent": [
+        0,
+        5
+      ],
+      "support": 0.00642,
+      "confidence": 0.704319,
+      "lift": 20.0512
+    },
+    {
+      "antecedent": [
+        12,
+        27
+      ],
+      "consequent": [
+        5
+      ],
+      "support": 0.008781,
+      "confidence": 0.781671,
+      "lift": 19.2929
+    },
+    {
+      "antecedent": [
+        1,
+        8,
+        31
       ],
       "consequent": [
         72
       ],
-      "support": 0.006495,
-      "confidence": 0.300985,
-      "lift": 20.8343
-    },
-    {
-      "antecedent": [
-        206,
-        212
-      ],
-      "consequent": [
-        67
-      ],
-      "support": 0.005068,
-      "confidence": 0.869792,
-      "lift": 20.6922
-    },
-    {
-      "antecedent": [
-        12,
-        38
-      ],
-      "consequent": [
-        1,
-        9
-      ],
-      "support": 0.006373,
-      "confidence": 0.697674,
-      "lift": 20.4153
-    },
-    {
-      "antecedent": [
-        12,
-        25
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.008801,
-      "confidence": 0.781671,
-      "lift": 19.6007
-    },
-    {
-      "antecedent": [
-        0,
-        29
-      ],
-      "consequent": [
-        7,
-        103
-      ],
-      "support": 0.005766,
-      "confidence": 0.357815,
-      "lift": 19.5842
-    },
-    {
-      "antecedent": [
-        7,
-        103
-      ],
-      "consequent": [
-        0,
-        29
-      ],
-      "support": 0.005766,
-      "confidence": 0.315615,
-      "lift": 19.5842
-    },
-    {
-      "antecedent": [
-        0,
-        7,
-        29
-      ],
-      "consequent": [
-        103
-      ],
-      "support": 0.005766,
+      "support": 0.005753,
       "confidence": 0.756972,
-      "lift": 19.5313
-    },
-    {
-      "antecedent": [
-        1,
-        38
-      ],
-      "consequent": [
-        9,
-        12
-      ],
-      "support": 0.006373,
-      "confidence": 0.43299,
-      "lift": 19.2013
-    },
-    {
-      "antecedent": [
-        1,
-        9,
-        56
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.007618,
-      "confidence": 0.749254,
-      "lift": 19.0487
+      "lift": 19.1704
     },
     {
       "antecedent": [
@@ -1624,222 +548,122 @@
         38
       ],
       "consequent": [
-        9
+        5
       ],
-      "support": 0.00692,
-      "confidence": 0.757475,
-      "lift": 18.9939
+      "support": 0.006965,
+      "confidence": 0.76412,
+      "lift": 18.8597
     },
     {
       "antecedent": [
-        1,
-        56
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.007618,
-      "confidence": 0.742604,
-      "lift": 18.8797
-    },
-    {
-      "antecedent": [
-        1,
+        0,
         12
       ],
       "consequent": [
-        9
+        5
       ],
-      "support": 0.020122,
-      "confidence": 0.751701,
-      "lift": 18.8492
+      "support": 0.020561,
+      "confidence": 0.758659,
+      "lift": 18.7249
     },
     {
       "antecedent": [
-        9
-      ],
-      "consequent": [
-        1,
-        12
-      ],
-      "support": 0.020122,
-      "confidence": 0.504566,
-      "lift": 18.8492
-    },
-    {
-      "antecedent": [
-        9,
-        56
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.007709,
-      "confidence": 0.740525,
-      "lift": 18.8268
-    },
-    {
-      "antecedent": [
-        1,
-        9,
-        25,
-        56
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.005159,
-      "confidence": 0.735931,
-      "lift": 18.71
-    },
-    {
-      "antecedent": [
-        9,
-        25,
-        56
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.00519,
-      "confidence": 0.733906,
-      "lift": 18.6585
-    },
-    {
-      "antecedent": [
-        1,
-        25,
-        56
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.005159,
-      "confidence": 0.729614,
-      "lift": 18.5494
-    },
-    {
-      "antecedent": [
-        25,
-        56
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.00519,
-      "confidence": 0.72766,
-      "lift": 18.4997
-    },
-    {
-      "antecedent": [
-        1,
         5
       ],
       "consequent": [
-        9,
+        0,
         12
       ],
-      "support": 0.006252,
-      "confidence": 0.416162,
-      "lift": 18.4551
+      "support": 0.020561,
+      "confidence": 0.507474,
+      "lift": 18.7249
     },
     {
       "antecedent": [
-        56
+        0,
+        38
       ],
       "consequent": [
+        5,
         12
       ],
-      "support": 0.007709,
-      "confidence": 0.723647,
-      "lift": 18.3977
+      "support": 0.00642,
+      "confidence": 0.425703,
+      "lift": 18.6204
     },
     {
       "antecedent": [
-        1,
-        9,
+        0,
+        6
+      ],
+      "consequent": [
+        5,
+        12
+      ],
+      "support": 0.006298,
+      "confidence": 0.417671,
+      "lift": 18.2691
+    },
+    {
+      "antecedent": [
+        0,
+        5,
         38
       ],
       "consequent": [
         12
       ],
-      "support": 0.006373,
-      "confidence": 0.716724,
-      "lift": 18.2217
+      "support": 0.00642,
+      "confidence": 0.716216,
+      "lift": 18.2503
     },
     {
       "antecedent": [
-        9,
+        5,
         38
       ],
       "consequent": [
         12
       ],
-      "support": 0.00692,
-      "confidence": 0.703704,
-      "lift": 17.8907
-    },
-    {
-      "antecedent": [
-        1,
-        5,
-        9
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.006252,
-      "confidence": 0.703072,
-      "lift": 17.8746
-    },
-    {
-      "antecedent": [
-        1,
-        25
-      ],
-      "consequent": [
-        9,
-        12
-      ],
-      "support": 0.008407,
-      "confidence": 0.397989,
-      "lift": 17.6492
-    },
-    {
-      "antecedent": [
-        9,
-        12
-      ],
-      "consequent": [
-        1,
-        25
-      ],
-      "support": 0.008407,
-      "confidence": 0.372813,
-      "lift": 17.6492
-    },
-    {
-      "antecedent": [
-        5,
-        9
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.006434,
-      "confidence": 0.69281,
-      "lift": 17.6137
+      "support": 0.006965,
+      "confidence": 0.703364,
+      "lift": 17.9228
     },
     {
       "antecedent": [
         85
       ],
       "consequent": [
-        8
+        9
       ],
-      "support": 0.005402,
-      "confidence": 0.671698,
-      "lift": 17.6068
+      "support": 0.005632,
+      "confidence": 0.701887,
+      "lift": 17.9128
+    },
+    {
+      "antecedent": [
+        0,
+        5,
+        6
+      ],
+      "consequent": [
+        12
+      ],
+      "support": 0.006298,
+      "confidence": 0.697987,
+      "lift": 17.7857
+    },
+    {
+      "antecedent": [
+        1,
+        75
+      ],
+      "consequent": [
+        16
+      ],
+      "support": 0.005329,
+      "confidence": 0.626335,
+      "lift": 17.7241
     },
     {
       "antecedent": [
@@ -1849,491 +673,506 @@
       "consequent": [
         10
       ],
-      "support": 0.006434,
+      "support": 0.00642,
       "confidence": 0.818533,
-      "lift": 17.5928
+      "lift": 17.6329
     },
     {
       "antecedent": [
-        0,
-        73
+        75
       ],
       "consequent": [
-        15
+        16
       ],
-      "support": 0.005251,
-      "confidence": 0.622302,
-      "lift": 17.57
-    },
-    {
-      "antecedent": [
-        73
-      ],
-      "consequent": [
-        15
-      ],
-      "support": 0.007345,
+      "support": 0.007328,
       "confidence": 0.622108,
-      "lift": 17.5646
+      "lift": 17.6045
     },
     {
       "antecedent": [
-        1,
-        9,
+        5,
+        6
+      ],
+      "consequent": [
         12
       ],
-      "consequent": [
-        25
-      ],
-      "support": 0.008407,
-      "confidence": 0.417798,
-      "lift": 17.5363
+      "support": 0.00648,
+      "confidence": 0.688103,
+      "lift": 17.5339
     },
     {
       "antecedent": [
-        25
+        46
       ],
       "consequent": [
-        1,
-        9,
-        12
+        50
       ],
-      "support": 0.008407,
-      "confidence": 0.352866,
-      "lift": 17.5363
-    },
-    {
-      "antecedent": [
-        59
-      ],
-      "consequent": [
-        1,
-        9
-      ],
-      "support": 0.005645,
-      "confidence": 0.598071,
-      "lift": 17.5007
-    },
-    {
-      "antecedent": [
-        45
-      ],
-      "consequent": [
-        48
-      ],
-      "support": 0.005281,
+      "support": 0.005269,
       "confidence": 0.313514,
-      "lift": 17.3905
-    },
-    {
-      "antecedent": [
-        1,
-        59
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.005645,
-      "confidence": 0.688889,
-      "lift": 17.2741
-    },
-    {
-      "antecedent": [
-        74
-      ],
-      "consequent": [
-        61
-      ],
-      "support": 0.005372,
-      "confidence": 0.324176,
-      "lift": 17.1174
-    },
-    {
-      "antecedent": [
-        1,
-        9,
-        25
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.008407,
-      "confidence": 0.648712,
-      "lift": 16.4926
-    },
-    {
-      "antecedent": [
-        9,
-        25
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.008801,
-      "confidence": 0.647321,
-      "lift": 16.4572
-    },
-    {
-      "antecedent": [
-        9,
-        12
-      ],
-      "consequent": [
-        25
-      ],
-      "support": 0.008801,
-      "confidence": 0.39031,
-      "lift": 16.3826
-    },
-    {
-      "antecedent": [
-        25
-      ],
-      "consequent": [
-        9,
-        12
-      ],
-      "support": 0.008801,
-      "confidence": 0.369427,
-      "lift": 16.3826
-    },
-    {
-      "antecedent": [
-        4,
-        7
-      ],
-      "consequent": [
-        16
-      ],
-      "support": 0.018756,
-      "confidence": 0.622984,
-      "lift": 16.2138
-    },
-    {
-      "antecedent": [
-        16
-      ],
-      "consequent": [
-        4,
-        7
-      ],
-      "support": 0.018756,
-      "confidence": 0.488152,
-      "lift": 16.2138
-    },
-    {
-      "antecedent": [
-        25
-      ],
-      "consequent": [
-        1,
-        9
-      ],
-      "support": 0.012959,
-      "confidence": 0.543949,
-      "lift": 15.917
-    },
-    {
-      "antecedent": [
-        1,
-        9
-      ],
-      "consequent": [
-        25
-      ],
-      "support": 0.012959,
-      "confidence": 0.379218,
-      "lift": 15.917
-    },
-    {
-      "antecedent": [
-        71
-      ],
-      "consequent": [
-        28
-      ],
-      "support": 0.006677,
-      "confidence": 0.44898,
-      "lift": 15.9069
-    },
-    {
-      "antecedent": [
-        59
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.005979,
-      "confidence": 0.633441,
-      "lift": 15.8837
+      "lift": 17.4301
     },
     {
       "antecedent": [
         0,
+        27
+      ],
+      "consequent": [
+        5,
+        12
+      ],
+      "support": 0.008448,
+      "confidence": 0.398003,
+      "lift": 17.4088
+    },
+    {
+      "antecedent": [
+        5,
+        12
+      ],
+      "consequent": [
+        0,
+        27
+      ],
+      "support": 0.008448,
+      "confidence": 0.369536,
+      "lift": 17.4088
+    },
+    {
+      "antecedent": [
+        0,
+        5,
+        12
+      ],
+      "consequent": [
+        27
+      ],
+      "support": 0.008448,
+      "confidence": 0.410898,
+      "lift": 17.286
+    },
+    {
+      "antecedent": [
+        27
+      ],
+      "consequent": [
+        0,
+        5,
+        12
+      ],
+      "support": 0.008448,
+      "confidence": 0.355414,
+      "lift": 17.286
+    },
+    {
+      "antecedent": [
+        76
+      ],
+      "consequent": [
+        62
+      ],
+      "support": 0.00536,
+      "confidence": 0.324176,
+      "lift": 17.1564
+    },
+    {
+      "antecedent": [
+        0,
+        5,
+        27
+      ],
+      "consequent": [
+        12
+      ],
+      "support": 0.008448,
+      "confidence": 0.644342,
+      "lift": 16.4188
+    },
+    {
+      "antecedent": [
+        5,
+        27
+      ],
+      "consequent": [
+        12
+      ],
+      "support": 0.008781,
+      "confidence": 0.641593,
+      "lift": 16.3487
+    },
+    {
+      "antecedent": [
+        4,
+        8
+      ],
+      "consequent": [
+        17
+      ],
+      "support": 0.018714,
+      "confidence": 0.622984,
+      "lift": 16.2507
+    },
+    {
+      "antecedent": [
+        17
+      ],
+      "consequent": [
+        4,
+        8
+      ],
+      "support": 0.018714,
+      "confidence": 0.488152,
+      "lift": 16.2507
+    },
+    {
+      "antecedent": [
+        5,
+        12
+      ],
+      "consequent": [
+        27
+      ],
+      "support": 0.008781,
+      "confidence": 0.384106,
+      "lift": 16.1589
+    },
+    {
+      "antecedent": [
+        27
+      ],
+      "consequent": [
+        5,
+        12
+      ],
+      "support": 0.008781,
+      "confidence": 0.369427,
+      "lift": 16.1589
+    },
+    {
+      "antecedent": [
+        73
+      ],
+      "consequent": [
+        30
+      ],
+      "support": 0.006662,
+      "confidence": 0.44898,
+      "lift": 15.9431
+    },
+    {
+      "antecedent": [
+        1,
         19
       ],
       "consequent": [
-        15
+        16
       ],
-      "support": 0.005858,
-      "confidence": 0.55942,
-      "lift": 15.7946
+      "support": 0.005905,
+      "confidence": 0.56196,
+      "lift": 15.9024
     },
     {
       "antecedent": [
-        25
+        27
       ],
       "consequent": [
-        1,
+        0,
         12
       ],
-      "support": 0.010046,
-      "confidence": 0.421656,
-      "lift": 15.7519
+      "support": 0.010144,
+      "confidence": 0.426752,
+      "lift": 15.7464
+    },
+    {
+      "antecedent": [
+        0,
+        12
+      ],
+      "consequent": [
+        27
+      ],
+      "support": 0.010144,
+      "confidence": 0.374302,
+      "lift": 15.7464
+    },
+    {
+      "antecedent": [
+        27
+      ],
+      "consequent": [
+        0,
+        5
+      ],
+      "support": 0.013112,
+      "confidence": 0.551592,
+      "lift": 15.7033
+    },
+    {
+      "antecedent": [
+        0,
+        5
+      ],
+      "consequent": [
+        27
+      ],
+      "support": 0.013112,
+      "confidence": 0.373276,
+      "lift": 15.7033
+    },
+    {
+      "antecedent": [
+        143
+      ],
+      "consequent": [
+        21
+      ],
+      "support": 0.007843,
+      "confidence": 0.761765,
+      "lift": 15.6934
     },
     {
       "antecedent": [
         1,
+        18
+      ],
+      "consequent": [
+        10
+      ],
+      "support": 0.00542,
+      "confidence": 0.718876,
+      "lift": 15.4861
+    },
+    {
+      "antecedent": [
+        201,
+        207
+      ],
+      "consequent": [
+        49
+      ],
+      "support": 0.005057,
+      "confidence": 0.869792,
+      "lift": 15.3604
+    },
+    {
+      "antecedent": [
+        0,
+        27
+      ],
+      "consequent": [
+        5
+      ],
+      "support": 0.013112,
+      "confidence": 0.617689,
+      "lift": 15.2456
+    },
+    {
+      "antecedent": [
+        5
+      ],
+      "consequent": [
+        0,
+        27
+      ],
+      "support": 0.013112,
+      "confidence": 0.323617,
+      "lift": 15.2456
+    },
+    {
+      "antecedent": [
+        0,
+        5
+      ],
+      "consequent": [
+        12
+      ],
+      "support": 0.020561,
+      "confidence": 0.585345,
+      "lift": 14.9155
+    },
+    {
+      "antecedent": [
         12
       ],
       "consequent": [
-        25
+        0,
+        5
       ],
-      "support": 0.010046,
-      "confidence": 0.375283,
-      "lift": 15.7519
+      "support": 0.020561,
+      "confidence": 0.52392,
+      "lift": 14.9155
+    },
+    {
+      "antecedent": [
+        0,
+        6
+      ],
+      "consequent": [
+        5
+      ],
+      "support": 0.009024,
+      "confidence": 0.598394,
+      "lift": 14.7693
+    },
+    {
+      "antecedent": [
+        8,
+        14
+      ],
+      "consequent": [
+        72
+      ],
+      "support": 0.005632,
+      "confidence": 0.579439,
+      "lift": 14.6744
+    },
+    {
+      "antecedent": [
+        0,
+        38
+      ],
+      "consequent": [
+        5
+      ],
+      "support": 0.008963,
+      "confidence": 0.594378,
+      "lift": 14.6702
+    },
+    {
+      "antecedent": [
+        12
+      ],
+      "consequent": [
+        5
+      ],
+      "support": 0.022862,
+      "confidence": 0.582562,
+      "lift": 14.3786
+    },
+    {
+      "antecedent": [
+        5
+      ],
+      "consequent": [
+        12
+      ],
+      "support": 0.022862,
+      "confidence": 0.564275,
+      "lift": 14.3786
     },
     {
       "antecedent": [
         146
       ],
       "consequent": [
-        21
+        16
       ],
-      "support": 0.007861,
-      "confidence": 0.761765,
-      "lift": 15.6578
+      "support": 0.005027,
+      "confidence": 0.506098,
+      "lift": 14.3217
+    },
+    {
+      "antecedent": [
+        27
+      ],
+      "consequent": [
+        5
+      ],
+      "support": 0.013687,
+      "confidence": 0.575796,
+      "lift": 14.2116
+    },
+    {
+      "antecedent": [
+        5
+      ],
+      "consequent": [
+        27
+      ],
+      "support": 0.013687,
+      "confidence": 0.337818,
+      "lift": 14.2116
     },
     {
       "antecedent": [
         0,
-        18
+        6
       ],
       "consequent": [
-        10
+        27
       ],
-      "support": 0.005372,
-      "confidence": 0.722449,
-      "lift": 15.5277
+      "support": 0.005027,
+      "confidence": 0.333333,
+      "lift": 14.0229
     },
     {
       "antecedent": [
         1,
-        25
+        8,
+        72
       ],
       "consequent": [
-        9
+        31
       ],
-      "support": 0.012959,
-      "confidence": 0.613506,
-      "lift": 15.3839
-    },
-    {
-      "antecedent": [
-        9
-      ],
-      "consequent": [
-        1,
-        25
-      ],
-      "support": 0.012959,
-      "confidence": 0.324962,
-      "lift": 15.3839
-    },
-    {
-      "antecedent": [
-        7,
-        14
-      ],
-      "consequent": [
-        103
-      ],
-      "support": 0.005736,
-      "confidence": 0.590625,
-      "lift": 15.2392
-    },
-    {
-      "antecedent": [
-        1,
-        38
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.008893,
-      "confidence": 0.604124,
-      "lift": 15.1486
-    },
-    {
-      "antecedent": [
-        1,
-        9
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.020122,
-      "confidence": 0.58881,
-      "lift": 14.9697
-    },
-    {
-      "antecedent": [
-        12
-      ],
-      "consequent": [
-        1,
-        9
-      ],
-      "support": 0.020122,
-      "confidence": 0.511574,
-      "lift": 14.9697
-    },
-    {
-      "antecedent": [
-        1,
-        5
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.008893,
-      "confidence": 0.591919,
-      "lift": 14.8426
-    },
-    {
-      "antecedent": [
-        12
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.02255,
-      "confidence": 0.573302,
-      "lift": 14.3758
-    },
-    {
-      "antecedent": [
-        9
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.02255,
-      "confidence": 0.565449,
-      "lift": 14.3758
-    },
-    {
-      "antecedent": [
-        25
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.013597,
-      "confidence": 0.570701,
-      "lift": 14.3105
-    },
-    {
-      "antecedent": [
-        9
-      ],
-      "consequent": [
-        25
-      ],
-      "support": 0.013597,
-      "confidence": 0.340944,
-      "lift": 14.3105
+      "support": 0.005753,
+      "confidence": 0.931373,
+      "lift": 14.019
     },
     {
       "antecedent": [
         149
       ],
       "consequent": [
-        15
+        56
       ],
-      "support": 0.005038,
-      "confidence": 0.506098,
-      "lift": 14.2891
+      "support": 0.005935,
+      "confidence": 0.440449,
+      "lift": 13.7741
     },
     {
       "antecedent": [
-        1,
-        5
+        27
       ],
       "consequent": [
-        25
+        38
       ],
-      "support": 0.005038,
-      "confidence": 0.335354,
-      "lift": 14.0759
+      "support": 0.008418,
+      "confidence": 0.35414,
+      "lift": 13.5517
+    },
+    {
+      "antecedent": [
+        38
+      ],
+      "consequent": [
+        27
+      ],
+      "support": 0.008418,
+      "confidence": 0.322132,
+      "lift": 13.5517
     },
     {
       "antecedent": [
         0,
-        7,
-        103
+        15
       ],
       "consequent": [
-        29
+        5
       ],
-      "support": 0.005766,
-      "confidence": 0.917874,
-      "lift": 13.7844
+      "support": 0.005299,
+      "confidence": 0.548589,
+      "lift": 13.5401
     },
     {
       "antecedent": [
-        152
-      ],
-      "consequent": [
-        53
-      ],
-      "support": 0.005949,
-      "confidence": 0.440449,
-      "lift": 13.7428
-    },
-    {
-      "antecedent": [
-        25
+        0,
+        27
       ],
       "consequent": [
         38
       ],
-      "support": 0.008437,
-      "confidence": 0.35414,
-      "lift": 13.5209
-    },
-    {
-      "antecedent": [
-        38
-      ],
-      "consequent": [
-        25
-      ],
-      "support": 0.008437,
-      "confidence": 0.322132,
-      "lift": 13.5209
-    },
-    {
-      "antecedent": [
-        1,
-        25
-      ],
-      "consequent": [
-        38
-      ],
-      "support": 0.007436,
-      "confidence": 0.352011,
-      "lift": 13.4397
+      "support": 0.00751,
+      "confidence": 0.35378,
+      "lift": 13.5379
     },
     {
       "antecedent": [
@@ -2342,9 +1181,9 @@
       "consequent": [
         10
       ],
-      "support": 0.01818,
+      "support": 0.018138,
       "confidence": 0.620725,
-      "lift": 13.3413
+      "lift": 13.3717
     },
     {
       "antecedent": [
@@ -2353,9 +1192,9 @@
       "consequent": [
         18
       ],
-      "support": 0.01818,
+      "support": 0.018138,
       "confidence": 0.390737,
-      "lift": 13.3413
+      "lift": 13.3717
     },
     {
       "antecedent": [
@@ -2365,220 +1204,220 @@
       "consequent": [
         18
       ],
-      "support": 0.006434,
+      "support": 0.00642,
       "confidence": 0.376554,
-      "lift": 12.8571
+      "lift": 12.8863
     },
     {
       "antecedent": [
-        1,
+        0,
         38
       ],
       "consequent": [
         12
       ],
-      "support": 0.007405,
-      "confidence": 0.503093,
-      "lift": 12.7904
+      "support": 0.007601,
+      "confidence": 0.504016,
+      "lift": 12.8431
     },
     {
       "antecedent": [
-        33
+        34
       ],
       "consequent": [
         11
       ],
-      "support": 0.011108,
+      "support": 0.011083,
       "confidence": 0.535871,
-      "lift": 12.7208
+      "lift": 12.7497
     },
     {
       "antecedent": [
-        7,
-        29
-      ],
-      "consequent": [
-        103
-      ],
-      "support": 0.011563,
-      "confidence": 0.478643,
-      "lift": 12.3499
-    },
-    {
-      "antecedent": [
-        0,
+        1,
         10
       ],
       "consequent": [
         18
       ],
-      "support": 0.005372,
-      "confidence": 0.3583,
-      "lift": 12.2338
+      "support": 0.00542,
+      "confidence": 0.360887,
+      "lift": 12.3502
     },
     {
       "antecedent": [
-        1,
-        6
+        0,
+        7
       ],
       "consequent": [
+        5
+      ],
+      "support": 0.00539,
+      "confidence": 0.498599,
+      "lift": 12.3062
+    },
+    {
+      "antecedent": [
+        0,
+        27
+      ],
+      "consequent": [
+        12
+      ],
+      "support": 0.010144,
+      "confidence": 0.477889,
+      "lift": 12.1773
+    },
+    {
+      "antecedent": [
+        8,
         9
       ],
-      "support": 0.00522,
-      "confidence": 0.485876,
-      "lift": 12.1835
-    },
-    {
-      "antecedent": [
-        1,
-        9,
-        12
-      ],
       "consequent": [
-        38
+        17
       ],
-      "support": 0.006373,
-      "confidence": 0.316742,
-      "lift": 12.0931
+      "support": 0.005087,
+      "confidence": 0.46281,
+      "lift": 12.0725
     },
     {
       "antecedent": [
-        1,
-        25
+        27
       ],
       "consequent": [
         12
       ],
-      "support": 0.010046,
-      "confidence": 0.475575,
-      "lift": 12.0908
+      "support": 0.011234,
+      "confidence": 0.472611,
+      "lift": 12.0428
     },
     {
       "antecedent": [
-        7,
-        8
-      ],
-      "consequent": [
+        1,
         16
       ],
-      "support": 0.005038,
-      "confidence": 0.462396,
-      "lift": 12.0343
-    },
-    {
-      "antecedent": [
-        25
-      ],
       "consequent": [
-        12
+        19
       ],
-      "support": 0.01126,
-      "confidence": 0.472611,
-      "lift": 12.0155
+      "support": 0.005905,
+      "confidence": 0.33913,
+      "lift": 11.9908
     },
     {
       "antecedent": [
-        69
+        70
       ],
       "consequent": [
         2
       ],
-      "support": 0.008832,
+      "support": 0.008812,
       "confidence": 0.84593,
-      "lift": 11.9573
+      "lift": 11.9846
     },
     {
       "antecedent": [
         0,
-        15
-      ],
-      "consequent": [
-        19
-      ],
-      "support": 0.005858,
-      "confidence": 0.338004,
-      "lift": 11.9239
-    },
-    {
-      "antecedent": [
-        1,
-        5
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.00695,
-      "confidence": 0.462626,
-      "lift": 11.7616
-    },
-    {
-      "antecedent": [
-        9,
+        5,
         12
       ],
       "consequent": [
         38
       ],
-      "support": 0.00692,
-      "confidence": 0.306864,
-      "lift": 11.7159
+      "support": 0.00642,
+      "confidence": 0.312224,
+      "lift": 11.9477
+    },
+    {
+      "antecedent": [
+        0,
+        6
+      ],
+      "consequent": [
+        12
+      ],
+      "support": 0.006995,
+      "confidence": 0.463855,
+      "lift": 11.8197
+    },
+    {
+      "antecedent": [
+        8,
+        31
+      ],
+      "consequent": [
+        72
+      ],
+      "support": 0.011174,
+      "confidence": 0.463568,
+      "lift": 11.7399
+    },
+    {
+      "antecedent": [
+        5,
+        12
+      ],
+      "consequent": [
+        38
+      ],
+      "support": 0.006965,
+      "confidence": 0.304636,
+      "lift": 11.6573
     },
     {
       "antecedent": [
         19
       ],
       "consequent": [
-        15
+        16
       ],
-      "support": 0.011594,
+      "support": 0.011567,
       "confidence": 0.408994,
-      "lift": 11.5475
+      "lift": 11.5738
     },
     {
       "antecedent": [
-        15
+        16
       ],
       "consequent": [
         19
       ],
-      "support": 0.011594,
+      "support": 0.011567,
       "confidence": 0.327335,
-      "lift": 11.5475
+      "lift": 11.5738
     },
     {
       "antecedent": [
-        0,
-        103
+        1,
+        72
       ],
       "consequent": [
-        29
+        31
       ],
-      "support": 0.006495,
-      "confidence": 0.750877,
-      "lift": 11.2765
+      "support": 0.00645,
+      "confidence": 0.75265,
+      "lift": 11.3289
     },
     {
       "antecedent": [
-        0,
+        1,
         10
       ],
       "consequent": [
         11
       ],
-      "support": 0.007072,
-      "confidence": 0.47166,
-      "lift": 11.1965
+      "support": 0.007055,
+      "confidence": 0.469758,
+      "lift": 11.1767
     },
     {
       "antecedent": [
         35
       ],
       "consequent": [
-        8
+        9
       ],
-      "support": 0.007345,
-      "confidence": 0.425308,
-      "lift": 11.1483
+      "support": 0.00754,
+      "confidence": 0.43761,
+      "lift": 11.1682
     },
     {
       "antecedent": [
@@ -2587,20 +1426,9 @@
       "consequent": [
         14
       ],
-      "support": 0.0061,
-      "confidence": 0.62037,
-      "lift": 10.9308
-    },
-    {
-      "antecedent": [
-        212
-      ],
-      "consequent": [
-        67
-      ],
-      "support": 0.005251,
-      "confidence": 0.454068,
-      "lift": 10.8022
+      "support": 0.006268,
+      "confidence": 0.638889,
+      "lift": 11.1456
     },
     {
       "antecedent": [
@@ -2609,487 +1437,301 @@
       "consequent": [
         2
       ],
-      "support": 0.005584,
+      "support": 0.005572,
       "confidence": 0.747967,
-      "lift": 10.5726
+      "lift": 10.5967
     },
     {
       "antecedent": [
-        0,
-        29
+        95
       ],
       "consequent": [
-        103
+        14
       ],
-      "support": 0.006495,
-      "confidence": 0.403013,
-      "lift": 10.3985
+      "support": 0.005753,
+      "confidence": 0.601266,
+      "lift": 10.4893
     },
     {
       "antecedent": [
-        0,
-        7
+        1,
+        31
       ],
       "consequent": [
-        103
+        72
       ],
-      "support": 0.006282,
-      "confidence": 0.395793,
-      "lift": 10.2122
+      "support": 0.00645,
+      "confidence": 0.40113,
+      "lift": 10.1587
     },
     {
       "antecedent": [
-        0,
+        47
+      ],
+      "consequent": [
+        9
+      ],
+      "support": 0.005208,
+      "confidence": 0.395402,
+      "lift": 10.091
+    },
+    {
+      "antecedent": [
+        1,
         11
       ],
       "consequent": [
         10
       ],
-      "support": 0.007072,
-      "confidence": 0.464143,
-      "lift": 9.9759
+      "support": 0.007055,
+      "confidence": 0.460474,
+      "lift": 9.9196
     },
     {
       "antecedent": [
-        46
-      ],
-      "consequent": [
+        1,
         8
       ],
-      "support": 0.005008,
-      "confidence": 0.37931,
-      "lift": 9.9426
-    },
-    {
-      "antecedent": [
-        38
-      ],
       "consequent": [
-        1,
-        9
+        72
       ],
-      "support": 0.008893,
-      "confidence": 0.339513,
-      "lift": 9.9348
-    },
-    {
-      "antecedent": [
-        7,
-        103
-      ],
-      "consequent": [
-        29
-      ],
-      "support": 0.011563,
-      "confidence": 0.63289,
-      "lift": 9.5046
-    },
-    {
-      "antecedent": [
-        38
-      ],
-      "consequent": [
-        9
-      ],
-      "support": 0.009833,
-      "confidence": 0.375435,
-      "lift": 9.4141
-    },
-    {
-      "antecedent": [
-        206
-      ],
-      "consequent": [
-        67
-      ],
-      "support": 0.00695,
-      "confidence": 0.392796,
-      "lift": 9.3446
-    },
-    {
-      "antecedent": [
-        9,
-        56
-      ],
-      "consequent": [
-        5
-      ],
-      "support": 0.006252,
-      "confidence": 0.600583,
-      "lift": 9.3167
-    },
-    {
-      "antecedent": [
-        7,
-        16
-      ],
-      "consequent": [
-        4
-      ],
-      "support": 0.018756,
-      "confidence": 0.778338,
-      "lift": 9.3121
-    },
-    {
-      "antecedent": [
-        1,
-        9,
-        56
-      ],
-      "consequent": [
-        5
-      ],
-      "support": 0.00607,
-      "confidence": 0.597015,
-      "lift": 9.2613
-    },
-    {
-      "antecedent": [
-        1,
-        56
-      ],
-      "consequent": [
-        5
-      ],
-      "support": 0.0061,
-      "confidence": 0.594675,
-      "lift": 9.225
-    },
-    {
-      "antecedent": [
-        0,
-        29,
-        103
-      ],
-      "consequent": [
-        7
-      ],
-      "support": 0.005766,
-      "confidence": 0.88785,
-      "lift": 9.2138
-    },
-    {
-      "antecedent": [
-        34
-      ],
-      "consequent": [
-        8
-      ],
-      "support": 0.005918,
-      "confidence": 0.35009,
-      "lift": 9.1767
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        5
-      ],
-      "support": 0.006282,
-      "confidence": 0.589744,
-      "lift": 9.1485
-    },
-    {
-      "antecedent": [
-        12,
-        25,
-        56
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.005159,
-      "confidence": 0.994152,
-      "lift": 9.0939
-    },
-    {
-      "antecedent": [
-        9,
-        12,
-        25,
-        56
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.005159,
-      "confidence": 0.994152,
-      "lift": 9.0939
-    },
-    {
-      "antecedent": [
-        25,
-        56
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.007072,
-      "confidence": 0.991489,
-      "lift": 9.0696
-    },
-    {
-      "antecedent": [
-        9,
-        25,
-        56
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.007011,
-      "confidence": 0.991416,
-      "lift": 9.0689
-    },
-    {
-      "antecedent": [
-        12,
-        56
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.007618,
-      "confidence": 0.988189,
-      "lift": 9.0394
-    },
-    {
-      "antecedent": [
-        9,
-        12,
-        56
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.007618,
-      "confidence": 0.988189,
-      "lift": 9.0394
-    },
-    {
-      "antecedent": [
-        5,
-        25
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.005038,
-      "confidence": 0.982249,
-      "lift": 8.985
-    },
-    {
-      "antecedent": [
-        9,
-        56
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.010167,
-      "confidence": 0.976676,
-      "lift": 8.9341
-    },
-    {
-      "antecedent": [
-        5,
-        9,
-        12
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.006252,
-      "confidence": 0.971698,
-      "lift": 8.8885
-    },
-    {
-      "antecedent": [
-        5,
-        56
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.0061,
-      "confidence": 0.971014,
-      "lift": 8.8823
-    },
-    {
-      "antecedent": [
-        5,
-        9,
-        56
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.00607,
-      "confidence": 0.970874,
-      "lift": 8.881
-    },
-    {
-      "antecedent": [
-        38
-      ],
-      "consequent": [
-        12
-      ],
-      "support": 0.009135,
-      "confidence": 0.348783,
-      "lift": 8.8673
-    },
-    {
-      "antecedent": [
-        56
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.010258,
-      "confidence": 0.962963,
-      "lift": 8.8086
-    },
-    {
-      "antecedent": [
-        16
-      ],
-      "consequent": [
-        4
-      ],
-      "support": 0.028195,
-      "confidence": 0.733807,
-      "lift": 8.7793
-    },
-    {
-      "antecedent": [
-        4
-      ],
-      "consequent": [
-        16
-      ],
-      "support": 0.028195,
-      "confidence": 0.337328,
-      "lift": 8.7793
-    },
-    {
-      "antecedent": [
-        5,
-        9
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.008893,
-      "confidence": 0.957516,
-      "lift": 8.7588
-    },
-    {
-      "antecedent": [
-        9,
-        12,
-        25
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.008407,
-      "confidence": 0.955172,
-      "lift": 8.7374
-    },
-    {
-      "antecedent": [
-        9,
-        25
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.012959,
-      "confidence": 0.953125,
-      "lift": 8.7186
-    },
-    {
-      "antecedent": [
-        11
-      ],
-      "consequent": [
-        10
-      ],
-      "support": 0.017087,
-      "confidence": 0.40562,
-      "lift": 8.718
-    },
-    {
-      "antecedent": [
-        10
-      ],
-      "consequent": [
-        11
-      ],
-      "support": 0.017087,
-      "confidence": 0.367254,
-      "lift": 8.718
+      "support": 0.006177,
+      "confidence": 0.388571,
+      "lift": 9.8406
     },
     {
       "antecedent": [
         8,
-        16
-      ],
-      "consequent": [
-        7
-      ],
-      "support": 0.005038,
-      "confidence": 0.834171,
-      "lift": 8.6567
-    },
-    {
-      "antecedent": [
         72
       ],
       "consequent": [
-        29
+        31
       ],
-      "support": 0.008316,
-      "confidence": 0.57563,
-      "lift": 8.6447
+      "support": 0.011174,
+      "confidence": 0.650794,
+      "lift": 9.7957
     },
     {
       "antecedent": [
-        9,
-        59
+        38
       ],
       "consequent": [
-        1
+        0,
+        5
       ],
-      "support": 0.005645,
-      "confidence": 0.944162,
-      "lift": 8.6366
+      "support": 0.008963,
+      "confidence": 0.34299,
+      "lift": 9.7646
     },
     {
       "antecedent": [
+        38
+      ],
+      "consequent": [
+        5
+      ],
+      "support": 0.009902,
+      "confidence": 0.378911,
+      "lift": 9.3521
+    },
+    {
+      "antecedent": [
+        8,
+        17
+      ],
+      "consequent": [
+        4
+      ],
+      "support": 0.018714,
+      "confidence": 0.778338,
+      "lift": 9.3333
+    },
+    {
+      "antecedent": [
+        1,
+        31,
+        72
+      ],
+      "consequent": [
+        8
+      ],
+      "support": 0.005753,
+      "confidence": 0.892019,
+      "lift": 9.2781
+    },
+    {
+      "antecedent": [
+        23
+      ],
+      "consequent": [
+        9
+      ],
+      "support": 0.007479,
+      "confidence": 0.355908,
+      "lift": 9.0831
+    },
+    {
+      "antecedent": [
+        6,
         27
+      ],
+      "consequent": [
+        0
+      ],
+      "support": 0.005027,
+      "confidence": 0.982249,
+      "lift": 8.9213
+    },
+    {
+      "antecedent": [
+        38
+      ],
+      "consequent": [
+        12
+      ],
+      "support": 0.009115,
+      "confidence": 0.348783,
+      "lift": 8.8875
+    },
+    {
+      "antecedent": [
+        5,
+        6,
+        12
+      ],
+      "consequent": [
+        0
+      ],
+      "support": 0.006298,
+      "confidence": 0.971963,
+      "lift": 8.8279
+    },
+    {
+      "antecedent": [
+        17
+      ],
+      "consequent": [
+        4
+      ],
+      "support": 0.028131,
+      "confidence": 0.733807,
+      "lift": 8.7993
+    },
+    {
+      "antecedent": [
+        4
+      ],
+      "consequent": [
+        17
+      ],
+      "support": 0.028131,
+      "confidence": 0.337328,
+      "lift": 8.7993
+    },
+    {
+      "antecedent": [
+        5,
+        12,
+        27
+      ],
+      "consequent": [
+        0
+      ],
+      "support": 0.008448,
+      "confidence": 0.962069,
+      "lift": 8.738
+    },
+    {
+      "antecedent": [
+        11
+      ],
+      "consequent": [
+        10
+      ],
+      "support": 0.017048,
+      "confidence": 0.40562,
+      "lift": 8.7379
+    },
+    {
+      "antecedent": [
+        10
+      ],
+      "consequent": [
+        11
+      ],
+      "support": 0.017048,
+      "confidence": 0.367254,
+      "lift": 8.7379
+    },
+    {
+      "antecedent": [
+        5,
+        6
+      ],
+      "consequent": [
+        0
+      ],
+      "support": 0.009024,
+      "confidence": 0.958199,
+      "lift": 8.7029
+    },
+    {
+      "antecedent": [
+        5,
+        27
+      ],
+      "consequent": [
+        0
+      ],
+      "support": 0.013112,
+      "confidence": 0.957965,
+      "lift": 8.7007
+    },
+    {
+      "antecedent": [
+        74
+      ],
+      "consequent": [
+        31
+      ],
+      "support": 0.008297,
+      "confidence": 0.57563,
+      "lift": 8.6644
+    },
+    {
+      "antecedent": [
+        29
       ],
       "consequent": [
         2
       ],
-      "support": 0.011715,
+      "support": 0.011688,
       "confidence": 0.610759,
-      "lift": 8.6332
+      "lift": 8.6528
+    },
+    {
+      "antecedent": [
+        5,
+        15
+      ],
+      "consequent": [
+        0
+      ],
+      "support": 0.005299,
+      "confidence": 0.945946,
+      "lift": 8.5916
     },
     {
       "antecedent": [
         9,
-        12,
-        38
+        17
       ],
       "consequent": [
-        1
+        8
       ],
-      "support": 0.006373,
-      "confidence": 0.921053,
-      "lift": 8.4253
+      "support": 0.005087,
+      "confidence": 0.823529,
+      "lift": 8.5657
     },
     {
       "antecedent": [
@@ -3099,9 +1741,58 @@
       "consequent": [
         11
       ],
-      "support": 0.006434,
+      "support": 0.00642,
       "confidence": 0.353923,
-      "lift": 8.4016
+      "lift": 8.4207
+    },
+    {
+      "antecedent": [
+        5,
+        12,
+        38
+      ],
+      "consequent": [
+        0
+      ],
+      "support": 0.00642,
+      "confidence": 0.921739,
+      "lift": 8.3717
+    },
+    {
+      "antecedent": [
+        6,
+        12
+      ],
+      "consequent": [
+        0
+      ],
+      "support": 0.006995,
+      "confidence": 0.916667,
+      "lift": 8.3256
+    },
+    {
+      "antecedent": [
+        5,
+        38
+      ],
+      "consequent": [
+        0
+      ],
+      "support": 0.008963,
+      "confidence": 0.905199,
+      "lift": 8.2215
+    },
+    {
+      "antecedent": [
+        12,
+        27
+      ],
+      "consequent": [
+        0
+      ],
+      "support": 0.010144,
+      "confidence": 0.902965,
+      "lift": 8.2012
     },
     {
       "antecedent": [
@@ -3109,161 +1800,102 @@
         12
       ],
       "consequent": [
-        1
+        0
       ],
-      "support": 0.00695,
-      "confidence": 0.90873,
-      "lift": 8.3125
-    },
-    {
-      "antecedent": [
-        9,
-        38
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.008893,
-      "confidence": 0.904321,
-      "lift": 8.2722
-    },
-    {
-      "antecedent": [
-        29,
-        103
-      ],
-      "consequent": [
-        7
-      ],
-      "support": 0.011563,
-      "confidence": 0.78882,
-      "lift": 8.1861
-    },
-    {
-      "antecedent": [
-        9,
-        12
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.020122,
-      "confidence": 0.892328,
-      "lift": 8.1625
-    },
-    {
-      "antecedent": [
-        12,
-        25
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.010046,
-      "confidence": 0.892183,
-      "lift": 8.1612
-    },
-    {
-      "antecedent": [
-        57
-      ],
-      "consequent": [
-        29
-      ],
-      "support": 0.011654,
-      "confidence": 0.540084,
-      "lift": 8.1109
-    },
-    {
-      "antecedent": [
-        25
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.021124,
-      "confidence": 0.886624,
-      "lift": 8.1103
-    },
-    {
-      "antecedent": [
-        25,
-        38
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.007436,
-      "confidence": 0.881295,
-      "lift": 8.0616
-    },
-    {
-      "antecedent": [
-        6,
-        9
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.00522,
-      "confidence": 0.868687,
-      "lift": 7.9462
+      "support": 0.020561,
+      "confidence": 0.899338,
+      "lift": 8.1682
     },
     {
       "antecedent": [
         59
       ],
       "consequent": [
-        1
+        31
       ],
-      "support": 0.008194,
-      "confidence": 0.868167,
-      "lift": 7.9415
+      "support": 0.011628,
+      "confidence": 0.540084,
+      "lift": 8.1293
     },
     {
       "antecedent": [
-        9
+        27
       ],
       "consequent": [
-        1
+        0
       ],
-      "support": 0.034174,
-      "confidence": 0.856925,
-      "lift": 7.8387
+      "support": 0.021227,
+      "confidence": 0.892994,
+      "lift": 8.1106
     },
     {
       "antecedent": [
-        1
+        27,
+        38
       ],
       "consequent": [
-        9
+        0
       ],
-      "support": 0.034174,
-      "confidence": 0.312604,
-      "lift": 7.8387
+      "support": 0.00751,
+      "confidence": 0.892086,
+      "lift": 8.1024
     },
     {
       "antecedent": [
-        75
+        207
       ],
       "consequent": [
+        49
+      ],
+      "support": 0.005269,
+      "confidence": 0.456693,
+      "lift": 8.0651
+    },
+    {
+      "antecedent": [
+        31,
+        72
+      ],
+      "consequent": [
+        8
+      ],
+      "support": 0.011174,
+      "confidence": 0.77521,
+      "lift": 8.0632
+    },
+    {
+      "antecedent": [
+        5,
         7
       ],
-      "support": 0.008407,
-      "confidence": 0.727034,
-      "lift": 7.5449
+      "consequent": [
+        0
+      ],
+      "support": 0.00539,
+      "confidence": 0.881188,
+      "lift": 8.0034
     },
     {
       "antecedent": [
-        0,
-        103
+        5
       ],
       "consequent": [
-        7
+        0
       ],
-      "support": 0.006282,
-      "confidence": 0.726316,
-      "lift": 7.5374
+      "support": 0.035126,
+      "confidence": 0.866966,
+      "lift": 7.8742
+    },
+    {
+      "antecedent": [
+        0
+      ],
+      "consequent": [
+        5
+      ],
+      "support": 0.035126,
+      "confidence": 0.319032,
+      "lift": 7.8742
     },
     {
       "antecedent": [
@@ -3271,326 +1903,338 @@
         38
       ],
       "consequent": [
-        1
+        0
       ],
-      "support": 0.007405,
-      "confidence": 0.810631,
-      "lift": 7.4152
+      "support": 0.007601,
+      "confidence": 0.833887,
+      "lift": 7.5738
     },
     {
       "antecedent": [
-        0,
-        7
+        77
       ],
       "consequent": [
-        29
+        8
       ],
-      "support": 0.007618,
-      "confidence": 0.479924,
-      "lift": 7.2074
+      "support": 0.008388,
+      "confidence": 0.727034,
+      "lift": 7.5621
     },
     {
       "antecedent": [
-        65
+        1,
+        72
+      ],
+      "consequent": [
+        8
+      ],
+      "support": 0.006177,
+      "confidence": 0.720848,
+      "lift": 7.4977
+    },
+    {
+      "antecedent": [
+        1,
+        8
+      ],
+      "consequent": [
+        31
+      ],
+      "support": 0.007601,
+      "confidence": 0.478095,
+      "lift": 7.1963
+    },
+    {
+      "antecedent": [
+        201
+      ],
+      "consequent": [
+        49
+      ],
+      "support": 0.007025,
+      "confidence": 0.397942,
+      "lift": 7.0276
+    },
+    {
+      "antecedent": [
+        66
       ],
       "consequent": [
         2
       ],
-      "support": 0.006343,
+      "support": 0.006329,
       "confidence": 0.489461,
-      "lift": 6.9186
+      "lift": 6.9344
     },
     {
       "antecedent": [
         4,
-        16
+        17
       ],
       "consequent": [
-        7
-      ],
-      "support": 0.018756,
-      "confidence": 0.665231,
-      "lift": 6.9035
-    },
-    {
-      "antecedent": [
-        248
-      ],
-      "consequent": [
-        43
-      ],
-      "support": 0.007679,
-      "confidence": 0.432479,
-      "lift": 6.8574
-    },
-    {
-      "antecedent": [
-        46
-      ],
-      "consequent": [
-        4
-      ],
-      "support": 0.007557,
-      "confidence": 0.572414,
-      "lift": 6.8484
-    },
-    {
-      "antecedent": [
-        109
-      ],
-      "consequent": [
-        39
-      ],
-      "support": 0.006313,
-      "confidence": 0.354344,
-      "lift": 6.7215
-    },
-    {
-      "antecedent": [
-        7,
         8
       ],
+      "support": 0.018714,
+      "confidence": 0.665231,
+      "lift": 6.9192
+    },
+    {
+      "antecedent": [
+        244
+      ],
+      "consequent": [
+        44
+      ],
+      "support": 0.007661,
+      "confidence": 0.432479,
+      "lift": 6.873
+    },
+    {
+      "antecedent": [
+        47
+      ],
       "consequent": [
         4
       ],
-      "support": 0.00607,
-      "confidence": 0.557103,
-      "lift": 6.6652
+      "support": 0.00754,
+      "confidence": 0.572414,
+      "lift": 6.864
     },
     {
       "antecedent": [
-        16
+        8,
+        9
       ],
       "consequent": [
-        7
+        4
       ],
-      "support": 0.024098,
-      "confidence": 0.627172,
-      "lift": 6.5086
+      "support": 0.006177,
+      "confidence": 0.561983,
+      "lift": 6.7389
     },
     {
       "antecedent": [
-        248
+        110
       ],
       "consequent": [
         39
       ],
-      "support": 0.00604,
+      "support": 0.006298,
+      "confidence": 0.354344,
+      "lift": 6.7368
+    },
+    {
+      "antecedent": [
+        17
+      ],
+      "consequent": [
+        8
+      ],
+      "support": 0.024043,
+      "confidence": 0.627172,
+      "lift": 6.5234
+    },
+    {
+      "antecedent": [
+        244
+      ],
+      "consequent": [
+        39
+      ],
+      "support": 0.006026,
       "confidence": 0.340171,
-      "lift": 6.4527
+      "lift": 6.4674
     },
     {
       "antecedent": [
-        152
+        149
       ],
       "consequent": [
-        7
+        8
       ],
-      "support": 0.008225,
+      "support": 0.008206,
       "confidence": 0.608989,
-      "lift": 6.3199
-    },
-    {
-      "antecedent": [
-        27
-      ],
-      "consequent": [
-        13
-      ],
-      "support": 0.005797,
-      "confidence": 0.302215,
-      "lift": 6.2431
+      "lift": 6.3343
     },
     {
       "antecedent": [
         12
       ],
       "consequent": [
-        1
+        0
       ],
-      "support": 0.026769,
-      "confidence": 0.680556,
-      "lift": 6.2253
+      "support": 0.027102,
+      "confidence": 0.690586,
+      "lift": 6.2723
+    },
+    {
+      "antecedent": [
+        29
+      ],
+      "consequent": [
+        13
+      ],
+      "support": 0.005784,
+      "confidence": 0.302215,
+      "lift": 6.2573
     },
     {
       "antecedent": [
         4,
-        23
+        24
       ],
       "consequent": [
-        7
+        8
       ],
-      "support": 0.005159,
+      "support": 0.005148,
       "confidence": 0.596491,
-      "lift": 6.1902
+      "lift": 6.2043
     },
     {
       "antecedent": [
         14,
-        103
+        72
       ],
       "consequent": [
-        7
+        8
       ],
-      "support": 0.005736,
-      "confidence": 0.583333,
-      "lift": 6.0536
+      "support": 0.005632,
+      "confidence": 0.58125,
+      "lift": 6.0457
     },
     {
       "antecedent": [
-        690
+        662
       ],
       "consequent": [
-        29
+        31
       ],
-      "support": 0.005342,
+      "support": 0.005329,
       "confidence": 0.399093,
-      "lift": 5.9935
+      "lift": 6.0071
     },
     {
       "antecedent": [
-        103
-      ],
-      "consequent": [
-        29
-      ],
-      "support": 0.014659,
-      "confidence": 0.37823,
-      "lift": 5.6802
-    },
-    {
-      "antecedent": [
-        81
-      ],
-      "consequent": [
-        4
-      ],
-      "support": 0.007072,
-      "confidence": 0.47166,
-      "lift": 5.643
-    },
-    {
-      "antecedent": [
-        7,
-        103
+        8,
+        72
       ],
       "consequent": [
         14
       ],
-      "support": 0.005736,
-      "confidence": 0.313953,
-      "lift": 5.5318
+      "support": 0.005632,
+      "confidence": 0.328042,
+      "lift": 5.7228
     },
     {
       "antecedent": [
-        81
-      ],
-      "consequent": [
-        7
-      ],
-      "support": 0.007952,
-      "confidence": 0.530364,
-      "lift": 5.5039
-    },
-    {
-      "antecedent": [
-        68
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.006556,
-      "confidence": 0.601671,
-      "lift": 5.5037
-    },
-    {
-      "antecedent": [
-        54
+        82
       ],
       "consequent": [
         4
       ],
-      "support": 0.006009,
-      "confidence": 0.443946,
-      "lift": 5.3114
+      "support": 0.007055,
+      "confidence": 0.47166,
+      "lift": 5.6558
     },
     {
       "antecedent": [
-        134
+        40
+      ],
+      "consequent": [
+        4
+      ],
+      "support": 0.007722,
+      "confidence": 0.467033,
+      "lift": 5.6003
+    },
+    {
+      "antecedent": [
+        82
+      ],
+      "consequent": [
+        8
+      ],
+      "support": 0.007934,
+      "confidence": 0.530364,
+      "lift": 5.5165
+    },
+    {
+      "antecedent": [
+        72
+      ],
+      "consequent": [
+        31
+      ],
+      "support": 0.014414,
+      "confidence": 0.365031,
+      "lift": 5.4944
+    },
+    {
+      "antecedent": [
+        69
+      ],
+      "consequent": [
+        0
+      ],
+      "support": 0.006541,
+      "confidence": 0.601671,
+      "lift": 5.4647
+    },
+    {
+      "antecedent": [
+        132
       ],
       "consequent": [
         3
       ],
-      "support": 0.006404,
-      "confidence": 0.562667,
-      "lift": 5.2939
-    },
-    {
-      "antecedent": [
-        34
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.009651,
-      "confidence": 0.570916,
-      "lift": 5.2224
+      "support": 0.006541,
+      "confidence": 0.576,
+      "lift": 5.3507
     },
     {
       "antecedent": [
         38
       ],
       "consequent": [
-        1
-      ],
-      "support": 0.01472,
-      "confidence": 0.561993,
-      "lift": 5.1408
-    },
-    {
-      "antecedent": [
-        53
-      ],
-      "consequent": [
-        7
-      ],
-      "support": 0.015752,
-      "confidence": 0.491477,
-      "lift": 5.1004
-    },
-    {
-      "antecedent": [
-        100
-      ],
-      "consequent": [
         0
       ],
-      "support": 0.006191,
-      "confidence": 0.752768,
-      "lift": 4.9115
+      "support": 0.01508,
+      "confidence": 0.577057,
+      "lift": 5.2411
     },
     {
       "antecedent": [
-        0,
-        29
+        101
       ],
       "consequent": [
-        7
+        1
       ],
-      "support": 0.007618,
+      "support": 0.006571,
+      "confidence": 0.800738,
+      "lift": 5.1962
+    },
+    {
+      "antecedent": [
+        56
+      ],
+      "consequent": [
+        8
+      ],
+      "support": 0.015716,
+      "confidence": 0.491477,
+      "lift": 5.112
+    },
+    {
+      "antecedent": [
+        1,
+        31
+      ],
+      "consequent": [
+        8
+      ],
+      "support": 0.007601,
       "confidence": 0.472693,
-      "lift": 4.9054
-    },
-    {
-      "antecedent": [
-        103
-      ],
-      "consequent": [
-        7
-      ],
-      "support": 0.018271,
-      "confidence": 0.471417,
-      "lift": 4.8922
+      "lift": 4.9166
     },
     {
       "antecedent": [
@@ -3599,304 +2243,325 @@
       "consequent": [
         4
       ],
-      "support": 0.007041,
+      "support": 0.007025,
       "confidence": 0.407733,
-      "lift": 4.8781
+      "lift": 4.8892
     },
     {
       "antecedent": [
-        23,
-        29
-      ],
-      "consequent": [
-        7
-      ],
-      "support": 0.005008,
-      "confidence": 0.466102,
-      "lift": 4.837
-    },
-    {
-      "antecedent": [
-        1,
-        9,
+        0,
+        5,
         12
       ],
       "consequent": [
-        5
+        6
       ],
-      "support": 0.006252,
-      "confidence": 0.310709,
-      "lift": 4.8199
+      "support": 0.006298,
+      "confidence": 0.306333,
+      "lift": 4.7428
     },
     {
       "antecedent": [
-        1,
+        16,
+        75
+      ],
+      "consequent": [
+        1
+      ],
+      "support": 0.005329,
+      "confidence": 0.727273,
+      "lift": 4.7195
+    },
+    {
+      "antecedent": [
+        0,
         4
       ],
       "consequent": [
-        7
-      ],
-      "support": 0.005584,
-      "confidence": 0.456576,
-      "lift": 4.7382
-    },
-    {
-      "antecedent": [
-        15,
-        73
-      ],
-      "consequent": [
-        0
-      ],
-      "support": 0.005251,
-      "confidence": 0.714876,
-      "lift": 4.6642
-    },
-    {
-      "antecedent": [
-        73
-      ],
-      "consequent": [
-        0
-      ],
-      "support": 0.008437,
-      "confidence": 0.714653,
-      "lift": 4.6628
-    },
-    {
-      "antecedent": [
-        4,
         8
       ],
-      "consequent": [
-        7
-      ],
-      "support": 0.00607,
-      "confidence": 0.437637,
-      "lift": 4.5416
-    },
-    {
-      "antecedent": [
-        90
-      ],
-      "consequent": [
-        3
-      ],
-      "support": 0.005615,
-      "confidence": 0.474359,
-      "lift": 4.4631
-    },
-    {
-      "antecedent": [
-        61
-      ],
-      "consequent": [
-        3
-      ],
-      "support": 0.008923,
-      "confidence": 0.471154,
-      "lift": 4.4329
-    },
-    {
-      "antecedent": [
-        66
-      ],
-      "consequent": [
-        0
-      ],
-      "support": 0.009712,
-      "confidence": 0.668058,
-      "lift": 4.3588
-    },
-    {
-      "antecedent": [
-        8
-      ],
-      "consequent": [
-        4
-      ],
-      "support": 0.01387,
-      "confidence": 0.363564,
-      "lift": 4.3497
-    },
-    {
-      "antecedent": [
-        55
-      ],
-      "consequent": [
-        0
-      ],
-      "support": 0.00865,
-      "confidence": 0.636161,
-      "lift": 4.1507
-    },
-    {
-      "antecedent": [
-        55
-      ],
-      "consequent": [
-        3
-      ],
-      "support": 0.005706,
-      "confidence": 0.419643,
-      "lift": 3.9483
+      "support": 0.005602,
+      "confidence": 0.452323,
+      "lift": 4.7047
     },
     {
       "antecedent": [
         23
       ],
       "consequent": [
-        7
-      ],
-      "support": 0.018331,
-      "confidence": 0.376794,
-      "lift": 3.9102
-    },
-    {
-      "antecedent": [
-        152
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.005615,
-      "confidence": 0.41573,
-      "lift": 3.8029
-    },
-    {
-      "antecedent": [
-        29
-      ],
-      "consequent": [
-        7
-      ],
-      "support": 0.024159,
-      "confidence": 0.362808,
-      "lift": 3.7651
-    },
-    {
-      "antecedent": [
-        4
-      ],
-      "consequent": [
-        7
-      ],
-      "support": 0.030107,
-      "confidence": 0.360203,
-      "lift": 3.7381
-    },
-    {
-      "antecedent": [
-        7
-      ],
-      "consequent": [
-        4
-      ],
-      "support": 0.030107,
-      "confidence": 0.312441,
-      "lift": 3.7381
-    },
-    {
-      "antecedent": [
-        58
-      ],
-      "consequent": [
-        3
-      ],
-      "support": 0.007557,
-      "confidence": 0.381902,
-      "lift": 3.5932
-    },
-    {
-      "antecedent": [
-        74
-      ],
-      "consequent": [
-        3
-      ],
-      "support": 0.006191,
-      "confidence": 0.373626,
-      "lift": 3.5153
-    },
-    {
-      "antecedent": [
-        27
-      ],
-      "consequent": [
-        1
-      ],
-      "support": 0.007193,
-      "confidence": 0.375,
-      "lift": 3.4303
-    },
-    {
-      "antecedent": [
-        62
-      ],
-      "consequent": [
         0
       ],
-      "support": 0.006525,
-      "confidence": 0.509479,
-      "lift": 3.3241
+      "support": 0.010871,
+      "confidence": 0.517291,
+      "lift": 4.6983
     },
     {
       "antecedent": [
-        17
+        75
       ],
       "consequent": [
         1
       ],
-      "support": 0.008984,
-      "confidence": 0.361416,
-      "lift": 3.306
-    },
-    {
-      "antecedent": [
-        15,
-        19
-      ],
-      "consequent": [
-        0
-      ],
-      "support": 0.005858,
-      "confidence": 0.505236,
-      "lift": 3.2964
+      "support": 0.008509,
+      "confidence": 0.722365,
+      "lift": 4.6876
     },
     {
       "antecedent": [
         90
       ],
       "consequent": [
-        0
+        3
       ],
-      "support": 0.005979,
-      "confidence": 0.505128,
-      "lift": 3.2957
+      "support": 0.005753,
+      "confidence": 0.487179,
+      "lift": 4.5256
     },
     {
       "antecedent": [
-        66
+        72
+      ],
+      "consequent": [
+        8
+      ],
+      "support": 0.017169,
+      "confidence": 0.434816,
+      "lift": 4.5226
+    },
+    {
+      "antecedent": [
+        62
       ],
       "consequent": [
         3
       ],
-      "support": 0.005068,
-      "confidence": 0.348643,
-      "lift": 3.2803
+      "support": 0.009145,
+      "confidence": 0.483974,
+      "lift": 4.4959
     },
     {
       "antecedent": [
-        7,
-        29,
-        103
+        4,
+        9
+      ],
+      "consequent": [
+        8
+      ],
+      "support": 0.006177,
+      "confidence": 0.426778,
+      "lift": 4.439
+    },
+    {
+      "antecedent": [
+        9
+      ],
+      "consequent": [
+        4
+      ],
+      "support": 0.014474,
+      "confidence": 0.369397,
+      "lift": 4.4295
+    },
+    {
+      "antecedent": [
+        67
+      ],
+      "consequent": [
+        1
+      ],
+      "support": 0.00969,
+      "confidence": 0.668058,
+      "lift": 4.3352
+    },
+    {
+      "antecedent": [
+        57
+      ],
+      "consequent": [
+        1
+      ],
+      "support": 0.00866,
+      "confidence": 0.638393,
+      "lift": 4.1427
+    },
+    {
+      "antecedent": [
+        24
+      ],
+      "consequent": [
+        8
+      ],
+      "support": 0.01829,
+      "confidence": 0.376794,
+      "lift": 3.9191
+    },
+    {
+      "antecedent": [
+        57
+      ],
+      "consequent": [
+        3
+      ],
+      "support": 0.005723,
+      "confidence": 0.421875,
+      "lift": 3.919
+    },
+    {
+      "antecedent": [
+        149
       ],
       "consequent": [
         0
       ],
-      "support": 0.005766,
-      "confidence": 0.498688,
-      "lift": 3.2537
+      "support": 0.005632,
+      "confidence": 0.417978,
+      "lift": 3.7963
+    },
+    {
+      "antecedent": [
+        31
+      ],
+      "consequent": [
+        8
+      ],
+      "support": 0.024104,
+      "confidence": 0.362808,
+      "lift": 3.7737
+    },
+    {
+      "antecedent": [
+        4
+      ],
+      "consequent": [
+        8
+      ],
+      "support": 0.030039,
+      "confidence": 0.360203,
+      "lift": 3.7466
+    },
+    {
+      "antecedent": [
+        8
+      ],
+      "consequent": [
+        4
+      ],
+      "support": 0.030039,
+      "confidence": 0.312441,
+      "lift": 3.7466
+    },
+    {
+      "antecedent": [
+        76
+      ],
+      "consequent": [
+        3
+      ],
+      "support": 0.00648,
+      "confidence": 0.391941,
+      "lift": 3.6409
+    },
+    {
+      "antecedent": [
+        60
+      ],
+      "consequent": [
+        3
+      ],
+      "support": 0.00757,
+      "confidence": 0.383436,
+      "lift": 3.5619
+    },
+    {
+      "antecedent": [
+        29
+      ],
+      "consequent": [
+        0
+      ],
+      "support": 0.007207,
+      "confidence": 0.376582,
+      "lift": 3.4203
+    },
+    {
+      "antecedent": [
+        23
+      ],
+      "consequent": [
+        8
+      ],
+      "support": 0.006753,
+      "confidence": 0.321326,
+      "lift": 3.3422
+    },
+    {
+      "antecedent": [
+        8,
+        31,
+        72
+      ],
+      "consequent": [
+        1
+      ],
+      "support": 0.005753,
+      "confidence": 0.514905,
+      "lift": 3.3414
+    },
+    {
+      "antecedent": [
+        16,
+        19
+      ],
+      "consequent": [
+        1
+      ],
+      "support": 0.005905,
+      "confidence": 0.510471,
+      "lift": 3.3126
+    },
+    {
+      "antecedent": [
+        63
+      ],
+      "consequent": [
+        1
+      ],
+      "support": 0.00651,
+      "confidence": 0.509479,
+      "lift": 3.3062
+    },
+    {
+      "antecedent": [
+        90
+      ],
+      "consequent": [
+        1
+      ],
+      "support": 0.005965,
+      "confidence": 0.505128,
+      "lift": 3.2779
+    },
+    {
+      "antecedent": [
+        67
+      ],
+      "consequent": [
+        3
+      ],
+      "support": 0.005117,
+      "confidence": 0.352818,
+      "lift": 3.2775
+    },
+    {
+      "antecedent": [
+        16
+      ],
+      "consequent": [
+        1
+      ],
+      "support": 0.017412,
+      "confidence": 0.492716,
+      "lift": 3.1974
     },
     {
       "antecedent": [
@@ -3905,54 +2570,54 @@
       "consequent": [
         0
       ],
-      "support": 0.01733,
-      "confidence": 0.489289,
-      "lift": 3.1924
+      "support": 0.00966,
+      "confidence": 0.348253,
+      "lift": 3.163
     },
     {
       "antecedent": [
         87
       ],
       "consequent": [
-        0
+        1
       ],
-      "support": 0.006586,
+      "support": 0.006571,
       "confidence": 0.451143,
-      "lift": 2.9435
+      "lift": 2.9276
     },
     {
       "antecedent": [
-        61
+        62
       ],
       "consequent": [
-        0
+        1
       ],
-      "support": 0.008498,
+      "support": 0.008479,
       "confidence": 0.448718,
-      "lift": 2.9277
+      "lift": 2.9119
     },
     {
       "antecedent": [
-        29,
-        103
+        31,
+        72
       ],
       "consequent": [
-        0
+        1
       ],
-      "support": 0.006495,
-      "confidence": 0.443064,
-      "lift": 2.8908
+      "support": 0.00645,
+      "confidence": 0.447479,
+      "lift": 2.9038
     },
     {
       "antecedent": [
-        109
+        110
       ],
       "consequent": [
-        0
+        1
       ],
-      "support": 0.007739,
+      "support": 0.007722,
       "confidence": 0.434412,
-      "lift": 2.8343
+      "lift": 2.819
     },
     {
       "antecedent": [
@@ -3960,90 +2625,90 @@
         11
       ],
       "consequent": [
-        0
+        1
       ],
-      "support": 0.007072,
+      "support": 0.007055,
       "confidence": 0.413854,
-      "lift": 2.7002
+      "lift": 2.6856
     },
     {
       "antecedent": [
-        74
+        76
       ],
       "consequent": [
-        0
+        1
       ],
-      "support": 0.006282,
+      "support": 0.006268,
       "confidence": 0.379121,
-      "lift": 2.4736
+      "lift": 2.4602
     },
     {
       "antecedent": [
         19
       ],
       "consequent": [
-        0
+        1
       ],
-      "support": 0.010471,
-      "confidence": 0.369379,
-      "lift": 2.41
+      "support": 0.010508,
+      "confidence": 0.37152,
+      "lift": 2.4109
     },
     {
       "antecedent": [
         11
       ],
       "consequent": [
-        0
+        1
       ],
-      "support": 0.015236,
-      "confidence": 0.361671,
-      "lift": 2.3597
+      "support": 0.015322,
+      "confidence": 0.364553,
+      "lift": 2.3657
     },
     {
       "antecedent": [
-        7,
-        103
+        8,
+        72
       ],
       "consequent": [
-        0
+        1
       ],
-      "support": 0.006282,
-      "confidence": 0.343854,
-      "lift": 2.2435
+      "support": 0.006177,
+      "confidence": 0.359788,
+      "lift": 2.3348
     },
     {
       "antecedent": [
-        6
+        7
       ],
       "consequent": [
-        0
+        1
       ],
-      "support": 0.016723,
-      "confidence": 0.330336,
-      "lift": 2.1553
+      "support": 0.016836,
+      "confidence": 0.333333,
+      "lift": 2.1631
     },
     {
       "antecedent": [
         10
       ],
       "consequent": [
-        0
+        1
       ],
-      "support": 0.014993,
-      "confidence": 0.322244,
-      "lift": 2.1025
+      "support": 0.015019,
+      "confidence": 0.323549,
+      "lift": 2.0996
     },
     {
       "antecedent": [
-        7,
-        29
+        8,
+        31
       ],
       "consequent": [
-        0
+        1
       ],
-      "support": 0.007618,
+      "support": 0.007601,
       "confidence": 0.315327,
-      "lift": 2.0574
+      "lift": 2.0462
     }
   ],
   "source": "rules-v1"

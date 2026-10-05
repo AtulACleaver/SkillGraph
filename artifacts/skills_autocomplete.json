@@ -1,19 +1,22 @@
 [
   {
     "id": 0,
-    "name": "python",
-    "display": "Python",
-    "aliases": [
-      "python"
-    ]
-  },
-  {
-    "id": 1,
     "name": "java",
     "display": "Java",
     "aliases": [
       "java",
-      "j2ee"
+      "java development",
+      "j2ee",
+      "javas"
+    ]
+  },
+  {
+    "id": 1,
+    "name": "python",
+    "display": "Python",
+    "aliases": [
+      "python",
+      "python development"
     ]
   },
   {
@@ -31,7 +34,8 @@
     "name": "sql",
     "display": "SQL",
     "aliases": [
-      "sql"
+      "sql",
+      "sql development"
     ]
   },
   {
@@ -44,6 +48,16 @@
   },
   {
     "id": 5,
+    "name": "spring boot",
+    "display": "Spring Boot",
+    "aliases": [
+      "spring boot",
+      "boot",
+      "springboot"
+    ]
+  },
+  {
+    "id": 6,
     "name": "development",
     "display": "Development",
     "aliases": [
@@ -51,7 +65,7 @@
     ]
   },
   {
-    "id": 6,
+    "id": 7,
     "name": "aws",
     "display": "AWS",
     "aliases": [
@@ -59,7 +73,7 @@
     ]
   },
   {
-    "id": 7,
+    "id": 8,
     "name": "css",
     "display": "CSS",
     "aliases": [
@@ -67,19 +81,13 @@
     ]
   },
   {
-    "id": 8,
+    "id": 9,
     "name": "react",
     "display": "React",
     "aliases": [
-      "reactjs"
-    ]
-  },
-  {
-    "id": 9,
-    "name": "spring boot",
-    "display": "Spring Boot",
-    "aliases": [
-      "spring boot"
+      "reactjs",
+      "reacts js",
+      "react js"
     ]
   },
   {
@@ -119,11 +127,23 @@
     "name": "sap",
     "display": "Sap",
     "aliases": [
-      "sap"
+      "sap",
+      "saps",
+      "sap development"
     ]
   },
   {
     "id": 15,
+    "name": "angular",
+    "display": "Angular",
+    "aliases": [
+      "angular",
+      "angularjs",
+      "angular development"
+    ]
+  },
+  {
+    "id": 16,
     "name": "ml",
     "display": "ML",
     "aliases": [
@@ -131,19 +151,11 @@
     ]
   },
   {
-    "id": 16,
+    "id": 17,
     "name": "html",
     "display": "HTML",
     "aliases": [
       "html"
-    ]
-  },
-  {
-    "id": 17,
-    "name": "angular",
-    "display": "Angular",
-    "aliases": [
-      "angular"
     ]
   },
   {
@@ -188,6 +200,15 @@
   },
   {
     "id": 23,
+    "name": "full stack",
+    "display": "Full Stack",
+    "aliases": [
+      "full stack",
+      "fullstack development"
+    ]
+  },
+  {
+    "id": 24,
     "name": "rest",
     "display": "Rest",
     "aliases": [
@@ -195,7 +216,7 @@
     ]
   },
   {
-    "id": 24,
+    "id": 25,
     "name": "microsoft azure",
     "display": "Microsoft Azure",
     "aliases": [
@@ -203,7 +224,16 @@
     ]
   },
   {
-    "id": 25,
+    "id": 26,
+    "name": "backend",
+    "display": "Backend",
+    "aliases": [
+      "backend",
+      "backend development"
+    ]
+  },
+  {
+    "id": 27,
     "name": "spring",
     "display": "Spring",
     "aliases": [
@@ -211,7 +241,7 @@
     ]
   },
   {
-    "id": 26,
+    "id": 28,
     "name": "cloud",
     "display": "Cloud",
     "aliases": [
@@ -219,7 +249,7 @@
     ]
   },
   {
-    "id": 27,
+    "id": 29,
     "name": "selenium",
     "display": "Selenium",
     "aliases": [
@@ -227,7 +257,7 @@
     ]
   },
   {
-    "id": 28,
+    "id": 30,
     "name": "git",
     "display": "Git",
     "aliases": [
@@ -235,7 +265,7 @@
     ]
   },
   {
-    "id": 29,
+    "id": 31,
     "name": "c#",
     "display": "C#",
     "aliases": [
@@ -243,15 +273,7 @@
     ]
   },
   {
-    "id": 30,
-    "name": "backend",
-    "display": "Backend",
-    "aliases": [
-      "backend"
-    ]
-  },
-  {
-    "id": 31,
+    "id": 32,
     "name": "oracle",
     "display": "Oracle",
     "aliases": [
@@ -259,7 +281,7 @@
     ]
   },
   {
-    "id": 32,
+    "id": 33,
     "name": "computer science",
     "display": "Computer Science",
     "aliases": [
@@ -267,19 +289,11 @@
     ]
   },
   {
-    "id": 33,
+    "id": 34,
     "name": "docker",
     "display": "Docker",
     "aliases": [
       "docker"
-    ]
-  },
-  {
-    "id": 34,
-    "name": "full stack",
-    "display": "Full Stack",
-    "aliases": [
-      "full stack"
     ]
   },
   {
@@ -324,6 +338,15 @@
   },
   {
     "id": 40,
+    "name": "front end",
+    "display": "Front End",
+    "aliases": [
+      "front end",
+      "frontend development"
+    ]
+  },
+  {
+    "id": 41,
     "name": "data",
     "display": "Data",
     "aliases": [
@@ -331,7 +354,7 @@
     ]
   },
   {
-    "id": 41,
+    "id": 42,
     "name": "debugging",
     "display": "Debugging",
     "aliases": [
@@ -339,7 +362,7 @@
     ]
   },
   {
-    "id": 42,
+    "id": 43,
     "name": "linux",
     "display": "Linux",
     "aliases": [
@@ -347,7 +370,7 @@
     ]
   },
   {
-    "id": 43,
+    "id": 44,
     "name": "project management",
     "display": "Project Management",
     "aliases": [
@@ -355,7 +378,7 @@
     ]
   },
   {
-    "id": 44,
+    "id": 45,
     "name": "c++",
     "display": "C++",
     "aliases": [
@@ -363,7 +386,7 @@
     ]
   },
   {
-    "id": 45,
+    "id": 46,
     "name": "postgresql",
     "display": "Postgresql",
     "aliases": [
@@ -371,7 +394,7 @@
     ]
   },
   {
-    "id": 46,
+    "id": 47,
     "name": "typescript",
     "display": "Typescript",
     "aliases": [
@@ -379,7 +402,7 @@
     ]
   },
   {
-    "id": 47,
+    "id": 48,
     "name": "coding",
     "display": "Coding",
     "aliases": [
@@ -387,7 +410,16 @@
     ]
   },
   {
-    "id": 48,
+    "id": 49,
+    "name": "software",
+    "display": "Software",
+    "aliases": [
+      "software development",
+      "software"
+    ]
+  },
+  {
+    "id": 50,
     "name": "mysql",
     "display": "Mysql",
     "aliases": [
@@ -395,7 +427,7 @@
     ]
   },
   {
-    "id": 49,
+    "id": 51,
     "name": "performance tuning",
     "display": "Performance Tuning",
     "aliases": [
@@ -403,7 +435,7 @@
     ]
   },
   {
-    "id": 50,
+    "id": 52,
     "name": "data modeling",
     "display": "Data Modeling",
     "aliases": [
@@ -411,7 +443,7 @@
     ]
   },
   {
-    "id": 51,
+    "id": 53,
     "name": "analytical",
     "display": "Analytical",
     "aliases": [
@@ -419,7 +451,7 @@
     ]
   },
   {
-    "id": 52,
+    "id": 54,
     "name": "api",
     "display": "Api",
     "aliases": [
@@ -427,7 +459,16 @@
     ]
   },
   {
-    "id": 53,
+    "id": 55,
+    "name": "servicenow",
+    "display": "Servicenow",
+    "aliases": [
+      "servicenow",
+      "servicenow development"
+    ]
+  },
+  {
+    "id": 56,
     "name": "web services",
     "display": "Web Services",
     "aliases": [
@@ -435,15 +476,7 @@
     ]
   },
   {
-    "id": 54,
-    "name": "front end",
-    "display": "Front End",
-    "aliases": [
-      "front end"
-    ]
-  },
-  {
-    "id": 55,
+    "id": 57,
     "name": "pyspark",
     "display": "Pyspark",
     "aliases": [
@@ -451,15 +484,15 @@
     ]
   },
   {
-    "id": 56,
-    "name": "boot",
-    "display": "Boot",
+    "id": 58,
+    "name": "ui",
+    "display": "Ui",
     "aliases": [
-      "boot"
+      "ui development"
     ]
   },
   {
-    "id": 57,
+    "id": 59,
     "name": "net",
     "display": "Net",
     "aliases": [
@@ -467,7 +500,7 @@
     ]
   },
   {
-    "id": 58,
+    "id": 60,
     "name": "power bi",
     "display": "Power BI",
     "aliases": [
@@ -475,15 +508,7 @@
     ]
   },
   {
-    "id": 59,
-    "name": "java development",
-    "display": "Java Development",
-    "aliases": [
-      "java development"
-    ]
-  },
-  {
-    "id": 60,
+    "id": 61,
     "name": "github",
     "display": "Github",
     "aliases": [
@@ -491,7 +516,7 @@
     ]
   },
   {
-    "id": 61,
+    "id": 62,
     "name": "etl",
     "display": "Etl",
     "aliases": [
@@ -499,7 +524,7 @@
     ]
   },
   {
-    "id": 62,
+    "id": 63,
     "name": "data engineering",
     "display": "Data Engineering",
     "aliases": [
@@ -507,7 +532,7 @@
     ]
   },
   {
-    "id": 63,
+    "id": 64,
     "name": "terraform",
     "display": "Terraform",
     "aliases": [
@@ -515,7 +540,7 @@
     ]
   },
   {
-    "id": 64,
+    "id": 65,
     "name": "data management",
     "display": "Data Management",
     "aliases": [
@@ -523,7 +548,7 @@
     ]
   },
   {
-    "id": 65,
+    "id": 66,
     "name": "test cases",
     "display": "Test Cases",
     "aliases": [
@@ -531,7 +556,7 @@
     ]
   },
   {
-    "id": 66,
+    "id": 67,
     "name": "hive",
     "display": "Hive",
     "aliases": [
@@ -539,15 +564,16 @@
     ]
   },
   {
-    "id": 67,
-    "name": "software development",
-    "display": "Software Development",
+    "id": 68,
+    "name": "salesforce",
+    "display": "Salesforce",
     "aliases": [
-      "software development"
+      "salesforce",
+      "sales force development"
     ]
   },
   {
-    "id": 68,
+    "id": 69,
     "name": "kafka",
     "display": "Kafka",
     "aliases": [
@@ -555,7 +581,7 @@
     ]
   },
   {
-    "id": 69,
+    "id": 70,
     "name": "regression testing",
     "display": "Regression Testing",
     "aliases": [
@@ -563,7 +589,7 @@
     ]
   },
   {
-    "id": 70,
+    "id": 71,
     "name": "azure",
     "display": "Azure",
     "aliases": [
@@ -571,7 +597,16 @@
     ]
   },
   {
-    "id": 71,
+    "id": 72,
+    "name": "application",
+    "display": "Application",
+    "aliases": [
+      "application development",
+      "application"
+    ]
+  },
+  {
+    "id": 73,
     "name": "version control",
     "display": "Version Control",
     "aliases": [
@@ -579,7 +614,7 @@
     ]
   },
   {
-    "id": 72,
+    "id": 74,
     "name": "net core",
     "display": "Net Core",
     "aliases": [
@@ -587,7 +622,7 @@
     ]
   },
   {
-    "id": 73,
+    "id": 75,
     "name": "natural language processing",
     "display": "Natural Language Processing",
     "aliases": [
@@ -595,7 +630,7 @@
     ]
   },
   {
-    "id": 74,
+    "id": 76,
     "name": "data warehousing",
     "display": "Data Warehousing",
     "aliases": [
@@ -603,7 +638,7 @@
     ]
   },
   {
-    "id": 75,
+    "id": 77,
     "name": "bootstrap",
     "display": "Bootstrap",
     "aliases": [
@@ -611,15 +646,7 @@
     ]
   },
   {
-    "id": 76,
-    "name": "servicenow",
-    "display": "Servicenow",
-    "aliases": [
-      "servicenow"
-    ]
-  },
-  {
-    "id": 77,
+    "id": 78,
     "name": "quality assurance",
     "display": "Quality Assurance",
     "aliases": [
@@ -627,7 +654,7 @@
     ]
   },
   {
-    "id": 78,
+    "id": 79,
     "name": "architecture",
     "display": "Architecture",
     "aliases": [
@@ -635,7 +662,7 @@
     ]
   },
   {
-    "id": 79,
+    "id": 80,
     "name": "mongodb",
     "display": "Mongodb",
     "aliases": [
@@ -643,7 +670,7 @@
     ]
   },
   {
-    "id": 80,
+    "id": 81,
     "name": "jenkins",
     "display": "Jenkins",
     "aliases": [
@@ -651,7 +678,7 @@
     ]
   },
   {
-    "id": 81,
+    "id": 82,
     "name": "jquery",
     "display": "Jquery",
     "aliases": [
@@ -659,19 +686,11 @@
     ]
   },
   {
-    "id": 82,
+    "id": 83,
     "name": "stack",
     "display": "Stack",
     "aliases": [
       "stack"
-    ]
-  },
-  {
-    "id": 83,
-    "name": "salesforce",
-    "display": "Salesforce",
-    "aliases": [
-      "salesforce"
     ]
   },
   {
@@ -764,12 +783,21 @@
   },
   {
     "id": 95,
+    "name": "sap abap",
+    "display": "Sap Abap",
+    "aliases": [
+      "sap abap",
+      "sap abap development"
+    ]
+  },
+  {
+    "id": 96,
     "name": "azure devops",
     "display": "Azure Devops",
     "aliases": []
   },
   {
-    "id": 96,
+    "id": 97,
     "name": "dbms",
     "display": "Dbms",
     "aliases": [
@@ -777,7 +805,7 @@
     ]
   },
   {
-    "id": 97,
+    "id": 98,
     "name": "jira",
     "display": "Jira",
     "aliases": [
@@ -785,7 +813,7 @@
     ]
   },
   {
-    "id": 98,
+    "id": 99,
     "name": "consulting",
     "display": "Consulting",
     "aliases": [
@@ -793,7 +821,7 @@
     ]
   },
   {
-    "id": 99,
+    "id": 100,
     "name": "senior",
     "display": "Senior",
     "aliases": [
@@ -801,7 +829,7 @@
     ]
   },
   {
-    "id": 100,
+    "id": 101,
     "name": "django",
     "display": "Django",
     "aliases": [
@@ -809,7 +837,7 @@
     ]
   },
   {
-    "id": 101,
+    "id": 102,
     "name": "analytics",
     "display": "Analytics",
     "aliases": [
@@ -817,19 +845,11 @@
     ]
   },
   {
-    "id": 102,
+    "id": 103,
     "name": "healthcare",
     "display": "Healthcare",
     "aliases": [
       "healthcare"
-    ]
-  },
-  {
-    "id": 103,
-    "name": "application development",
-    "display": "Application Development",
-    "aliases": [
-      "application development"
     ]
   },
   {
@@ -842,9 +862,12 @@
   },
   {
     "id": 105,
-    "name": "fullstack development",
-    "display": "Fullstack Development",
-    "aliases": []
+    "name": "abap",
+    "display": "Abap",
+    "aliases": [
+      "abap",
+      "abap development"
+    ]
   },
   {
     "id": 106,
@@ -856,6 +879,14 @@
   },
   {
     "id": 107,
+    "name": "ios",
+    "display": "Ios",
+    "aliases": [
+      "ios development"
+    ]
+  },
+  {
+    "id": 108,
     "name": "management",
     "display": "Management",
     "aliases": [
@@ -863,7 +894,7 @@
     ]
   },
   {
-    "id": 108,
+    "id": 109,
     "name": "technical support",
     "display": "Technical Support",
     "aliases": [
@@ -871,18 +902,12 @@
     ]
   },
   {
-    "id": 109,
+    "id": 110,
     "name": "data analytics",
     "display": "Data Analytics",
     "aliases": [
       "data analytics"
     ]
-  },
-  {
-    "id": 110,
-    "name": "ui development",
-    "display": "Ui Development",
-    "aliases": []
   },
   {
     "id": 111,
@@ -940,14 +965,6 @@
   },
   {
     "id": 118,
-    "name": "abap",
-    "display": "Abap",
-    "aliases": [
-      "abap"
-    ]
-  },
-  {
-    "id": 119,
     "name": "generative ai",
     "display": "Generative Ai",
     "aliases": [
@@ -955,10 +972,18 @@
     ]
   },
   {
-    "id": 120,
+    "id": 119,
     "name": "data migration",
     "display": "Data Migration",
     "aliases": []
+  },
+  {
+    "id": 120,
+    "name": "databricks",
+    "display": "Databricks",
+    "aliases": [
+      "data bricks"
+    ]
   },
   {
     "id": 121,
@@ -994,14 +1019,6 @@
   },
   {
     "id": 125,
-    "name": "sap abap",
-    "display": "Sap Abap",
-    "aliases": [
-      "sap abap"
-    ]
-  },
-  {
-    "id": 126,
     "name": "training",
     "display": "Training",
     "aliases": [
@@ -1009,19 +1026,13 @@
     ]
   },
   {
-    "id": 127,
-    "name": "ui",
-    "display": "Ui",
-    "aliases": []
-  },
-  {
-    "id": 128,
+    "id": 126,
     "name": "azure data factory",
     "display": "Azure Data Factory",
     "aliases": []
   },
   {
-    "id": 129,
+    "id": 127,
     "name": "business intelligence",
     "display": "Business Intelligence",
     "aliases": [
@@ -1029,13 +1040,13 @@
     ]
   },
   {
-    "id": 130,
+    "id": 128,
     "name": "application support",
     "display": "Application Support",
     "aliases": []
   },
   {
-    "id": 131,
+    "id": 129,
     "name": "sales",
     "display": "Sales",
     "aliases": [
@@ -1045,13 +1056,13 @@
     ]
   },
   {
-    "id": 132,
+    "id": 130,
     "name": "deep learning",
     "display": "Deep Learning",
     "aliases": []
   },
   {
-    "id": 133,
+    "id": 131,
     "name": "manager quality assurance",
     "display": "Manager Quality Assurance",
     "aliases": [
@@ -1059,7 +1070,7 @@
     ]
   },
   {
-    "id": 134,
+    "id": 132,
     "name": "plsql",
     "display": "Plsql",
     "aliases": [
@@ -1067,7 +1078,7 @@
     ]
   },
   {
-    "id": 135,
+    "id": 133,
     "name": "monitoring",
     "display": "Monitoring",
     "aliases": [
@@ -1075,7 +1086,7 @@
     ]
   },
   {
-    "id": 136,
+    "id": 134,
     "name": "english",
     "display": "English",
     "aliases": [
@@ -1083,7 +1094,7 @@
     ]
   },
   {
-    "id": 137,
+    "id": 135,
     "name": "web technologies",
     "display": "Web Technologies",
     "aliases": [
@@ -1091,7 +1102,7 @@
     ]
   },
   {
-    "id": 138,
+    "id": 136,
     "name": "spark",
     "display": "Spark",
     "aliases": [
@@ -1099,7 +1110,7 @@
     ]
   },
   {
-    "id": 139,
+    "id": 137,
     "name": "engineering",
     "display": "Engineering",
     "aliases": [
@@ -1107,7 +1118,7 @@
     ]
   },
   {
-    "id": 140,
+    "id": 138,
     "name": "dns",
     "display": "Dns",
     "aliases": [
@@ -1115,7 +1126,7 @@
     ]
   },
   {
-    "id": 141,
+    "id": 139,
     "name": "nosql",
     "display": "Nosql",
     "aliases": [
@@ -1123,13 +1134,13 @@
     ]
   },
   {
-    "id": 142,
+    "id": 140,
     "name": "shell scripting",
     "display": "Shell Scripting",
     "aliases": []
   },
   {
-    "id": 143,
+    "id": 141,
     "name": "customer service",
     "display": "Customer Service",
     "aliases": [
@@ -1137,19 +1148,13 @@
     ]
   },
   {
-    "id": 144,
+    "id": 142,
     "name": "pytorch",
     "display": "Pytorch",
     "aliases": []
   },
   {
-    "id": 145,
-    "name": "python development",
-    "display": "Python Development",
-    "aliases": []
-  },
-  {
-    "id": 146,
+    "id": 143,
     "name": "scrum",
     "display": "Scrum",
     "aliases": [
@@ -1157,7 +1162,7 @@
     ]
   },
   {
-    "id": 147,
+    "id": 144,
     "name": "sap s hana",
     "display": "Sap S Hana",
     "aliases": [
@@ -1165,7 +1170,7 @@
     ]
   },
   {
-    "id": 148,
+    "id": 145,
     "name": "bi",
     "display": "Bi",
     "aliases": [
@@ -1173,7 +1178,7 @@
     ]
   },
   {
-    "id": 149,
+    "id": 146,
     "name": "data science",
     "display": "Data Science",
     "aliases": [
@@ -1181,13 +1186,13 @@
     ]
   },
   {
-    "id": 150,
+    "id": 147,
     "name": "sql queries",
     "display": "Sql Queries",
     "aliases": []
   },
   {
-    "id": 151,
+    "id": 148,
     "name": "automation framework",
     "display": "Automation Framework",
     "aliases": [
@@ -1195,7 +1200,7 @@
     ]
   },
   {
-    "id": 152,
+    "id": 149,
     "name": "jsp",
     "display": "Jsp",
     "aliases": [
@@ -1203,7 +1208,7 @@
     ]
   },
   {
-    "id": 153,
+    "id": 150,
     "name": "vmware",
     "display": "Vmware",
     "aliases": [
@@ -1211,7 +1216,7 @@
     ]
   },
   {
-    "id": 154,
+    "id": 151,
     "name": "sap sd",
     "display": "Sap Sd",
     "aliases": [
@@ -1219,13 +1224,13 @@
     ]
   },
   {
-    "id": 155,
+    "id": 152,
     "name": "kotlin",
     "display": "Kotlin",
     "aliases": []
   },
   {
-    "id": 156,
+    "id": 153,
     "name": "tableau",
     "display": "Tableau",
     "aliases": [
@@ -1233,7 +1238,7 @@
     ]
   },
   {
-    "id": 157,
+    "id": 154,
     "name": "research",
     "display": "Research",
     "aliases": [
@@ -1241,43 +1246,46 @@
     ]
   },
   {
-    "id": 158,
-    "name": "ios",
-    "display": "Ios",
-    "aliases": []
-  },
-  {
-    "id": 159,
+    "id": 155,
     "name": "powershell",
     "display": "Powershell",
     "aliases": []
   },
   {
-    "id": 160,
+    "id": 156,
     "name": "data processing",
     "display": "Data Processing",
     "aliases": []
   },
   {
-    "id": 161,
+    "id": 157,
     "name": "aiml",
     "display": "Aiml",
     "aliases": []
   },
   {
-    "id": 162,
+    "id": 158,
+    "name": "rest api",
+    "display": "Rest Api",
+    "aliases": [
+      "rest api development",
+      "rest apis"
+    ]
+  },
+  {
+    "id": 159,
     "name": "azure databricks",
     "display": "Azure Databricks",
     "aliases": []
   },
   {
-    "id": 163,
+    "id": 160,
     "name": "master data",
     "display": "Master Data",
     "aliases": []
   },
   {
-    "id": 164,
+    "id": 161,
     "name": "communication",
     "display": "Communication",
     "aliases": [
@@ -1285,7 +1293,7 @@
     ]
   },
   {
-    "id": 165,
+    "id": 162,
     "name": "quality",
     "display": "Quality",
     "aliases": [
@@ -1293,7 +1301,7 @@
     ]
   },
   {
-    "id": 166,
+    "id": 163,
     "name": "operations",
     "display": "Operations",
     "aliases": [
@@ -1301,27 +1309,27 @@
     ]
   },
   {
-    "id": 167,
-    "name": "software",
-    "display": "Software",
-    "aliases": [
-      "software"
-    ]
-  },
-  {
-    "id": 168,
+    "id": 164,
     "name": "web api",
     "display": "Web Api",
     "aliases": []
   },
   {
-    "id": 169,
+    "id": 165,
+    "name": "flutter",
+    "display": "Flutter",
+    "aliases": [
+      "flutter development"
+    ]
+  },
+  {
+    "id": 166,
     "name": "react native",
     "display": "React Native",
     "aliases": []
   },
   {
-    "id": 170,
+    "id": 167,
     "name": "documentation",
     "display": "Documentation",
     "aliases": [
@@ -1329,19 +1337,19 @@
     ]
   },
   {
-    "id": 171,
+    "id": 168,
     "name": "ci cd pipeline",
     "display": "Ci Cd Pipeline",
     "aliases": []
   },
   {
-    "id": 172,
+    "id": 169,
     "name": "quality engineering",
     "display": "Quality Engineering",
     "aliases": []
   },
   {
-    "id": 173,
+    "id": 170,
     "name": "mvc",
     "display": "Mvc",
     "aliases": [
@@ -1349,25 +1357,19 @@
     ]
   },
   {
-    "id": 174,
+    "id": 171,
     "name": "oops",
     "display": "Oops",
     "aliases": []
   },
   {
-    "id": 175,
-    "name": "frontend development",
-    "display": "Frontend Development",
-    "aliases": []
-  },
-  {
-    "id": 176,
+    "id": 172,
     "name": "apex",
     "display": "Apex",
     "aliases": []
   },
   {
-    "id": 177,
+    "id": 173,
     "name": "change management",
     "display": "Change Management",
     "aliases": [
@@ -1375,7 +1377,7 @@
     ]
   },
   {
-    "id": 178,
+    "id": 174,
     "name": "switching",
     "display": "Switching",
     "aliases": [
@@ -1383,7 +1385,15 @@
     ]
   },
   {
-    "id": 179,
+    "id": 175,
+    "name": "mobile applications",
+    "display": "Mobile Applications",
+    "aliases": [
+      "mobile application development"
+    ]
+  },
+  {
+    "id": 176,
     "name": "itsm",
     "display": "Itsm",
     "aliases": [
@@ -1391,13 +1401,7 @@
     ]
   },
   {
-    "id": 180,
-    "name": "data bricks",
-    "display": "Data Bricks",
-    "aliases": []
-  },
-  {
-    "id": 181,
+    "id": 177,
     "name": "quality control",
     "display": "Quality Control",
     "aliases": [
@@ -1405,13 +1409,13 @@
     ]
   },
   {
-    "id": 182,
+    "id": 178,
     "name": "testing tools",
     "display": "Testing Tools",
     "aliases": []
   },
   {
-    "id": 183,
+    "id": 179,
     "name": "design patterns",
     "display": "Design Patterns",
     "aliases": [
@@ -1419,7 +1423,7 @@
     ]
   },
   {
-    "id": 184,
+    "id": 180,
     "name": "image processing",
     "display": "Image Processing",
     "aliases": [
@@ -1427,13 +1431,7 @@
     ]
   },
   {
-    "id": 185,
-    "name": "angularjs",
-    "display": "Angularjs",
-    "aliases": []
-  },
-  {
-    "id": 186,
+    "id": 181,
     "name": "programming",
     "display": "Programming",
     "aliases": [
@@ -1441,13 +1439,13 @@
     ]
   },
   {
-    "id": 187,
+    "id": 182,
     "name": "database design",
     "display": "Database Design",
     "aliases": []
   },
   {
-    "id": 188,
+    "id": 183,
     "name": "xml",
     "display": "Xml",
     "aliases": [
@@ -1455,7 +1453,7 @@
     ]
   },
   {
-    "id": 189,
+    "id": 184,
     "name": "sdlc",
     "display": "Sdlc",
     "aliases": [
@@ -1463,7 +1461,7 @@
     ]
   },
   {
-    "id": 190,
+    "id": 185,
     "name": "data visualization",
     "display": "Data Visualization",
     "aliases": [
@@ -1471,7 +1469,15 @@
     ]
   },
   {
-    "id": 191,
+    "id": 186,
+    "name": "cloud platform",
+    "display": "Cloud Platform",
+    "aliases": [
+      "cloud platforms"
+    ]
+  },
+  {
+    "id": 187,
     "name": "workflow",
     "display": "Workflow",
     "aliases": [
@@ -1479,13 +1485,13 @@
     ]
   },
   {
-    "id": 192,
+    "id": 188,
     "name": "appium",
     "display": "Appium",
     "aliases": []
   },
   {
-    "id": 193,
+    "id": 189,
     "name": "manager technology",
     "display": "Manager Technology",
     "aliases": [
@@ -1493,7 +1499,7 @@
     ]
   },
   {
-    "id": 194,
+    "id": 190,
     "name": "customer support",
     "display": "Customer Support",
     "aliases": [
@@ -1501,7 +1507,7 @@
     ]
   },
   {
-    "id": 195,
+    "id": 191,
     "name": "excel",
     "display": "Excel",
     "aliases": [
@@ -1509,7 +1515,7 @@
     ]
   },
   {
-    "id": 196,
+    "id": 192,
     "name": "deployment",
     "display": "Deployment",
     "aliases": [
@@ -1517,7 +1523,7 @@
     ]
   },
   {
-    "id": 197,
+    "id": 193,
     "name": "presentation skills",
     "display": "Presentation Skills",
     "aliases": [
@@ -1525,7 +1531,7 @@
     ]
   },
   {
-    "id": 198,
+    "id": 194,
     "name": "network security",
     "display": "Network Security",
     "aliases": [
@@ -1533,19 +1539,19 @@
     ]
   },
   {
-    "id": 199,
+    "id": 195,
     "name": "cloud services",
     "display": "Cloud Services",
     "aliases": []
   },
   {
-    "id": 200,
+    "id": 196,
     "name": "flask",
     "display": "Flask",
     "aliases": []
   },
   {
-    "id": 201,
+    "id": 197,
     "name": "supply chain",
     "display": "Supply Chain",
     "aliases": [
@@ -1553,7 +1559,7 @@
     ]
   },
   {
-    "id": 202,
+    "id": 198,
     "name": "system design",
     "display": "System Design",
     "aliases": [
@@ -1561,25 +1567,19 @@
     ]
   },
   {
-    "id": 203,
+    "id": 199,
     "name": "rdbms",
     "display": "Rdbms",
     "aliases": []
   },
   {
-    "id": 204,
+    "id": 200,
     "name": "cucumber",
     "display": "Cucumber",
     "aliases": []
   },
   {
-    "id": 205,
-    "name": "servicenow development",
-    "display": "Servicenow Development",
-    "aliases": []
-  },
-  {
-    "id": 206,
+    "id": 201,
     "name": "software development life cycle",
     "display": "Software Development Life Cycle",
     "aliases": [
@@ -1587,19 +1587,19 @@
     ]
   },
   {
-    "id": 207,
+    "id": 202,
     "name": "aws cloud",
     "display": "Aws Cloud",
     "aliases": []
   },
   {
-    "id": 208,
+    "id": 203,
     "name": "chatbot",
     "display": "Chatbot",
     "aliases": []
   },
   {
-    "id": 209,
+    "id": 204,
     "name": "screening",
     "display": "Screening",
     "aliases": [
@@ -1607,7 +1607,7 @@
     ]
   },
   {
-    "id": 210,
+    "id": 205,
     "name": "production",
     "display": "Production",
     "aliases": [
@@ -1615,13 +1615,13 @@
     ]
   },
   {
-    "id": 211,
+    "id": 206,
     "name": "orchestration",
     "display": "Orchestration",
     "aliases": []
   },
   {
-    "id": 212,
+    "id": 207,
     "name": "root cause analysis",
     "display": "Root Cause Analysis",
     "aliases": [
@@ -1629,31 +1629,31 @@
     ]
   },
   {
-    "id": 213,
+    "id": 208,
     "name": "database administration",
     "display": "Database Administration",
     "aliases": []
   },
   {
-    "id": 214,
+    "id": 209,
     "name": "junit",
     "display": "Junit",
     "aliases": []
   },
   {
-    "id": 215,
+    "id": 210,
     "name": "test management",
     "display": "Test Management",
     "aliases": []
   },
   {
-    "id": 216,
+    "id": 211,
     "name": "core java",
     "display": "Core Java",
     "aliases": []
   },
   {
-    "id": 217,
+    "id": 212,
     "name": "windows",
     "display": "Windows",
     "aliases": [
@@ -1661,13 +1661,13 @@
     ]
   },
   {
-    "id": 218,
+    "id": 213,
     "name": "spring mvc",
     "display": "Spring Mvc",
     "aliases": []
   },
   {
-    "id": 219,
+    "id": 214,
     "name": "incident management",
     "display": "Incident Management",
     "aliases": [
@@ -1675,7 +1675,7 @@
     ]
   },
   {
-    "id": 220,
+    "id": 215,
     "name": "aspnet",
     "display": "Aspnet",
     "aliases": [
@@ -1683,7 +1683,7 @@
     ]
   },
   {
-    "id": 221,
+    "id": 216,
     "name": "visualforce",
     "display": "Visualforce",
     "aliases": [
@@ -1691,13 +1691,13 @@
     ]
   },
   {
-    "id": 222,
+    "id": 217,
     "name": "functional testing",
     "display": "Functional Testing",
     "aliases": []
   },
   {
-    "id": 223,
+    "id": 218,
     "name": "airflow",
     "display": "Airflow",
     "aliases": [
@@ -1705,7 +1705,7 @@
     ]
   },
   {
-    "id": 224,
+    "id": 219,
     "name": "agile methodology",
     "display": "Agile Methodology",
     "aliases": [
@@ -1713,13 +1713,13 @@
     ]
   },
   {
-    "id": 225,
+    "id": 220,
     "name": "cmdb",
     "display": "Cmdb",
     "aliases": []
   },
   {
-    "id": 226,
+    "id": 221,
     "name": "data validation",
     "display": "Data Validation",
     "aliases": [
@@ -1727,7 +1727,15 @@
     ]
   },
   {
-    "id": 227,
+    "id": 222,
+    "name": "restful api",
+    "display": "Restful Api",
+    "aliases": [
+      "restfull api"
+    ]
+  },
+  {
+    "id": 223,
     "name": "infrastructure",
     "display": "Infrastructure",
     "aliases": [
@@ -1735,13 +1743,13 @@
     ]
   },
   {
-    "id": 228,
+    "id": 224,
     "name": "cloud computing",
     "display": "Cloud Computing",
     "aliases": []
   },
   {
-    "id": 229,
+    "id": 225,
     "name": "web application",
     "display": "Web Application",
     "aliases": [
@@ -1749,19 +1757,19 @@
     ]
   },
   {
-    "id": 230,
+    "id": 226,
     "name": "network engineering",
     "display": "Network Engineering",
     "aliases": []
   },
   {
-    "id": 231,
+    "id": 227,
     "name": "android application development",
     "display": "Android Application Development",
     "aliases": []
   },
   {
-    "id": 232,
+    "id": 228,
     "name": "continuous improvement",
     "display": "Continuous Improvement",
     "aliases": [
@@ -1769,7 +1777,7 @@
     ]
   },
   {
-    "id": 233,
+    "id": 229,
     "name": "machine",
     "display": "Machine",
     "aliases": [
@@ -1777,7 +1785,7 @@
     ]
   },
   {
-    "id": 234,
+    "id": 230,
     "name": "product management",
     "display": "Product Management",
     "aliases": [
@@ -1785,13 +1793,13 @@
     ]
   },
   {
-    "id": 235,
+    "id": 231,
     "name": "llm",
     "display": "Llm",
     "aliases": []
   },
   {
-    "id": 236,
+    "id": 232,
     "name": "it services",
     "display": "It Services",
     "aliases": [
@@ -1799,19 +1807,27 @@
     ]
   },
   {
-    "id": 237,
+    "id": 233,
+    "name": "genai",
+    "display": "Genai",
+    "aliases": [
+      "gen ai"
+    ]
+  },
+  {
+    "id": 234,
     "name": "web development",
     "display": "Web Development",
     "aliases": []
   },
   {
-    "id": 238,
+    "id": 235,
     "name": "system architecture",
     "display": "System Architecture",
     "aliases": []
   },
   {
-    "id": 239,
+    "id": 236,
     "name": "integration",
     "display": "Integration",
     "aliases": [
@@ -1819,13 +1835,13 @@
     ]
   },
   {
-    "id": 240,
+    "id": 237,
     "name": "amazon redshift",
     "display": "Amazon Redshift",
     "aliases": []
   },
   {
-    "id": 241,
+    "id": 238,
     "name": "stakeholder management",
     "display": "Stakeholder Management",
     "aliases": [
@@ -1833,13 +1849,13 @@
     ]
   },
   {
-    "id": 242,
+    "id": 239,
     "name": "big data",
     "display": "Big Data",
     "aliases": []
   },
   {
-    "id": 243,
+    "id": 240,
     "name": "open source",
     "display": "Open Source",
     "aliases": [
@@ -1847,19 +1863,19 @@
     ]
   },
   {
-    "id": 244,
+    "id": 241,
     "name": "nextjs",
     "display": "Nextjs",
     "aliases": []
   },
   {
-    "id": 245,
+    "id": 242,
     "name": "user acceptance testing",
     "display": "User Acceptance Testing",
     "aliases": []
   },
   {
-    "id": 246,
+    "id": 243,
     "name": "crm",
     "display": "Crm",
     "aliases": [
@@ -1867,15 +1883,7 @@
     ]
   },
   {
-    "id": 247,
-    "name": "application",
-    "display": "Application",
-    "aliases": [
-      "application"
-    ]
-  },
-  {
-    "id": 248,
+    "id": 244,
     "name": "business analysis",
     "display": "Business Analysis",
     "aliases": [
@@ -1883,37 +1891,37 @@
     ]
   },
   {
-    "id": 249,
+    "id": 245,
     "name": "bilingual",
     "display": "Bilingual",
     "aliases": []
   },
   {
-    "id": 250,
+    "id": 246,
     "name": "api integration",
     "display": "Api Integration",
     "aliases": []
   },
   {
-    "id": 251,
+    "id": 247,
     "name": "container",
     "display": "Container",
     "aliases": []
   },
   {
-    "id": 252,
+    "id": 248,
     "name": "test engineering",
     "display": "Test Engineering",
     "aliases": []
   },
   {
-    "id": 253,
+    "id": 249,
     "name": "qa automation",
     "display": "Qa Automation",
     "aliases": []
   },
   {
-    "id": 254,
+    "id": 250,
     "name": "administration",
     "display": "Administration",
     "aliases": [
@@ -1921,7 +1929,7 @@
     ]
   },
   {
-    "id": 255,
+    "id": 251,
     "name": "hadoop",
     "display": "Hadoop",
     "aliases": [
@@ -1929,7 +1937,7 @@
     ]
   },
   {
-    "id": 256,
+    "id": 252,
     "name": "core",
     "display": "Core",
     "aliases": [
@@ -1937,13 +1945,13 @@
     ]
   },
   {
-    "id": 257,
+    "id": 253,
     "name": "configuration management",
     "display": "Configuration Management",
     "aliases": []
   },
   {
-    "id": 258,
+    "id": 254,
     "name": "hrsd",
     "display": "Hrsd",
     "aliases": [
@@ -1951,7 +1959,7 @@
     ]
   },
   {
-    "id": 259,
+    "id": 255,
     "name": "ajax",
     "display": "Ajax",
     "aliases": [
@@ -1959,73 +1967,61 @@
     ]
   },
   {
-    "id": 260,
+    "id": 256,
     "name": "adobe forms",
     "display": "Adobe Forms",
     "aliases": []
   },
   {
-    "id": 261,
+    "id": 257,
     "name": "intelligence",
     "display": "Intelligence",
     "aliases": []
   },
   {
-    "id": 262,
+    "id": 258,
     "name": "production support",
     "display": "Production Support",
     "aliases": []
   },
   {
-    "id": 263,
-    "name": "mobile application development",
-    "display": "Mobile Application Development",
-    "aliases": []
-  },
-  {
-    "id": 264,
-    "name": "flutter",
-    "display": "Flutter",
-    "aliases": []
-  },
-  {
-    "id": 265,
+    "id": 259,
     "name": "swift",
     "display": "Swift",
     "aliases": []
   },
   {
-    "id": 266,
+    "id": 260,
     "name": "multithreading",
     "display": "Multithreading",
     "aliases": []
   },
   {
-    "id": 267,
+    "id": 261,
     "name": "software design",
     "display": "Software Design",
     "aliases": []
   },
   {
-    "id": 268,
+    "id": 262,
     "name": "configuration",
     "display": "Configuration",
     "aliases": []
   },
   {
-    "id": 269,
+    "id": 263,
     "name": "data governance",
     "display": "Data Governance",
     "aliases": []
   },
   {
-    "id": 270,
+    "id": 264,
     "name": "desktop support",
     "display": "Desktop Support",
     "aliases": []
   },
   {
-    "id": 271,
+    "id": 265,
     "name": "end",
     "display": "End",
     "aliases": [
@@ -2033,7 +2029,7 @@
     ]
   },
   {
-    "id": 272,
+    "id": 266,
     "name": "team management",
     "display": "Team Management",
     "aliases": [
@@ -2041,61 +2037,55 @@
     ]
   },
   {
-    "id": 273,
-    "name": "backend development",
-    "display": "Backend Development",
-    "aliases": []
-  },
-  {
-    "id": 274,
+    "id": 267,
     "name": "bigquery",
     "display": "Bigquery",
     "aliases": []
   },
   {
-    "id": 275,
+    "id": 268,
     "name": "mvvm",
     "display": "Mvvm",
     "aliases": []
   },
   {
-    "id": 276,
+    "id": 269,
     "name": "scripting",
     "display": "Scripting",
     "aliases": []
   },
   {
-    "id": 277,
+    "id": 270,
     "name": "apache",
     "display": "Apache",
     "aliases": []
   },
   {
-    "id": 278,
+    "id": 271,
     "name": "langchain",
     "display": "Langchain",
     "aliases": []
   },
   {
-    "id": 279,
+    "id": 272,
     "name": "lwc",
     "display": "Lwc",
     "aliases": []
   },
   {
-    "id": 280,
+    "id": 273,
     "name": "data dictionary",
     "display": "Data Dictionary",
     "aliases": []
   },
   {
-    "id": 281,
+    "id": 274,
     "name": "test automation framework",
     "display": "Test Automation Framework",
     "aliases": []
   },
   {
-    "id": 282,
+    "id": 275,
     "name": "c",
     "display": "C",
     "aliases": [
@@ -2103,19 +2093,19 @@
     ]
   },
   {
-    "id": 283,
+    "id": 276,
     "name": "computer vision",
     "display": "Computer Vision",
     "aliases": []
   },
   {
-    "id": 284,
+    "id": 277,
     "name": "soap",
     "display": "Soap",
     "aliases": []
   },
   {
-    "id": 285,
+    "id": 278,
     "name": "tcp",
     "display": "Tcp",
     "aliases": [
@@ -2123,19 +2113,19 @@
     ]
   },
   {
-    "id": 286,
+    "id": 279,
     "name": "fast api",
     "display": "Fast Api",
     "aliases": []
   },
   {
-    "id": 287,
+    "id": 280,
     "name": "test scripts",
     "display": "Test Scripts",
     "aliases": []
   },
   {
-    "id": 288,
+    "id": 281,
     "name": "sap fiori",
     "display": "Sap Fiori",
     "aliases": [
@@ -2143,7 +2133,7 @@
     ]
   },
   {
-    "id": 289,
+    "id": 282,
     "name": "risk management",
     "display": "Risk Management",
     "aliases": [
@@ -2151,19 +2141,13 @@
     ]
   },
   {
-    "id": 290,
-    "name": "rest api",
-    "display": "Rest Api",
-    "aliases": []
-  },
-  {
-    "id": 291,
+    "id": 283,
     "name": "oracle cloud",
     "display": "Oracle Cloud",
     "aliases": []
   },
   {
-    "id": 292,
+    "id": 284,
     "name": "hiring",
     "display": "Hiring",
     "aliases": [
@@ -2171,13 +2155,13 @@
     ]
   },
   {
-    "id": 293,
+    "id": 285,
     "name": "distribution system",
     "display": "Distribution System",
     "aliases": []
   },
   {
-    "id": 294,
+    "id": 286,
     "name": "usage",
     "display": "Usage",
     "aliases": [
@@ -2185,19 +2169,19 @@
     ]
   },
   {
-    "id": 295,
+    "id": 287,
     "name": "scikitlearn",
     "display": "Scikitlearn",
     "aliases": []
   },
   {
-    "id": 296,
+    "id": 288,
     "name": "glue",
     "display": "Glue",
     "aliases": []
   },
   {
-    "id": 297,
+    "id": 289,
     "name": "software engineering",
     "display": "Software Engineering",
     "aliases": [
@@ -2205,55 +2189,55 @@
     ]
   },
   {
-    "id": 298,
+    "id": 290,
     "name": "data security",
     "display": "Data Security",
     "aliases": []
   },
   {
-    "id": 299,
+    "id": 291,
     "name": "pandas",
     "display": "Pandas",
     "aliases": []
   },
   {
-    "id": 300,
+    "id": 292,
     "name": "html5",
     "display": "Html5",
     "aliases": []
   },
   {
-    "id": 301,
+    "id": 293,
     "name": "testing methodologies",
     "display": "Testing Methodologies",
     "aliases": []
   },
   {
-    "id": 302,
+    "id": 294,
     "name": "vuejs",
     "display": "Vuejs",
     "aliases": []
   },
   {
-    "id": 303,
+    "id": 295,
     "name": "graphql",
     "display": "Graphql",
     "aliases": []
   },
   {
-    "id": 304,
+    "id": 296,
     "name": "itom",
     "display": "Itom",
     "aliases": []
   },
   {
-    "id": 305,
+    "id": 297,
     "name": "ssis",
     "display": "Ssis",
     "aliases": []
   },
   {
-    "id": 306,
+    "id": 298,
     "name": "technical leadership",
     "display": "Technical Leadership",
     "aliases": [
@@ -2261,13 +2245,13 @@
     ]
   },
   {
-    "id": 307,
+    "id": 299,
     "name": "azure data lake",
     "display": "Azure Data Lake",
     "aliases": []
   },
   {
-    "id": 308,
+    "id": 300,
     "name": "telecom",
     "display": "Telecom",
     "aliases": [
@@ -2275,25 +2259,25 @@
     ]
   },
   {
-    "id": 309,
+    "id": 301,
     "name": "middleware",
     "display": "Middleware",
     "aliases": []
   },
   {
-    "id": 310,
+    "id": 302,
     "name": "pan",
     "display": "Pan",
     "aliases": []
   },
   {
-    "id": 311,
+    "id": 303,
     "name": "cloud infrastructure",
     "display": "Cloud Infrastructure",
     "aliases": []
   },
   {
-    "id": 312,
+    "id": 304,
     "name": "technical",
     "display": "Technical",
     "aliases": [
@@ -2301,7 +2285,7 @@
     ]
   },
   {
-    "id": 313,
+    "id": 305,
     "name": "confluence",
     "display": "Confluence",
     "aliases": [
@@ -2309,19 +2293,19 @@
     ]
   },
   {
-    "id": 314,
+    "id": 306,
     "name": "routing",
     "display": "Routing",
     "aliases": []
   },
   {
-    "id": 315,
+    "id": 307,
     "name": "aspnet core",
     "display": "Aspnet Core",
     "aliases": []
   },
   {
-    "id": 316,
+    "id": 308,
     "name": "php",
     "display": "Php",
     "aliases": [
@@ -2329,31 +2313,31 @@
     ]
   },
   {
-    "id": 317,
+    "id": 309,
     "name": "active directory",
     "display": "Active Directory",
     "aliases": []
   },
   {
-    "id": 318,
+    "id": 310,
     "name": "informatica",
     "display": "Informatica",
     "aliases": []
   },
   {
-    "id": 319,
+    "id": 311,
     "name": "uiux",
     "display": "Uiux",
     "aliases": []
   },
   {
-    "id": 320,
+    "id": 312,
     "name": "entity framework",
     "display": "Entity Framework",
     "aliases": []
   },
   {
-    "id": 321,
+    "id": 313,
     "name": "ux",
     "display": "Ux",
     "aliases": [
@@ -2361,49 +2345,49 @@
     ]
   },
   {
-    "id": 322,
+    "id": 314,
     "name": "odata",
     "display": "Odata",
     "aliases": []
   },
   {
-    "id": 323,
+    "id": 315,
     "name": "aws lambda",
     "display": "Aws Lambda",
     "aliases": []
   },
   {
-    "id": 324,
+    "id": 316,
     "name": "integration testing",
     "display": "Integration Testing",
     "aliases": []
   },
   {
-    "id": 325,
+    "id": 317,
     "name": "schema",
     "display": "Schema",
     "aliases": []
   },
   {
-    "id": 326,
+    "id": 318,
     "name": "cisco",
     "display": "Cisco",
     "aliases": []
   },
   {
-    "id": 327,
+    "id": 319,
     "name": "agentic ai",
     "display": "Agentic Ai",
     "aliases": []
   },
   {
-    "id": 328,
+    "id": 320,
     "name": "http",
     "display": "Http",
     "aliases": []
   },
   {
-    "id": 329,
+    "id": 321,
     "name": "iso",
     "display": "Iso",
     "aliases": [
@@ -2411,19 +2395,19 @@
     ]
   },
   {
-    "id": 330,
+    "id": 322,
     "name": "load balancing",
     "display": "Load Balancing",
     "aliases": []
   },
   {
-    "id": 331,
+    "id": 323,
     "name": "stored procedures",
     "display": "Stored Procedures",
     "aliases": []
   },
   {
-    "id": 332,
+    "id": 324,
     "name": "itil",
     "display": "Itil",
     "aliases": [
@@ -2431,25 +2415,25 @@
     ]
   },
   {
-    "id": 333,
+    "id": 325,
     "name": "test case design",
     "display": "Test Case Design",
     "aliases": []
   },
   {
-    "id": 334,
+    "id": 326,
     "name": "htmlcss",
     "display": "Htmlcss",
     "aliases": []
   },
   {
-    "id": 335,
+    "id": 327,
     "name": "aws iam",
     "display": "Aws Iam",
     "aliases": []
   },
   {
-    "id": 336,
+    "id": 328,
     "name": "financial services",
     "display": "Financial Services",
     "aliases": [
@@ -2457,25 +2441,25 @@
     ]
   },
   {
-    "id": 337,
+    "id": 329,
     "name": "playwright",
     "display": "Playwright",
     "aliases": []
   },
   {
-    "id": 338,
+    "id": 330,
     "name": "wan",
     "display": "Wan",
     "aliases": []
   },
   {
-    "id": 339,
+    "id": 331,
     "name": "framework",
     "display": "Framework",
     "aliases": []
   },
   {
-    "id": 340,
+    "id": 332,
     "name": "problem solving",
     "display": "Problem Solving",
     "aliases": [
@@ -2483,19 +2467,19 @@
     ]
   },
   {
-    "id": 341,
+    "id": 333,
     "name": "rest assured",
     "display": "Rest Assured",
     "aliases": []
   },
   {
-    "id": 342,
+    "id": 334,
     "name": "sdet",
     "display": "Sdet",
     "aliases": []
   },
   {
-    "id": 343,
+    "id": 335,
     "name": "warehouse",
     "display": "Warehouse",
     "aliases": [
@@ -2503,7 +2487,7 @@
     ]
   },
   {
-    "id": 344,
+    "id": 336,
     "name": "cloud security",
     "display": "Cloud Security",
     "aliases": [
@@ -2511,31 +2495,31 @@
     ]
   },
   {
-    "id": 345,
+    "id": 337,
     "name": "prometheus",
     "display": "Prometheus",
     "aliases": []
   },
   {
-    "id": 346,
+    "id": 338,
     "name": "api gateway",
     "display": "Api Gateway",
     "aliases": []
   },
   {
-    "id": 347,
+    "id": 339,
     "name": "gen",
     "display": "Gen",
     "aliases": []
   },
   {
-    "id": 348,
+    "id": 340,
     "name": "disaster recovery",
     "display": "Disaster Recovery",
     "aliases": []
   },
   {
-    "id": 349,
+    "id": 341,
     "name": "qc",
     "display": "Qc",
     "aliases": [
@@ -2543,7 +2527,7 @@
     ]
   },
   {
-    "id": 350,
+    "id": 342,
     "name": "automotive",
     "display": "Automotive",
     "aliases": [
@@ -2551,7 +2535,7 @@
     ]
   },
   {
-    "id": 351,
+    "id": 343,
     "name": "sap bi",
     "display": "Sap Bi",
     "aliases": [
@@ -2559,37 +2543,19 @@
     ]
   },
   {
-    "id": 352,
+    "id": 344,
     "name": "express",
     "display": "Express",
     "aliases": []
   },
   {
-    "id": 353,
-    "name": "cloud platforms",
-    "display": "Cloud Platforms",
-    "aliases": []
-  },
-  {
-    "id": 354,
-    "name": "ios development",
-    "display": "Ios Development",
-    "aliases": []
-  },
-  {
-    "id": 355,
-    "name": "cloud platform",
-    "display": "Cloud Platform",
-    "aliases": []
-  },
-  {
-    "id": 356,
+    "id": 345,
     "name": "site reliability engineering",
     "display": "Site Reliability Engineering",
     "aliases": []
   },
   {
-    "id": 357,
+    "id": 346,
     "name": "finance",
     "display": "Finance",
     "aliases": [
@@ -2597,79 +2563,61 @@
     ]
   },
   {
-    "id": 358,
+    "id": 347,
     "name": "networking protocols",
     "display": "Networking Protocols",
     "aliases": []
   },
   {
-    "id": 359,
-    "name": "reacts js",
-    "display": "Reacts Js",
-    "aliases": []
-  },
-  {
-    "id": 360,
+    "id": 348,
     "name": "test execution reporting",
     "display": "Test Execution Reporting",
     "aliases": []
   },
   {
-    "id": 361,
+    "id": 349,
     "name": "openshift",
     "display": "Openshift",
     "aliases": []
   },
   {
-    "id": 362,
+    "id": 350,
     "name": "bash",
     "display": "Bash",
     "aliases": []
   },
   {
-    "id": 363,
+    "id": 351,
     "name": "soa",
     "display": "Soa",
     "aliases": []
   },
   {
-    "id": 364,
+    "id": 352,
     "name": "hybris",
     "display": "Hybris",
     "aliases": []
   },
   {
-    "id": 365,
+    "id": 353,
     "name": "ms sql",
     "display": "Ms Sql",
     "aliases": []
   },
   {
-    "id": 366,
-    "name": "restfull api",
-    "display": "Restfull Api",
-    "aliases": []
-  },
-  {
-    "id": 367,
-    "name": "gen ai",
-    "display": "Gen Ai",
-    "aliases": []
-  },
-  {
-    "id": 368,
+    "id": 354,
     "name": "android studio",
     "display": "Android Studio",
     "aliases": []
   },
   {
-    "id": 369,
+    "id": 355,
     "name": "bdd",
     "display": "Bdd",
     "aliases": []
   },
   {
-    "id": 370,
+    "id": 356,
     "name": "database",
     "display": "Database",
     "aliases": [
@@ -2677,13 +2625,7 @@
     ]
   },
   {
-    "id": 371,
-    "name": "sql development",
-    "display": "Sql Development",
-    "aliases": []
-  },
-  {
-    "id": 372,
+    "id": 357,
     "name": "design",
     "display": "Design",
     "aliases": [
@@ -2691,31 +2633,31 @@
     ]
   },
   {
-    "id": 373,
+    "id": 358,
     "name": "sfdc",
     "display": "Sfdc",
     "aliases": []
   },
   {
-    "id": 374,
+    "id": 359,
     "name": "paas",
     "display": "Paas",
     "aliases": []
   },
   {
-    "id": 375,
+    "id": 360,
     "name": "sqlite",
     "display": "Sqlite",
     "aliases": []
   },
   {
-    "id": 376,
+    "id": 361,
     "name": "jdbc",
     "display": "Jdbc",
     "aliases": []
   },
   {
-    "id": 377,
+    "id": 362,
     "name": "sap mm",
     "display": "Sap Mm",
     "aliases": [
@@ -2723,7 +2665,7 @@
     ]
   },
   {
-    "id": 378,
+    "id": 363,
     "name": "billing",
     "display": "Billing",
     "aliases": [
@@ -2731,31 +2673,31 @@
     ]
   },
   {
-    "id": 379,
+    "id": 364,
     "name": "data integrity",
     "display": "Data Integrity",
     "aliases": []
   },
   {
-    "id": 380,
+    "id": 365,
     "name": "grafana",
     "display": "Grafana",
     "aliases": []
   },
   {
-    "id": 381,
+    "id": 366,
     "name": "ccna",
     "display": "Ccna",
     "aliases": []
   },
   {
-    "id": 382,
+    "id": 367,
     "name": "architecting",
     "display": "Architecting",
     "aliases": []
   },
   {
-    "id": 383,
+    "id": 368,
     "name": "data services",
     "display": "Data Services",
     "aliases": [
@@ -2763,7 +2705,7 @@
     ]
   },
   {
-    "id": 384,
+    "id": 369,
     "name": "digital marketing",
     "display": "Digital Marketing",
     "aliases": [
@@ -2771,13 +2713,13 @@
     ]
   },
   {
-    "id": 385,
+    "id": 370,
     "name": "performance optimization",
     "display": "Performance Optimization",
     "aliases": []
   },
   {
-    "id": 386,
+    "id": 371,
     "name": "data integration",
     "display": "Data Integration",
     "aliases": [
@@ -2785,13 +2727,13 @@
     ]
   },
   {
-    "id": 387,
+    "id": 372,
     "name": "qaqc",
     "display": "Qaqc",
     "aliases": []
   },
   {
-    "id": 388,
+    "id": 373,
     "name": "interpersonal skills",
     "display": "Interpersonal Skills",
     "aliases": [
@@ -2799,13 +2741,13 @@
     ]
   },
   {
-    "id": 389,
+    "id": 374,
     "name": "bdc",
     "display": "Bdc",
     "aliases": []
   },
   {
-    "id": 390,
+    "id": 375,
     "name": "focus",
     "display": "Focus",
     "aliases": [
@@ -2813,7 +2755,7 @@
     ]
   },
   {
-    "id": 391,
+    "id": 376,
     "name": "database management",
     "display": "Database Management",
     "aliases": [
@@ -2821,7 +2763,7 @@
     ]
   },
   {
-    "id": 392,
+    "id": 377,
     "name": "saas",
     "display": "Saas",
     "aliases": [
@@ -2829,19 +2771,19 @@
     ]
   },
   {
-    "id": 393,
+    "id": 378,
     "name": "lan",
     "display": "Lan",
     "aliases": []
   },
   {
-    "id": 394,
+    "id": 379,
     "name": "aws devops",
     "display": "Aws Devops",
     "aliases": []
   },
   {
-    "id": 395,
+    "id": 380,
     "name": "inspection",
     "display": "Inspection",
     "aliases": [
@@ -2849,19 +2791,19 @@
     ]
   },
   {
-    "id": 396,
+    "id": 381,
     "name": "rxjs",
     "display": "Rxjs",
     "aliases": []
   },
   {
-    "id": 397,
+    "id": 382,
     "name": "api automation",
     "display": "Api Automation",
     "aliases": []
   },
   {
-    "id": 398,
+    "id": 383,
     "name": "problem management",
     "display": "Problem Management",
     "aliases": [
@@ -2869,15 +2811,7 @@
     ]
   },
   {
-    "id": 399,
-    "name": "sap abap development",
-    "display": "Sap Abap Development",
-    "aliases": [
-      "sap abap development"
-    ]
-  },
-  {
-    "id": 400,
+    "id": 384,
     "name": "security",
     "display": "Security",
     "aliases": [
@@ -2885,61 +2819,55 @@
     ]
   },
   {
-    "id": 401,
+    "id": 385,
     "name": "server",
     "display": "Server",
     "aliases": []
   },
   {
-    "id": 402,
+    "id": 386,
     "name": "sql database",
     "display": "Sql Database",
     "aliases": []
   },
   {
-    "id": 403,
-    "name": "sales force development",
-    "display": "Sales Force Development",
-    "aliases": []
-  },
-  {
-    "id": 404,
+    "id": 387,
     "name": "quality audit",
     "display": "Quality Audit",
     "aliases": []
   },
   {
-    "id": 405,
+    "id": 388,
     "name": "outlook configuration",
     "display": "Outlook Configuration",
     "aliases": []
   },
   {
-    "id": 406,
+    "id": 389,
     "name": "scalability",
     "display": "Scalability",
     "aliases": []
   },
   {
-    "id": 407,
+    "id": 390,
     "name": "application software",
     "display": "Application Software",
     "aliases": []
   },
   {
-    "id": 408,
+    "id": 391,
     "name": "system integration",
     "display": "System Integration",
     "aliases": []
   },
   {
-    "id": 409,
+    "id": 392,
     "name": "firewall",
     "display": "Firewall",
     "aliases": []
   },
   {
-    "id": 410,
+    "id": 393,
     "name": "assurance",
     "display": "Assurance",
     "aliases": [
@@ -2947,7 +2875,7 @@
     ]
   },
   {
-    "id": 411,
+    "id": 394,
     "name": "wellness",
     "display": "Wellness",
     "aliases": [
@@ -2955,73 +2883,73 @@
     ]
   },
   {
-    "id": 412,
+    "id": 395,
     "name": "data architecture",
     "display": "Data Architecture",
     "aliases": []
   },
   {
-    "id": 413,
+    "id": 396,
     "name": "san",
     "display": "San",
     "aliases": []
   },
   {
-    "id": 414,
+    "id": 397,
     "name": "etl process",
     "display": "Etl Process",
     "aliases": []
   },
   {
-    "id": 415,
+    "id": 398,
     "name": "aks",
     "display": "Aks",
     "aliases": []
   },
   {
-    "id": 416,
+    "id": 399,
     "name": "ecc",
     "display": "Ecc",
     "aliases": []
   },
   {
-    "id": 417,
+    "id": 400,
     "name": "aws glue",
     "display": "Aws Glue",
     "aliases": []
   },
   {
-    "id": 418,
+    "id": 401,
     "name": "bengali",
     "display": "Bengali",
     "aliases": []
   },
   {
-    "id": 419,
+    "id": 402,
     "name": "azure functions",
     "display": "Azure Functions",
     "aliases": []
   },
   {
-    "id": 420,
+    "id": 403,
     "name": "mobile development",
     "display": "Mobile Development",
     "aliases": []
   },
   {
-    "id": 421,
+    "id": 404,
     "name": "postman",
     "display": "Postman",
     "aliases": []
   },
   {
-    "id": 422,
+    "id": 405,
     "name": "cypress",
     "display": "Cypress",
     "aliases": []
   },
   {
-    "id": 423,
+    "id": 406,
     "name": "analysis",
     "display": "Analysis",
     "aliases": [
@@ -3029,7 +2957,7 @@
     ]
   },
   {
-    "id": 424,
+    "id": 407,
     "name": "hr generalist activities",
     "display": "Hr Generalist Activities",
     "aliases": [
@@ -3037,97 +2965,91 @@
     ]
   },
   {
-    "id": 425,
+    "id": 408,
     "name": "net fullstack",
     "display": "Net Fullstack",
     "aliases": []
   },
   {
-    "id": 426,
+    "id": 409,
     "name": "automation tools",
     "display": "Automation Tools",
     "aliases": []
   },
   {
-    "id": 427,
+    "id": 410,
     "name": "quality inspection",
     "display": "Quality Inspection",
     "aliases": []
   },
   {
-    "id": 428,
+    "id": 411,
     "name": "sap bw",
     "display": "Sap Bw",
     "aliases": []
   },
   {
-    "id": 429,
+    "id": 412,
     "name": "dynatrace",
     "display": "Dynatrace",
     "aliases": []
   },
   {
-    "id": 430,
+    "id": 413,
     "name": "vpn",
     "display": "Vpn",
     "aliases": []
   },
   {
-    "id": 431,
+    "id": 414,
     "name": "release management",
     "display": "Release Management",
     "aliases": []
   },
   {
-    "id": 432,
-    "name": "databricks",
-    "display": "Databricks",
-    "aliases": []
-  },
-  {
-    "id": 433,
+    "id": 415,
     "name": "quality assurance engineering",
     "display": "Quality Assurance Engineering",
     "aliases": []
   },
   {
-    "id": 434,
+    "id": 416,
     "name": "os installation",
     "display": "Os Installation",
     "aliases": []
   },
   {
-    "id": 435,
+    "id": 417,
     "name": "sap mdg",
     "display": "Sap Mdg",
     "aliases": []
   },
   {
-    "id": 436,
+    "id": 418,
     "name": "data mining",
     "display": "Data Mining",
     "aliases": []
   },
   {
-    "id": 437,
+    "id": 419,
     "name": "data pipeline",
     "display": "Data Pipeline",
     "aliases": []
   },
   {
-    "id": 438,
+    "id": 420,
     "name": "cloud technologies",
     "display": "Cloud Technologies",
     "aliases": []
   },
   {
-    "id": 439,
+    "id": 421,
     "name": "fi",
     "display": "Fi",
     "aliases": []
   },
   {
-    "id": 440,
+    "id": 422,
     "name": "payroll",
     "display": "Payroll",
     "aliases": [
@@ -3135,19 +3057,19 @@
     ]
   },
   {
-    "id": 441,
+    "id": 423,
     "name": "machine learning algorithms",
     "display": "Machine Learning Algorithms",
     "aliases": []
   },
   {
-    "id": 442,
+    "id": 424,
     "name": "scripting languages",
     "display": "Scripting Languages",
     "aliases": []
   },
   {
-    "id": 443,
+    "id": 425,
     "name": "front",
     "display": "Front",
     "aliases": [
@@ -3155,19 +3077,19 @@
     ]
   },
   {
-    "id": 444,
+    "id": 426,
     "name": "jmeter",
     "display": "Jmeter",
     "aliases": []
   },
   {
-    "id": 445,
+    "id": 427,
     "name": "google",
     "display": "Google",
     "aliases": []
   },
   {
-    "id": 446,
+    "id": 428,
     "name": "design principles",
     "display": "Design Principles",
     "aliases": [
@@ -3175,7 +3097,7 @@
     ]
   },
   {
-    "id": 447,
+    "id": 429,
     "name": "procurement",
     "display": "Procurement",
     "aliases": [
@@ -3183,25 +3105,25 @@
     ]
   },
   {
-    "id": 448,
+    "id": 430,
     "name": "testing",
     "display": "Testing",
     "aliases": []
   },
   {
-    "id": 449,
+    "id": 431,
     "name": "dashboards",
     "display": "Dashboards",
     "aliases": []
   },
   {
-    "id": 450,
+    "id": 432,
     "name": "data analyst",
     "display": "Data Analyst",
     "aliases": []
   },
   {
-    "id": 451,
+    "id": 433,
     "name": "leadership",
     "display": "Leadership",
     "aliases": [
@@ -3209,13 +3131,13 @@
     ]
   },
   {
-    "id": 452,
+    "id": 434,
     "name": "test execution",
     "display": "Test Execution",
     "aliases": []
   },
   {
-    "id": 453,
+    "id": 435,
     "name": "fico",
     "display": "Fico",
     "aliases": [
@@ -3223,49 +3145,49 @@
     ]
   },
   {
-    "id": 454,
+    "id": 436,
     "name": "test planning",
     "display": "Test Planning",
     "aliases": []
   },
   {
-    "id": 455,
+    "id": 437,
     "name": "eks",
     "display": "Eks",
     "aliases": []
   },
   {
-    "id": 456,
+    "id": 438,
     "name": "gcp cloud",
     "display": "Gcp Cloud",
     "aliases": []
   },
   {
-    "id": 457,
+    "id": 439,
     "name": "service cloud",
     "display": "Service Cloud",
     "aliases": []
   },
   {
-    "id": 458,
+    "id": 440,
     "name": "sre",
     "display": "Sre",
     "aliases": []
   },
   {
-    "id": 459,
+    "id": 441,
     "name": "sdk",
     "display": "Sdk",
     "aliases": []
   },
   {
-    "id": 460,
+    "id": 442,
     "name": "technical documentation",
     "display": "Technical Documentation",
     "aliases": []
   },
   {
-    "id": 461,
+    "id": 443,
     "name": "macros",
     "display": "Macros",
     "aliases": [
@@ -3273,43 +3195,43 @@
     ]
   },
   {
-    "id": 462,
+    "id": 444,
     "name": "firebase",
     "display": "Firebase",
     "aliases": []
   },
   {
-    "id": 463,
+    "id": 445,
     "name": "data manipulation",
     "display": "Data Manipulation",
     "aliases": []
   },
   {
-    "id": 464,
+    "id": 446,
     "name": "ssrs",
     "display": "Ssrs",
     "aliases": []
   },
   {
-    "id": 465,
+    "id": 447,
     "name": "cloud architecture",
     "display": "Cloud Architecture",
     "aliases": []
   },
   {
-    "id": 466,
+    "id": 448,
     "name": "s3",
     "display": "S3",
     "aliases": []
   },
   {
-    "id": 467,
+    "id": 449,
     "name": "lambda expressions",
     "display": "Lambda Expressions",
     "aliases": []
   },
   {
-    "id": 468,
+    "id": 450,
     "name": "compliance",
     "display": "Compliance",
     "aliases": [
@@ -3317,13 +3239,13 @@
     ]
   },
   {
-    "id": 469,
+    "id": 451,
     "name": "emerging technologies",
     "display": "Emerging Technologies",
     "aliases": []
   },
   {
-    "id": 470,
+    "id": 452,
     "name": "salesforce lightning",
     "display": "Salesforce Lightning",
     "aliases": [
@@ -3331,19 +3253,13 @@
     ]
   },
   {
-    "id": 471,
-    "name": "flutter development",
-    "display": "Flutter Development",
-    "aliases": []
-  },
-  {
-    "id": 472,
+    "id": 453,
     "name": "desktop",
     "display": "Desktop",
     "aliases": []
   },
   {
-    "id": 473,
+    "id": 454,
     "name": "accounting",
     "display": "Accounting",
     "aliases": [
@@ -3351,13 +3267,13 @@
     ]
   },
   {
-    "id": 474,
+    "id": 455,
     "name": "redis",
     "display": "Redis",
     "aliases": []
   },
   {
-    "id": 475,
+    "id": 456,
     "name": "service management",
     "display": "Service Management",
     "aliases": [
@@ -3365,25 +3281,25 @@
     ]
   },
   {
-    "id": 476,
+    "id": 457,
     "name": "cs",
     "display": "Cs",
     "aliases": []
   },
   {
-    "id": 477,
+    "id": 458,
     "name": "pipeline",
     "display": "Pipeline",
     "aliases": []
   },
   {
-    "id": 478,
+    "id": 459,
     "name": "jpa",
     "display": "Jpa",
     "aliases": []
   },
   {
-    "id": 479,
+    "id": 460,
     "name": "advanced excel",
     "display": "Advanced Excel",
     "aliases": [
@@ -3391,31 +3307,31 @@
     ]
   },
   {
-    "id": 480,
+    "id": 461,
     "name": "ticketing",
     "display": "Ticketing",
     "aliases": []
   },
   {
-    "id": 481,
+    "id": 462,
     "name": "aws cloudformation",
     "display": "Aws Cloudformation",
     "aliases": []
   },
   {
-    "id": 482,
+    "id": 463,
     "name": "numpy",
     "display": "Numpy",
     "aliases": []
   },
   {
-    "id": 483,
+    "id": 464,
     "name": "manual",
     "display": "Manual",
     "aliases": []
   },
   {
-    "id": 484,
+    "id": 465,
     "name": "mis",
     "display": "Mis",
     "aliases": [
@@ -3423,25 +3339,25 @@
     ]
   },
   {
-    "id": 485,
+    "id": 466,
     "name": "user interface designing",
     "display": "User Interface Designing",
     "aliases": []
   },
   {
-    "id": 486,
+    "id": 467,
     "name": "tosca",
     "display": "Tosca",
     "aliases": []
   },
   {
-    "id": 487,
+    "id": 468,
     "name": "sap upgrade",
     "display": "Sap Upgrade",
     "aliases": []
   },
   {
-    "id": 488,
+    "id": 469,
     "name": "presales",
     "display": "Presales",
     "aliases": [
@@ -3449,31 +3365,31 @@
     ]
   },
   {
-    "id": 489,
+    "id": 470,
     "name": "azure synapse",
     "display": "Azure Synapse",
     "aliases": []
   },
   {
-    "id": 490,
+    "id": 471,
     "name": "etl testing",
     "display": "Etl Testing",
     "aliases": []
   },
   {
-    "id": 491,
+    "id": 472,
     "name": "java spring boot",
     "display": "Java Spring Boot",
     "aliases": []
   },
   {
-    "id": 492,
+    "id": 473,
     "name": "load runner",
     "display": "Load Runner",
     "aliases": []
   },
   {
-    "id": 493,
+    "id": 474,
     "name": "scheduling",
     "display": "Scheduling",
     "aliases": [
@@ -3481,43 +3397,43 @@
     ]
   },
   {
-    "id": 494,
+    "id": 475,
     "name": "metadata",
     "display": "Metadata",
     "aliases": []
   },
   {
-    "id": 495,
+    "id": 476,
     "name": "pytest",
     "display": "Pytest",
     "aliases": []
   },
   {
-    "id": 496,
+    "id": 477,
     "name": "neural networks",
     "display": "Neural Networks",
     "aliases": []
   },
   {
-    "id": 497,
+    "id": 478,
     "name": "ticketing tools",
     "display": "Ticketing Tools",
     "aliases": []
   },
   {
-    "id": 498,
+    "id": 479,
     "name": "artifactory",
     "display": "Artifactory",
     "aliases": []
   },
   {
-    "id": 499,
+    "id": 480,
     "name": "sap module",
     "display": "Sap Module",
     "aliases": []
   },
   {
-    "id": 500,
+    "id": 481,
     "name": "architectural design",
     "display": "Architectural Design",
     "aliases": [
@@ -3525,13 +3441,13 @@
     ]
   },
   {
-    "id": 501,
+    "id": 482,
     "name": "soql",
     "display": "Soql",
     "aliases": []
   },
   {
-    "id": 502,
+    "id": 483,
     "name": "functional",
     "display": "Functional",
     "aliases": [
@@ -3539,7 +3455,7 @@
     ]
   },
   {
-    "id": 503,
+    "id": 484,
     "name": "process",
     "display": "Process",
     "aliases": [
@@ -3547,145 +3463,133 @@
     ]
   },
   {
-    "id": 504,
+    "id": 485,
     "name": "iac",
     "display": "Iac",
     "aliases": []
   },
   {
-    "id": 505,
+    "id": 486,
     "name": "sharepoint",
     "display": "Sharepoint",
     "aliases": []
   },
   {
-    "id": 506,
+    "id": 487,
     "name": "test case execution",
     "display": "Test Case Execution",
     "aliases": []
   },
   {
-    "id": 507,
-    "name": "restful api",
-    "display": "Restful Api",
-    "aliases": []
-  },
-  {
-    "id": 508,
+    "id": 488,
     "name": "eigrp",
     "display": "Eigrp",
     "aliases": []
   },
   {
-    "id": 509,
+    "id": 489,
     "name": "dax",
     "display": "Dax",
     "aliases": []
   },
   {
-    "id": 510,
+    "id": 490,
     "name": "tsql",
     "display": "Tsql",
     "aliases": []
   },
   {
-    "id": 511,
+    "id": 491,
     "name": "robot framework",
     "display": "Robot Framework",
     "aliases": []
   },
   {
-    "id": 512,
+    "id": 492,
     "name": "lan troubleshooting",
     "display": "Lan Troubleshooting",
     "aliases": []
   },
   {
-    "id": 513,
+    "id": 493,
     "name": "network support",
     "display": "Network Support",
     "aliases": []
   },
   {
-    "id": 514,
+    "id": 494,
     "name": "software quality assurance",
     "display": "Software Quality Assurance",
     "aliases": []
   },
   {
-    "id": 515,
+    "id": 495,
     "name": "hipaa",
     "display": "Hipaa",
     "aliases": []
   },
   {
-    "id": 516,
+    "id": 496,
     "name": "java selenium",
     "display": "Java Selenium",
     "aliases": []
   },
   {
-    "id": 517,
-    "name": "angular development",
-    "display": "Angular Development",
-    "aliases": []
-  },
-  {
-    "id": 518,
+    "id": 497,
     "name": "amazon ec2",
     "display": "Amazon Ec2",
     "aliases": []
   },
   {
-    "id": 519,
+    "id": 498,
     "name": "engineering support",
     "display": "Engineering Support",
     "aliases": []
   },
   {
-    "id": 520,
+    "id": 499,
     "name": "quality management",
     "display": "Quality Management",
     "aliases": []
   },
   {
-    "id": 521,
+    "id": 500,
     "name": "sd",
     "display": "Sd",
     "aliases": []
   },
   {
-    "id": 522,
+    "id": 501,
     "name": "monitoring tools",
     "display": "Monitoring Tools",
     "aliases": []
   },
   {
-    "id": 523,
+    "id": 502,
     "name": "salesforce sales cloud",
     "display": "Salesforce Sales Cloud",
     "aliases": []
   },
   {
-    "id": 524,
+    "id": 503,
     "name": "abap programming",
     "display": "Abap Programming",
     "aliases": []
   },
   {
-    "id": 525,
+    "id": 504,
     "name": "selenium webdriver",
     "display": "Selenium Webdriver",
     "aliases": []
   },
   {
-    "id": 526,
+    "id": 505,
     "name": "sap cloud",
     "display": "Sap Cloud",
     "aliases": []
   },
   {
-    "id": 527,
+    "id": 506,
     "name": "languages",
     "display": "Languages",
     "aliases": [
@@ -3693,13 +3597,7 @@
     ]
   },
   {
-    "id": 528,
-    "name": "mobile applications",
-    "display": "Mobile Applications",
-    "aliases": []
-  },
-  {
-    "id": 529,
+    "id": 507,
     "name": "joining formalities",
     "display": "Joining Formalities",
     "aliases": [
@@ -3707,25 +3605,25 @@
     ]
   },
   {
-    "id": 530,
+    "id": 508,
     "name": "access management",
     "display": "Access Management",
     "aliases": []
   },
   {
-    "id": 531,
+    "id": 509,
     "name": "system testing",
     "display": "System Testing",
     "aliases": []
   },
   {
-    "id": 532,
+    "id": 510,
     "name": "cassandra",
     "display": "Cassandra",
     "aliases": []
   },
   {
-    "id": 533,
+    "id": 511,
     "name": "site",
     "display": "Site",
     "aliases": [
@@ -3733,25 +3631,25 @@
     ]
   },
   {
-    "id": 534,
+    "id": 512,
     "name": "qms",
     "display": "Qms",
     "aliases": []
   },
   {
-    "id": 535,
+    "id": 513,
     "name": "enterprise applications",
     "display": "Enterprise Applications",
     "aliases": []
   },
   {
-    "id": 536,
+    "id": 514,
     "name": "sap analytics cloud",
     "display": "Sap Analytics Cloud",
     "aliases": []
   },
   {
-    "id": 537,
+    "id": 515,
     "name": "product design",
     "display": "Product Design",
     "aliases": [
@@ -3759,49 +3657,43 @@
     ]
   },
   {
-    "id": 538,
+    "id": 516,
     "name": "job description",
     "display": "Job Description",
     "aliases": []
   },
   {
-    "id": 539,
+    "id": 517,
     "name": "asp",
     "display": "Asp",
     "aliases": []
   },
   {
-    "id": 540,
+    "id": 518,
     "name": "native",
     "display": "Native",
     "aliases": []
   },
   {
-    "id": 541,
+    "id": 519,
     "name": "database testing",
     "display": "Database Testing",
     "aliases": []
   },
   {
-    "id": 542,
+    "id": 520,
     "name": "grc",
     "display": "Grc",
     "aliases": []
   },
   {
-    "id": 543,
+    "id": 521,
     "name": "system administration",
     "display": "System Administration",
     "aliases": []
   },
   {
-    "id": 544,
-    "name": "springboot",
-    "display": "Springboot",
-    "aliases": []
-  },
-  {
-    "id": 545,
+    "id": 522,
     "name": "program management",
     "display": "Program Management",
     "aliases": [
@@ -3809,25 +3701,25 @@
     ]
   },
   {
-    "id": 546,
+    "id": 523,
     "name": "dot",
     "display": "Dot",
     "aliases": []
   },
   {
-    "id": 547,
+    "id": 524,
     "name": "power platform",
     "display": "Power Platform",
     "aliases": []
   },
   {
-    "id": 548,
+    "id": 525,
     "name": "digital transformation",
     "display": "Digital Transformation",
     "aliases": []
   },
   {
-    "id": 549,
+    "id": 526,
     "name": "cad",
     "display": "Cad",
     "aliases": [
@@ -3835,7 +3727,7 @@
     ]
   },
   {
-    "id": 550,
+    "id": 527,
     "name": "workday",
     "display": "Workday",
     "aliases": [
@@ -3843,7 +3735,7 @@
     ]
   },
   {
-    "id": 551,
+    "id": 528,
     "name": "customer relationship",
     "display": "Customer Relationship",
     "aliases": [
@@ -3851,7 +3743,7 @@
     ]
   },
   {
-    "id": 552,
+    "id": 529,
     "name": "operational excellence",
     "display": "Operational Excellence",
     "aliases": [
@@ -3859,31 +3751,25 @@
     ]
   },
   {
-    "id": 553,
+    "id": 530,
     "name": "infrastructure management",
     "display": "Infrastructure Management",
     "aliases": []
   },
   {
-    "id": 554,
-    "name": "rest api development",
-    "display": "Rest Api Development",
-    "aliases": []
-  },
-  {
-    "id": 555,
+    "id": 531,
     "name": "infotainment",
     "display": "Infotainment",
     "aliases": []
   },
   {
-    "id": 556,
+    "id": 532,
     "name": "hardware networking",
     "display": "Hardware Networking",
     "aliases": []
   },
   {
-    "id": 557,
+    "id": 533,
     "name": "performance management",
     "display": "Performance Management",
     "aliases": [
@@ -3891,43 +3777,43 @@
     ]
   },
   {
-    "id": 558,
+    "id": 534,
     "name": "redhat linux",
     "display": "Redhat Linux",
     "aliases": []
   },
   {
-    "id": 559,
+    "id": 535,
     "name": "swift ui",
     "display": "Swift Ui",
     "aliases": []
   },
   {
-    "id": 560,
+    "id": 536,
     "name": "it support",
     "display": "It Support",
     "aliases": []
   },
   {
-    "id": 561,
+    "id": 537,
     "name": "r",
     "display": "R",
     "aliases": []
   },
   {
-    "id": 562,
+    "id": 538,
     "name": "reliability",
     "display": "Reliability",
     "aliases": []
   },
   {
-    "id": 563,
+    "id": 539,
     "name": "bitbucket",
     "display": "Bitbucket",
     "aliases": []
   },
   {
-    "id": 564,
+    "id": 540,
     "name": "accounts payable",
     "display": "Accounts Payable",
     "aliases": [
@@ -3935,67 +3821,61 @@
     ]
   },
   {
-    "id": 565,
-    "name": "genai",
-    "display": "Genai",
-    "aliases": []
-  },
-  {
-    "id": 566,
+    "id": 541,
     "name": "oracle dba",
     "display": "Oracle Dba",
     "aliases": []
   },
   {
-    "id": 567,
+    "id": 542,
     "name": "gitlab",
     "display": "Gitlab",
     "aliases": []
   },
   {
-    "id": 568,
+    "id": 543,
     "name": "devops tools",
     "display": "Devops Tools",
     "aliases": []
   },
   {
-    "id": 569,
+    "id": 544,
     "name": "tdd",
     "display": "Tdd",
     "aliases": []
   },
   {
-    "id": 570,
+    "id": 545,
     "name": "sas",
     "display": "Sas",
     "aliases": []
   },
   {
-    "id": 571,
+    "id": 546,
     "name": "sap cloud platform",
     "display": "Sap Cloud Platform",
     "aliases": []
   },
   {
-    "id": 572,
+    "id": 547,
     "name": "product engineering",
     "display": "Product Engineering",
     "aliases": []
   },
   {
-    "id": 573,
+    "id": 548,
     "name": "rag",
     "display": "Rag",
     "aliases": []
   },
   {
-    "id": 574,
+    "id": 549,
     "name": "cloud migration",
     "display": "Cloud Migration",
     "aliases": []
   },
   {
-    "id": 575,
+    "id": 550,
     "name": "recruitment",
     "display": "Recruitment",
     "aliases": [
@@ -4003,31 +3883,31 @@
     ]
   },
   {
-    "id": 576,
+    "id": 551,
     "name": "rabbitmq",
     "display": "Rabbitmq",
     "aliases": []
   },
   {
-    "id": 577,
+    "id": 552,
     "name": "solution architecture",
     "display": "Solution Architecture",
     "aliases": []
   },
   {
-    "id": 578,
+    "id": 553,
     "name": "test scenarios",
     "display": "Test Scenarios",
     "aliases": []
   },
   {
-    "id": 579,
+    "id": 554,
     "name": "architect",
     "display": "Architect",
     "aliases": []
   },
   {
-    "id": 580,
+    "id": 555,
     "name": "analytical skills",
     "display": "Analytical Skills",
     "aliases": [
@@ -4035,7 +3915,7 @@
     ]
   },
   {
-    "id": 581,
+    "id": 556,
     "name": "process improvement",
     "display": "Process Improvement",
     "aliases": [
@@ -4043,25 +3923,25 @@
     ]
   },
   {
-    "id": 582,
+    "id": 557,
     "name": "query",
     "display": "Query",
     "aliases": []
   },
   {
-    "id": 583,
+    "id": 558,
     "name": "l1 support",
     "display": "L1 Support",
     "aliases": []
   },
   {
-    "id": 584,
+    "id": 559,
     "name": "master data management",
     "display": "Master Data Management",
     "aliases": []
   },
   {
-    "id": 585,
+    "id": 560,
     "name": "reporting",
     "display": "Reporting",
     "aliases": [
@@ -4069,31 +3949,31 @@
     ]
   },
   {
-    "id": 586,
+    "id": 561,
     "name": "bgp",
     "display": "Bgp",
     "aliases": []
   },
   {
-    "id": 587,
+    "id": 562,
     "name": "sap implementation",
     "display": "Sap Implementation",
     "aliases": []
   },
   {
-    "id": 588,
+    "id": 563,
     "name": "data lake",
     "display": "Data Lake",
     "aliases": []
   },
   {
-    "id": 589,
+    "id": 564,
     "name": "nlp",
     "display": "Nlp",
     "aliases": []
   },
   {
-    "id": 590,
+    "id": 565,
     "name": "marketing",
     "display": "Marketing",
     "aliases": [
@@ -4101,37 +3981,37 @@
     ]
   },
   {
-    "id": 591,
+    "id": 566,
     "name": "api management",
     "display": "Api Management",
     "aliases": []
   },
   {
-    "id": 592,
+    "id": 567,
     "name": "etl pipelines",
     "display": "Etl Pipelines",
     "aliases": []
   },
   {
-    "id": 593,
+    "id": 568,
     "name": "mlops",
     "display": "Mlops",
     "aliases": []
   },
   {
-    "id": 594,
+    "id": 569,
     "name": "rca",
     "display": "Rca",
     "aliases": []
   },
   {
-    "id": 595,
+    "id": 570,
     "name": "microsoft windows",
     "display": "Microsoft Windows",
     "aliases": []
   },
   {
-    "id": 596,
+    "id": 571,
     "name": "information security",
     "display": "Information Security",
     "aliases": [
@@ -4139,7 +4019,7 @@
     ]
   },
   {
-    "id": 597,
+    "id": 572,
     "name": "sap fico",
     "display": "Sap Fico",
     "aliases": [
@@ -4147,13 +4027,13 @@
     ]
   },
   {
-    "id": 598,
+    "id": 573,
     "name": "quality process",
     "display": "Quality Process",
     "aliases": []
   },
   {
-    "id": 599,
+    "id": 574,
     "name": "health insurance",
     "display": "Health Insurance",
     "aliases": [
@@ -4161,13 +4041,13 @@
     ]
   },
   {
-    "id": 600,
+    "id": 575,
     "name": "tfs",
     "display": "Tfs",
     "aliases": []
   },
   {
-    "id": 601,
+    "id": 576,
     "name": "photoshop",
     "display": "Photoshop",
     "aliases": [
@@ -4175,13 +4055,13 @@
     ]
   },
   {
-    "id": 602,
+    "id": 577,
     "name": "oracle fusion",
     "display": "Oracle Fusion",
     "aliases": []
   },
   {
-    "id": 603,
+    "id": 578,
     "name": "sr",
     "display": "Sr",
     "aliases": [
@@ -4189,13 +4069,13 @@
     ]
   },
   {
-    "id": 604,
+    "id": 579,
     "name": "process automation",
     "display": "Process Automation",
     "aliases": []
   },
   {
-    "id": 605,
+    "id": 580,
     "name": "social media",
     "display": "Social Media",
     "aliases": [
@@ -4203,43 +4083,37 @@
     ]
   },
   {
-    "id": 606,
+    "id": 581,
     "name": "lightning",
     "display": "Lightning",
     "aliases": []
   },
   {
-    "id": 607,
+    "id": 582,
     "name": "software quality",
     "display": "Software Quality",
     "aliases": []
   },
   {
-    "id": 608,
+    "id": 583,
     "name": "data collection",
     "display": "Data Collection",
     "aliases": []
   },
   {
-    "id": 609,
-    "name": "react js",
-    "display": "React Js",
-    "aliases": []
-  },
-  {
-    "id": 610,
+    "id": 584,
     "name": "sapui5",
     "display": "Sapui5",
     "aliases": []
   },
   {
-    "id": 611,
+    "id": 585,
     "name": "deep learning frameworks",
     "display": "Deep Learning Frameworks",
     "aliases": []
   },
   {
-    "id": 612,
+    "id": 586,
     "name": "asset management",
     "display": "Asset Management",
     "aliases": [
@@ -4247,7 +4121,7 @@
     ]
   },
   {
-    "id": 613,
+    "id": 587,
     "name": "cms",
     "display": "Cms",
     "aliases": [
@@ -4255,55 +4129,55 @@
     ]
   },
   {
-    "id": 614,
+    "id": 588,
     "name": "sap cpi",
     "display": "Sap Cpi",
     "aliases": []
   },
   {
-    "id": 615,
+    "id": 589,
     "name": "qa testing",
     "display": "Qa Testing",
     "aliases": []
   },
   {
-    "id": 616,
+    "id": 590,
     "name": "cloud integration",
     "display": "Cloud Integration",
     "aliases": []
   },
   {
-    "id": 617,
+    "id": 591,
     "name": "solution design",
     "display": "Solution Design",
     "aliases": []
   },
   {
-    "id": 618,
+    "id": 592,
     "name": "large language model",
     "display": "Large Language Model",
     "aliases": []
   },
   {
-    "id": 619,
+    "id": 593,
     "name": "data warehousing concepts",
     "display": "Data Warehousing Concepts",
     "aliases": []
   },
   {
-    "id": 620,
+    "id": 594,
     "name": "sql azure",
     "display": "Sql Azure",
     "aliases": []
   },
   {
-    "id": 621,
+    "id": 595,
     "name": "io",
     "display": "Io",
     "aliases": []
   },
   {
-    "id": 622,
+    "id": 596,
     "name": "career development",
     "display": "Career Development",
     "aliases": [
@@ -4311,73 +4185,73 @@
     ]
   },
   {
-    "id": 623,
+    "id": 597,
     "name": "vpc",
     "display": "Vpc",
     "aliases": []
   },
   {
-    "id": 624,
+    "id": 598,
     "name": "virtualization",
     "display": "Virtualization",
     "aliases": []
   },
   {
-    "id": 625,
+    "id": 599,
     "name": "defect tracking",
     "display": "Defect Tracking",
     "aliases": []
   },
   {
-    "id": 626,
+    "id": 600,
     "name": "relational databases",
     "display": "Relational Databases",
     "aliases": []
   },
   {
-    "id": 627,
+    "id": 601,
     "name": "ngrx",
     "display": "Ngrx",
     "aliases": []
   },
   {
-    "id": 628,
+    "id": 602,
     "name": "cmmi",
     "display": "Cmmi",
     "aliases": []
   },
   {
-    "id": 629,
+    "id": 603,
     "name": "ubuntu",
     "display": "Ubuntu",
     "aliases": []
   },
   {
-    "id": 630,
+    "id": 604,
     "name": "mobile testing",
     "display": "Mobile Testing",
     "aliases": []
   },
   {
-    "id": 631,
+    "id": 605,
     "name": "bw",
     "display": "Bw",
     "aliases": []
   },
   {
-    "id": 632,
+    "id": 606,
     "name": "migration",
     "display": "Migration",
     "aliases": []
   },
   {
-    "id": 633,
+    "id": 607,
     "name": "tools",
     "display": "Tools",
     "aliases": []
   },
   {
-    "id": 634,
+    "id": 608,
     "name": "us healthcare",
     "display": "Us Healthcare",
     "aliases": [
@@ -4385,19 +4259,19 @@
     ]
   },
   {
-    "id": 635,
+    "id": 609,
     "name": "nagios",
     "display": "Nagios",
     "aliases": []
   },
   {
-    "id": 636,
+    "id": 610,
     "name": "product support",
     "display": "Product Support",
     "aliases": []
   },
   {
-    "id": 637,
+    "id": 611,
     "name": "sourcing",
     "display": "Sourcing",
     "aliases": [
@@ -4405,97 +4279,91 @@
     ]
   },
   {
-    "id": 638,
+    "id": 612,
     "name": "splunk",
     "display": "Splunk",
     "aliases": []
   },
   {
-    "id": 639,
+    "id": 613,
     "name": "dart",
     "display": "Dart",
     "aliases": []
   },
   {
-    "id": 640,
+    "id": 614,
     "name": "query optimization",
     "display": "Query Optimization",
     "aliases": []
   },
   {
-    "id": 641,
+    "id": 615,
     "name": "order management",
     "display": "Order Management",
     "aliases": []
   },
   {
-    "id": 642,
+    "id": 616,
     "name": "perl",
     "display": "Perl",
     "aliases": []
   },
   {
-    "id": 643,
+    "id": 617,
     "name": "cloud applications",
     "display": "Cloud Applications",
     "aliases": []
   },
   {
-    "id": 644,
+    "id": 618,
     "name": "ruby",
     "display": "Ruby",
     "aliases": []
   },
   {
-    "id": 645,
+    "id": 619,
     "name": "testng",
     "display": "Testng",
     "aliases": []
   },
   {
-    "id": 646,
+    "id": 620,
     "name": "selenium testing",
     "display": "Selenium Testing",
     "aliases": []
   },
   {
-    "id": 647,
+    "id": 621,
     "name": "data flow",
     "display": "Data Flow",
     "aliases": []
   },
   {
-    "id": 648,
+    "id": 622,
     "name": "containerization",
     "display": "Containerization",
     "aliases": []
   },
   {
-    "id": 649,
+    "id": 623,
     "name": "statistics",
     "display": "Statistics",
     "aliases": []
   },
   {
-    "id": 650,
-    "name": "sap development",
-    "display": "Sap Development",
-    "aliases": []
-  },
-  {
-    "id": 651,
+    "id": 624,
     "name": "project delivery",
     "display": "Project Delivery",
     "aliases": []
   },
   {
-    "id": 652,
+    "id": 625,
     "name": "hcm",
     "display": "Hcm",
     "aliases": []
   },
   {
-    "id": 653,
+    "id": 626,
     "name": "cyber security",
     "display": "Cyber Security",
     "aliases": [
@@ -4503,7 +4371,7 @@
     ]
   },
   {
-    "id": 654,
+    "id": 627,
     "name": "content",
     "display": "Content",
     "aliases": [
@@ -4511,85 +4379,79 @@
     ]
   },
   {
-    "id": 655,
+    "id": 628,
     "name": "mern stack",
     "display": "Mern Stack",
     "aliases": []
   },
   {
-    "id": 656,
+    "id": 629,
     "name": "nestjs",
     "display": "Nestjs",
     "aliases": []
   },
   {
-    "id": 657,
+    "id": 630,
     "name": "elastic search",
     "display": "Elastic Search",
     "aliases": []
   },
   {
-    "id": 658,
-    "name": "javas",
-    "display": "Javas",
-    "aliases": []
-  },
-  {
-    "id": 659,
+    "id": 631,
     "name": "nosql databases",
     "display": "Nosql Databases",
     "aliases": []
   },
   {
-    "id": 660,
+    "id": 632,
     "name": "enterprise architecture",
     "display": "Enterprise Architecture",
     "aliases": []
   },
   {
-    "id": 661,
+    "id": 633,
     "name": "cpq",
     "display": "Cpq",
     "aliases": []
   },
   {
-    "id": 662,
+    "id": 634,
     "name": "factory",
     "display": "Factory",
     "aliases": []
   },
   {
-    "id": 663,
+    "id": 635,
     "name": "cosmos",
     "display": "Cosmos",
     "aliases": []
   },
   {
-    "id": 664,
+    "id": 636,
     "name": "css3",
     "display": "Css3",
     "aliases": []
   },
   {
-    "id": 665,
+    "id": 637,
     "name": "elk",
     "display": "Elk",
     "aliases": []
   },
   {
-    "id": 666,
+    "id": 638,
     "name": "rest api design",
     "display": "Rest Api Design",
     "aliases": []
   },
   {
-    "id": 667,
+    "id": 639,
     "name": "code review",
     "display": "Code Review",
     "aliases": []
   },
   {
-    "id": 668,
+    "id": 640,
     "name": "purchase",
     "display": "Purchase",
     "aliases": [
@@ -4597,55 +4459,55 @@
     ]
   },
   {
-    "id": 669,
+    "id": 641,
     "name": "itil framework",
     "display": "Itil Framework",
     "aliases": []
   },
   {
-    "id": 670,
+    "id": 642,
     "name": "power query",
     "display": "Power Query",
     "aliases": []
   },
   {
-    "id": 671,
+    "id": 643,
     "name": "network infrastructure",
     "display": "Network Infrastructure",
     "aliases": []
   },
   {
-    "id": 672,
+    "id": 644,
     "name": "customer complaints",
     "display": "Customer Complaints",
     "aliases": []
   },
   {
-    "id": 673,
+    "id": 645,
     "name": "mdg",
     "display": "Mdg",
     "aliases": []
   },
   {
-    "id": 674,
+    "id": 646,
     "name": "dynamo db",
     "display": "Dynamo Db",
     "aliases": []
   },
   {
-    "id": 675,
+    "id": 647,
     "name": "pdf",
     "display": "Pdf",
     "aliases": []
   },
   {
-    "id": 676,
+    "id": 648,
     "name": "ssl",
     "display": "Ssl",
     "aliases": []
   },
   {
-    "id": 677,
+    "id": 649,
     "name": "payments",
     "display": "Payments",
     "aliases": [
@@ -4653,79 +4515,79 @@
     ]
   },
   {
-    "id": 678,
+    "id": 650,
     "name": "adf",
     "display": "Adf",
     "aliases": []
   },
   {
-    "id": 679,
+    "id": 651,
     "name": "firmware",
     "display": "Firmware",
     "aliases": []
   },
   {
-    "id": 680,
+    "id": 652,
     "name": "sap integration",
     "display": "Sap Integration",
     "aliases": []
   },
   {
-    "id": 681,
+    "id": 653,
     "name": "database migration",
     "display": "Database Migration",
     "aliases": []
   },
   {
-    "id": 682,
+    "id": 654,
     "name": "microsoft azure iaas",
     "display": "Microsoft Azure Iaas",
     "aliases": []
   },
   {
-    "id": 683,
+    "id": 655,
     "name": "rpa",
     "display": "Rpa",
     "aliases": []
   },
   {
-    "id": 684,
+    "id": 656,
     "name": "dom",
     "display": "Dom",
     "aliases": []
   },
   {
-    "id": 685,
+    "id": 657,
     "name": "wordpress",
     "display": "Wordpress",
     "aliases": []
   },
   {
-    "id": 686,
+    "id": 658,
     "name": "nexus",
     "display": "Nexus",
     "aliases": []
   },
   {
-    "id": 687,
+    "id": 659,
     "name": "qe",
     "display": "Qe",
     "aliases": []
   },
   {
-    "id": 688,
+    "id": 660,
     "name": "agile testing",
     "display": "Agile Testing",
     "aliases": []
   },
   {
-    "id": 689,
+    "id": 661,
     "name": "spc",
     "display": "Spc",
     "aliases": []
   },
   {
-    "id": 690,
+    "id": 662,
     "name": "application design",
     "display": "Application Design",
     "aliases": [
@@ -4733,39 +4595,31 @@
     ]
   },
   {
-    "id": 691,
-    "name": "saps",
-    "display": "Saps",
-    "aliases": [
-      "saps"
-    ]
-  },
-  {
-    "id": 692,
+    "id": 663,
     "name": "edi",
     "display": "Edi",
     "aliases": []
   },
   {
-    "id": 693,
+    "id": 664,
     "name": "websphere",
     "display": "Websphere",
     "aliases": []
   },
   {
-    "id": 694,
+    "id": 665,
     "name": "struts",
     "display": "Struts",
     "aliases": []
   },
   {
-    "id": 695,
+    "id": 666,
     "name": "powerapps",
     "display": "Powerapps",
     "aliases": []
   },
   {
-    "id": 696,
+    "id": 667,
     "name": "transformers",
     "display": "Transformers",
     "aliases": [
@@ -4773,7 +4627,7 @@
     ]
   },
   {
-    "id": 697,
+    "id": 668,
     "name": "customer care",
     "display": "Customer Care",
     "aliases": [
@@ -4781,43 +4635,43 @@
     ]
   },
   {
-    "id": 698,
+    "id": 669,
     "name": "helm",
     "display": "Helm",
     "aliases": []
   },
   {
-    "id": 699,
+    "id": 670,
     "name": "german",
     "display": "German",
     "aliases": []
   },
   {
-    "id": 700,
+    "id": 671,
     "name": "l2",
     "display": "L2",
     "aliases": []
   },
   {
-    "id": 701,
+    "id": 672,
     "name": "part time",
     "display": "Part Time",
     "aliases": []
   },
   {
-    "id": 702,
+    "id": 673,
     "name": "ppap",
     "display": "Ppap",
     "aliases": []
   },
   {
-    "id": 703,
+    "id": 674,
     "name": "visual studio",
     "display": "Visual Studio",
     "aliases": []
   },
   {
-    "id": 704,
+    "id": 675,
     "name": "program",
     "display": "Program",
     "aliases": [
@@ -4825,7 +4679,7 @@
     ]
   },
   {
-    "id": 705,
+    "id": 676,
     "name": "ms office",
     "display": "Ms Office",
     "aliases": [
@@ -4833,13 +4687,13 @@
     ]
   },
   {
-    "id": 706,
+    "id": 677,
     "name": "modeling",
     "display": "Modeling",
     "aliases": []
   },
   {
-    "id": 707,
+    "id": 678,
     "name": "basic",
     "display": "Basic",
     "aliases": [
@@ -4847,37 +4701,37 @@
     ]
   },
   {
-    "id": 708,
+    "id": 679,
     "name": "hardware support",
     "display": "Hardware Support",
     "aliases": []
   },
   {
-    "id": 709,
+    "id": 680,
     "name": "sap master data governance",
     "display": "Sap Master Data Governance",
     "aliases": []
   },
   {
-    "id": 710,
+    "id": 681,
     "name": "software installation",
     "display": "Software Installation",
     "aliases": []
   },
   {
-    "id": 711,
+    "id": 682,
     "name": "datadog",
     "display": "Datadog",
     "aliases": []
   },
   {
-    "id": 712,
+    "id": 683,
     "name": "azure logic apps",
     "display": "Azure Logic Apps",
     "aliases": []
   },
   {
-    "id": 713,
+    "id": 684,
     "name": "soc",
     "display": "Soc",
     "aliases": [
@@ -4885,7 +4739,7 @@
     ]
   },
   {
-    "id": 714,
+    "id": 685,
     "name": "sap fi",
     "display": "Sap Fi",
     "aliases": [
@@ -4893,19 +4747,19 @@
     ]
   },
   {
-    "id": 715,
+    "id": 686,
     "name": "triggers",
     "display": "Triggers",
     "aliases": []
   },
   {
-    "id": 716,
+    "id": 687,
     "name": "xcode",
     "display": "Xcode",
     "aliases": []
   },
   {
-    "id": 717,
+    "id": 688,
     "name": "investment banking",
     "display": "Investment Banking",
     "aliases": [
@@ -4913,55 +4767,49 @@
     ]
   },
   {
-    "id": 718,
+    "id": 689,
     "name": "bricks",
     "display": "Bricks",
     "aliases": []
   },
   {
-    "id": 719,
+    "id": 690,
     "name": "sap bods",
     "display": "Sap Bods",
     "aliases": []
   },
   {
-    "id": 720,
+    "id": 691,
     "name": "salesforce integration",
     "display": "Salesforce Integration",
     "aliases": []
   },
   {
-    "id": 721,
+    "id": 692,
     "name": "google cloud platforms",
     "display": "Google Cloud Platforms",
     "aliases": []
   },
   {
-    "id": 722,
-    "name": "abap development",
-    "display": "Abap Development",
-    "aliases": []
-  },
-  {
-    "id": 723,
+    "id": 693,
     "name": "microsoft dynamics",
     "display": "Microsoft Dynamics",
     "aliases": []
   },
   {
-    "id": 724,
+    "id": 694,
     "name": "configuring",
     "display": "Configuring",
     "aliases": []
   },
   {
-    "id": 725,
+    "id": 695,
     "name": "sass",
     "display": "Sass",
     "aliases": []
   },
   {
-    "id": 726,
+    "id": 696,
     "name": "installation",
     "display": "Installation",
     "aliases": [
@@ -4969,7 +4817,7 @@
     ]
   },
   {
-    "id": 727,
+    "id": 697,
     "name": "forecasting",
     "display": "Forecasting",
     "aliases": [
@@ -4977,79 +4825,79 @@
     ]
   },
   {
-    "id": 728,
+    "id": 698,
     "name": "db",
     "display": "Db",
     "aliases": []
   },
   {
-    "id": 729,
+    "id": 699,
     "name": "mdm",
     "display": "Mdm",
     "aliases": []
   },
   {
-    "id": 730,
+    "id": 700,
     "name": "protocols",
     "display": "Protocols",
     "aliases": []
   },
   {
-    "id": 731,
+    "id": 701,
     "name": "network operations",
     "display": "Network Operations",
     "aliases": []
   },
   {
-    "id": 732,
+    "id": 702,
     "name": "smoke testing",
     "display": "Smoke Testing",
     "aliases": []
   },
   {
-    "id": 733,
+    "id": 703,
     "name": "web application framework",
     "display": "Web Application Framework",
     "aliases": []
   },
   {
-    "id": 734,
+    "id": 704,
     "name": "linux administration",
     "display": "Linux Administration",
     "aliases": []
   },
   {
-    "id": 735,
+    "id": 705,
     "name": "mobile application testing",
     "display": "Mobile Application Testing",
     "aliases": []
   },
   {
-    "id": 736,
+    "id": 706,
     "name": "part",
     "display": "Part",
     "aliases": []
   },
   {
-    "id": 737,
+    "id": 707,
     "name": "itam",
     "display": "Itam",
     "aliases": []
   },
   {
-    "id": 738,
+    "id": 708,
     "name": "gui testing",
     "display": "Gui Testing",
     "aliases": []
   },
   {
-    "id": 739,
+    "id": 709,
     "name": "hardware",
     "display": "Hardware",
     "aliases": []
   },
   {
-    "id": 740,
+    "id": 710,
     "name": "auditing",
     "display": "Auditing",
     "aliases": [
@@ -5057,73 +4905,73 @@
     ]
   },
   {
-    "id": 741,
+    "id": 711,
     "name": "linq",
     "display": "Linq",
     "aliases": []
   },
   {
-    "id": 742,
+    "id": 712,
     "name": "product quality",
     "display": "Product Quality",
     "aliases": []
   },
   {
-    "id": 743,
+    "id": 713,
     "name": "iphone",
     "display": "Iphone",
     "aliases": []
   },
   {
-    "id": 744,
+    "id": 714,
     "name": "oracle sql",
     "display": "Oracle Sql",
     "aliases": []
   },
   {
-    "id": 745,
+    "id": 715,
     "name": "apache tomcat",
     "display": "Apache Tomcat",
     "aliases": []
   },
   {
-    "id": 746,
+    "id": 716,
     "name": "sosl",
     "display": "Sosl",
     "aliases": []
   },
   {
-    "id": 747,
+    "id": 717,
     "name": "aem",
     "display": "Aem",
     "aliases": []
   },
   {
-    "id": 748,
+    "id": 718,
     "name": "uat",
     "display": "Uat",
     "aliases": []
   },
   {
-    "id": 749,
+    "id": 719,
     "name": "figma",
     "display": "Figma",
     "aliases": []
   },
   {
-    "id": 750,
+    "id": 720,
     "name": "core data",
     "display": "Core Data",
     "aliases": []
   },
   {
-    "id": 751,
+    "id": 721,
     "name": "oracle database",
     "display": "Oracle Database",
     "aliases": []
   },
   {
-    "id": 752,
+    "id": 722,
     "name": "adobe",
     "display": "Adobe",
     "aliases": [
@@ -5131,67 +4979,67 @@
     ]
   },
   {
-    "id": 753,
+    "id": 723,
     "name": "salesforce crm",
     "display": "Salesforce Crm",
     "aliases": []
   },
   {
-    "id": 754,
+    "id": 724,
     "name": "matlab",
     "display": "Matlab",
     "aliases": []
   },
   {
-    "id": 755,
+    "id": 725,
     "name": "ssas",
     "display": "Ssas",
     "aliases": []
   },
   {
-    "id": 756,
+    "id": 726,
     "name": "s",
     "display": "S",
     "aliases": []
   },
   {
-    "id": 757,
+    "id": 727,
     "name": "unix shell scripting",
     "display": "Unix Shell Scripting",
     "aliases": []
   },
   {
-    "id": 758,
+    "id": 728,
     "name": "welding",
     "display": "Welding",
     "aliases": []
   },
   {
-    "id": 759,
+    "id": 729,
     "name": "data conversion",
     "display": "Data Conversion",
     "aliases": []
   },
   {
-    "id": 760,
+    "id": 730,
     "name": "oracle hcm cloud",
     "display": "Oracle Hcm Cloud",
     "aliases": []
   },
   {
-    "id": 761,
+    "id": 731,
     "name": "csm",
     "display": "Csm",
     "aliases": []
   },
   {
-    "id": 762,
+    "id": 732,
     "name": "flex",
     "display": "Flex",
     "aliases": []
   },
   {
-    "id": 763,
+    "id": 733,
     "name": "writing",
     "display": "Writing",
     "aliases": [
@@ -5199,25 +5047,25 @@
     ]
   },
   {
-    "id": 764,
+    "id": 734,
     "name": "data engineer",
     "display": "Data Engineer",
     "aliases": []
   },
   {
-    "id": 765,
+    "id": 735,
     "name": "operating systems",
     "display": "Operating Systems",
     "aliases": []
   },
   {
-    "id": 766,
+    "id": 736,
     "name": "ms dynamics crm",
     "display": "Ms Dynamics Crm",
     "aliases": []
   },
   {
-    "id": 767,
+    "id": 737,
     "name": "service operations",
     "display": "Service Operations",
     "aliases": [
@@ -5225,157 +5073,157 @@
     ]
   },
   {
-    "id": 768,
+    "id": 738,
     "name": "publishing",
     "display": "Publishing",
     "aliases": []
   },
   {
-    "id": 769,
+    "id": 739,
     "name": "ai solutions",
     "display": "Ai Solutions",
     "aliases": []
   },
   {
-    "id": 770,
+    "id": 740,
     "name": "cloudera",
     "display": "Cloudera",
     "aliases": []
   },
   {
-    "id": 771,
+    "id": 741,
     "name": "support services",
     "display": "Support Services",
     "aliases": []
   },
   {
-    "id": 772,
+    "id": 742,
     "name": "final inspection",
     "display": "Final Inspection",
     "aliases": []
   },
   {
-    "id": 773,
+    "id": 743,
     "name": "routing and switching",
     "display": "Routing And Switching",
     "aliases": []
   },
   {
-    "id": 774,
+    "id": 744,
     "name": "network troubleshooting",
     "display": "Network Troubleshooting",
     "aliases": []
   },
   {
-    "id": 775,
+    "id": 745,
     "name": "cd tools",
     "display": "Cd Tools",
     "aliases": []
   },
   {
-    "id": 776,
+    "id": 746,
     "name": "azure paas",
     "display": "Azure Paas",
     "aliases": []
   },
   {
-    "id": 777,
+    "id": 747,
     "name": "stlc",
     "display": "Stlc",
     "aliases": []
   },
   {
-    "id": 778,
+    "id": 748,
     "name": "load testing",
     "display": "Load Testing",
     "aliases": []
   },
   {
-    "id": 779,
+    "id": 749,
     "name": "storage",
     "display": "Storage",
     "aliases": []
   },
   {
-    "id": 780,
+    "id": 750,
     "name": "windows server",
     "display": "Windows Server",
     "aliases": []
   },
   {
-    "id": 781,
+    "id": 751,
     "name": "sap basis",
     "display": "Sap Basis",
     "aliases": []
   },
   {
-    "id": 782,
+    "id": 752,
     "name": "oic",
     "display": "Oic",
     "aliases": []
   },
   {
-    "id": 783,
+    "id": 753,
     "name": "backend operations",
     "display": "Backend Operations",
     "aliases": []
   },
   {
-    "id": 784,
+    "id": 754,
     "name": "ricef",
     "display": "Ricef",
     "aliases": []
   },
   {
-    "id": 785,
+    "id": 755,
     "name": "cloud sales",
     "display": "Cloud Sales",
     "aliases": []
   },
   {
-    "id": 786,
+    "id": 756,
     "name": "odata services",
     "display": "Odata Services",
     "aliases": []
   },
   {
-    "id": 787,
+    "id": 757,
     "name": "oo abap",
     "display": "Oo Abap",
     "aliases": []
   },
   {
-    "id": 788,
+    "id": 758,
     "name": "sap abap hana",
     "display": "Sap Abap Hana",
     "aliases": []
   },
   {
-    "id": 789,
+    "id": 759,
     "name": "bi publisher",
     "display": "Bi Publisher",
     "aliases": []
   },
   {
-    "id": 790,
+    "id": 760,
     "name": "ip",
     "display": "Ip",
     "aliases": []
   },
   {
-    "id": 791,
+    "id": 761,
     "name": "cds views",
     "display": "Cds Views",
     "aliases": []
   },
   {
-    "id": 792,
+    "id": 762,
     "name": "cds",
     "display": "Cds",
     "aliases": []
   },
   {
-    "id": 793,
+    "id": 763,
     "name": "business process",
     "display": "Business Process",
     "aliases": [
@@ -5383,25 +5231,19 @@
     ]
   },
   {
-    "id": 794,
-    "name": "rest apis",
-    "display": "Rest Apis",
-    "aliases": []
-  },
-  {
-    "id": 795,
+    "id": 764,
     "name": "prototype",
     "display": "Prototype",
     "aliases": []
   },
   {
-    "id": 796,
+    "id": 765,
     "name": "github actions",
     "display": "Github Actions",
     "aliases": []
   },
   {
-    "id": 797,
+    "id": 766,
     "name": "vendor management",
     "display": "Vendor Management",
     "aliases": [
@@ -5409,15 +5251,211 @@
     ]
   },
   {
-    "id": 798,
+    "id": 767,
     "name": "remote",
     "display": "Remote",
     "aliases": []
   },
   {
-    "id": 799,
+    "id": 768,
     "name": "application security",
     "display": "Application Security",
+    "aliases": []
+  },
+  {
+    "id": 769,
+    "name": "power automate",
+    "display": "Power Automate",
+    "aliases": []
+  },
+  {
+    "id": 770,
+    "name": "apqp",
+    "display": "Apqp",
+    "aliases": []
+  },
+  {
+    "id": 771,
+    "name": "qc inspection",
+    "display": "Qc Inspection",
+    "aliases": []
+  },
+  {
+    "id": 772,
+    "name": "erp implementation",
+    "display": "Erp Implementation",
+    "aliases": []
+  },
+  {
+    "id": 773,
+    "name": "azure active directory",
+    "display": "Azure Active Directory",
+    "aliases": []
+  },
+  {
+    "id": 774,
+    "name": "embedded systems",
+    "display": "Embedded Systems",
+    "aliases": []
+  },
+  {
+    "id": 775,
+    "name": "scm",
+    "display": "Scm",
+    "aliases": []
+  },
+  {
+    "id": 776,
+    "name": "tomcat",
+    "display": "Tomcat",
+    "aliases": []
+  },
+  {
+    "id": 777,
+    "name": "ci cd tools",
+    "display": "Ci Cd Tools",
+    "aliases": []
+  },
+  {
+    "id": 778,
+    "name": "system support",
+    "display": "System Support",
+    "aliases": []
+  },
+  {
+    "id": 779,
+    "name": "quality analysis",
+    "display": "Quality Analysis",
+    "aliases": []
+  },
+  {
+    "id": 780,
+    "name": "project",
+    "display": "Project",
+    "aliases": [
+      "project"
+    ]
+  },
+  {
+    "id": 781,
+    "name": "nas",
+    "display": "Nas",
+    "aliases": []
+  },
+  {
+    "id": 782,
+    "name": "sap btp",
+    "display": "Sap Btp",
+    "aliases": []
+  },
+  {
+    "id": 783,
+    "name": "microservice based architecture",
+    "display": "Microservice Based Architecture",
+    "aliases": []
+  },
+  {
+    "id": 784,
+    "name": "azure service bus",
+    "display": "Azure Service Bus",
+    "aliases": []
+  },
+  {
+    "id": 785,
+    "name": "software troubleshooting",
+    "display": "Software Troubleshooting",
+    "aliases": []
+  },
+  {
+    "id": 786,
+    "name": "lightning components",
+    "display": "Lightning Components",
+    "aliases": []
+  },
+  {
+    "id": 787,
+    "name": "successfactors",
+    "display": "Successfactors",
+    "aliases": []
+  },
+  {
+    "id": 788,
+    "name": "olap",
+    "display": "Olap",
+    "aliases": []
+  },
+  {
+    "id": 789,
+    "name": "system",
+    "display": "System",
+    "aliases": [
+      "system"
+    ]
+  },
+  {
+    "id": 790,
+    "name": "adonet",
+    "display": "Adonet",
+    "aliases": [
+      "adonet"
+    ]
+  },
+  {
+    "id": 791,
+    "name": "control",
+    "display": "Control",
+    "aliases": [
+      "control"
+    ]
+  },
+  {
+    "id": 792,
+    "name": "webdynpro",
+    "display": "Webdynpro",
+    "aliases": []
+  },
+  {
+    "id": 793,
+    "name": "emr",
+    "display": "Emr",
+    "aliases": []
+  },
+  {
+    "id": 794,
+    "name": "infrastructure architecture",
+    "display": "Infrastructure Architecture",
+    "aliases": []
+  },
+  {
+    "id": 795,
+    "name": "retail",
+    "display": "Retail",
+    "aliases": [
+      "retail"
+    ]
+  },
+  {
+    "id": 796,
+    "name": "sap erp",
+    "display": "Sap Erp",
+    "aliases": []
+  },
+  {
+    "id": 797,
+    "name": "idocs",
+    "display": "Idocs",
+    "aliases": []
+  },
+  {
+    "id": 798,
+    "name": "objective c",
+    "display": "Objective C",
+    "aliases": []
+  },
+  {
+    "id": 799,
+    "name": "lsmw",
+    "display": "Lsmw",
     "aliases": []
   }
 ]

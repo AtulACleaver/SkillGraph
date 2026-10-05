@@ -51,18 +51,18 @@ data = json.load(sys.stdin)
 match = data.get("match", {})
 top_match = match.get("matches", [{}])[0]
 role = top_match.get("role")
-assert role == "Data / BI Analyst", f"Expected Data / BI Analyst, got {role}"
+assert role == "Backend", f"Expected Backend, got {role}"
 prob = round(top_match.get("probability", 0), 4)
-assert prob == 0.4313, f"Expected match prob 0.4313, got {prob}"
+assert prob == 0.4018, f"Expected match prob 0.4018, got {prob}"
 
 readiness = data.get("readiness", {})
 r_prob = round(readiness.get("probability", 0), 4)
-assert r_prob == 0.4313, f"Expected readiness prob 0.4313, got {r_prob}"
+assert r_prob == 0.2560, f"Expected readiness prob 0.2560, got {r_prob}"
 band = readiness.get("band")
-assert band == "Close", f"Expected band Close, got {band}"
+assert band == "Not yet", f"Expected band Not yet, got {band}"
 cov = round(readiness.get("coverage", 0), 2)
 assert cov == 0.1, f"Expected coverage 0.1, got {cov}"
-print("   Passed: Persona 1 match 0.4313, readiness 0.4313, band Close, coverage 0.1")
+print("   Passed: Persona 1 match 0.4018, readiness 0.2560, band Not yet, coverage 0.1")
 '
 
 # 5. Persona 2 check
@@ -75,12 +75,12 @@ import sys, json
 data = json.load(sys.stdin)
 readiness = data.get("readiness", {})
 r_prob = round(readiness.get("probability", 0), 4)
-assert r_prob == 0.6942, f"Expected readiness prob 0.6942, got {r_prob}"
+assert r_prob == 0.7202, f"Expected readiness prob 0.7202, got {r_prob}"
 band = readiness.get("band")
 assert band == "Close", f"Expected band Close, got {band}"
 cov = round(readiness.get("coverage", 0), 2)
 assert cov == 0.15, f"Expected coverage 0.15, got {cov}"
-print("   Passed: Persona 2 readiness 0.6942, band Close, coverage 0.15")
+print("   Passed: Persona 2 readiness 0.7202, band Close, coverage 0.15")
 '
 
 # 6. Persona 3 check
@@ -96,14 +96,14 @@ top_match = match.get("matches", [{}])[0]
 role = top_match.get("role")
 assert role == "Frontend", f"Expected Frontend, got {role}"
 prob = round(top_match.get("probability", 0), 4)
-assert prob == 0.7072, f"Expected match prob 0.7072, got {prob}"
+assert prob == 0.7313, f"Expected match prob 0.7313, got {prob}"
 
 readiness = data.get("readiness", {})
 r_prob = round(readiness.get("probability", 0), 4)
-assert r_prob == 0.2588, f"Expected readiness prob 0.2588, got {r_prob}"
+assert r_prob == 0.2459, f"Expected readiness prob 0.2459, got {r_prob}"
 band = readiness.get("band")
 assert band == "Not yet", f"Expected band Not yet, got {band}"
-print("   Passed: Persona 3 match Frontend 0.7072, readiness 0.2588, band Not yet")
+print("   Passed: Persona 3 match Frontend 0.7313, readiness 0.2459, band Not yet")
 '
 
 # 7. Unrecognized skills 400 check

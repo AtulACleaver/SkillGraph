@@ -1,6 +1,6 @@
 # Contracts
 
-- skill_vocab.json: ordered JSON list of canonical names. skill_id == list index, starting at 0. len(vocab) == classifier.n_features_in_. Frozen once data-v3 ships.
+- skill_vocab.json: ordered JSON list of canonical names. skill_id == list index, starting at 0. len(vocab) == classifier.n_features_in_. Frozen once data-v4 ships.
 - skills_autocomplete.json: list of {id, name, display, aliases}, vocab skills only. This file feeds /api/skills, not skill_vocab.json.
 - dataset.parquet: posting_id, skill_ids, role_family, experience_band, company, location_raw. Labelled rows only.
 - role_profiles.json: {role: {n_postings, top_skills, skill_freq}} for every class. top_skills = the role's 20 most common skill names in the train split, before augmentation. skill_freq = [[name, share], ...] for the same 20, where share = fraction of that role's train postings listing the skill. Aryan's coverage_pct is that share.
@@ -21,12 +21,12 @@
 ## Personas
 
 1. `["python", "sql", "pandas"]` for role `Data / BI Analyst`:
-   - Match: top match Data / BI Analyst 0.4313
-   - Readiness: probability 0.4313, band Close, coverage 0.1, covered sql and python.
+   - Match: top match Backend 0.4018
+   - Readiness: probability 0.2560, band Not yet, coverage 0.1, covered sql and python.
 
 2. `["java", "spring boot", "mysql", "docker"]` for role `Backend`:
-   - Readiness: probability 0.6942, band Close, coverage 0.15.
+   - Readiness: probability 0.7202, band Close, coverage 0.15.
 
 3. `["react", "javascript", "html", "css"]` for role `Full Stack`:
-   - Match: top match Frontend 0.7072
-   - Readiness: probability 0.2588, band Not yet.
+   - Match: top match Frontend 0.7313
+   - Readiness: probability 0.2459, band Not yet, coverage 0.2.

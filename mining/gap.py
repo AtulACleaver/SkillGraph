@@ -5,21 +5,7 @@ import numpy as np
 
 from etl.paths import ARTIFACTS_DIR
 
-# Generic words that appear in top_skills but are not something you can learn.
-NON_SKILLS = {
-    "data",
-    "development",
-    "backend",
-    "devops",
-    "cloud",
-    "front end",
-    "frontend development",
-    "ui development",
-    "java development",
-    "python development",
-    "automation",
-}
-
+from etl.paths import ARTIFACTS_DIR, REPO_ROOT
 
 _CACHE: dict[str, Any] | None = None
 
@@ -66,11 +52,21 @@ def load_gap_artifacts() -> dict[str, Any]:
         except (FileNotFoundError, ValueError, OSError):
             rules_list = []
 
+    # 4. Non-learnable skills
+    non_skills = set()
+    non_skills_path = REPO_ROOT / "taxonomy" / "non_learnable.txt"
+    if non_skills_path.exists():
+        with open(non_skills_path, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    non_skills.add(line.strip().lower())
+
     return {
         "role_profiles": role_profiles,
         "skill_to_id": skill_to_id,
         "id_to_skill": id_to_skill,
         "rules_list": rules_list,
+        "non_skills": non_skills,
     }
 
 
@@ -159,6 +155,7 @@ def rank_gap(
     skill_to_id = artifacts.get("skill_to_id", {})
     id_to_skill = artifacts.get("id_to_skill", {})
     rules_list = artifacts.get("rules_list", [])
+    non_skills = artifacts.get("non_skills", set())
 
     if not role_profiles:
         raise ValueError("System artifacts (role profiles) are missing or not loaded.")
@@ -179,10 +176,26 @@ def rank_gap(
 
     user_skills = _extract_user_skills(vector, skill_to_id, id_to_skill)
 
-    candidates = [
-        s for s in top_role_skills
-        if s.lower() not in user_skills and s.lower() not in NON_SKILLS
-    ]
+    generic_words = ["development", "developer", "engineering", "engineer", "administration", "administrator"]
+    
+    candidates = []
+    for s in top_role_skills:
+        s_lower = s.lower()
+        if s_lower in user_skills or s_lower in non_skills:
+            continue
+            
+        # never recommends a skill that is a skill the user already has plus a generic word (java development when the user has java)
+        is_user_skill_plus_generic = False
+        for user_skill in user_skills:
+            if s_lower.startswith(user_skill + " "):
+                suffix = s_lower[len(user_skill) + 1:]
+                if suffix in generic_words:
+                    is_user_skill_plus_generic = True
+                    break
+        if is_user_skill_plus_generic:
+            continue
+            
+        candidates.append(s)
 
     if not candidates:
         return []

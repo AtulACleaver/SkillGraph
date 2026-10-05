@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Data Analyst",
+    "skills": ["python", "sql", "pandas"],
+    "desired_role": "Data / BI Analyst"
+  },
+  {
+    "name": "Backend Eng",
+    "skills": ["java", "spring boot", "mysql", "docker"],
+    "desired_role": "Backend"
+  },
+  {
+    "name": "Full Stack Hopeful",
+    "skills": ["react", "javascript", "html", "css"],
+    "desired_role": "Full Stack"
+  },
+  {
+    "name": "DevOps Guy",
+    "skills": ["aws", "linux", "jenkins"],
+    "desired_role": "DevOps / Cloud"
+  },
+  {
+    "name": "QA Tester",
+    "skills": ["selenium", "java", "testing"],
+    "desired_role": "QA / Test"
+  },
+  {
+    "name": "ERP Consultant",
+    "skills": ["sap", "abap"],
+    "desired_role": "ERP / Enterprise"
+  },
+  {
+    "name": "Data Scientist",
+    "skills": ["python", "machine learning algorithms", "pytorch"],
+    "desired_role": "Data Science / ML"
+  },
+  {
+    "name": "Support Ops",
+    "skills": ["windows", "linux", "troubleshooting"],
+    "desired_role": "Support / IT Ops"
+  },
+  {
+    "name": "Frontend Pro",
+    "skills": ["javascript", "css3", "html5"],
+    "desired_role": "Frontend"
+  },
+  {
+    "name": "Mobile Dev",
+    "skills": ["swift", "ios", "xcode"],
+    "desired_role": "Mobile"
+  }
+]

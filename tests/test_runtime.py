@@ -62,10 +62,10 @@ def test_analyze_personas():
         })
         assert resp1.status_code == 200
         data1 = resp1.json()
-        assert abs(data1["readiness"]["probability"] - 0.4313) < 1e-4
-        assert data1["readiness"]["band"] == "Close"
-        assert data1["match"]["matches"][0]["role"] == "Data / BI Analyst"
-        assert abs(data1["match"]["matches"][0]["probability"] - 0.4313) < 1e-4
+        assert abs(data1["readiness"]["probability"] - 0.2560) < 1e-4
+        assert data1["readiness"]["band"] == "Not yet"
+        assert data1["match"]["matches"][0]["role"] == "Backend"
+        assert abs(data1["match"]["matches"][0]["probability"] - 0.4018) < 1e-4
 
         # Persona 2
         resp2 = client.post("/api/analyze", json={
@@ -74,7 +74,7 @@ def test_analyze_personas():
         })
         assert resp2.status_code == 200
         data2 = resp2.json()
-        assert abs(data2["readiness"]["probability"] - 0.6942) < 1e-4
+        assert abs(data2["readiness"]["probability"] - 0.7202) < 1e-4
         assert data2["readiness"]["band"] == "Close"
 
         # Persona 3
@@ -85,8 +85,8 @@ def test_analyze_personas():
         assert resp3.status_code == 200
         data3 = resp3.json()
         assert data3["match"]["matches"][0]["role"] == "Frontend"
-        assert abs(data3["match"]["matches"][0]["probability"] - 0.7072) < 1e-4
-        assert abs(data3["readiness"]["probability"] - 0.2588) < 1e-4
+        assert abs(data3["match"]["matches"][0]["probability"] - 0.7313) < 1e-4
+        assert abs(data3["readiness"]["probability"] - 0.2459) < 1e-4
         assert data3["readiness"]["band"] == "Not yet"
 
 def test_400_validations():
