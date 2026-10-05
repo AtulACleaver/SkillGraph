@@ -108,3 +108,14 @@ Total Rows: 97,929
 ## Skills
 - Rows with empty/null skills: 571
 - Distinct raw tokens: 59,479
+- Tokens exported (count >= 5): 14,843 covering 91.3% of mentions
+
+## Baskets Audit: 34,569 vs 30,134
+
+The original project plan stated 30,134 baskets, whereas data-v3 produced 34,569 baskets. The difference arose from how tech postings were filtered and cleaned across project stages.
+
+In the initial exploratory plan, a draft filter selected 33,724 postings based on skill tags. After dropping exact duplicates and empty skill lists, 30,134 rows survived. The plan assumed mining baskets would match that preliminary count of 30,134 postings (comprising 13,185 generic software engineer rows, 4,086 unmatched rows, and 12,863 role-labelled rows).
+
+In the pipeline implementation in `etl/clean.py`, the tech filter checked 32 keywords from `etl/tech_terms.txt` across both `title` and `tagsAndSkills` columns of `data/raw/indian-job-market-dataset-2025.xlsx`. This broader check identified 38,271 candidate tech postings. Cleaning dropped 100 exact duplicates, 80 rows with no skills after splitting, and 3,522 reposts, leaving 34,569 rows saved to `data/clean.parquet`.
+
+In `etl/label.py`, the `build_baskets` function created one basket per row of `data/clean.parquet`, saving 34,569 records to `data/baskets.parquet`. In that file, 32,949 baskets contain one or more canonical skill IDs and 1,620 contain empty lists after mapping against `artifacts/skill_vocab.json`.

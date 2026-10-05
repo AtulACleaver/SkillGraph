@@ -1,11 +1,13 @@
 import hashlib
 import json
 import pickle
+import time
 
 import numpy as np
 import pandas as pd
 
 from etl.paths import ARTIFACTS_DIR
+from etl.stats import write_stage_stats
 
 
 def softmax(x):
@@ -75,6 +77,19 @@ def export_rules():
     with open(ARTIFACTS_DIR / "rules.json", "w") as f:
         json.dump(rules_json, f, indent=2)
 
-if __name__ == "__main__":
+def main():
+    t0 = time.time()
     export_model()
     export_rules()
+    elapsed = time.time() - t0
+    write_stage_stats(
+        stage="export",
+        rows_in=2,
+        rows_out=2,
+        drops_by_reason={},
+        elapsed_seconds=elapsed,
+        output_files=[ARTIFACTS_DIR / "model.json", ARTIFACTS_DIR / "rules.json"],
+    )
+
+if __name__ == "__main__":
+    main()

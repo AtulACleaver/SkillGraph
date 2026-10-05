@@ -1,9 +1,11 @@
 import json
 import re
+import time
 
 import pandas as pd
 
 import etl.normalize as norm
+from etl.stats import write_stage_stats
 
 
 def load_families(csv_path):
@@ -29,6 +31,7 @@ def label_title(title, patterns):
     return None
 
 def main():
+    t0 = time.time()
     print("Labeling dataset...")
     clean_df = pd.read_parquet('data/clean.parquet')
     
@@ -108,6 +111,24 @@ def main():
     
     print(f"\nFinal labelled rows for dataset.parquet: {len(dataset_df)}")
     dataset_df.to_parquet('data/dataset.parquet', index=False)
+
+    elapsed = time.time() - t0
+    write_stage_stats(
+        stage="label",
+        rows_in=len(clean_df),
+        rows_out=len(dataset_df),
+        drops_by_reason={
+            "unmatched": len(unmatched),
+            "Software Engineer (generic)": int(dist.get('Software Engineer (generic)', 0)),
+        },
+        elapsed_seconds=elapsed,
+        output_files=[
+            'data/baskets.parquet',
+            'data/dataset.parquet',
+            'artifacts/skill_vocab.json',
+            'artifacts/skills_autocomplete.json',
+        ],
+    )
 
 if __name__ == '__main__':
     main()
