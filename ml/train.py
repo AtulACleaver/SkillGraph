@@ -18,6 +18,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
+from etl.stats import write_stage_stats
 from ml import augment, evaluate, features
 
 DATASET_PATH = os.path.join("data", "dataset.parquet")
@@ -125,11 +126,35 @@ def main():
         pickle.dump(le, f)
     with open(os.path.join(ARTIFACTS_DIR, "role_profiles.json"), "w") as f:
         json.dump(build_role_profiles(train, vocab), f, indent=2)
-    with open(os.path.join(ARTIFACTS_DIR, "metrics.json"), "w") as f:
+    metrics_path = os.path.join(ARTIFACTS_DIR, "metrics.json")
+    if os.path.exists(metrics_path):
+        try:
+            with open(metrics_path, "r") as f:
+                saved = json.load(f)
+            saved.update(report)
+            report = saved
+        except (json.JSONDecodeError, OSError) as e:
+            print(f"[warn] Could not load existing metrics.json: {e}")
+    with open(metrics_path, "w") as f:
         json.dump(report, f, indent=2)
 
     evaluate.print_report(report)
-    print(f"Artifacts written to {ARTIFACTS_DIR}/ in {time.time() - t0:.1f}s")
+    elapsed = time.time() - t0
+    print(f"Artifacts written to {ARTIFACTS_DIR}/ in {elapsed:.1f}s")
+
+    write_stage_stats(
+        stage="train",
+        rows_in=len(df) + dropped_rows,
+        rows_out=len(df),
+        drops_by_reason={"no_skill_ids": dropped_rows},
+        elapsed_seconds=elapsed,
+        output_files=[
+            os.path.join(ARTIFACTS_DIR, "classifier.pkl"),
+            os.path.join(ARTIFACTS_DIR, "label_encoder.pkl"),
+            os.path.join(ARTIFACTS_DIR, "role_profiles.json"),
+            os.path.join(ARTIFACTS_DIR, "metrics.json"),
+        ],
+    )
 
 
 if __name__ == "__main__":

@@ -1,6 +1,9 @@
 import re
+import time
 
 import pandas as pd
+
+from etl.stats import write_stage_stats
 
 DROP_REASONS = {}
 
@@ -11,7 +14,9 @@ def drop(df, mask, reason):
     return df[~mask]
 
 def main():
+    t0 = time.time()
     df = pd.read_parquet('data/raw.parquet')
+    rows_in = len(df)
     
     # 1. Filter to tech subset
     with open('etl/tech_terms.txt', 'r') as f:
@@ -116,6 +121,16 @@ def main():
     for reason, n in DROP_REASONS.items():
         print(f"{n:>7,}  {reason}")
     print(f"{len(df):>7,}  rows surviving")
+
+    elapsed = time.time() - t0
+    write_stage_stats(
+        stage="clean",
+        rows_in=rows_in,
+        rows_out=len(df),
+        drops_by_reason=DROP_REASONS,
+        elapsed_seconds=elapsed,
+        output_files=['data/clean.parquet'],
+    )
 
 if __name__ == '__main__':
     main()
