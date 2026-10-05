@@ -1,1 +1,82 @@
 @import "tailwindcss";
+
+@theme {
+  /* Type */
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Neutrals */
+  --color-bg: #f8f8f6;
+  --color-surface: #ffffff;
+  --color-tint: #f0f5f4;
+  --color-line: #e3e8ea;
+  --color-line-2: #cdd6db;
+  --color-ink: #13222e;
+  --color-ink-2: #4a5966;
+  --color-ink-3: #66737e;
+
+  /* Accent: green (readiness, skills, primary action) */
+  --color-accent: #1d7a52;
+  --color-accent-hover: #166443;
+  --color-accent-ink: #17684a;
+  --color-accent-tint: #e5f1eb;
+  --color-accent-track: #d6e6e0;
+  --color-accent-line: #a9cfbd;
+
+  /* Secondary: orange (role fit) */
+  --color-fit: #d06d1a;
+  --color-fit-ink: #9c4a0e;
+  --color-fit-tint: #fcf1e6;
+  --color-fit-track: #f0e5d9;
+
+  /* Readiness bands */
+  --color-band-ready: #1d7a52;
+  --color-band-close: #7a7330;
+  --color-band-notyet: #d06d1a;
+
+  /* Elevation */
+  --shadow-card: 0 1px 2px rgb(19 34 46 / 0.04), 0 12px 32px -16px rgb(19 34 46 / 0.1);
+  --shadow-logo: 0 4px 10px -2px rgb(23 101 74 / 0.45);
+}
+
+@utility text-gradient {
+  background-image: linear-gradient(90deg, #1d7a52 0%, #7f7a32 50%, #d06d1a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-bg);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  input::placeholder {
+    color: var(--color-ink-3);
+    opacity: 1;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  a {
+    color: var(--color-accent-ink);
+  }
+  a:hover {
+    color: var(--color-ink);
+  }
+}

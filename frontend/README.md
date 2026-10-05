@@ -1,16 +1,28 @@
-# React + Vite
+# SkillGraph frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite (JavaScript), Tailwind CSS v4 (`@tailwindcss/vite`, tokens in `src/index.css` `@theme`), axios, lucide-react.
 
-Currently, two official plugins are available:
+## Run it
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. `cd frontend && npm install`
+2. `cp .env.example .env`, then set `VITE_API_URL` to your API (no trailing slash)
+3. To run without a backend, set `VITE_USE_MOCK=true` (fixtures in `src/api/mock.js`, 600 ms delay)
+4. `npm run dev`, then open http://localhost:5173
+5. `npm run build && npm run preview` to check the production bundle
 
-## React Compiler
+## Mock-mode scenarios
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Append these to the URL while `VITE_USE_MOCK=true`:
 
-## Expanding the ESLint configuration
+- `?mock=slow` makes /analyze take 9 s, so the "server is waking up" message appears after 5 s
+- `?mock=error` makes the first /analyze time out; Try again resends the same payload and succeeds
+- `?mock=offline` makes /roles fail on first load; it auto-retries after 15 s, or click Try again now
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+`src/api/mock.js` lists skill + role combinations that give a lopsided result, an empty gap list, a chosen role missing from the top 3, and unrecognized skills.
+
+## Notes
+
+- **Base URL:** read only from `import.meta.env.VITE_API_URL`; it is never hardcoded.
+- **Request timeout:** 45 s. Raw errors are mapped to readable copy in `toFriendlyError`.
+- **Readiness change:** shown as `readiness.probability → readiness.probability + readiness_gain`, rounded to whole percent.
+- **`coverage_pct`:** expected as a 0–1 share; a 0–100 value is also handled.

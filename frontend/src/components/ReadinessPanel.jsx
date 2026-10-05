@@ -1,182 +1,166 @@
-export default function ReadinessPanel({
-  desiredRole = 'Target Role',
-  readinessData = null,
-  isLoading = false
-}) {
-  if (isLoading) {
-    return (
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 sm:p-7 shadow-xl space-y-5 animate-pulse">
-        <div className="flex justify-between items-center pb-2 border-b border-slate-800/60">
-          <div className="space-y-2">
-            <div className="h-4 w-32 bg-slate-800 rounded"></div>
-            <div className="h-6 w-48 bg-slate-800 rounded"></div>
-          </div>
-          <div className="h-8 w-24 bg-slate-800 rounded-full"></div>
-        </div>
-        <div className="h-20 bg-slate-800/50 rounded-xl"></div>
-        <div className="h-12 bg-slate-800/40 rounded-xl"></div>
-      </div>
-    )
-  }
+import { Scale } from 'lucide-react';
+import Card from './ui/Card';
+import StepHeading from './ui/StepHeading';
+import ProbabilityBar from './ui/ProbabilityBar';
+import { CoveredChip } from './ui/Chip';
 
-  // Safe defaults if readinessData is not yet populated
-  const data = readinessData || {
-    probability: 0.48,
-    band: 'Close',
-    coverage: 0.35,
-    covered: [],
-    missing_count: 13
-  }
+const BANDS = {
+  Ready: {
+    index: 2,
+    dot: 'border-band-ready bg-band-ready',
+    fill: 'bg-band-ready',
+    message: (role) => ['You’re ', 'ready', ` for most ${role} postings. Start applying, and keep building depth.`],
+  },
+  Close: {
+    index: 1,
+    dot: 'border-band-close bg-[linear-gradient(90deg,var(--color-band-close)_50%,transparent_50%)]',
+    fill: 'bg-band-close',
+    message: () => ['You’re ', 'within reach', '. One or two skills from the list below would likely move you into Ready.'],
+  },
+  'Not yet': {
+    index: 0,
+    dot: 'border-band-notyet bg-transparent',
+    fill: 'bg-band-notyet',
+    message: () => ['This is a ', 'starting point', ', not a verdict. The list below is the shortest path up — most students begin about here.'],
+  },
+};
 
-  const prob = typeof data.probability === 'number'
-    ? data.probability <= 1 ? Math.round(data.probability * 100) : Math.round(data.probability)
-    : 48
+const ZONES = [
+  { label: 'Not yet', basis: 'flex-[0_0_40%]' },
+  { label: 'Close · 40', basis: 'flex-[0_0_30%]' },
+  { label: 'Ready · 70', basis: 'flex-[0_0_30%]' },
+];
 
-  const band = data.band || (prob >= 70 ? 'Ready' : prob >= 45 ? 'Close' : 'Not yet')
-  const coveredSkills = Array.isArray(data.covered) ? data.covered : []
-  const missingCount = typeof data.missing_count === 'number' ? data.missing_count : 13
-  const totalSkillsForRole = coveredSkills.length + missingCount || 20
-  const coveragePct = Math.round((coveredSkills.length / Math.max(totalSkillsForRole, 1)) * 100)
+function getTension({ probability, coverage }) {
+  let probBand = 'Not yet';
+  if (probability >= 0.6) probBand = 'Ready';
+  else if (probability >= 0.3) probBand = 'Close';
 
-  // Notion Rule: Green for Ready, Amber for Close, Grey for Not yet. Never Red.
-  const bandStyles = {
-    Ready: {
-      badge: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
-      pill: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-      text: 'text-emerald-400',
-      bar: 'from-emerald-400 to-teal-300',
-      summary: 'Strong match for standard job postings in this family.'
-    },
-    Close: {
-      badge: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
-      pill: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
-      text: 'text-amber-400',
-      bar: 'from-amber-400 to-amber-300',
-      summary: 'Close to market threshold. A few key skills will bridge the gap.'
-    },
-    'Not yet': {
-      badge: 'bg-slate-700/40 text-slate-300 border-slate-600/40',
-      pill: 'bg-slate-800 text-slate-300 border-slate-700/60',
-      text: 'text-slate-300',
-      bar: 'from-slate-500 to-slate-400',
-      summary: 'Significant skill overlap still required for this specific role family.'
+  let covBand = 'Not yet';
+  if (coverage >= 0.2) covBand = 'Ready';
+  else if (coverage >= 0.1) covBand = 'Close';
+
+  const levels = { 'Ready': 3, 'Close': 2, 'Not yet': 1 };
+  
+  let tension = null;
+  if (probBand !== covBand) {
+    if (levels[probBand] > levels[covBand]) {
+      tension = {
+        title: 'Coverage held it back',
+        text: `Probability alone would be ${probBand}, but coverage held it back.`,
+      };
+    } else {
+      tension = {
+        title: 'Probability held it back',
+        text: `Coverage alone would be ${covBand}, but probability held it back.`,
+      };
     }
   }
+  
+  const finalBandStr = levels[probBand] < levels[covBand] ? probBand : covBand;
+  return { finalBandStr, tension };
+}
 
-  const currentBandStyle = bandStyles[band] || bandStyles['Not yet']
-
-  // Detect signal divergence / tension between statistical model & keyword coverage
-  // E.g. high coverage but low probability, or low coverage but high probability
-  const hasHighCoverageLowProb = coveragePct >= 50 && prob < 45
-  const hasLowCoverageHighProb = coveragePct <= 30 && prob >= 65
-  const hasDivergence = hasHighCoverageLowProb || hasLowCoverageHighProb
+export default function ReadinessPanel({ readiness, role }) {
+  const probability = Math.max(0, Math.min(1, readiness.probability ?? 0));
+  const pct = Math.round(probability * 100);
+  const covered = readiness.covered || [];
+  const have = covered.length;
+  const total = have + (readiness.missing_count ?? 0);
+  const coverage = readiness.coverage ?? (total ? have / total : 0);
+  const coveragePct = Math.round(coverage * 100);
+  
+  const { finalBandStr, tension } = getTension({ probability, coverage });
+  const band = BANDS[finalBandStr] || BANDS['Not yet'];
+  
+  const [msgA, msgB, msgC] = band.message(role);
 
   return (
-    <div className="bg-slate-900/80 border border-slate-800/90 backdrop-blur-xl rounded-2xl p-6 sm:p-7 shadow-xl space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-800/60">
-        <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-            Panel 1 · Readiness Score
-          </div>
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-100">
-            Readiness for {desiredRole}
-          </h2>
-        </div>
+    <Card tone="readiness" aria-labelledby="readiness-heading">
+      <StepHeading n="01" id="readiness-heading" className="mb-6">
+        Am I ready for {role}?
+      </StepHeading>
 
-        {/* Band Label Badge (Green, Amber, or Grey - Never Red) */}
-        <div className={`px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-bold flex items-center gap-1.5 self-start sm:self-auto ${currentBandStyle.badge}`}>
-          <span className="w-2 h-2 rounded-full bg-current"></span>
-          <span>{band}</span>
-        </div>
-      </div>
-
-      {/* Main Metric Banner */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 rounded-xl bg-slate-950/50 border border-slate-800/80 items-center">
-        {/* Big Percentage & Band */}
-        <div className="md:col-span-1 border-b md:border-b-0 md:border-r border-slate-800/70 pb-4 md:pb-0 md:pr-4">
-          <div className="text-xs uppercase font-medium tracking-wider text-slate-400">
-            Model Probability
-          </div>
-          <div className="flex items-baseline gap-2 mt-1">
-            <span className={`text-5xl sm:text-6xl font-black font-mono tracking-tight ${currentBandStyle.text}`}>
-              {prob}%
+      <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
+        <div className="flex-[0_1_auto]">
+          <p className="text-[clamp(88px,23vw,156px)] font-bold leading-[0.86] tracking-[-0.06em] tabular-nums">
+            {pct}
+            <span className="tracking-[-0.04em]">%</span>
+            <span className="sr-only"> readiness</span>
+          </p>
+          <p className="mt-4 flex items-center gap-[9px] text-lg font-bold">
+            <span aria-hidden="true" className={`size-3 flex-none rounded-full border-[2.5px] ${band.dot}`} />
+            <span>
+              <span className="sr-only">Band: </span>
+              {readiness.band}
             </span>
-          </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Band classification: <strong className={currentBandStyle.text}>{band}</strong>
+            <span aria-hidden="true" className="text-[15px] font-normal text-ink-3">
+              · readiness band
+            </span>
           </p>
         </div>
 
-        {/* Coverage Summary & Visual Bars */}
-        <div className="md:col-span-2 space-y-3 md:pl-2">
-          <div>
-            <div className="flex justify-between items-center text-xs mb-1.5">
-              <span className="text-slate-300 font-medium">Market Skill Coverage</span>
-              <span className="text-slate-400 font-mono font-semibold">{coveragePct}% ({coveredSkills.length}/{totalSkillsForRole})</span>
+        <div className="max-w-[400px] flex-[1_1_280px]">
+          <p className="mb-5 text-base leading-[1.6] text-ink-2 text-pretty">
+            {msgA}
+            <strong className="font-bold text-ink">{msgB}</strong>
+            {msgC}
+          </p>
+          <div aria-hidden="true">
+            <div className="relative h-2 bg-line-2">
+              <div className={`absolute inset-y-0 left-0 ${band.fill}`} style={{ width: `${pct}%` }} />
+              <span className="absolute bottom-[-3px] left-[40%] top-[-3px] w-[3px] bg-tint" />
+              <span className="absolute bottom-[-3px] left-[70%] top-[-3px] w-[3px] bg-tint" />
             </div>
-            {/* Dual visual track */}
-            <div className="w-full h-3 rounded-full bg-slate-800/80 overflow-hidden p-0.5">
-              <div
-                className={`h-full rounded-full bg-gradient-to-r ${currentBandStyle.bar} transition-all duration-700 ease-out`}
-                style={{ width: `${Math.min(Math.max(coveragePct, 5), 100)}%` }}
-              ></div>
+            <div className="mt-2 flex text-xs">
+              {ZONES.map((z, i) => (
+                <span key={z.label} className={`${z.basis} ${i === band.index ? 'font-bold text-ink' : 'text-ink-3'}`}>
+                  {z.label}
+                </span>
+              ))}
             </div>
           </div>
-
-          {/* Explicit Coverage Line per Notion spec */}
-          <p className="text-xs sm:text-sm text-slate-300 font-normal">
-            You have <strong className="text-white font-semibold">{coveredSkills.length}</strong> of the <strong className="text-white font-semibold">{totalSkillsForRole}</strong> skills this role usually asks for in Indian postings.
-          </p>
         </div>
       </div>
 
-      {/* Covered Skills Chips Section */}
-      {coveredSkills.length > 0 && (
-        <div className="space-y-2">
-          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-            <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
-            </svg>
-            Matching Skills You Possess ({coveredSkills.length})
+      <div className="mt-8 border-t border-line-2 pt-7">
+        <div className="mb-3.5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1.5">
+          <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+            <span className="flex-none whitespace-nowrap text-[clamp(36px,7vw,48px)] font-bold leading-none tracking-[-0.045em] tabular-nums">
+              {have}
+              <span className="font-medium text-ink-3">&nbsp;of&nbsp;{total}</span>
+            </span>
+            <span className="text-[15px] text-ink-2">core skills covered</span>
           </div>
-          <div className="flex flex-wrap gap-1.5">
-            {coveredSkills.map(skill => (
-              <span
-                key={skill}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"
-              >
-                <span className="text-emerald-400 text-[10px]">✓</span>
-                {skill}
-              </span>
-            ))}
-          </div>
+          <span className="text-[15px] font-semibold tabular-nums text-accent-ink">{coveragePct}% coverage</span>
         </div>
-      )}
+        <ProbabilityBar value={coverage} size="h-2" track="bg-accent-track" fill="bg-accent" />
+        <p className="mb-3 mt-3.5 text-[15px] text-ink-2">
+          covers {have} of {total} top skills
+        </p>
 
-      {/* Signal Tension / Disagreement Callout (Per Notion Day 5 Concept) */}
-      {hasDivergence && (
-        <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25 text-amber-200 text-xs space-y-1">
-          <div className="font-semibold flex items-center gap-1.5 text-amber-300">
-            <svg className="w-4 h-4 text-amber-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-            Signal Discrepancy Note
-          </div>
-          <p className="text-amber-200/90 leading-relaxed">
-            {hasHighCoverageLowProb ? (
-              <>
-                You have significant keyword coverage ({coveragePct}%), but the predictive classifier band is <strong>{band}</strong> ({prob}%). This indicates you have peripheral tooling, but are missing critical high-weight anchor skills that recruiters prioritize for this title.
-              </>
-            ) : (
-              <>
-                Your raw coverage count is lower ({coveragePct}%), yet your predicted probability is high at <strong>{prob}% ({band})</strong>. This occurs because the specific skills you possess carry heavy predictive weight for this role family.
-              </>
-            )}
+        {have > 0 ? (
+          <ul aria-label="Skills you have that this role asks for" className="flex flex-wrap gap-2">
+            {covered.map((s) => (
+              <CoveredChip key={s} name={s} />
+            ))}
+          </ul>
+        ) : (
+          <p className="border border-dashed border-line-2 px-3.5 py-3 text-sm text-ink-2">
+            None of your skills are on this role's usual list yet. That's exactly what section 02 is for.
           </p>
-        </div>
-      )}
-    </div>
-  )
+        )}
+
+        {tension && (
+          <div className="mt-6 grid grid-cols-[auto_minmax(0,1fr)] gap-3.5 border border-line-2 bg-surface px-5 py-[18px]">
+            <Scale size={20} strokeWidth={2} className="mt-px text-ink-2" aria-hidden="true" />
+            <div>
+              <p className="mb-1 text-base font-bold">{tension.title}</p>
+              <p className="max-w-[72ch] text-sm leading-[1.6] text-ink-2 text-pretty">{tension.text}</p>
+            </div>
+          </div>
+        )}
+      </div>
+    </Card>
+  );
 }
