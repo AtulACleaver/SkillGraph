@@ -1,0 +1,10 @@
+- Layout: etl/ (Atul), ml/ (Aditya), mining/ and taxonomy/ (Aryan), api/ (Archit), frontend/ (Shashank). Contracts live in docs/contracts.md. A contract changes only in the same PR that updates docs/contracts.md, and the PR body says so.
+- Python: use .venv at the repo root, Python 3.12.
+- Serving path (api/, ml/predict.py, mining/gap.py, runtime functions in etl/normalize.py) imports only the standard library, numpy, rapidfuzz, fastapi and pydantic. pandas, scipy, sklearn, pyarrow, lightgbm and mlxtend are build-time only.
+- Random seed 42 everywhere.
+- Never commit data/, .env, *.xlsx, *.pkl or *.parquet.
+- Never invent a number. Every number in docs, report or slides comes from a file in the repo or a command you ran. Name the file.
+- Writing style for docs, report and slides: plain and direct, past tense for work done. No em dashes. Never use these words: delve, leverage, utilize, harness, unlock, empower, enhance, comprehensive, crucial, vital, pivotal, landscape, realm, tapestry, bustling, vibrant, robust, seamless, cutting-edge, revolutionize, game-changing, navigate, embark, showcase, underscore, foster, meticulous, intricate. Never write "however", "furthermore", "moreover", "in conclusion", "it is important to note".
+- Commits: Conventional Commits with a scope, e.g. feat(api): ..., fix(ml): ..., docs: ...
+- One branch and one PR per prompt. Finish every task with ruff check ., pytest -q, and npm run build inside frontend/ if frontend changed. Then git push and gh pr create. Never merge. Never push to main.
+- If blocked (missing file, auth, a failing test you cannot explain), stop and report what you tried. Never work around it silently.

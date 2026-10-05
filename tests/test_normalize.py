@@ -16,6 +16,13 @@ def setup_module(module):
     norm._fuzzy_cache = {}
     norm._aliases = {}
 
+def teardown_module(module):
+    norm._vocab = []
+    norm._clean_map = {}
+    norm._exact_map = {}
+    norm._fuzzy_cache = {}
+    norm._aliases = {}
+
 def test_skills_to_vector_empty():
     vec, unmapped = norm.skills_to_vector([])
     assert vec.sum() == 0
@@ -37,8 +44,8 @@ def test_skills_to_vector_dedupe():
     assert vec[0] == 1
     assert not unmapped
 
-@pytest.mark.skipif(not os.path.exists('artifacts/skill_vocab.json') or not os.path.exists('data/clean.parquet'),
-                    reason="Real artifacts not found")
+@pytest.mark.skipif(not os.path.exists('data/clean.parquet') or not os.path.exists('data/baskets.parquet'),
+                    reason="Needs data/clean.parquet and data/baskets.parquet")
 def test_real_artifacts():
     # Load real vocab
     with open('artifacts/skill_vocab.json', 'r') as f:

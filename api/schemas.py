@@ -8,6 +8,8 @@ class HealthResponse(BaseModel):
     n_postings: int = 0
     n_skills: int = 0
     built_at: str | None = None
+    model: str | None = None
+    rules: str | None = None
 
 class RoleResponse(BaseModel):
     role_family: str

@@ -1,73 +1,57 @@
 import json
-import os
-import pickle
-import sys
 from typing import Any
 
-import pandas as pd
+from etl.paths import ARTIFACTS_DIR
 
-
-class FakePredictor:
-    pass
-
-class FakeLabelEncoder:
-    pass
-
-sys.modules["__main__"].FakePredictor = FakePredictor
-sys.modules["__main__"].FakeLabelEncoder = FakeLabelEncoder
 
 class ArtifactsManager:
     def __init__(self):
         self.vocab: dict[str, Any] = {}
         self.autocomplete: list[dict[str, Any]] = []
         self.role_profiles: dict[str, Any] = {}
-        self.rules: pd.DataFrame = None
-        self.classifier: Any = None
-        self.label_encoder: Any = None
         self.artifacts_loaded = False
         
         self.n_skills = 0
         self.n_postings = 0
+        
+        # New model metadata
+        self.model_version: str | None = None
+        self.rules_version: str | None = None
 
     def load(self):
-        artifacts_dir = os.getenv("ARTIFACTS_DIR", "fixtures")
-        
-        vocab_path = os.path.join(artifacts_dir, "skill_vocab.json")
-        if os.path.exists(vocab_path):
+        vocab_path = ARTIFACTS_DIR / "skill_vocab.json"
+        if vocab_path.exists():
             with open(vocab_path, "r") as f:
                 self.vocab = json.load(f)
                 self.n_skills = len(self.vocab)
         
-        # /skills reads skills_autocomplete.json, not skill_vocab.json (contract)
-        autocomplete_path = os.path.join(artifacts_dir, "skills_autocomplete.json")
-        if os.path.exists(autocomplete_path):
+        autocomplete_path = ARTIFACTS_DIR / "skills_autocomplete.json"
+        if autocomplete_path.exists():
             with open(autocomplete_path, "r") as f:
                 self.autocomplete = json.load(f)
         
-        roles_path = os.path.join(artifacts_dir, "role_profiles.json")
-        if os.path.exists(roles_path):
+        roles_path = ARTIFACTS_DIR / "role_profiles.json"
+        if roles_path.exists():
             with open(roles_path, "r") as f:
                 self.role_profiles = json.load(f)
                 self.n_postings = sum(d.get("n_postings", 0) for d in self.role_profiles.values())
-        
-        rules_path = os.path.join(artifacts_dir, "rules.parquet")
-        if os.path.exists(rules_path):
-            self.rules = pd.read_parquet(rules_path)
-            
-        clf_path = os.path.join(artifacts_dir, "classifier.pkl")
-        if os.path.exists(clf_path):
-            with open(clf_path, "rb") as f:
-                self.classifier = pickle.load(f)
                 
-        le_path = os.path.join(artifacts_dir, "label_encoder.pkl")
-        if os.path.exists(le_path):
-            with open(le_path, "rb") as f:
-                self.label_encoder = pickle.load(f)
+        model_path = ARTIFACTS_DIR / "model.json"
+        if model_path.exists():
+            with open(model_path, "r") as f:
+                model_data = json.load(f)
+                self.model_version = model_data.get("source")
+                
+        rules_path = ARTIFACTS_DIR / "rules.json"
+        if rules_path.exists():
+            with open(rules_path, "r") as f:
+                rules_data = json.load(f)
+                self.rules_version = rules_data.get("source")
                 
         # Ensure all required artifacts were successfully loaded
-        if self.vocab and self.role_profiles and self.rules is not None and self.classifier and self.label_encoder:
+        if self.vocab and self.role_profiles and self.model_version and self.rules_version:
             self.artifacts_loaded = True
         else:
-            raise FileNotFoundError(f"Missing one or more artifacts in {artifacts_dir}")
+            raise FileNotFoundError(f"Missing one or more JSON artifacts in {ARTIFACTS_DIR}")
 
 artifacts = ArtifactsManager()

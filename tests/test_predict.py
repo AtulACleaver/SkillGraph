@@ -8,7 +8,7 @@ import pytest
 from ml import augment, features, predict
 
 ARTIFACTS = os.environ.get("ARTIFACTS_DIR", "artifacts")
-HAVE_MODEL = os.path.exists(os.path.join(ARTIFACTS, "classifier.pkl"))
+HAVE_MODEL = os.path.exists(os.path.join(ARTIFACTS, "model.json"))
 
 def test_to_matrix_multi_hot():
     X = features.to_matrix([[0, 2, 2], [], [1, 999]], width=5)
@@ -31,7 +31,7 @@ def test_predictor_end_to_end():
     vec = features.to_matrix([[name_to_id.get(s, -1) for s in ["python", "machine learning", "deep learning", "nlp"]]], p.width)
     out = predict.predict_roles(vec.toarray()[0])
     
-    assert len(out) == len(p.le.classes_)
+    assert len(out) == len(p.classes)
     assert abs(sum(m["probability"] for m in out)) <= 1.0001
     assert out[0]["probability"] >= out[-1]["probability"]
     assert out[0]["role"] == "Data Science / ML"
@@ -69,7 +69,7 @@ def test_predictor_load_time_checks(monkeypatch):
     monkeypatch.undo()
 
 @pytest.mark.skipif(not HAVE_MODEL, reason="run `python -m ml.train` first")
-@pytest.mark.skipif(os.environ.get("CI") == "true", reason="Real-artifact tests skip in CI")
+@pytest.mark.skipif(not os.path.exists("data/clean.parquet") or not os.path.exists("data/dataset.parquet"), reason="Needs data/clean.parquet and data/dataset.parquet")
 def test_matrix_round_trip():
     import etl.normalize as norm
     p = predict.get_predictor()

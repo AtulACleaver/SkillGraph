@@ -1,6 +1,4 @@
-import os
 
-import pytest
 from fastapi.testclient import TestClient
 
 from api.main import app
@@ -8,7 +6,7 @@ from api.main import app
 
 def test_get_roles():
     with TestClient(app) as client:
-        response = client.get("/roles")
+        response = client.get("/api/roles")
         assert response.status_code == 200
         data = response.json()
         assert isinstance(data, list)
@@ -18,7 +16,7 @@ def test_get_roles():
 
 def test_get_skills():
     with TestClient(app) as client:
-        response = client.get("/skills?q=py")
+        response = client.get("/api/skills?q=py")
         assert response.status_code == 200
         data = response.json()
         assert len(data) > 0
@@ -27,26 +25,24 @@ def test_get_skills():
 
 def test_get_skills_empty():
     with TestClient(app) as client:
-        response = client.get("/skills?q=nonexistent_skill_123")
+        response = client.get("/api/skills?q=nonexistent_skill_123")
         assert response.status_code == 200
         assert response.json() == []
 
 
-@pytest.mark.skipif(os.environ.get("CI") == "true", reason="Fake fixtures cannot drive real model in CI")
 def test_match():
     with TestClient(app) as client:
-        response = client.post("/match", json={"skills": ["android", "kotlin", "java"]})
+        response = client.post("/api/match", json={"skills": ["android", "kotlin", "java"]})
         assert response.status_code == 200
         data = response.json()
         assert len(data["matches"]) > 0
         assert data["matches"][0]["role"] == "Mobile"
 
 
-@pytest.mark.skipif(os.environ.get("CI") == "true", reason="Fake fixtures cannot drive real model in CI")
 def test_readiness():
     with TestClient(app) as client:
         response = client.post(
-            "/readiness",
+            "/api/readiness",
             json={"skills": ["react", "javascript", "typescript", "html", "css"], "desired_role": "Frontend"},
         )
         assert response.status_code == 200
@@ -54,18 +50,16 @@ def test_readiness():
         assert data["band"] == "Ready"
 
 
-@pytest.mark.skipif(os.environ.get("CI") == "true", reason="Fake fixtures cannot drive real model in CI")
 def test_readiness_unrecognized():
     with TestClient(app) as client:
-        response = client.post("/readiness", json={"skills": ["asdfgh"], "desired_role": "Frontend"})
+        response = client.post("/api/readiness", json={"skills": ["asdfgh"], "desired_role": "Frontend"})
         assert response.status_code == 400
 
 
-@pytest.mark.skipif(os.environ.get("CI") == "true", reason="Fake fixtures cannot drive real model in CI")
 def test_gap():
     with TestClient(app) as client:
         response = client.post(
-            "/gap",
+            "/api/gap",
             json={"skills": ["react", "javascript", "typescript", "html", "css"], "desired_role": "Frontend"},
         )
         assert response.status_code == 200
@@ -77,21 +71,19 @@ def test_gap():
             assert rec["skill"] not in ["Frontend", "Front End"]
 
 
-@pytest.mark.skipif(os.environ.get("CI") == "true", reason="Fake fixtures cannot drive real model in CI")
 def test_gap_unknown_role():
     with TestClient(app) as client:
         response = client.post(
-            "/gap",
+            "/api/gap",
             json={"skills": ["react"], "desired_role": "Astronaut"},
         )
         assert response.status_code == 400
 
 
-@pytest.mark.skipif(os.environ.get("CI") == "true", reason="Fake fixtures cannot drive real model in CI")
 def test_analyze():
     with TestClient(app) as client:
         response = client.post(
-            "/analyze",
+            "/api/analyze",
             json={"skills": ["react", "javascript", "typescript", "html", "css"], "desired_role": "Frontend"},
         )
         assert response.status_code == 200
