@@ -150,6 +150,22 @@ def test_gap_ranking():
     all_have = rank_gap(profile_top_skills, desired_role="Frontend", top_n=5)
     assert all_have == []
 
+    # Direction 1: User has base skill (e.g. java), candidate with generic word (java development) must be skipped
+    java_user = ["java", "docker", "mysql"]
+    java_gaps = [r["skill"].lower() for r in rank_gap(java_user, desired_role="Backend", top_n=10)]
+    assert "java development" not in java_gaps
+
+    # Direction 2: Every word in candidate appears in a user skill
+    # (spring vs spring boot, boot vs spring boot, net vs net core)
+    spring_boot_user = ["java", "spring boot", "mysql", "docker"]
+    sb_gaps = [r["skill"].lower() for r in rank_gap(spring_boot_user, desired_role="Backend", top_n=10)]
+    assert "spring" not in sb_gaps
+    assert "boot" not in sb_gaps
+
+    net_core_user = ["c#", "net core", "sql"]
+    net_gaps = [r["skill"].lower() for r in rank_gap(net_core_user, desired_role="Full Stack", top_n=10)]
+    assert "net" not in net_gaps
+
 
 if __name__ == "__main__":
     test_apriori_l2()

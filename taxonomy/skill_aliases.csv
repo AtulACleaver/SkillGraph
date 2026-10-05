@@ -33,7 +33,7 @@ Voice Process,voice process,domain
 B2B Sales,sales,domain
 BPO,bpo,domain
 Javascript,javascript,language
-software development,software development,domain
+software development,software,unknown
 Business Development,sales,domain
 oracle,oracle,database
 Accounting,accounting,unknown
@@ -44,7 +44,7 @@ Recruitment,recruitment,unknown
 Training,training,data
 troubleshooting,troubleshooting,unknown
 Lead Generation,lead generation,unknown
-application development,application development,domain
+application development,application,unknown
 Finance,finance,unknown
 kubernetes,kubernetes,cloud
 Networking,networking,unknown
@@ -83,7 +83,7 @@ AutoCAD,autocad,unknown
 business analysis,business analysis,domain
 Process,process,unknown
 Administration,administration,unknown
-microsoft azure,microsoft azure,cloud
+microsoft azure,azure,cloud
 html,html,language
 application design,application design,unknown
 Architecture,architecture,unknown
@@ -291,7 +291,7 @@ Auditing,auditing,unknown
 Non Voice Process,non voice process,domain
 Node.Js,node,framework
 moderation,moderation,unknown
-Boot,boot,unknown
+Boot,spring boot,framework
 supply chain,supply chain,data
 Agency Channel,agency channel,unknown
 Scrum,scrum,unknown
@@ -303,7 +303,7 @@ artificial intelligence,ai,data
 retail sales,retail sales,data
 customer relationship,customer relationship,unknown
 stakeholder management,stakeholder management,soft
-sap abap development,sap abap development,tooling
+sap abap development,sap abap,tooling
 CRM,crm,unknown
 Chat Support,chat support,unknown
 Devops,devops,unknown
@@ -311,7 +311,7 @@ Financial services,financial services,unknown
 New Client Acquisition,new client acquisition,unknown
 microsoft,microsoft,unknown
 test cases,test cases,unknown
-Microsoft Azure,microsoft azure,cloud
+Microsoft Azure,azure,cloud
 Machine Learning,ml,data
 Customer Handling,customer handling,unknown
 autocad,autocad,unknown
@@ -340,7 +340,7 @@ quality assurance,quality assurance,unknown
 International Voice,international voice,unknown
 Real Estate Sales,real estate sales,domain
 Docker,docker,cloud
-Advanced Excel,advanced excel,unknown
+Advanced Excel,excel,unknown
 Control,control,unknown
 Inventory Management,inventory management,soft
 Team,team,unknown
@@ -371,7 +371,7 @@ Data Engineering,data engineering,data
 bpo,bpo,domain
 Illustrator,illustrator,unknown
 Education,education,unknown
-Application development,application development,domain
+Application development,application,unknown
 Information technology,information technology,unknown
 balance sheet,balance sheet,unknown
 Chat Process,chat process,unknown
@@ -379,7 +379,7 @@ Outbound Process,outbound process,unknown
 ado.net,ado.net,unknown
 Solving Queries,solving queries,unknown
 Unix,unix,unknown
-natural language processing,natural language processing,unknown
+natural language processing,nlp,unknown
 Typescript,typescript,unknown
 procurement,procurement,unknown
 Staffing,staffing,unknown
@@ -499,11 +499,10 @@ Quality Control,quality control,unknown
 Certified,certified,unknown
 Airflow,airflow,data
 purchase,purchase,unknown
-Java Development,java development,language
+Java Development,java,language
 Machine,machine,unknown
 plsql,plsql,language
 Corporate Sales,corporate sales,domain
-Stack,stack,unknown
 Telugu,telugu,unknown
 PPC,ppc,unknown
 NoSQL,nosql,language
@@ -607,7 +606,7 @@ Quality Assurance,quality assurance,unknown
 data visualization,data visualization,data
 Data Modeling,data modeling,data
 System design,system design,unknown
-Saps,saps,tooling
+Saps,sap,tooling
 tcp,tcp,unknown
 Education Counseling,education counseling,unknown
 End,end,unknown
@@ -799,3 +798,37 @@ architectural design,architectural design,unknown
 Office Administration,office administration,unknown
 Languages,languages,unknown
 Onboarding,onboarding,unknown
+react js,react,framework
+reacts js,react,framework
+springboot,spring boot,framework
+angularjs,angular,framework
+angular development,angular,framework
+data bricks,databricks,unknown
+genai,generative ai,data
+gen ai,generative ai,data
+Gen AI,generative ai,data
+Gen ai,generative ai,data
+rest apis,rest api,unknown
+rest api development,rest api,unknown
+restful api,rest api,unknown
+restfull api,rest api,unknown
+javas,java,language
+sap development,sap,tooling
+abap development,sap abap,tooling
+abap programming,sap abap,tooling
+flutter development,flutter,unknown
+ios development,ios,unknown
+android application development,android,unknown
+python development,python,language
+sql development,sql,language
+servicenow development,servicenow,unknown
+sales force development,salesforce,domain
+cloud platforms,cloud platform,unknown
+fullstack development,full stack,unknown
+backend development,backend,unknown
+frontend development,front end,unknown
+ui development,ui,unknown
+selenium webdriver,selenium,unknown
+itil framework,itil,unknown
+core java,java,language
+web application development,web application,unknown

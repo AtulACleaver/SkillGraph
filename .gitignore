@@ -1,4 +1,4 @@
-data/
+/data/
 artifacts/*
 !artifacts/*.json
 *.pkl

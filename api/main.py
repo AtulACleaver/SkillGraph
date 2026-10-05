@@ -31,7 +31,7 @@ async def lifespan(app: FastAPI):
         cached_roles.append(schemas.RoleResponse(
             role_family=role,
             n_postings=details.get("n_postings", 0),
-            top_skills=details.get("top_skills", [])
+            top_skills=[artifacts.get_display_name(s) for s in details.get("top_skills", [])]
         ))
         
     yield

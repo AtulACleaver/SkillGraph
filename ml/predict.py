@@ -1,8 +1,9 @@
+import csv
 import json
 
 import numpy as np
 
-from etl.paths import ARTIFACTS_DIR
+from etl.paths import ARTIFACTS_DIR, TAXONOMY_DIR
 from ml import features
 
 _predictor = None
@@ -36,6 +37,33 @@ class Predictor:
         profiles_set = set(self.profiles.keys())
         if classes_set != profiles_set:
             raise ValueError("Label classes do not match role_profiles keys")
+
+        self.display_names: dict[str, str] = {}
+        ac_path = ARTIFACTS_DIR / "skills_autocomplete.json"
+        if ac_path.exists():
+            try:
+                with open(ac_path, "r", encoding="utf-8") as f:
+                    for item in json.load(f):
+                        self.display_names[item["name"].lower()] = item.get("display", item["name"].title())
+            except (json.JSONDecodeError, OSError):
+                pass
+        overrides_path = TAXONOMY_DIR / "display_overrides.csv"
+        if overrides_path.exists():
+            try:
+                with open(overrides_path, "r", encoding="utf-8") as f:
+                    reader = csv.reader(f)
+                    next(reader, None)
+                    for row in reader:
+                        if len(row) >= 2:
+                            k, v = row[0].strip().lower(), row[1].strip()
+                            if k and v:
+                                self.display_names[k] = v
+            except OSError:
+                pass
+
+    def get_display_name(self, name: str) -> str:
+        s = name.lower().strip()
+        return self.display_names.get(s, name.title() if not name.isupper() else name)
 
     def proba(self, vector):
         if isinstance(vector, np.ndarray):
@@ -107,7 +135,7 @@ def readiness(vector, desired_role: str) -> dict:
         indices = vector
         
     have = {p.vocab[int(i)].lower() for i in indices if 0 <= int(i) < p.width}
-    covered = [s for s in top if s in have]
+    covered = [p.get_display_name(s) for s in top if s in have]
     coverage = len(covered) / len(top) if top else 0.0
     
     return {

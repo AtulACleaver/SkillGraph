@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Data / BI Analyst",
+    "role": "Data / BI Analyst",
+    "skills": ["python", "sql", "pandas"]
+  },
+  {
+    "name": "Backend",
+    "role": "Backend",
+    "skills": ["java", "spring boot", "mysql", "docker"]
+  },
+  {
+    "name": "Full Stack",
+    "role": "Full Stack",
+    "skills": ["react", "javascript", "html", "css"]
+  },
+  {
+    "name": "Frontend",
+    "role": "Frontend",
+    "skills": ["javascript", "typescript", "react", "html", "css"]
+  },
+  {
+    "name": "DevOps / Cloud",
+    "role": "DevOps / Cloud",
+    "skills": ["docker", "kubernetes", "aws", "linux"]
+  },
+  {
+    "name": "QA / Test",
+    "role": "QA / Test",
+    "skills": ["selenium", "python", "sql", "jira"]
+  },
+  {
+    "name": "ERP / Enterprise",
+    "role": "ERP / Enterprise",
+    "skills": ["sap", "abap", "sql"]
+  },
+  {
+    "name": "Data Science / ML",
+    "role": "Data Science / ML",
+    "skills": ["python", "sql", "pytorch", "numpy"]
+  },
+  {
+    "name": "Support / IT Ops",
+    "role": "Support / IT Ops",
+    "skills": ["linux", "networking", "troubleshooting", "sql"]
+  },
+  {
+    "name": "Mobile",
+    "role": "Mobile",
+    "skills": ["kotlin", "android", "git"]
+  }
+]

@@ -1,108 +1,108 @@
 {
   "DevOps / Cloud": {
-    "n_postings": 1585,
+    "n_postings": 1584,
     "top_skills": [
       "kubernetes",
       "aws",
       "devops",
       "python",
       "continuous integration",
+      "azure",
       "cicd",
-      "microsoft azure",
       "cloud",
-      "docker",
       "terraform",
-      "automation",
+      "docker",
       "java",
+      "automation",
       "sql",
       "gcp",
       "oracle",
-      "networking",
-      "jenkins",
       "linux",
-      "azure devops",
-      "troubleshooting"
+      "troubleshooting",
+      "ansible",
+      "jenkins",
+      "azure devops"
     ],
     "skill_freq": [
       [
         "kubernetes",
-        0.2183
+        0.2197
       ],
       [
         "aws",
-        0.1943
+        0.197
       ],
       [
         "devops",
-        0.1855
+        0.1843
       ],
       [
         "python",
-        0.1811
+        0.1837
       ],
       [
         "continuous integration",
-        0.1495
+        0.1553
+      ],
+      [
+        "azure",
+        0.1332
       ],
       [
         "cicd",
-        0.1237
-      ],
-      [
-        "microsoft azure",
-        0.1117
+        0.1193
       ],
       [
         "cloud",
-        0.1066
-      ],
-      [
-        "docker",
-        0.0978
+        0.1061
       ],
       [
         "terraform",
-        0.0965
+        0.1016
       ],
       [
-        "automation",
-        0.0896
+        "docker",
+        0.1004
       ],
       [
         "java",
-        0.0845
+        0.0915
+      ],
+      [
+        "automation",
+        0.089
       ],
       [
         "sql",
-        0.077
+        0.0745
       ],
       [
         "gcp",
-        0.0612
+        0.0657
       ],
       [
         "oracle",
-        0.0587
-      ],
-      [
-        "networking",
-        0.0587
-      ],
-      [
-        "jenkins",
-        0.058
+        0.0612
       ],
       [
         "linux",
-        0.058
-      ],
-      [
-        "azure devops",
-        0.0536
+        0.0606
       ],
       [
         "troubleshooting",
-        0.0511
+        0.0543
+      ],
+      [
+        "ansible",
+        0.0537
+      ],
+      [
+        "jenkins",
+        0.0537
+      ],
+      [
+        "azure devops",
+        0.0524
       ]
     ]
   },
@@ -111,8 +111,8 @@
     "top_skills": [
       "qa",
       "selenium",
-      "automation",
       "java",
+      "automation",
       "python",
       "test cases",
       "quality assurance",
@@ -137,15 +137,15 @@
       ],
       [
         "selenium",
-        0.261
+        0.2725
+      ],
+      [
+        "java",
+        0.1667
       ],
       [
         "automation",
         0.1587
-      ],
-      [
-        "java",
-        0.1552
       ],
       [
         "python",
@@ -214,117 +214,117 @@
     ]
   },
   "ERP / Enterprise": {
-    "n_postings": 1039,
+    "n_postings": 1040,
     "top_skills": [
       "sap",
       "javascript",
-      "qa",
       "servicenow",
-      "css",
+      "qa",
+      "sap abap",
       "abap",
       "development",
-      "sap abap",
+      "css",
+      "salesforce",
       "sap hana",
       "sap s hana",
-      "salesforce",
-      "project management",
-      "sap sd",
       "master data",
-      "html",
+      "project management",
       "data migration",
-      "troubleshooting",
+      "sap sd",
       "rest",
+      "html",
       "apex",
-      "servicenow development"
+      "troubleshooting",
+      "sql"
     ],
     "skill_freq": [
       [
         "sap",
-        0.3859
+        0.3933
       ],
       [
         "javascript",
-        0.1145
-      ],
-      [
-        "qa",
-        0.1059
+        0.1212
       ],
       [
         "servicenow",
-        0.103
+        0.1202
       ],
       [
-        "css",
-        0.0905
-      ],
-      [
-        "abap",
-        0.0866
-      ],
-      [
-        "development",
-        0.0857
+        "qa",
+        0.101
       ],
       [
         "sap abap",
-        0.0837
+        0.0942
       ],
       [
-        "sap hana",
-        0.0808
+        "abap",
+        0.0904
       ],
       [
-        "sap s hana",
-        0.0799
+        "development",
+        0.0894
+      ],
+      [
+        "css",
+        0.0856
       ],
       [
         "salesforce",
-        0.0789
+        0.0856
       ],
       [
-        "project management",
-        0.0683
+        "sap hana",
+        0.075
       ],
       [
-        "sap sd",
-        0.0664
+        "sap s hana",
+        0.0731
       ],
       [
         "master data",
-        0.0645
+        0.0673
       ],
       [
-        "html",
-        0.0587
+        "project management",
+        0.0635
       ],
       [
         "data migration",
-        0.0577
+        0.0625
       ],
       [
-        "troubleshooting",
-        0.0558
+        "sap sd",
+        0.0596
       ],
       [
         "rest",
-        0.0558
+        0.0548
+      ],
+      [
+        "html",
+        0.0548
       ],
       [
         "apex",
-        0.0549
+        0.0538
       ],
       [
-        "servicenow development",
-        0.0539
+        "troubleshooting",
+        0.0538
+      ],
+      [
+        "sql",
+        0.05
       ]
     ]
   },
   "Data / BI Analyst": {
-    "n_postings": 953,
+    "n_postings": 954,
     "top_skills": [
-      "sql",
       "python",
+      "sql",
       "data",
       "pyspark",
       "data engineering",
@@ -336,94 +336,94 @@
       "aws",
       "data warehousing",
       "snowflake",
+      "azure",
       "performance tuning",
-      "scala",
       "data management",
-      "oracle",
-      "business intelligence",
+      "scala",
       "azure data factory",
-      "microsoft azure"
+      "oracle",
+      "business intelligence"
     ],
     "skill_freq": [
       [
-        "sql",
-        0.3882
+        "python",
+        0.3847
       ],
       [
-        "python",
-        0.383
+        "sql",
+        0.3774
       ],
       [
         "data",
-        0.1721
+        0.1604
       ],
       [
         "pyspark",
-        0.1637
+        0.1593
       ],
       [
         "data engineering",
-        0.1595
+        0.1583
       ],
       [
         "data analysis",
-        0.1563
+        0.1583
       ],
       [
         "power bi",
-        0.1438
+        0.1447
       ],
       [
         "data modeling",
-        0.1301
+        0.1258
       ],
       [
         "etl",
-        0.1291
+        0.1226
       ],
       [
         "hive",
-        0.1196
+        0.1195
       ],
       [
         "aws",
-        0.1081
+        0.1038
       ],
       [
         "data warehousing",
-        0.1039
+        0.1006
       ],
       [
         "snowflake",
-        0.0986
+        0.0943
+      ],
+      [
+        "azure",
+        0.0797
       ],
       [
         "performance tuning",
-        0.0818
-      ],
-      [
-        "scala",
-        0.0787
+        0.0765
       ],
       [
         "data management",
-        0.0756
+        0.0755
       ],
       [
-        "oracle",
-        0.0609
-      ],
-      [
-        "business intelligence",
-        0.0609
+        "scala",
+        0.0734
       ],
       [
         "azure data factory",
-        0.0598
+        0.066
       ],
       [
-        "microsoft azure",
-        0.0588
+        "oracle",
+        0.0629
+      ],
+      [
+        "business intelligence",
+        0.0597
       ]
     ]
   },
@@ -431,54 +431,54 @@
     "n_postings": 901,
     "top_skills": [
       "java",
-      "react",
       "full stack",
+      "react",
       "javascript",
-      "css",
       "angular",
+      "css",
       "spring boot",
       "html",
       "microservices",
       "development",
       "c#",
-      "node",
       "stack",
+      "node",
       "python",
       "java fullstack",
       "aws",
-      "fullstack development",
       "spring",
       "net",
-      "net core"
+      "net core",
+      "sql"
     ],
     "skill_freq": [
       [
         "java",
-        0.3751
-      ],
-      [
-        "react",
-        0.3341
+        0.3896
       ],
       [
         "full stack",
-        0.2897
+        0.3529
+      ],
+      [
+        "react",
+        0.3452
       ],
       [
         "javascript",
         0.2752
       ],
       [
+        "angular",
+        0.2719
+      ],
+      [
         "css",
         0.2608
       ],
       [
-        "angular",
-        0.2531
-      ],
-      [
         "spring boot",
-        0.1853
+        0.1909
       ],
       [
         "html",
@@ -497,16 +497,16 @@
         0.1354
       ],
       [
-        "node",
-        0.1254
-      ],
-      [
         "stack",
         0.1254
       ],
       [
+        "node",
+        0.1254
+      ],
+      [
         "python",
-        0.1132
+        0.1154
       ],
       [
         "java fullstack",
@@ -515,10 +515,6 @@
       [
         "aws",
         0.1043
-      ],
-      [
-        "fullstack development",
-        0.1032
       ],
       [
         "spring",
@@ -531,220 +527,224 @@
       [
         "net core",
         0.0932
+      ],
+      [
+        "sql",
+        0.091
       ]
     ]
   },
   "Backend": {
-    "n_postings": 891,
+    "n_postings": 892,
     "top_skills": [
       "java",
       "spring boot",
       "microservices",
       "development",
       "spring",
-      "java development",
       "hibernate",
       "python",
-      "boot",
       "backend",
       "aws",
       "sql",
-      "javascript",
       "rest",
+      "javascript",
       "kafka",
-      "css",
+      "postgresql",
       "mysql",
       "node",
-      "python development",
-      "django"
+      "css",
+      "django",
+      "mongodb",
+      "golang"
     ],
     "skill_freq": [
       [
         "java",
-        0.5028
+        0.5359
       ],
       [
         "spring boot",
-        0.3838
+        0.4025
       ],
       [
         "microservices",
-        0.3457
+        0.3442
       ],
       [
         "development",
-        0.3086
+        0.3038
       ],
       [
         "spring",
-        0.2099
-      ],
-      [
-        "java development",
-        0.1863
+        0.2096
       ],
       [
         "hibernate",
-        0.1818
+        0.1872
       ],
       [
         "python",
-        0.1616
-      ],
-      [
-        "boot",
-        0.1582
+        0.1794
       ],
       [
         "backend",
-        0.1526
+        0.1682
       ],
       [
         "aws",
-        0.1279
+        0.1267
       ],
       [
         "sql",
-        0.11
-      ],
-      [
-        "javascript",
-        0.0898
+        0.1166
       ],
       [
         "rest",
-        0.0831
+        0.0908
+      ],
+      [
+        "javascript",
+        0.0886
       ],
       [
         "kafka",
-        0.0786
+        0.0886
       ],
       [
-        "css",
-        0.0786
+        "postgresql",
+        0.0785
       ],
       [
         "mysql",
-        0.0763
+        0.0785
       ],
       [
         "node",
-        0.0741
+        0.0729
       ],
       [
-        "python development",
-        0.0741
+        "css",
+        0.0695
       ],
       [
         "django",
-        0.073
+        0.065
+      ],
+      [
+        "mongodb",
+        0.0583
+      ],
+      [
+        "golang",
+        0.0572
       ]
     ]
   },
   "Data Science / ML": {
-    "n_postings": 839,
+    "n_postings": 840,
     "top_skills": [
       "python",
-      "ml",
       "ai",
-      "natural language processing",
+      "ml",
+      "nlp",
+      "generative ai",
       "tensorflow",
       "deep learning",
-      "generative ai",
       "pytorch",
-      "computer science",
-      "sql",
-      "aiml",
-      "algorithms",
       "image processing",
-      "kubernetes",
+      "sql",
       "research",
-      "training",
-      "data science",
+      "aiml",
       "gcp",
+      "kubernetes",
+      "algorithms",
+      "data science",
+      "computer science",
+      "training",
       "aws",
-      "project management"
+      "english"
     ],
     "skill_freq": [
       [
         "python",
-        0.4148
-      ],
-      [
-        "ml",
-        0.4005
+        0.4238
       ],
       [
         "ai",
-        0.3969
+        0.4024
       ],
       [
-        "natural language processing",
-        0.1359
+        "ml",
+        0.4012
       ],
       [
-        "tensorflow",
-        0.1108
-      ],
-      [
-        "deep learning",
-        0.1025
+        "nlp",
+        0.1643
       ],
       [
         "generative ai",
-        0.093
+        0.1381
+      ],
+      [
+        "tensorflow",
+        0.1202
+      ],
+      [
+        "deep learning",
+        0.0976
       ],
       [
         "pytorch",
-        0.087
-      ],
-      [
-        "computer science",
-        0.0799
-      ],
-      [
-        "sql",
-        0.0787
-      ],
-      [
-        "aiml",
-        0.0751
-      ],
-      [
-        "algorithms",
-        0.0751
+        0.0881
       ],
       [
         "image processing",
-        0.0739
+        0.0798
       ],
       [
-        "kubernetes",
-        0.0715
+        "sql",
+        0.0762
       ],
       [
         "research",
-        0.0703
+        0.075
       ],
       [
-        "training",
-        0.0691
-      ],
-      [
-        "data science",
-        0.0679
+        "aiml",
+        0.0738
       ],
       [
         "gcp",
-        0.0656
+        0.0714
+      ],
+      [
+        "kubernetes",
+        0.0714
+      ],
+      [
+        "algorithms",
+        0.0714
+      ],
+      [
+        "data science",
+        0.0702
+      ],
+      [
+        "computer science",
+        0.0702
+      ],
+      [
+        "training",
+        0.0702
       ],
       [
         "aws",
-        0.0656
+        0.0702
       ],
       [
-        "project management",
-        0.062
+        "english",
+        0.0631
       ]
     ]
   },
@@ -768,8 +768,8 @@
       "customer support",
       "network security",
       "project management",
-      "wan",
       "c++",
+      "wan",
       "java"
     ],
     "skill_freq": [
@@ -842,11 +842,11 @@
         0.0483
       ],
       [
-        "wan",
+        "c++",
         0.047
       ],
       [
-        "c++",
+        "wan",
         0.047
       ],
       [
@@ -862,22 +862,22 @@
       "css",
       "react",
       "html",
-      "angular",
       "front end",
+      "angular",
+      "ui",
       "typescript",
       "development",
-      "ui development",
       "redux",
-      "frontend development",
-      "bootstrap",
-      "git",
       "java",
+      "git",
+      "bootstrap",
       "node",
       "jquery",
-      "ui",
       "backend",
       "agile",
-      "angularjs"
+      "software",
+      "debugging",
+      "unit testing"
     ],
     "skill_freq": [
       [
@@ -890,19 +890,23 @@
       ],
       [
         "react",
-        0.351
+        0.3638
       ],
       [
         "html",
         0.2797
       ],
       [
-        "angular",
-        0.223
+        "front end",
+        0.2633
       ],
       [
-        "front end",
-        0.1901
+        "angular",
+        0.2596
+      ],
+      [
+        "ui",
+        0.1883
       ],
       [
         "typescript",
@@ -913,19 +917,11 @@
         0.1572
       ],
       [
-        "ui development",
-        0.1554
-      ],
-      [
         "redux",
         0.1481
       ],
       [
-        "frontend development",
-        0.1097
-      ],
-      [
-        "bootstrap",
+        "java",
         0.0969
       ],
       [
@@ -933,8 +929,8 @@
         0.0969
       ],
       [
-        "java",
-        0.0951
+        "bootstrap",
+        0.0969
       ],
       [
         "node",
@@ -945,10 +941,6 @@
         0.0786
       ],
       [
-        "ui",
-        0.0731
-      ],
-      [
         "backend",
         0.0695
       ],
@@ -957,8 +949,16 @@
         0.064
       ],
       [
-        "angularjs",
-        0.0585
+        "software",
+        0.0567
+      ],
+      [
+        "debugging",
+        0.0548
+      ],
+      [
+        "unit testing",
+        0.053
       ]
     ]
   },
@@ -966,49 +966,49 @@
     "n_postings": 304,
     "top_skills": [
       "android",
-      "kotlin",
       "ios",
+      "kotlin",
       "development",
-      "android application development",
       "java",
-      "git",
       "flutter",
+      "git",
       "react native",
-      "mobile application development",
       "swift",
+      "mobile application development",
       "mvvm",
       "javascript",
       "mobile development",
       "android studio",
       "sqlite",
-      "flutter development",
       "version control",
-      "ios development",
-      "mobile applications"
+      "application",
+      "json",
+      "debugging",
+      "backend"
     ],
     "skill_freq": [
       [
         "android",
-        0.3191
+        0.3684
+      ],
+      [
+        "ios",
+        0.2336
       ],
       [
         "kotlin",
         0.2138
       ],
       [
-        "ios",
-        0.2007
-      ],
-      [
         "development",
         0.1908
       ],
       [
-        "android application development",
+        "java",
         0.1711
       ],
       [
-        "java",
+        "flutter",
         0.1678
       ],
       [
@@ -1016,19 +1016,15 @@
         0.1612
       ],
       [
-        "flutter",
-        0.1513
-      ],
-      [
         "react native",
         0.148
       ],
       [
-        "mobile application development",
+        "swift",
         0.1414
       ],
       [
-        "swift",
+        "mobile application development",
         0.1414
       ],
       [
@@ -1052,19 +1048,23 @@
         0.0954
       ],
       [
-        "flutter development",
-        0.0855
-      ],
-      [
         "version control",
         0.0855
       ],
       [
-        "ios development",
-        0.0822
+        "application",
+        0.0789
       ],
       [
-        "mobile applications",
+        "json",
+        0.0724
+      ],
+      [
+        "debugging",
+        0.0724
+      ],
+      [
+        "backend",
         0.0724
       ]
     ]
