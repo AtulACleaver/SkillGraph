@@ -19,7 +19,7 @@
   {
     "id": 2,
     "name": "qa",
-    "display": "Qa",
+    "display": "QA",
     "aliases": [
       "software testing",
       "automation testing",
@@ -37,7 +37,7 @@
   {
     "id": 4,
     "name": "javascript",
-    "display": "Javascript",
+    "display": "JavaScript",
     "aliases": [
       "javascript"
     ]
@@ -61,7 +61,7 @@
   {
     "id": 7,
     "name": "css",
-    "display": "Css",
+    "display": "CSS",
     "aliases": [
       "css"
     ]
@@ -125,7 +125,7 @@
   {
     "id": 15,
     "name": "ml",
-    "display": "Ml",
+    "display": "ML",
     "aliases": [
       "machine learning"
     ]
@@ -133,7 +133,7 @@
   {
     "id": 16,
     "name": "html",
-    "display": "Html",
+    "display": "HTML",
     "aliases": [
       "html"
     ]
@@ -149,7 +149,7 @@
   {
     "id": 18,
     "name": "cicd",
-    "display": "Cicd",
+    "display": "CI/CD",
     "aliases": [
       "cicd"
     ]

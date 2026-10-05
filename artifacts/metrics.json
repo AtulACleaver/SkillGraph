@@ -275,7 +275,7 @@
   "n_dropped_no_skills": 103,
   "n_val": 1915,
   "n_test": 1916,
-  "built_at": "2026-10-03T19:48:24Z",
+  "built_at": "2026-10-05T14:09:43Z",
   "band_cutoffs": {
     "prob_ready": 0.6,
     "prob_close": 0.3,

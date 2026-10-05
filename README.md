@@ -29,7 +29,6 @@ skillgraph/
 ├── taxonomy/      # Aryan — hand-edited skill aliases & role families
 ├── api/           # Archit — FastAPI serving layer
 ├── frontend/      # Shashank — Vite + React UI
-├── fixtures/      # Archit — fake artifacts for dev
 ├── tests/         # each person owns their module's tests
 ├── docs/          # data audit, contracts, model writeup
 ├── data/          # GITIGNORED — rebuilt by the pipeline

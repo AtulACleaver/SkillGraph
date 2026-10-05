@@ -3,7 +3,7 @@ artifacts/*
 !artifacts/*.json
 *.pkl
 *.parquet
-!fixtures/*
+.vercel/
 __pycache__/
 .ipynb_checkpoints/
 .env

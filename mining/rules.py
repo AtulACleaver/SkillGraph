@@ -1,8 +1,11 @@
 import os
+import time
 from itertools import combinations
 from typing import Any
 
 import pandas as pd
+
+from etl.stats import write_stage_stats
 
 
 def generate_rules(
@@ -96,8 +99,7 @@ def run_rule_mining(
     Full pipeline to mine frequent itemsets and generate association rules.
     Uses FP-growth for speed and aggressively prunes to keep artifacts lean.
     """
-    import time
-
+    t_start = time.time()
     from mlxtend.frequent_patterns import fpgrowth
     from mlxtend.preprocessing import TransactionEncoder
 
@@ -105,6 +107,7 @@ def run_rule_mining(
     df = pd.read_parquet(baskets_file)
     baskets = [list(skill_ids) for skill_ids in df["skill_ids"] if len(skill_ids) > 0]
     total_baskets = len(baskets)
+    empty_baskets = len(df) - total_baskets
 
     print("Encoding transactions for FP-Growth...")
     te = TransactionEncoder()
@@ -125,13 +128,26 @@ def run_rule_mining(
 
     print(f"Generating rules with min_confidence={min_confidence}, min_lift={min_lift}...")
     rules_df = generate_rules(frequent_itemsets, total_baskets, min_confidence, min_lift)
+    initial_rules_count = len(rules_df)
+    pruned_count = 0
 
     # Hard pruning step to prevent bloated artifacts
     if len(rules_df) > max_rules:
         print(f"Pruning {len(rules_df):,} rules down to top {max_rules:,} by lift & confidence...")
         rules_df = rules_df.head(max_rules)
+        pruned_count = initial_rules_count - len(rules_df)
 
     save_rules(rules_df, output_rules_file)
+
+    elapsed = time.time() - t_start
+    write_stage_stats(
+        stage="rules",
+        rows_in=len(df),
+        rows_out=len(rules_df),
+        drops_by_reason={"empty_baskets": empty_baskets, "pruned_rules": pruned_count},
+        elapsed_seconds=elapsed,
+        output_files=[output_rules_file],
+    )
     return rules_df
 
 
