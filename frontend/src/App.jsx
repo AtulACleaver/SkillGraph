@@ -75,6 +75,7 @@ export default function App() {
 
   const abortRef = useRef(null);
   const resultsHeadingRef = useRef(null);
+  const isSubmittingRef = useRef(false);
 
   function loadRoles() {
     setRolesStatus('loading');
@@ -117,12 +118,16 @@ export default function App() {
     return () => clearInterval(id);
   }, [status, lastPayload]);
 
-  // Move focus to the results heading when an answer arrives.
+  // Move focus to the results heading after submit and when results or error change.
   useEffect(() => {
-    if (status === 'success') resultsHeadingRef.current?.focus({ preventScroll: true });
-  }, [status]);
+    if (view === 'results') {
+      resultsHeadingRef.current?.focus({ preventScroll: true });
+    }
+  }, [view, status]);
 
   async function runAnalyze(payload) {
+    if (isSubmittingRef.current) return;
+    isSubmittingRef.current = true;
     abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
@@ -141,6 +146,8 @@ export default function App() {
       if (controller.signal.aborted || isCancelled(err)) return;
       setError(toFriendlyError(err));
       setStatus('error');
+    } finally {
+      isSubmittingRef.current = false;
     }
   }
 
@@ -150,7 +157,7 @@ export default function App() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!canSubmit) return;
+    if (!canSubmit || isSubmittingRef.current || status === 'loading') return;
     runAnalyze({ skills: skillNames, desired_role: desiredRole });
   }
 
@@ -253,7 +260,7 @@ export default function App() {
                 </p>
                 <button
                   type="submit"
-                  disabled={!canSubmit}
+                  disabled={!canSubmit || status === 'loading'}
                   aria-describedby="submit-reason"
                   className="flex min-h-[54px] max-w-[360px] flex-[1_1_260px] items-center justify-between gap-3 bg-accent px-[22px] text-base font-semibold text-white hover:bg-accent-hover disabled:opacity-[.42] disabled:hover:bg-accent"
                 >
@@ -266,7 +273,7 @@ export default function App() {
         )}
 
         {view === 'results' && (
-          <>
+          <div id="results-region" aria-live="polite">
             <section className="flex flex-wrap items-end justify-between gap-x-6 gap-y-5 pb-7 pt-[clamp(40px,9vw,88px)]">
               <div className="min-w-0 flex-[1_1_420px]">
                 <p className={eyebrow}>{status === 'loading' ? 'Building your skill map' : 'Your skill map'}</p>
@@ -275,7 +282,7 @@ export default function App() {
                   tabIndex={-1}
                   className="text-[clamp(40px,9vw,64px)] font-semibold leading-[1.03] tracking-[-0.05em] outline-none"
                 >
-                  {status === 'loading' ? 'Reading the postings' : status === 'error' ? 'Almost there —' : 'Here’s your honest'}
+                  {status === 'loading' ? 'Reading the postings' : status === 'error' ? 'Almost there,' : 'Here’s your honest'}
                   <br />
                   <span className="text-gradient">{status === 'loading' ? 'for you.' : status === 'error' ? 'one more try.' : 'starting point.'}</span>
                 </h1>
@@ -335,8 +342,13 @@ export default function App() {
               <Card tone="error" role="alert" className="mb-14 grid grid-cols-[auto_minmax(0,1fr)] gap-4">
                 <CircleAlert size={24} strokeWidth={2} className="mt-0.5 text-ink-2" aria-hidden="true" />
                 <div className="min-w-0">
-                  <h2 className="mb-2 text-[clamp(20px,4vw,24px)] font-bold tracking-[-0.025em]">{error.title}</h2>
+                  <h2 className="mb-2 text-[clamp(20px,4vw,24px)] font-bold tracking-[-0.025em]">{error.title || 'Something went wrong'}</h2>
                   <p className="mb-1.5 max-w-[58ch] text-[15px] leading-[1.55] text-ink-2 text-pretty">{error.message}</p>
+                  {error.unrecognized?.length > 0 && (
+                    <p className="mb-3 text-sm text-ink-3">
+                      Unrecognized: <strong className="font-semibold text-ink-2">{error.unrecognized.join(', ')}</strong>. Try checking the spelling or picking suggestions from our list.
+                    </p>
+                  )}
                   <p className="mb-5 text-sm text-ink-3">
                     Your {shownSkills.length} skills and {shownRole} are still here.
                   </p>
@@ -394,7 +406,7 @@ export default function App() {
                 </div>
               </>
             )}
-          </>
+          </div>
         )}
 
         <Footer />
