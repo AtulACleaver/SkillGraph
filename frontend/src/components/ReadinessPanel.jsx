@@ -4,6 +4,13 @@ import StepHeading from './ui/StepHeading';
 import ProbabilityBar from './ui/ProbabilityBar';
 import { CoveredChip } from './ui/Chip';
 
+const BAND_CUTOFFS = {
+  close: 0.3,
+  ready: 0.6,
+  coverageClose: 0.1,
+  coverageReady: 0.2,
+};
+
 const BANDS = {
   Ready: {
     index: 2,
@@ -21,24 +28,24 @@ const BANDS = {
     index: 0,
     dot: 'border-band-notyet bg-transparent',
     fill: 'bg-band-notyet',
-    message: () => ['This is a ', 'starting point', ', not a verdict. The list below is the shortest path up — most students begin about here.'],
+    message: () => ['This is a ', 'starting point', ', not a verdict. The list below is the shortest path up, most students begin about here.'],
   },
 };
 
 const ZONES = [
-  { label: 'Not yet', basis: 'flex-[0_0_40%]' },
-  { label: 'Close · 40', basis: 'flex-[0_0_30%]' },
-  { label: 'Ready · 70', basis: 'flex-[0_0_30%]' },
+  { label: 'Not yet', basis: 'flex-[0_0_30%]' },
+  { label: `Close · ${Math.round(BAND_CUTOFFS.close * 100)}`, basis: 'flex-[0_0_30%]' },
+  { label: `Ready · ${Math.round(BAND_CUTOFFS.ready * 100)}`, basis: 'flex-[0_0_40%]' },
 ];
 
 function getTension({ probability, coverage }) {
   let probBand = 'Not yet';
-  if (probability >= 0.6) probBand = 'Ready';
-  else if (probability >= 0.3) probBand = 'Close';
+  if (probability >= BAND_CUTOFFS.ready) probBand = 'Ready';
+  else if (probability >= BAND_CUTOFFS.close) probBand = 'Close';
 
   let covBand = 'Not yet';
-  if (coverage >= 0.2) covBand = 'Ready';
-  else if (coverage >= 0.1) covBand = 'Close';
+  if (coverage >= BAND_CUTOFFS.coverageReady) covBand = 'Ready';
+  else if (coverage >= BAND_CUTOFFS.coverageClose) covBand = 'Close';
 
   const levels = { 'Ready': 3, 'Close': 2, 'Not yet': 1 };
   
@@ -109,8 +116,8 @@ export default function ReadinessPanel({ readiness, role }) {
           <div aria-hidden="true">
             <div className="relative h-2 bg-line-2">
               <div className={`absolute inset-y-0 left-0 ${band.fill}`} style={{ width: `${pct}%` }} />
-              <span className="absolute bottom-[-3px] left-[40%] top-[-3px] w-[3px] bg-tint" />
-              <span className="absolute bottom-[-3px] left-[70%] top-[-3px] w-[3px] bg-tint" />
+              <span className="absolute bottom-[-3px] top-[-3px] w-[3px] bg-tint" style={{ left: `${BAND_CUTOFFS.close * 100}%` }} />
+              <span className="absolute bottom-[-3px] top-[-3px] w-[3px] bg-tint" style={{ left: `${BAND_CUTOFFS.ready * 100}%` }} />
             </div>
             <div className="mt-2 flex text-xs">
               {ZONES.map((z, i) => (

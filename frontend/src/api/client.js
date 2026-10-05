@@ -14,11 +14,15 @@ export function isCancelled(err) {
 }
 
 function normalizeError(err) {
+  if (err && typeof err === 'object' && 'unrecognized' in err && 'title' in err) {
+    return err;
+  }
   const status = err?.response?.status || null;
   const detail = err?.response?.data?.detail;
-  let message = err.message;
+  let title = 'Something went wrong';
+  let message = err?.message || 'An unexpected error occurred';
   let unrecognized = [];
-  
+
   if (detail) {
     if (typeof detail === 'string') {
       message = detail;
@@ -26,13 +30,24 @@ function normalizeError(err) {
       message = detail.message || message;
       unrecognized = detail.unrecognized || [];
     }
-  } else if (err.code === 'ECONNABORTED' || err.code === 'ETIMEDOUT') {
-    message = "The server didn't respond within 25 seconds. This sometimes happens right after it wakes up — trying again usually works.";
-  } else if (!err.response) {
+    if (status === 400 && unrecognized.length > 0) {
+      title = "We couldn't recognize your skills";
+    } else if (status === 400) {
+      title = 'Invalid request';
+    } else if (status === 404) {
+      title = 'Not found';
+    } else if (status >= 500) {
+      title = 'Server error';
+    }
+  } else if (err?.code === 'ECONNABORTED' || err?.code === 'ETIMEDOUT' || /timeout/i.test(err?.message || '')) {
+    title = 'Request timed out';
+    message = "The server didn't respond within 25 seconds. This sometimes happens right after it wakes up, trying again usually works.";
+  } else if (!err?.response) {
+    title = 'Connection problem';
     message = "The request didn't reach the server. Check your internet connection.";
   }
-  
-  return { status, message, unrecognized };
+
+  return { status, title, message, unrecognized };
 }
 
 export function toFriendlyError(err) {

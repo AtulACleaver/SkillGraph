@@ -20,12 +20,14 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
   const [showAll, setShowAll] = useState(false);
   const [retryTick, setRetryTick] = useState(0);
   const [announce, setAnnounce] = useState('');
+  const [limitMessage, setLimitMessage] = useState('');
   const inputRef = useRef(null);
   const listRef = useRef(null);
 
   const listId = `${inputId}-listbox`;
   const hintId = `${inputId}-hint`;
   const errorId = `${inputId}-error`;
+  const limitId = `${inputId}-limit`;
 
   useEffect(() => {
     const q = query.trim();
@@ -86,10 +88,21 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
 
   function pick(opt) {
     if (!opt) return;
-    if (opt.added) {
+    const nameLower = opt.name.trim().toLowerCase();
+    if (opt.added || added.has(nameLower)) {
       setAnnounce(`${opt.name} is already added`);
+      setQuery('');
+      setOpen(false);
       return;
     }
+    if (value.length >= CHIP_LIMIT) {
+      setLimitMessage('You can add up to 30 skills. Remove one before adding more.');
+      setAnnounce('Maximum of 30 skills reached. Remove one before adding more.');
+      setQuery('');
+      setOpen(false);
+      return;
+    }
+    setLimitMessage('');
     onChange([...value, { name: opt.name, known: opt.type === 'skill' }]);
     setAnnounce(`${opt.name} added. ${value.length + 1} skills.`);
     setQuery('');
@@ -101,6 +114,7 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
   function removeAt(index) {
     const removed = value[index];
     onChange(value.filter((_, i) => i !== index));
+    setLimitMessage('');
     setAnnounce(`${removed.name} removed`);
     inputRef.current?.focus();
   }
@@ -120,7 +134,24 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
       case 'Enter':
         if (q) {
           e.preventDefault();
-          if (options.length) pick(options[activeIndex]);
+          if (added.has(ql)) {
+            setAnnounce(`${q} is already added`);
+            setQuery('');
+            setOpen(false);
+            return;
+          }
+          if (value.length >= CHIP_LIMIT) {
+            setLimitMessage('You can add up to 30 skills. Remove one before adding more.');
+            setAnnounce('Maximum of 30 skills reached. Remove one before adding more.');
+            setQuery('');
+            setOpen(false);
+            return;
+          }
+          if (options.length) {
+            pick(options[activeIndex]);
+          } else {
+            pick({ type: 'free', name: q });
+          }
         }
         break;
       case 'Escape':
@@ -157,7 +188,11 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
         <label htmlFor={inputId} className="flex-1 text-[13px] font-bold uppercase tracking-[0.12em] text-ink-2">
           Skills you already have
         </label>
-        {value.length > 0 && <span className="text-[13px] tabular-nums text-ink-3">{value.length} added</span>}
+        {value.length > 0 && (
+          <span className="text-[13px] tabular-nums text-ink-3">
+            {value.length} added{value.length >= CHIP_LIMIT ? ' (maximum)' : ''}
+          </span>
+        )}
       </div>
 
       <div className="relative">
@@ -174,7 +209,9 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
           aria-expanded={listOpen}
           aria-controls={listId}
           aria-activedescendant={listOpen && options.length ? `${listId}-opt-${activeIndex}` : undefined}
-          aria-describedby={searchStatus === 'error' ? `${hintId} ${errorId}` : hintId}
+          aria-describedby={[hintId, limitMessage ? limitId : null, searchStatus === 'error' ? errorId : null]
+            .filter(Boolean)
+            .join(' ')}
           placeholder="Search skills, like React or Python"
           value={query}
           onChange={(e) => {
@@ -230,8 +267,14 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
         )}
       </div>
 
+      {limitMessage && (
+        <p id={limitId} role="alert" className="mt-2.5 text-sm font-semibold text-fit-ink">
+          {limitMessage}
+        </p>
+      )}
+
       <p id={hintId} className="mb-5 mt-2.5 text-[13px] leading-normal text-ink-3">
-        Aliases work — “reactjs”, “k8s”, “sklearn”. ↑ ↓ to move, Enter to add, Esc to clear, Backspace removes the last skill.
+        Aliases work, like “reactjs”, “k8s”, “sklearn”. ↑ ↓ to move, Enter to add, Esc to clear, Backspace removes the last skill.
       </p>
 
       {searchStatus === 'error' && (
@@ -282,7 +325,7 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
         </>
       ) : (
         <p className="text-[15px] leading-normal text-ink-3">
-          Your selected skills will appear here. Add at least 2 — languages, frameworks, tools and coursework like DBMS all count.
+          Your selected skills will appear here. Add at least 2. Languages, frameworks, tools and coursework like DBMS all count.
         </p>
       )}
     </section>

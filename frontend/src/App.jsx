@@ -28,7 +28,7 @@ function disabledReason(count, role) {
   if (need && !role) {
     return count === 0 ? 'Add at least 2 skills and choose a target role to continue.' : 'Add 1 more skill and choose a target role to continue.';
   }
-  if (need) return count === 0 ? 'Add at least 2 skills to continue.' : 'Add 1 more skill to continue — one skill isn’t enough to compare against postings.';
+  if (need) return count === 0 ? 'Add at least 2 skills to continue.' : 'Add 1 more skill to continue, one skill isn’t enough to compare against postings.';
   if (!role) return 'Choose the role you’re aiming for to continue.';
   return null;
 }
@@ -43,7 +43,7 @@ function Header() {
           </span>
           <span className="text-xl font-bold tracking-[-0.035em]">SkillGraph</span>
         </div>
-        <span className="ml-auto hidden text-[13px] font-medium text-ink-2 sm:block">Built from patterns in 30,000+ Indian tech postings</span>
+        <span className="ml-auto hidden text-[13px] font-medium text-ink-2 sm:block">Built from 12,872 labelled Indian tech job postings</span>
       </div>
     </header>
   );
@@ -53,7 +53,7 @@ function Footer() {
   return (
     <footer className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-t border-line pb-8 pt-5 text-xs leading-normal text-ink-3">
       <span>Estimates from posting data, not hiring guarantees.</span>
-      <span>30,000+ postings · 10 role families · India</span>
+      <span>12,872 labelled Indian tech job postings · 10 role families · India</span>
     </footer>
   );
 }
@@ -75,6 +75,7 @@ export default function App() {
 
   const abortRef = useRef(null);
   const resultsHeadingRef = useRef(null);
+  const isSubmittingRef = useRef(false);
 
   function loadRoles() {
     setRolesStatus('loading');
@@ -117,12 +118,16 @@ export default function App() {
     return () => clearInterval(id);
   }, [status, lastPayload]);
 
-  // Move focus to the results heading when an answer arrives.
+  // Move focus to the results heading after submit and when results or error change.
   useEffect(() => {
-    if (status === 'success') resultsHeadingRef.current?.focus({ preventScroll: true });
-  }, [status]);
+    if (view === 'results') {
+      resultsHeadingRef.current?.focus({ preventScroll: true });
+    }
+  }, [view, status]);
 
   async function runAnalyze(payload) {
+    if (isSubmittingRef.current) return;
+    isSubmittingRef.current = true;
     abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
@@ -141,6 +146,8 @@ export default function App() {
       if (controller.signal.aborted || isCancelled(err)) return;
       setError(toFriendlyError(err));
       setStatus('error');
+    } finally {
+      isSubmittingRef.current = false;
     }
   }
 
@@ -150,7 +157,7 @@ export default function App() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!canSubmit) return;
+    if (!canSubmit || isSubmittingRef.current || status === 'loading') return;
     runAnalyze({ skills: skillNames, desired_role: desiredRole });
   }
 
@@ -210,7 +217,7 @@ export default function App() {
                 <span className="text-gradient pb-[0.06em]">before you apply.</span>
               </h1>
               <p className="mt-5 max-w-[40ch] text-[clamp(16px,2.6vw,19px)] leading-[1.55] text-ink-2 text-pretty">
-                See how your current skills line up with the roles Indian tech companies are hiring for — based on 30,000+ real postings.
+                See how your current skills line up with the roles Indian tech companies are hiring for, based on 12,872 labelled Indian tech job postings.
               </p>
             </section>
 
@@ -220,11 +227,11 @@ export default function App() {
                 <div>
                   <h2 className="mb-1.5 text-[19px] font-bold tracking-[-0.02em]">We can't reach SkillGraph right now</h2>
                   <p className="mb-1.5 max-w-[58ch] text-[15px] leading-[1.55] text-ink-2 text-pretty">
-                    The roles load from our server, which is either waking up or briefly offline. Nothing you did caused this — your skills are kept.
+                    The roles load from our server, which is either waking up or briefly offline. Nothing you did caused this. Your skills are kept.
                   </p>
                   <p className="mb-4 text-sm text-ink-3">
                     {retryIn > 0
-                      ? `We'll try again automatically in ${retryIn} s. Free servers can take up to 30 seconds to wake up.`
+                      ? `We'll try again automatically in ${retryIn} s. Free servers can take up to 25 seconds to wake up.`
                       : 'Trying again…'}
                   </p>
                   <button type="button" onClick={loadRoles} className={primaryBtn.replace('min-h-[46px]', 'min-h-11')}>
@@ -253,7 +260,7 @@ export default function App() {
                 </p>
                 <button
                   type="submit"
-                  disabled={!canSubmit}
+                  disabled={!canSubmit || status === 'loading'}
                   aria-describedby="submit-reason"
                   className="flex min-h-[54px] max-w-[360px] flex-[1_1_260px] items-center justify-between gap-3 bg-accent px-[22px] text-base font-semibold text-white hover:bg-accent-hover disabled:opacity-[.42] disabled:hover:bg-accent"
                 >
@@ -266,7 +273,7 @@ export default function App() {
         )}
 
         {view === 'results' && (
-          <>
+          <div id="results-region" aria-live="polite">
             <section className="flex flex-wrap items-end justify-between gap-x-6 gap-y-5 pb-7 pt-[clamp(40px,9vw,88px)]">
               <div className="min-w-0 flex-[1_1_420px]">
                 <p className={eyebrow}>{status === 'loading' ? 'Building your skill map' : 'Your skill map'}</p>
@@ -275,7 +282,7 @@ export default function App() {
                   tabIndex={-1}
                   className="text-[clamp(40px,9vw,64px)] font-semibold leading-[1.03] tracking-[-0.05em] outline-none"
                 >
-                  {status === 'loading' ? 'Reading the postings' : status === 'error' ? 'Almost there —' : 'Here’s your honest'}
+                  {status === 'loading' ? 'Reading the postings' : status === 'error' ? 'Almost there,' : 'Here’s your honest'}
                   <br />
                   <span className="text-gradient">{status === 'loading' ? 'for you.' : status === 'error' ? 'one more try.' : 'starting point.'}</span>
                 </h1>
@@ -299,16 +306,16 @@ export default function App() {
                     </h2>
                     <p className="mb-5 max-w-[60ch] text-[15px] leading-[1.55] text-ink-2 text-pretty">
                       {!waking
-                        ? 'Comparing your skills with 30,000+ postings. This usually takes a few seconds.'
-                        : 'This can take up to 30 seconds. SkillGraph runs on a free server that sleeps when nobody is using it, so the first check after a quiet spell is slower. Waiting is normal — no need to refresh, and your answers are kept.'}
+                        ? 'Comparing your skills with 12,872 labelled Indian tech job postings. This usually takes a few seconds.'
+                        : 'This can take up to 25 seconds. SkillGraph runs on a free server that sleeps when nobody is using it, so the first check after a quiet spell is slower. Waiting is normal, no need to refresh, and your answers are kept.'}
                     </p>
                     <div className="max-w-[520px]" aria-hidden="true">
                       <div className="h-1.5 bg-accent-track">
-                        <div className="h-full bg-accent transition-[width] duration-200 ease-linear" style={{ width: `${Math.min(96, (elapsed / 30) * 100)}%` }} />
+                        <div className="h-full bg-accent transition-[width] duration-200 ease-linear" style={{ width: `${Math.min(96, (elapsed / 25) * 100)}%` }} />
                       </div>
                       <div className="mt-2 flex justify-between gap-3 text-[13px] tabular-nums text-ink-3">
                         <span>{Math.floor(elapsed)} s elapsed</span>
-                        <span>Cold starts take up to 30 s</span>
+                        <span>Cold starts take up to 25 s</span>
                       </div>
                     </div>
                   </div>
@@ -335,8 +342,13 @@ export default function App() {
               <Card tone="error" role="alert" className="mb-14 grid grid-cols-[auto_minmax(0,1fr)] gap-4">
                 <CircleAlert size={24} strokeWidth={2} className="mt-0.5 text-ink-2" aria-hidden="true" />
                 <div className="min-w-0">
-                  <h2 className="mb-2 text-[clamp(20px,4vw,24px)] font-bold tracking-[-0.025em]">{error.title}</h2>
+                  <h2 className="mb-2 text-[clamp(20px,4vw,24px)] font-bold tracking-[-0.025em]">{error.title || 'Something went wrong'}</h2>
                   <p className="mb-1.5 max-w-[58ch] text-[15px] leading-[1.55] text-ink-2 text-pretty">{error.message}</p>
+                  {error.unrecognized?.length > 0 && (
+                    <p className="mb-3 text-sm text-ink-3">
+                      Unrecognized: <strong className="font-semibold text-ink-2">{error.unrecognized.join(', ')}</strong>. Try checking the spelling or picking suggestions from our list.
+                    </p>
+                  )}
                   <p className="mb-5 text-sm text-ink-3">
                     Your {shownSkills.length} skills and {shownRole} are still here.
                   </p>
@@ -361,8 +373,8 @@ export default function App() {
                     <span className="[overflow-wrap:anywhere]">
                       We didn't recognise: <strong className="font-semibold text-ink">{unrecognized.join(', ')}</strong>.{' '}
                       {unrecognized.length === 1
-                        ? 'It wasn’t counted — check the spelling or pick from the suggestions.'
-                        : 'They weren’t counted — check the spelling or pick from the suggestions.'}
+                        ? 'It wasn’t counted. Check the spelling or pick from the suggestions.'
+                        : 'They weren’t counted. Check the spelling or pick from the suggestions.'}
                     </span>
                   </p>
                 )}
@@ -394,7 +406,7 @@ export default function App() {
                 </div>
               </>
             )}
-          </>
+          </div>
         )}
 
         <Footer />

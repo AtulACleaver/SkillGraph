@@ -40,10 +40,12 @@ export default function RoleSelect({ roles, status, value, onChange, selectedNam
             roles.map((role) => {
               const checked = role.role_family === value;
               const hits = role.top_skills.filter((s) => have.has(s)).length;
+              const roleInputId = `role-opt-${role.role_family.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
               return (
                 <label
                   key={role.role_family}
-                  className={`flex cursor-pointer items-center gap-4 border-b border-line py-4 pr-3 transition-colors ${
+                  htmlFor={roleInputId}
+                  className={`flex min-h-[52px] cursor-pointer items-center gap-4 border-b border-line py-4 pr-3 transition-colors ${
                     checked ? 'bg-accent-tint pl-4 shadow-[inset_3px_0_0_var(--color-accent)]' : 'pl-0 hover:bg-tint'
                   }`}
                 >
@@ -62,6 +64,7 @@ export default function RoleSelect({ roles, status, value, onChange, selectedNam
                   </span>
                   <input
                     type="radio"
+                    id={roleInputId}
                     name={name}
                     value={role.role_family}
                     checked={checked}
