@@ -1,35 +1,79 @@
-export default function GapPanel({ desiredRole = 'Target Role' }) {
-  return (
-    <div className="bg-slate-900/80 border border-slate-800/90 backdrop-blur-xl rounded-2xl p-6 sm:p-7 shadow-xl space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-1 border-b border-slate-800/60">
-        <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-            Panel 2 · Skill Gaps
-          </div>
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-100">
-            What to Learn Next
-          </h2>
-        </div>
-        <span className="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 font-mono">
-          Day 6 Sprint Target
-        </span>
-      </div>
+import { Check, Link as LinkIcon } from 'lucide-react';
+import Card from './ui/Card';
+import StepHeading from './ui/StepHeading';
+import ProbabilityBar from './ui/ProbabilityBar';
 
-      <div className="p-4 rounded-xl bg-slate-950/40 border border-slate-800/80 flex items-center justify-between">
-        <div>
-          <div className="text-xs text-slate-400">High-Impact Market Recommendations</div>
-          <div className="text-base font-semibold text-slate-200 mt-0.5">Top 5 Curated Skill Gaps</div>
-          <div className="text-xs text-slate-500 mt-1">
-            Optimized for {desiredRole} career progression
+// coverage_pct is a 0–1 share; tolerate a 0–100 value too.
+const toShare = (v) => (v > 1 ? v / 100 : v || 0);
+
+export default function GapPanel({ recommendations = [], probability = 0, role, className = '' }) {
+  const before = Math.round(probability * 100);
+  const recs = recommendations.slice(0, 5);
+
+  return (
+    <Card tone="plain" className={className} aria-labelledby="gap-heading">
+      <StepHeading n="02" id="gap-heading" className="mb-1.5">
+        What should I learn next?
+      </StepHeading>
+
+      {recs.length > 0 ? (
+        <>
+          <p className="mb-[18px] ml-[42px] text-[13px] text-ink-3">Ranked by how much each would raise your readiness.</p>
+          <ol className="border-t border-line">
+            {recs.map((rec, i) => {
+              const after = Math.round(Math.min(1, probability + (rec.readiness_gain || 0)) * 100);
+              const points = after - before;
+              const share = toShare(rec.coverage_pct);
+              const partners = Array.isArray(rec.learn_with) ? rec.learn_with : (rec.learn_with ? [rec.learn_with] : []);
+              return (
+                <li key={rec.skill} className="grid grid-cols-[30px_minmax(0,1fr)] gap-x-3 border-b border-line pb-5 pt-[18px]">
+                  <span className="pt-[3px] text-sm font-medium tabular-nums text-accent-ink">{String(i + 1).padStart(2, '0')}</span>
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                      <span className="min-w-0 text-lg font-semibold tracking-[-0.01em] [overflow-wrap:anywhere]">{rec.skill}</span>
+                      <span className="whitespace-nowrap text-[17px] tabular-nums text-ink-3">
+                        readiness <strong className="font-bold text-ink">{before}% to {after}%</strong>
+                      </span>
+                    </div>
+
+                    {partners.length > 0 && (
+                      <div className="mt-2 flex flex-wrap items-center gap-1.5 text-[13px] text-ink-2">
+                        <LinkIcon size={13} strokeWidth={2.2} className="flex-none text-accent" aria-hidden="true" />
+                        <span className="mr-1">Learn alongside:</span>
+                        {partners.map(p => (
+                          <span key={p} className="inline-flex items-center rounded-sm bg-surface px-1.5 py-0.5 text-[11px] font-semibold border border-line-2">
+                            {p}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="mt-3 flex justify-between gap-3 text-[13px]">
+                      <span className="text-ink-3">
+                        in {Math.round(share * 100)}% of {role} postings
+                      </span>
+                      <span className="whitespace-nowrap font-bold text-accent-ink">{points >= 1 ? `+${points} points` : '< 1 point'}</span>
+                    </div>
+                    <ProbabilityBar value={share} size="h-[5px]" track="bg-accent-track" fill="bg-accent" className="mt-2" />
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      ) : (
+        <div className="mt-[18px] grid grid-cols-[auto_minmax(0,1fr)] gap-3.5 border-t border-line pb-1 pt-5">
+          <span aria-hidden="true" className="grid size-[30px] place-items-center rounded-full bg-accent text-white">
+            <Check size={15} strokeWidth={3} />
+          </span>
+          <div>
+            <p className="mb-1.5 text-lg font-bold tracking-[-0.015em]">You already have every skill this role commonly asks for.</p>
+            <p className="max-w-[46ch] text-sm leading-[1.6] text-ink-2">
+              From here, depth counts more than breadth — projects and interview practice will move you further than another skill.
+            </p>
           </div>
         </div>
-        <div className="text-right">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
-            Wiring /gap on Day 6
-          </span>
-        </div>
-      </div>
-    </div>
-  )
+      )}
+    </Card>
+  );
 }

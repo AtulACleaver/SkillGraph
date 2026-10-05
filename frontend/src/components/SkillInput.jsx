@@ -1,271 +1,290 @@
-import { useState, useRef, useEffect } from 'react'
-import { fetchSkills } from '../api/client'
+import { useEffect, useRef, useState } from 'react';
+import { Search } from 'lucide-react';
+import { searchSkills, isCancelled } from '../api/client';
+import Chip from './ui/Chip';
+import { StepNumber } from './ui/StepHeading';
 
-// Fallback skills in case API is offline (so Sashang is never blocked)
-const FALLBACK_SKILLS = [
-  'Python', 'JavaScript', 'TypeScript', 'React', 'Node.js',
-  'Docker', 'Kubernetes', 'AWS', 'SQL', 'PostgreSQL',
-  'MongoDB', 'Git', 'FastAPI', 'Java', 'C++',
-  'Go', 'GraphQL', 'CI/CD', 'Linux', 'Redis',
-  'Django', 'Spring Boot', 'Terraform', 'Bash', 'HTML/CSS',
-  'Tailwind CSS', 'Next.js', 'Apache Kafka', 'PyTorch', 'TensorFlow',
-  'Pandas', 'NumPy', 'Scikit-learn', 'Express.js', 'Google Cloud (GCP)',
-  'Microsoft Azure', 'Microservices', 'REST APIs', 'Elasticsearch', 'Jenkins'
-]
+const CHIP_LIMIT = 30;
+const DEBOUNCE_MS = 200;
 
-export default function SkillInput({ selectedSkills, onAddSkill, onRemoveSkill, onApiStatusChange }) {
-  const [query, setQuery] = useState('')
-  const [debouncedQuery, setDebouncedQuery] = useState('')
-  const [skillsList, setSkillsList] = useState(FALLBACK_SKILLS)
-  const [isLoading, setIsLoading] = useState(false)
-  const [isApiOffline, setIsApiOffline] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
-  const [highlightedIndex, setHighlightedIndex] = useState(-1)
-  
-  const containerRef = useRef(null)
-  const inputRef = useRef(null)
+/**
+ * value: [{ name: string, known: boolean }]
+ * known = picked from /skills results; false = added as typed (shown dashed).
+ */
+export default function SkillInput({ value, onChange, inputId = 'skill-search' }) {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+  const [searchStatus, setSearchStatus] = useState('idle'); // idle | loading | ready | error
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(0);
+  const [showAll, setShowAll] = useState(false);
+  const [retryTick, setRetryTick] = useState(0);
+  const [announce, setAnnounce] = useState('');
+  const inputRef = useRef(null);
+  const listRef = useRef(null);
 
-  // 1. Debounce the search input by 200ms
+  const listId = `${inputId}-listbox`;
+  const hintId = `${inputId}-hint`;
+  const errorId = `${inputId}-error`;
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedQuery(query)
-    }, 200)
-
-    return () => clearTimeout(timer)
-  }, [query])
-
-  // 2. Fetch skills from API (/skills?q=...) whenever debouncedQuery changes
-  useEffect(() => {
-    let isCancelled = false
-
-    async function loadSkills() {
-      setIsLoading(true)
+    const q = query.trim();
+    if (!q) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setResults([]);
+      setSearchStatus('idle');
+      return undefined;
+    }
+    const controller = new AbortController();
+    const timer = setTimeout(async () => {
+      setSearchStatus('loading');
       try {
-        const data = await fetchSkills(debouncedQuery)
-        if (isCancelled) return
-
-        // Support both: [{ skill_id, name, aliases }] and string[]
-        const normalized = Array.isArray(data)
-          ? data.map(item => (typeof item === 'string' ? item : item.name || item.skill_id))
-          : FALLBACK_SKILLS
-
-        setSkillsList(normalized)
-        setIsApiOffline(false)
-        if (onApiStatusChange) onApiStatusChange(true)
-      } catch {
-        if (isCancelled) return
-        // API offline or error -> gracefully fallback to local skills
-        setIsApiOffline(true)
-        if (onApiStatusChange) onApiStatusChange(false)
-        const filtered = FALLBACK_SKILLS.filter(s =>
-          s.toLowerCase().includes(debouncedQuery.trim().toLowerCase())
-        )
-        setSkillsList(filtered)
-      } finally {
-        if (!isCancelled) {
-          setIsLoading(false)
-        }
+        const data = await searchSkills(q, { signal: controller.signal });
+        if (controller.signal.aborted) return;
+        setResults(data.slice(0, 20));
+        setSearchStatus('ready');
+        setActive(0);
+      } catch (err) {
+        if (controller.signal.aborted || isCancelled(err)) return;
+        setResults([]);
+        setSearchStatus('error');
       }
-    }
-
-    loadSkills()
-
+    }, DEBOUNCE_MS);
     return () => {
-      isCancelled = true
-    }
-  }, [debouncedQuery, onApiStatusChange])
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [query, retryTick]);
 
-  // Filter out already selected skills
-  const availableSkills = skillsList.filter(
-    skill => !selectedSkills.includes(skill)
-  )
+  const q = query.trim();
+  const ql = q.toLowerCase();
+  const added = new Set(value.map((s) => s.name.toLowerCase()));
 
-  // Close dropdown on click outside
+  const options = results.map((s) => {
+    const nameHit = s.name.toLowerCase().includes(ql);
+    const alias = nameHit ? null : (s.aliases || []).find((a) => a.toLowerCase().includes(ql)) || null;
+    return { type: 'skill', name: s.name, alias, added: added.has(s.name.toLowerCase()) };
+  });
+  const exact = results.some((s) => s.name.toLowerCase() === ql || (s.aliases || []).some((a) => a.toLowerCase() === ql));
+  if (q && searchStatus !== 'loading' && !exact && !added.has(ql)) {
+    options.push({ type: 'free', name: q, alias: null, added: false });
+  }
+
+  const activeIndex = Math.max(0, Math.min(active, options.length - 1));
+  const listOpen = open && q.length > 0 && (options.length > 0 || searchStatus === 'loading');
+
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (containerRef.current && !containerRef.current.contains(event.target)) {
-        setIsOpen(false)
-        setHighlightedIndex(-1)
-      }
+    const list = listRef.current;
+    if (!list || !listOpen) return;
+    const el = list.querySelector(`[data-index="${activeIndex}"]`);
+    if (!el) return;
+    if (el.offsetTop < list.scrollTop) list.scrollTop = el.offsetTop;
+    else if (el.offsetTop + el.offsetHeight > list.scrollTop + list.clientHeight) {
+      list.scrollTop = el.offsetTop + el.offsetHeight - list.clientHeight;
     }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+  }, [activeIndex, listOpen]);
 
-  const handleSelect = (skill) => {
-    onAddSkill(skill)
-    setQuery('')
-    setIsOpen(false)
-    setHighlightedIndex(-1)
-    inputRef.current?.focus()
+  function pick(opt) {
+    if (!opt) return;
+    if (opt.added) {
+      setAnnounce(`${opt.name} is already added`);
+      return;
+    }
+    onChange([...value, { name: opt.name, known: opt.type === 'skill' }]);
+    setAnnounce(`${opt.name} added. ${value.length + 1} skills.`);
+    setQuery('');
+    setResults([]);
+    setOpen(false);
+    setActive(0);
   }
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault()
-      if (!isOpen) {
-        setIsOpen(true)
-      } else {
-        setHighlightedIndex(prev =>
-          prev < availableSkills.length - 1 ? prev + 1 : 0
-        )
-      }
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault()
-      setHighlightedIndex(prev =>
-        prev > 0 ? prev - 1 : availableSkills.length - 1
-      )
-    } else if (e.key === 'Enter') {
-      e.preventDefault()
-      if (isOpen && highlightedIndex >= 0 && highlightedIndex < availableSkills.length) {
-        handleSelect(availableSkills[highlightedIndex])
-      } else if (availableSkills.length > 0 && query.trim() !== '') {
-        handleSelect(availableSkills[0])
-      }
-    } else if (e.key === 'Escape') {
-      setIsOpen(false)
-      setHighlightedIndex(-1)
+  function removeAt(index) {
+    const removed = value[index];
+    onChange(value.filter((_, i) => i !== index));
+    setAnnounce(`${removed.name} removed`);
+    inputRef.current?.focus();
+  }
+
+  function onKeyDown(e) {
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setOpen(true);
+        setActive((a) => Math.min(a + 1, Math.max(options.length - 1, 0)));
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setActive((a) => Math.max(a - 1, 0));
+        break;
+      case ',':
+      case 'Enter':
+        if (q) {
+          e.preventDefault();
+          if (options.length) pick(options[activeIndex]);
+        }
+        break;
+      case 'Escape':
+        if (q || open) {
+          e.preventDefault();
+          setQuery('');
+          setResults([]);
+          setOpen(false);
+          setAnnounce('Search cleared');
+        }
+        break;
+      case 'Backspace':
+        if (!query && value.length) {
+          e.preventDefault();
+          removeAt(value.length - 1);
+        }
+        break;
+      case 'Tab':
+        setOpen(false);
+        break;
+      default:
+        break;
     }
   }
+
+  const visible = showAll || value.length <= CHIP_LIMIT ? value : value.slice(0, CHIP_LIMIT);
 
   return (
-    <div className="w-full space-y-3" ref={containerRef}>
-      <div className="flex items-center justify-between">
-        <label className="block text-sm font-semibold tracking-wide text-slate-300">
-          Your Skills <span className="text-emerald-400">*</span>
-          <span className="ml-2 text-xs font-normal text-slate-500">
-            (select at least 2)
-          </span>
-        </label>
+    <section className="min-w-0">
+      <p className="sr-only" aria-live="polite">{announce}</p>
 
-        {/* Live / Offline badge */}
-        <div className="flex items-center gap-1.5 text-[11px]">
-          {isApiOffline ? (
-            <span className="text-amber-400/90 flex items-center gap-1 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              Local Fallback (API Offline)
-            </span>
-          ) : (
-            <span className="text-emerald-400 flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              API Live (/skills?q=)
-            </span>
-          )}
-        </div>
+      <div className="mb-5 flex items-center gap-3">
+        <StepNumber n="01" />
+        <label htmlFor={inputId} className="flex-1 text-[13px] font-bold uppercase tracking-[0.12em] text-ink-2">
+          Skills you already have
+        </label>
+        {value.length > 0 && <span className="text-[13px] tabular-nums text-ink-3">{value.length} added</span>}
       </div>
 
-      {/* Selected Chips */}
-      {selectedSkills.length > 0 && (
-        <div className="flex flex-wrap gap-2 p-2.5 bg-slate-950/60 rounded-xl border border-slate-800/80 min-h-12 items-center">
-          {selectedSkills.map(skill => (
-            <span
-              key={skill}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs sm:text-sm font-medium bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 transition-all hover:bg-emerald-500/25"
-            >
-              <span>{skill}</span>
-              <button
-                type="button"
-                onClick={() => onRemoveSkill(skill)}
-                className="hover:text-red-400 hover:bg-red-500/20 rounded p-0.5 transition-colors focus:outline-none focus:ring-1 focus:ring-red-400"
-                aria-label={`Remove ${skill}`}
+      <div className="relative">
+        <Search size={18} strokeWidth={2} aria-hidden="true" className="pointer-events-none absolute left-4 top-[18px] text-ink-2" />
+        <input
+          ref={inputRef}
+          id={inputId}
+          type="text"
+          role="combobox"
+          autoComplete="off"
+          autoCapitalize="off"
+          spellCheck={false}
+          aria-autocomplete="list"
+          aria-expanded={listOpen}
+          aria-controls={listId}
+          aria-activedescendant={listOpen && options.length ? `${listId}-opt-${activeIndex}` : undefined}
+          aria-describedby={searchStatus === 'error' ? `${hintId} ${errorId}` : hintId}
+          placeholder="Search skills, like React or Python"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setOpen(true);
+            setActive(0);
+          }}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setTimeout(() => setOpen(false), 120)}
+          onKeyDown={onKeyDown}
+          className="min-h-[54px] w-full rounded-none border border-line-2 bg-surface py-3 pl-[46px] pr-3.5 text-base text-ink focus:border-accent"
+        />
+
+        {listOpen && (
+          <ul
+            ref={listRef}
+            id={listId}
+            role="listbox"
+            aria-label="Matching skills"
+            className="absolute inset-x-0 top-[calc(100%-1px)] z-30 max-h-[336px] overflow-auto border border-accent bg-surface shadow-card"
+          >
+            {options.length === 0 && searchStatus === 'loading' && (
+              <li role="presentation" className="px-4 py-3 text-sm text-ink-3">
+                Searching…
+              </li>
+            )}
+            {options.map((opt, i) => (
+              <li
+                key={`${opt.type}-${opt.name}`}
+                id={`${listId}-opt-${i}`}
+                data-index={i}
+                role="option"
+                aria-selected={i === activeIndex}
+                aria-disabled={opt.added || undefined}
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  pick(opt);
+                }}
+                onMouseEnter={() => setActive(i)}
+                className={`flex min-h-[46px] cursor-pointer flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5 border-b border-line px-4 py-3 last:border-b-0 ${
+                  i === activeIndex ? 'bg-tint' : ''
+                } ${opt.added ? 'text-ink-3' : 'text-ink'}`}
               >
-                <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none">
-                  <path
-                    d="M3.5 3.5L10.5 10.5M10.5 3.5L3.5 10.5"
-                    stroke="currentColor"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </button>
-            </span>
-          ))}
-        </div>
+                <span className={`min-w-0 [overflow-wrap:anywhere] ${opt.type === 'free' ? '' : 'font-semibold'}`}>
+                  {opt.type === 'free' ? `Add “${opt.name}” as typed` : opt.name}
+                </span>
+                <span className="text-xs text-ink-3">
+                  {opt.type === 'free' ? 'We may not recognise it' : opt.added ? 'Already added' : opt.alias ? `matches “${opt.alias}”` : ''}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <p id={hintId} className="mb-5 mt-2.5 text-[13px] leading-normal text-ink-3">
+        Aliases work — “reactjs”, “k8s”, “sklearn”. ↑ ↓ to move, Enter to add, Esc to clear, Backspace removes the last skill.
+      </p>
+
+      {searchStatus === 'error' && (
+        <p id={errorId} role="alert" className="-mt-2 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-ink-2">
+          <span>We couldn't load suggestions. You can still add “{q}” as typed.</span>
+          <button
+            type="button"
+            onClick={() => setRetryTick((t) => t + 1)}
+            className="min-h-11 font-semibold text-accent-ink underline underline-offset-[3px]"
+          >
+            Retry
+          </button>
+        </p>
       )}
 
-      {/* Autocomplete Input with 200ms Debounce Indicator */}
-      <div className="relative">
-        <div className="relative">
-          <input
-            ref={inputRef}
-            type="text"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value)
-              setIsOpen(true)
-            }}
-            onFocus={() => setIsOpen(true)}
-            onKeyDown={handleKeyDown}
-            placeholder={
-              selectedSkills.length === 0
-                ? "Search skills (e.g. Python, Docker, React)..."
-                : "Add another skill..."
-            }
-            className="w-full px-4 py-3 pl-10 pr-20 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500/60 focus:ring-2 focus:ring-emerald-500/20 transition-all shadow-inner"
-          />
-          
-          {/* Left search icon */}
-          <div className="absolute left-3.5 top-3.5 text-slate-500 pointer-events-none">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-
-          {/* Right status: Loading spinner or Clear button */}
-          <div className="absolute right-3.5 top-3 flex items-center gap-2">
-            {isLoading && (
-              <svg className="animate-spin h-4 w-4 text-emerald-400" viewBox="0 0 24 24" fill="none">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-              </svg>
+      {value.length > 0 ? (
+        <>
+          <ul aria-label="Selected skills" className="flex flex-wrap gap-2">
+            {visible.map((s, i) => (
+              <Chip key={s.name} name={s.name} unrecognized={!s.known} onRemove={() => removeAt(i)} />
+            ))}
+          </ul>
+          <div className="mt-2 flex flex-wrap gap-x-[18px]">
+            {value.length > CHIP_LIMIT && (
+              <button
+                type="button"
+                onClick={() => setShowAll((v) => !v)}
+                className="min-h-11 text-sm font-semibold text-accent-ink underline underline-offset-[3px]"
+              >
+                {showAll ? 'Show fewer' : `Show all ${value.length}`}
+              </button>
             )}
-            {query && (
+            {value.length >= 3 && (
               <button
                 type="button"
                 onClick={() => {
-                  setQuery('')
-                  setIsOpen(false)
+                  onChange([]);
+                  setShowAll(false);
+                  setAnnounce('All skills cleared');
+                  inputRef.current?.focus();
                 }}
-                className="text-slate-400 hover:text-slate-200 text-xs px-1.5 py-0.5 rounded bg-slate-800"
+                className="min-h-11 text-sm font-medium text-ink-3 hover:text-ink"
               >
-                Clear
+                Clear all
               </button>
             )}
           </div>
-        </div>
-
-        {/* Dropdown Options */}
-        {isOpen && (
-          <div className="absolute z-20 left-0 right-0 mt-2 max-h-60 overflow-y-auto rounded-xl bg-slate-900/95 backdrop-blur-md border border-slate-700/80 shadow-2xl divide-y divide-slate-800/50">
-            {availableSkills.length > 0 ? (
-              availableSkills.map((skill, index) => (
-                <button
-                  key={skill}
-                  type="button"
-                  onClick={() => handleSelect(skill)}
-                  onMouseEnter={() => setHighlightedIndex(index)}
-                  className={`w-full text-left px-4 py-2.5 text-sm transition-colors flex items-center justify-between ${
-                    index === highlightedIndex
-                      ? 'bg-emerald-500/20 text-emerald-200'
-                      : 'text-slate-300 hover:bg-slate-800/60'
-                  }`}
-                >
-                  <span className="font-medium">{skill}</span>
-                  <span className="text-xs text-slate-500">+ Add</span>
-                </button>
-              ))
-            ) : (
-              <div className="px-4 py-3 text-xs text-slate-500 text-center">
-                {isLoading
-                  ? 'Searching skills...'
-                  : query.trim() === ''
-                  ? 'All available skills are already selected'
-                  : `No skills matching "${query}"`}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  )
+        </>
+      ) : (
+        <p className="text-[15px] leading-normal text-ink-3">
+          Your selected skills will appear here. Add at least 2 — languages, frameworks, tools and coursework like DBMS all count.
+        </p>
+      )}
+    </section>
+  );
 }

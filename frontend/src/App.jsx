@@ -1,359 +1,404 @@
-import { useState, useEffect } from 'react'
-import SkillInput from './components/SkillInput'
-import RoleSelect from './components/RoleSelect'
-import MatchPanel from './components/MatchPanel'
-import ReadinessPanel from './components/ReadinessPanel'
-import GapPanel from './components/GapPanel'
-import { checkApiHealth, fetchMatch, fetchReadiness, API_BASE_URL } from './api/client'
+import { useEffect, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, CircleAlert, CloudOff, Info, RefreshCw, RotateCcw, Server } from 'lucide-react';
+import { analyze, getRoles, getHealth, isCancelled, toFriendlyError } from './api/client';
+import SkillInput from './components/SkillInput';
+import RoleSelect from './components/RoleSelect';
+import ReadinessPanel from './components/ReadinessPanel';
+import GapPanel from './components/GapPanel';
+import MatchPanel from './components/MatchPanel';
+import RoleSkillMix from './components/ui/RoleSkillMix';
+import Card from './components/ui/Card';
+import { SkeletonBarRow } from './components/ui/Skeleton';
+import Skeleton from './components/ui/Skeleton';
 
-// Fallback fixture generator to ensure Sashang is NEVER blocked
-function generateFallbackMatches(skills, desiredRole) {
-  const roleWeights = [
-    { role: 'DevOps Engineer', keywords: ['Docker', 'Kubernetes', 'AWS', 'CI/CD', 'Linux', 'Terraform', 'Jenkins', 'Bash'] },
-    { role: 'Frontend Developer', keywords: ['JavaScript', 'TypeScript', 'React', 'HTML/CSS', 'Tailwind CSS', 'Next.js', 'Vite'] },
-    { role: 'Backend Developer', keywords: ['Python', 'Node.js', 'FastAPI', 'Java', 'SQL', 'PostgreSQL', 'MongoDB', 'Redis', 'Django', 'Express.js', 'Go'] },
-    { role: 'Full Stack Engineer', keywords: ['React', 'JavaScript', 'Node.js', 'SQL', 'MongoDB', 'TypeScript', 'REST APIs', 'Express.js'] },
-    { role: 'Data Engineer', keywords: ['Python', 'SQL', 'PostgreSQL', 'Apache Kafka', 'Pandas', 'NumPy', 'AWS', 'Redis'] },
-    { role: 'Machine Learning Engineer', keywords: ['Python', 'PyTorch', 'TensorFlow', 'Pandas', 'NumPy', 'Scikit-learn', 'SQL'] },
-    { role: 'Cloud Architect', keywords: ['AWS', 'Google Cloud (GCP)', 'Microsoft Azure', 'Terraform', 'Kubernetes', 'Docker', 'Microservices'] }
-  ]
+const MIN_SKILLS = 2;
+const AUTO_RETRY_SECONDS = 15;
+const WAKING_AFTER_SECONDS = 4;
+const SKILL_INPUT_ID = 'skill-search';
 
-  // Calculate score based on keyword intersection
-  const scoredRoles = roleWeights.map(item => {
-    let matchCount = 0
-    skills.forEach(s => {
-      if (item.keywords.some(k => k.toLowerCase() === s.toLowerCase())) {
-        matchCount += 1
-      }
-    })
-    // Boost desired role slightly if selected
-    if (desiredRole && item.role.toLowerCase() === desiredRole.toLowerCase()) {
-      matchCount += 0.5
-    }
-    const rawProb = Math.min(0.92, Math.max(0.35, (matchCount / Math.max(skills.length, 3)) * 0.8 + 0.35))
-    return {
-      role: item.role,
-      probability: Math.round(rawProb * 100) / 100
-    }
-  })
+const container = 'mx-auto max-w-[928px] px-5 sm:px-6';
+const eyebrow = 'mb-[18px] text-xs font-bold uppercase tracking-[0.16em] text-accent-ink';
+const primaryBtn =
+  'inline-flex min-h-[46px] items-center gap-2 bg-accent px-[18px] text-[15px] font-semibold text-white hover:bg-accent-hover disabled:opacity-[.42]';
+const secondaryBtn =
+  'inline-flex min-h-[46px] flex-none items-center gap-2.5 whitespace-nowrap border border-line-2 bg-surface px-[18px] text-[15px] font-medium text-ink hover:border-ink-3 hover:bg-tint';
 
-  // Sort by probability descending
-  scoredRoles.sort((a, b) => b.probability - a.probability)
-
-  // Ensure desiredRole is included in top 3 if it has reasonable score
-  const top3 = scoredRoles.slice(0, 3)
-  const desiredInTop3 = top3.some(r => r.role.toLowerCase() === desiredRole.toLowerCase())
-  if (!desiredInTop3 && desiredRole) {
-    const desiredMatch = scoredRoles.find(r => r.role.toLowerCase() === desiredRole.toLowerCase())
-    if (desiredMatch) {
-      top3[2] = desiredMatch
-    }
+function disabledReason(count, role) {
+  const need = Math.max(0, MIN_SKILLS - count);
+  if (need && !role) {
+    return count === 0 ? 'Add at least 2 skills and choose a target role to continue.' : 'Add 1 more skill and choose a target role to continue.';
   }
-
-  // Check for unrecognized skills (if any skill is outside standard list)
-  const knownTokens = roleWeights.flatMap(r => r.keywords.map(k => k.toLowerCase()))
-  const unrecognized = skills.filter(s => !knownTokens.includes(s.toLowerCase()) && !['c++', 'rest apis', 'elasticsearch', 'spring boot'].includes(s.toLowerCase()))
-
-  return {
-    matches: top3,
-    unrecognized
-  }
+  if (need) return count === 0 ? 'Add at least 2 skills to continue.' : 'Add 1 more skill to continue — one skill isn’t enough to compare against postings.';
+  if (!role) return 'Choose the role you’re aiming for to continue.';
+  return null;
 }
 
-// Fallback readiness evaluator matching Day 5 OpenAPI specification
-function generateFallbackReadiness(skills, desiredRole) {
-  const roleVocab = {
-    'DevOps Engineer': ['Docker', 'Kubernetes', 'AWS', 'CI/CD', 'Linux', 'Terraform', 'Jenkins', 'Bash', 'Git', 'Ansible', 'Python', 'Prometheus', 'Grafana', 'Nginx', 'GCP', 'Azure', 'Security', 'YAML', 'Networking', 'Monitoring'],
-    'Frontend Developer': ['JavaScript', 'TypeScript', 'React', 'HTML/CSS', 'Tailwind CSS', 'Next.js', 'Vite', 'Redux', 'Vue.js', 'REST APIs', 'Webpack', 'Jest', 'Git', 'GraphQL', 'Responsive Design', 'Sass', 'Figma', 'UI/UX', 'CI/CD', 'Node.js'],
-    'Backend Developer': ['Python', 'Node.js', 'FastAPI', 'Java', 'SQL', 'PostgreSQL', 'MongoDB', 'Redis', 'Django', 'Express.js', 'Go', 'Docker', 'REST APIs', 'Microservices', 'Git', 'AWS', 'Linux', 'Kafka', 'GraphQL', 'CI/CD'],
-    'Full Stack Engineer': ['React', 'JavaScript', 'Node.js', 'SQL', 'MongoDB', 'TypeScript', 'REST APIs', 'Express.js', 'HTML/CSS', 'Git', 'Tailwind CSS', 'Docker', 'PostgreSQL', 'Python', 'AWS', 'Next.js', 'Redis', 'CI/CD', 'Linux', 'Microservices'],
-    'Data Engineer': ['Python', 'SQL', 'PostgreSQL', 'Apache Kafka', 'Pandas', 'NumPy', 'AWS', 'Redis', 'Apache Spark', 'Airflow', 'Docker', 'ETL Pipelines', 'BigQuery', 'Linux', 'Git', 'Data Warehousing', 'Snowflake', 'Hadoop', 'Scala', 'Bash'],
-    'Machine Learning Engineer': ['Python', 'PyTorch', 'TensorFlow', 'Pandas', 'NumPy', 'Scikit-learn', 'SQL', 'Machine Learning', 'Deep Learning', 'Docker', 'NLP', 'Computer Vision', 'Git', 'MLOps', 'FastAPI', 'AWS', 'Data Modeling', 'Linux', 'Jupyter', 'Statistics'],
-    'Cloud Architect': ['AWS', 'Google Cloud (GCP)', 'Microsoft Azure', 'Terraform', 'Kubernetes', 'Docker', 'Microservices', 'Linux', 'Networking', 'Security', 'CI/CD', 'Cloud Architecture', 'Python', 'Bash', 'IAM', 'Cost Optimization', 'Disaster Recovery', 'Serverless', 'Monitoring', 'Git']
-  }
-
-  const roleSkills = roleVocab[desiredRole] || [
-    'Python', 'SQL', 'Docker', 'Git', 'Linux', 'REST APIs', 'Cloud Computing', 'Data Structures', 'Algorithms', 'CI/CD', 'Testing', 'Databases', 'Monitoring', 'Security', 'System Design'
-  ]
-
-  const covered = skills.filter(userSkill =>
-    roleSkills.some(rk => rk.toLowerCase() === userSkill.toLowerCase())
-  )
-
-  const missing_count = Math.max(0, roleSkills.length - covered.length)
-  const coverage = Math.round((covered.length / roleSkills.length) * 100) / 100
-
-  // Realistic probability calculation
-  const rawProb = Math.min(0.95, Math.max(0.20, (covered.length / Math.min(roleSkills.length, 12)) * 0.75 + 0.15))
-  const probability = Math.round(rawProb * 100) / 100
-
-  // Band: Ready (>=0.70), Close (>=0.45), Not yet (<0.45)
-  const band = probability >= 0.70 ? 'Ready' : probability >= 0.45 ? 'Close' : 'Not yet'
-
-  return {
-    probability,
-    band,
-    coverage,
-    covered,
-    missing_count
-  }
+function Header() {
+  return (
+    <header className="border-b border-line bg-[linear-gradient(90deg,#ffffff_55%,#fdf2e8_100%)]">
+      <div className={`${container} flex items-center gap-4 py-3`}>
+        <div className="flex flex-none items-center gap-2.5">
+          <span aria-hidden="true" className="grid size-[30px] place-items-center rounded-lg bg-[linear-gradient(160deg,#2a9466,#17654a)] text-[15px] font-bold text-white shadow-logo">
+            S
+          </span>
+          <span className="text-xl font-bold tracking-[-0.035em]">SkillGraph</span>
+        </div>
+        <span className="ml-auto hidden text-[13px] font-medium text-ink-2 sm:block">Built from patterns in 30,000+ Indian tech postings</span>
+      </div>
+    </header>
+  );
 }
 
-function App() {
-  const [selectedSkills, setSelectedSkills] = useState([])
-  const [desiredRole, setDesiredRole] = useState('')
-  const [viewMode, setViewMode] = useState('input') // 'input' | 'result'
-  const [matchData, setMatchData] = useState({ matches: [], unrecognized: [] })
-  const [readinessData, setReadinessData] = useState(null)
-  const [isLoadingMatch, setIsLoadingMatch] = useState(false)
-  const [isLoadingReadiness, setIsLoadingReadiness] = useState(false)
-  const [apiStatus, setApiStatus] = useState('checking') // 'online' | 'offline'
+function Footer() {
+  return (
+    <footer className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-t border-line pb-8 pt-5 text-xs leading-normal text-ink-3">
+      <span>Estimates from posting data, not hiring guarantees.</span>
+      <span>30,000+ postings · 10 role families · India</span>
+    </footer>
+  );
+}
 
-  // Probe API health on mount
-  useEffect(() => {
-    let isCancelled = false
+export default function App() {
+  const [selectedSkills, setSelectedSkills] = useState([]); // [{ name, known }]
+  const [desiredRole, setDesiredRole] = useState('');
+  const [result, setResult] = useState(null);
+  const [status, setStatus] = useState('idle'); // idle | loading | success | error
+  const [error, setError] = useState(null);
+  const [view, setView] = useState('input'); // input | results
+  const [lastPayload, setLastPayload] = useState(null);
+  const [elapsed, setElapsed] = useState(0);
 
-    async function probeApi() {
-      try {
-        await checkApiHealth()
-        if (!isCancelled) setApiStatus('online')
-      } catch {
-        if (!isCancelled) setApiStatus('offline')
-      }
-    }
+  const [roles, setRoles] = useState([]);
+  const [rolesStatus, setRolesStatus] = useState('loading'); // loading | ready | error
+  const [retryIn, setRetryIn] = useState(0);
+  const [healthFailed, setHealthFailed] = useState(false);
 
-    probeApi()
-    const interval = setInterval(probeApi, 15000)
+  const abortRef = useRef(null);
+  const resultsHeadingRef = useRef(null);
 
-    return () => {
-      isCancelled = true
-      clearInterval(interval)
-    }
-  }, [])
-
-  const handleAddSkill = (skill) => {
-    if (!selectedSkills.includes(skill)) {
-      setSelectedSkills(prev => [...prev, skill])
-    }
-  }
-
-  const handleRemoveSkill = (skillToRemove) => {
-    setSelectedSkills(prev => prev.filter(skill => skill !== skillToRemove))
-  }
-
-  // Validation: at least 2 skills and a chosen role
-  const hasEnoughSkills = selectedSkills.length >= 2
-  const hasSelectedRole = desiredRole.trim() !== ''
-  const isFormValid = hasEnoughSkills && hasSelectedRole
-
-  const getDisabledReason = () => {
-    if (!hasEnoughSkills && !hasSelectedRole) {
-      return 'Select at least 2 skills and choose a target role'
-    }
-    if (!hasEnoughSkills) {
-      return `Add at least ${2 - selectedSkills.length} more skill${2 - selectedSkills.length > 1 ? 's' : ''}`
-    }
-    if (!hasSelectedRole) {
-      return 'Please choose a target role'
-    }
-    return ''
-  }
-
-  // Submit and transition to Result State (Day 4 & Day 5)
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!isFormValid) return
-
-    setIsLoadingMatch(true)
-    setIsLoadingReadiness(true)
-    setViewMode('result')
-
-    const payload = {
-      skills: selectedSkills,
-      desired_role: desiredRole
-    }
-    console.log('Analyzing job fit and readiness with payload:', payload)
-
-    // Call POST /match and POST /readiness concurrently
-    const [matchResult, readinessResult] = await Promise.allSettled([
-      fetchMatch(selectedSkills),
-      fetchReadiness(selectedSkills, desiredRole)
-    ])
-
-    // Process Match results
-    if (matchResult.status === 'fulfilled' && matchResult.value?.matches) {
-      setMatchData({
-        matches: matchResult.value.matches,
-        unrecognized: matchResult.value.unrecognized || []
+  function loadRoles() {
+    setRolesStatus('loading');
+    setRetryIn(0);
+    getRoles()
+      .then((data) => {
+        setRoles(data);
+        setRolesStatus('ready');
       })
-    } else {
-      console.warn('API /match unavailable or error, using realistic fallback fixtures')
-      setMatchData(generateFallbackMatches(selectedSkills, desiredRole))
-    }
-    setIsLoadingMatch(false)
-
-    // Process Readiness results
-    if (readinessResult.status === 'fulfilled' && readinessResult.value) {
-      setReadinessData(readinessResult.value)
-    } else {
-      console.warn('API /readiness unavailable or error, using realistic fallback evaluation')
-      setReadinessData(generateFallbackReadiness(selectedSkills, desiredRole))
-    }
-    setIsLoadingReadiness(false)
+      .catch(() => {
+        setRolesStatus('error');
+        setRetryIn(AUTO_RETRY_SECONDS);
+      });
   }
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadRoles();
+    getHealth().catch(() => setHealthFailed(true));
+    return () => abortRef.current?.abort();
+  }, []);
+
+  // Auto-retry /roles with a visible countdown.
+  useEffect(() => {
+    if (rolesStatus !== 'error' || retryIn <= 0) return undefined;
+    const t = setTimeout(() => {
+      if (retryIn <= 1) loadRoles();
+      else setRetryIn(retryIn - 1);
+    }, 1000);
+    return () => clearTimeout(t);
+  }, [rolesStatus, retryIn]);
+
+  // Elapsed seconds while /analyze is in flight.
+  useEffect(() => {
+    if (status !== 'loading') return undefined;
+    const started = Date.now();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setElapsed(0);
+    const id = setInterval(() => setElapsed((Date.now() - started) / 1000), 250);
+    return () => clearInterval(id);
+  }, [status, lastPayload]);
+
+  // Move focus to the results heading when an answer arrives.
+  useEffect(() => {
+    if (status === 'success') resultsHeadingRef.current?.focus({ preventScroll: true });
+  }, [status]);
+
+  async function runAnalyze(payload) {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    setLastPayload(payload);
+    setResult(null);
+    setError(null);
+    setStatus('loading');
+    setView('results');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      const data = await analyze(payload, { signal: controller.signal });
+      if (controller.signal.aborted) return;
+      setResult(data);
+      setStatus('success');
+    } catch (err) {
+      if (controller.signal.aborted || isCancelled(err)) return;
+      setError(toFriendlyError(err));
+      setStatus('error');
+    }
+  }
+
+  const skillNames = selectedSkills.map((s) => s.name);
+  const reason = disabledReason(selectedSkills.length, desiredRole);
+  const canSubmit = !reason && rolesStatus === 'ready';
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!canSubmit) return;
+    runAnalyze({ skills: skillNames, desired_role: desiredRole });
+  }
+
+  function handleEdit() {
+    abortRef.current?.abort();
+    setStatus('idle');
+    setView('input');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => document.getElementById(SKILL_INPUT_ID)?.focus({ preventScroll: true }), 50);
+  }
+
+  function handleRetry() {
+    if (lastPayload) runAnalyze(lastPayload);
+  }
+
+  function handleSwitchRole(role) {
+    if (!role || !lastPayload) return;
+    setDesiredRole(role);
+    runAnalyze({ skills: lastPayload.skills, desired_role: role });
+  }
+
+  const shownRole = lastPayload?.desired_role || desiredRole;
+  const shownSkills = lastPayload?.skills || skillNames;
+  const skillSummary = shownSkills.length > 6 ? `${shownSkills.slice(0, 6).join(', ')} + ${shownSkills.length - 6} more` : shownSkills.join(', ');
+  const roleInfo = roles.find((r) => r.role_family === shownRole);
+
+  let liveMessage = '';
+  if (view === 'results' && status === 'loading') liveMessage = elapsed >= WAKING_AFTER_SECONDS ? 'Waking the server up, the first request takes a few seconds.' : 'Checking your skills.';
+  if (status === 'success' && result) {
+    liveMessage = `Readiness for ${shownRole}: ${Math.round(result.readiness.probability * 100)} percent, ${result.readiness.band}.`;
+  }
+
+  const waking = elapsed >= WAKING_AFTER_SECONDS;
+  const unrecognized = result?.match?.unrecognized || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-8">
-      {/* Top Header */}
-      <header className="max-w-3xl mx-auto w-full text-center pt-4 sm:pt-6 pb-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-4">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          Day 5 · ReadinessPanel & Market Coverage
+    <div className="min-h-screen bg-bg text-ink">
+      <p className="sr-only" aria-live="polite" aria-atomic="true">
+        {liveMessage}
+      </p>
+      <Header />
+      {healthFailed && (
+        <div className="bg-surface border-b border-line px-5 py-2 text-center text-sm text-ink-2">
+          <CircleAlert size={16} strokeWidth={2} className="inline-block mr-1.5 -mt-0.5" aria-hidden="true" />
+          The server is offline or waking up. Your first request might take a few extra seconds.
         </div>
-        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-400 via-teal-200 to-cyan-400 bg-clip-text text-transparent">
-          SkillGraph
-        </h1>
-        <p className="mt-2 text-slate-400 text-sm sm:text-base font-normal max-w-lg mx-auto">
-          India Job Market Mining Engine · Discover role fit, readiness & high-impact skill gaps
-        </p>
-      </header>
+      )}
 
-      {/* Main Content Area */}
-      <main className="max-w-2xl mx-auto w-full space-y-6">
-        {/* API Status Notice */}
-        {apiStatus === 'offline' && (
-          <div className="flex items-start gap-3 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200 text-xs">
-            <svg className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-            <div>
-              <div className="font-semibold text-amber-300">Fixture API Unreachable ({API_BASE_URL})</div>
-              <p className="text-amber-400/80 mt-0.5">
-                Archit's local server isn't running yet. Running in unblocked fixture fallback mode with real market heuristics.
+      <main className={container}>
+        {view === 'input' && (
+          <>
+            <section className="pb-[clamp(28px,5vw,44px)] pt-[clamp(40px,9vw,88px)]">
+              <p className={eyebrow}>Placement prep, made honest</p>
+              <h1 className="text-[clamp(42px,10.5vw,72px)] font-semibold leading-[1.02] tracking-[-0.05em]">
+                Know what to learn
+                <br />
+                <span className="text-gradient pb-[0.06em]">before you apply.</span>
+              </h1>
+              <p className="mt-5 max-w-[40ch] text-[clamp(16px,2.6vw,19px)] leading-[1.55] text-ink-2 text-pretty">
+                See how your current skills line up with the roles Indian tech companies are hiring for — based on 30,000+ real postings.
               </p>
-            </div>
-          </div>
-        )}
+            </section>
 
-        {/* -------------------- STATE 1: INPUT STATE -------------------- */}
-        {viewMode === 'input' && (
-          <form
-            onSubmit={handleSubmit}
-            className="bg-slate-900/70 border border-slate-800 backdrop-blur-xl rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6"
-          >
-            {/* Skill Selector Component */}
-            <SkillInput
-              selectedSkills={selectedSkills}
-              onAddSkill={handleAddSkill}
-              onRemoveSkill={handleRemoveSkill}
-              onApiStatusChange={(isOnline) => setApiStatus(isOnline ? 'online' : 'offline')}
-            />
+            {rolesStatus === 'error' && (
+              <Card as="section" tone="notice" shadow={false} role="alert" className="mb-9 grid grid-cols-[auto_minmax(0,1fr)] gap-3.5">
+                <CloudOff size={22} strokeWidth={2} className="mt-0.5 text-ink-2" aria-hidden="true" />
+                <div>
+                  <h2 className="mb-1.5 text-[19px] font-bold tracking-[-0.02em]">We can't reach SkillGraph right now</h2>
+                  <p className="mb-1.5 max-w-[58ch] text-[15px] leading-[1.55] text-ink-2 text-pretty">
+                    The roles load from our server, which is either waking up or briefly offline. Nothing you did caused this — your skills are kept.
+                  </p>
+                  <p className="mb-4 text-sm text-ink-3">
+                    {retryIn > 0
+                      ? `We'll try again automatically in ${retryIn} s. Free servers can take up to 30 seconds to wake up.`
+                      : 'Trying again…'}
+                  </p>
+                  <button type="button" onClick={loadRoles} className={primaryBtn.replace('min-h-[46px]', 'min-h-11')}>
+                    <RefreshCw size={16} strokeWidth={2} aria-hidden="true" />
+                    Try again now
+                  </button>
+                </div>
+              </Card>
+            )}
 
-            {/* Role Dropdown Component */}
-            <RoleSelect
-              desiredRole={desiredRole}
-              onChangeRole={setDesiredRole}
-            />
+            <form onSubmit={handleSubmit} noValidate>
+              <div className="grid grid-cols-1 items-start gap-11 md:grid-cols-2 md:gap-x-14">
+                <SkillInput value={selectedSkills} onChange={setSelectedSkills} inputId={SKILL_INPUT_ID} />
+                <RoleSelect roles={roles} status={rolesStatus} value={desiredRole} onChange={setDesiredRole} selectedNames={skillNames} />
+              </div>
 
-            {/* Submit Button Section */}
-            <div className="pt-2">
-              <div className="group relative">
+              <div className="sticky bottom-0 z-20 mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-line-2 bg-bg pb-4 pt-3.5">
+                <p id="submit-reason" aria-live="polite" className="flex flex-[1_1_260px] items-start gap-2 text-sm leading-[1.45] text-ink-2 text-pretty">
+                  {reason && <Info size={16} strokeWidth={2} className="mt-0.5 flex-none" aria-hidden="true" />}
+                  <span>
+                    {reason ||
+                      (rolesStatus === 'ready'
+                        ? `Ready to check ${selectedSkills.length} skills against ${desiredRole}.`
+                        : 'Waiting for the role list to load.')}
+                  </span>
+                </p>
                 <button
                   type="submit"
-                  disabled={!isFormValid}
-                  title={!isFormValid ? getDisabledReason() : 'Submit for role fit analysis'}
-                  className={`w-full py-3.5 px-6 rounded-xl font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg ${
-                    isFormValid
-                      ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 hover:from-emerald-400 hover:to-teal-400 active:scale-[0.99] cursor-pointer shadow-emerald-950/40'
-                      : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700/50'
-                  }`}
+                  disabled={!canSubmit}
+                  aria-describedby="submit-reason"
+                  className="flex min-h-[54px] max-w-[360px] flex-[1_1_260px] items-center justify-between gap-3 bg-accent px-[22px] text-base font-semibold text-white hover:bg-accent-hover disabled:opacity-[.42] disabled:hover:bg-accent"
                 >
-                  <span>Analyze Job Market Fit</span>
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
+                  Show my skill map
+                  <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
                 </button>
-
-                {!isFormValid && (
-                  <div className="hidden group-hover:block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-slate-800 border border-slate-700 text-xs text-amber-300 rounded-lg shadow-xl whitespace-nowrap z-30">
-                    {getDisabledReason()}
-                  </div>
-                )}
               </div>
-
-              <div className="mt-2 text-center text-xs">
-                {!isFormValid ? (
-                  <span className="text-amber-400/90 font-medium">
-                    {getDisabledReason()}
-                  </span>
-                ) : (
-                  <span className="text-emerald-400 font-medium">
-                    Ready to analyze! Click to view 3-panel market report.
-                  </span>
-                )}
-              </div>
-            </div>
-          </form>
+            </form>
+          </>
         )}
 
-        {/* -------------------- STATE 2: RESULT STATE (Day 4) -------------------- */}
-        {viewMode === 'result' && (
-          <div className="space-y-6">
-            {/* Top Navigation & Profile Summary */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-slate-900/60 border border-slate-800/90">
-              <button
-                type="button"
-                onClick={() => setViewMode('input')}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 bg-slate-800/80 hover:bg-slate-700 hover:text-white border border-slate-700/80 transition-all cursor-pointer w-fit"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                ← Back to Edit Skills
+        {view === 'results' && (
+          <>
+            <section className="flex flex-wrap items-end justify-between gap-x-6 gap-y-5 pb-7 pt-[clamp(40px,9vw,88px)]">
+              <div className="min-w-0 flex-[1_1_420px]">
+                <p className={eyebrow}>{status === 'loading' ? 'Building your skill map' : 'Your skill map'}</p>
+                <h1
+                  ref={resultsHeadingRef}
+                  tabIndex={-1}
+                  className="text-[clamp(40px,9vw,64px)] font-semibold leading-[1.03] tracking-[-0.05em] outline-none"
+                >
+                  {status === 'loading' ? 'Reading the postings' : status === 'error' ? 'Almost there —' : 'Here’s your honest'}
+                  <br />
+                  <span className="text-gradient">{status === 'loading' ? 'for you.' : status === 'error' ? 'one more try.' : 'starting point.'}</span>
+                </h1>
+                <p className="mt-4 text-sm leading-normal text-ink-3 [overflow-wrap:anywhere]">
+                  <strong className="font-semibold text-ink-2">{shownRole}</strong> · {shownSkills.length} skill{shownSkills.length === 1 ? '' : 's'}: {skillSummary}
+                </p>
+              </div>
+              <button type="button" onClick={handleEdit} className={secondaryBtn}>
+                <ArrowLeft size={16} strokeWidth={2} aria-hidden="true" />
+                {status === 'loading' ? 'Cancel and edit' : 'Edit my answers'}
               </button>
+            </section>
 
-              <div className="flex flex-wrap items-center gap-2 text-xs">
-                <span className="text-slate-400">Target Role:</span>
-                <span className="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 font-semibold border border-emerald-500/30">
-                  {desiredRole}
-                </span>
-                <span className="text-slate-500">·</span>
-                <span className="text-slate-400">{selectedSkills.length} Skills Submitted</span>
-              </div>
-            </div>
+            {status === 'loading' && (
+              <>
+                <Card tone="status" shadow={false} role="status" className="grid grid-cols-[auto_minmax(0,1fr)] gap-4">
+                  <Server size={24} strokeWidth={2} className="mt-0.5 text-accent-ink" aria-hidden="true" />
+                  <div className="min-w-0">
+                    <h2 className="mb-2 text-[clamp(20px,4vw,24px)] font-bold tracking-[-0.025em]">
+                      {!waking ? 'Checking your skills…' : 'Waking the server up, the first request takes a few seconds.'}
+                    </h2>
+                    <p className="mb-5 max-w-[60ch] text-[15px] leading-[1.55] text-ink-2 text-pretty">
+                      {!waking
+                        ? 'Comparing your skills with 30,000+ postings. This usually takes a few seconds.'
+                        : 'This can take up to 30 seconds. SkillGraph runs on a free server that sleeps when nobody is using it, so the first check after a quiet spell is slower. Waiting is normal — no need to refresh, and your answers are kept.'}
+                    </p>
+                    <div className="max-w-[520px]" aria-hidden="true">
+                      <div className="h-1.5 bg-accent-track">
+                        <div className="h-full bg-accent transition-[width] duration-200 ease-linear" style={{ width: `${Math.min(96, (elapsed / 30) * 100)}%` }} />
+                      </div>
+                      <div className="mt-2 flex justify-between gap-3 text-[13px] tabular-nums text-ink-3">
+                        <span>{Math.floor(elapsed)} s elapsed</span>
+                        <span>Cold starts take up to 30 s</span>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
 
-            {/* THREE STACKED CARDS (Ordered per Notion spec) */}
-            <div className="space-y-6">
-              {/* Card 1: Readiness Panel (Day 5 target) */}
-              <ReadinessPanel
-                desiredRole={desiredRole}
-                readinessData={readinessData}
-                isLoading={isLoadingReadiness}
-              />
+                <div aria-hidden="true" className="mb-12 mt-4 flex flex-wrap gap-4">
+                  <div className="grid flex-[1.35_1_380px] gap-[22px] border border-line bg-surface p-7">
+                    <Skeleton className="h-3 w-[180px]" />
+                    <SkeletonBarRow w="44%" />
+                    <SkeletonBarRow w="36%" />
+                    <SkeletonBarRow w="52%" />
+                  </div>
+                  <div className="grid flex-[1_1_300px] content-start gap-[22px] border border-line bg-surface p-7">
+                    <Skeleton className="h-3 w-[160px]" />
+                    <SkeletonBarRow w="44%" tag="h-5 w-11" />
+                    <SkeletonBarRow w="36%" tag="h-5 w-11" />
+                    <SkeletonBarRow w="52%" tag="h-5 w-11" />
+                  </div>
+                </div>
+              </>
+            )}
 
-              {/* Card 2: What to Learn Next (Day 6 target) */}
-              <GapPanel
-                desiredRole={desiredRole}
-              />
+            {status === 'error' && error && (
+              <Card tone="error" role="alert" className="mb-14 grid grid-cols-[auto_minmax(0,1fr)] gap-4">
+                <CircleAlert size={24} strokeWidth={2} className="mt-0.5 text-ink-2" aria-hidden="true" />
+                <div className="min-w-0">
+                  <h2 className="mb-2 text-[clamp(20px,4vw,24px)] font-bold tracking-[-0.025em]">{error.title}</h2>
+                  <p className="mb-1.5 max-w-[58ch] text-[15px] leading-[1.55] text-ink-2 text-pretty">{error.message}</p>
+                  <p className="mb-5 text-sm text-ink-3">
+                    Your {shownSkills.length} skills and {shownRole} are still here.
+                  </p>
+                  <div className="flex flex-wrap gap-2.5">
+                    <button type="button" onClick={handleRetry} className={primaryBtn}>
+                      <RefreshCw size={16} strokeWidth={2} aria-hidden="true" />
+                      Try again
+                    </button>
+                    <button type="button" onClick={handleEdit} className={secondaryBtn}>
+                      Edit my answers
+                    </button>
+                  </div>
+                </div>
+              </Card>
+            )}
 
-              {/* Card 3: Roles That Actually Fit You (Day 4 Core Build) */}
-              <MatchPanel
-                matches={matchData.matches}
-                unrecognized={matchData.unrecognized}
-                desiredRole={desiredRole}
-                isLoading={isLoadingMatch}
-              />
-            </div>
-          </div>
+            {status === 'success' && result && (
+              <>
+                {unrecognized.length > 0 && (
+                  <p className="mb-4 flex items-start gap-2.5 border border-line bg-surface px-4 py-3 text-sm leading-normal text-ink-2">
+                    <Info size={16} strokeWidth={2} className="mt-[3px] flex-none" aria-hidden="true" />
+                    <span className="[overflow-wrap:anywhere]">
+                      We didn't recognise: <strong className="font-semibold text-ink">{unrecognized.join(', ')}</strong>.{' '}
+                      {unrecognized.length === 1
+                        ? 'It wasn’t counted — check the spelling or pick from the suggestions.'
+                        : 'They weren’t counted — check the spelling or pick from the suggestions.'}
+                    </span>
+                  </p>
+                )}
+
+                <ReadinessPanel readiness={result.readiness} role={shownRole} topSkills={roleInfo?.top_skills || []} />
+
+                <div className="mt-4 flex flex-wrap items-stretch gap-4">
+                  <GapPanel
+                    className="flex-[1.35_1_380px]"
+                    recommendations={result.gap?.recommendations || []}
+                    probability={result.readiness.probability}
+                    role={shownRole}
+                  />
+                  <MatchPanel
+                    className="flex-[1_1_300px]"
+                    matches={result.match?.matches || []}
+                    desiredRole={shownRole}
+                    onSwitchRole={handleSwitchRole}
+                  />
+                </div>
+
+                <RoleSkillMix role={roleInfo} covered={result.readiness.covered || []} />
+
+                <div className="mb-14 mt-7 flex flex-wrap gap-2.5">
+                  <button type="button" onClick={handleEdit} className={secondaryBtn}>
+                    <RotateCcw size={16} strokeWidth={2} aria-hidden="true" />
+                    Analyze again
+                  </button>
+                </div>
+              </>
+            )}
+          </>
         )}
+
+        <Footer />
       </main>
-
-      {/* Footer */}
-      <footer className="text-center text-xs text-slate-600 py-6">
-        SkillGraph Sprint · Frontend Module
-      </footer>
     </div>
-  )
+  );
 }
-
-export default App
