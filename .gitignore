@@ -13,3 +13,4 @@ venv/
 *.py[cod]
 .pytest_cache/
 *.xlsx
+.vercel

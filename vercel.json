@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "app.py": {
+      "excludeFiles": "{frontend/**,tests/**,docs/**,data/**,scripts/**,fixtures/**,.github/**,**/*.parquet,**/*.pkl,**/*.xlsx}"
+    }
+  }
+}

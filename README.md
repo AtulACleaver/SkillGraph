@@ -1,4 +1,7 @@
-# SkillGraph — India Job Market Mining Engine
+# SkillGraph: India Job Market Mining Engine
+
+**Live Web App**: https://skillgraph-two-delta.vercel.app  
+**Production API**: https://skillgraph-api-notionatul.vercel.app
 
 A student types the skills they have and the job they want. They get back: the role that actually fits them, whether they are ready for the one they asked for, and the skills that would move them fastest.
 
@@ -23,17 +26,17 @@ cd frontend && npm install && npm run dev
 
 ```
 skillgraph/
-├── etl/           # Atul — cleaning, normalization, labelling
-├── ml/            # Aditya — features, training, prediction
-├── mining/        # Aryan — Apriori, FP-growth, gap ranking
-├── taxonomy/      # Aryan — hand-edited skill aliases & role families
-├── api/           # Archit — FastAPI serving layer
-├── frontend/      # Shashank — Vite + React UI
-├── fixtures/      # Archit — fake artifacts for dev
+├── etl/           # Atul: cleaning, normalization, labelling
+├── ml/            # Aditya: features, training, prediction
+├── mining/        # Aryan: Apriori, FP-growth, gap ranking
+├── taxonomy/      # Aryan: hand-edited skill aliases & role families
+├── api/           # Archit: FastAPI serving layer
+├── frontend/      # Shashank: Vite + React UI
+├── fixtures/      # Archit: fake artifacts for dev
 ├── tests/         # each person owns their module's tests
-├── docs/          # data audit, contracts, model writeup
-├── data/          # GITIGNORED — rebuilt by the pipeline
-└── artifacts/     # GITIGNORED — built artifacts shipped via GitHub Releases
+├── docs/          # data audit, contracts, model writeup, deployment guide
+├── data/          # GITIGNORED: rebuilt by the pipeline
+└── artifacts/     # GITIGNORED: built artifacts shipped via GitHub Releases
 ```
 
 ## API Endpoints
