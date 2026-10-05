@@ -1,0 +1,43 @@
+name,display
+etl,ETL
+pyspark,PySpark
+mysql,MySQL
+javascript,JavaScript
+typescript,TypeScript
+html,HTML
+css,CSS
+postgresql,PostgreSQL
+mongodb,MongoDB
+github,GitHub
+gitlab,GitLab
+devops,DevOps
+graphql,GraphQL
+numpy,NumPy
+tensorflow,TensorFlow
+pytorch,PyTorch
+jquery,jQuery
+ios,iOS
+sap abap,SAP ABAP
+servicenow,ServiceNow
+salesforce,Salesforce
+power bi,Power BI
+aws,AWS
+gcp,GCP
+rest api,REST API
+sql,SQL
+nosql,NoSQL
+node,Node.js
+scikitlearn,scikit-learn
+cicd,CI/CD
+nlp,NLP
+itil,ITIL
+ui,UI
+generative ai,Generative AI
+api testing,API Testing
+mvvm,MVVM
+wan,WAN
+dns,DNS
+azure devops,Azure DevOps
+sap s hana,SAP S/4HANA
+ux,UX
+uiux,UI/UX

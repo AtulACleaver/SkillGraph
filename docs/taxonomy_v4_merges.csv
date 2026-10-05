@@ -1,0 +1,41 @@
+keep,merge_from,reason
+react,react js,suffix js
+react,reacts js,plural typo with suffix js
+spring boot,springboot,spacing normalisation
+spring boot,boot,framework fragment
+angular,angularjs,variant with js suffix
+angular,angular development,trailing development
+databricks,data bricks,spacing normalisation
+generative ai,gen ai,acronym expansion
+generative ai,genai,spacing normalisation
+rest api,rest apis,plural normalisation
+rest api,rest api development,trailing development
+rest api,restful api,spelling variant
+rest api,restfull api,spelling typo
+java,java development,trailing development
+java,javas,plural typo
+sap,sap development,trailing development
+sap,saps,plural typo
+sap abap,sap abap development,trailing development
+sap abap,abap development,trailing development
+sap abap,abap programming,trailing programming
+flutter,flutter development,trailing development
+ios,ios development,trailing development
+android,android application development,trailing development
+python,python development,trailing development
+sql,sql development,trailing development
+servicenow,servicenow development,trailing development
+salesforce,sales force development,trailing development
+cloud platform,cloud platforms,plural normalisation
+full stack,fullstack development,trailing development
+backend,backend development,trailing development
+front end,frontend development,trailing development
+ui,ui development,trailing development
+software,software development,trailing development
+application,application development,trailing development
+azure,microsoft azure,vendor prefix
+nlp,natural language processing,acronym expansion
+selenium,selenium webdriver,tool component
+itil,itil framework,trailing framework
+java,core java,core prefix
+excel,advanced excel,advanced prefix

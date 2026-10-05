@@ -1,24 +1,108 @@
+import csv
 import json
 from typing import Any
 
 import numpy as np
 
-from etl.paths import ARTIFACTS_DIR
+from etl.paths import ARTIFACTS_DIR, TAXONOMY_DIR
 
-# Generic words that appear in top_skills but are not something you can learn.
-NON_SKILLS = {
-    "data",
+GENERIC_WORDS = {
     "development",
-    "backend",
-    "devops",
-    "cloud",
-    "front end",
-    "frontend development",
-    "ui development",
-    "java development",
-    "python development",
-    "automation",
+    "developer",
+    "engineering",
+    "engineer",
+    "programming",
+    "programmer",
+    "technologies",
+    "technology",
+    "services",
+    "service",
+    "tools",
+    "tool",
+    "framework",
+    "frameworks",
+    "core",
+    "application",
+    "applications",
+    "app",
+    "apps",
+    "platform",
+    "platforms",
+    "operations",
+    "ops",
 }
+
+
+def _load_non_learnable() -> set[str]:
+    """Load non-learnable tokens from taxonomy/non_learnable.txt."""
+    path = TAXONOMY_DIR / "non_learnable.txt"
+    if not path.exists():
+        return set()
+    with open(path, "r", encoding="utf-8") as f:
+        return {line.strip().lower() for line in f if line.strip() and not line.startswith("#")}
+
+
+def _normalize_words(phrase: str) -> set[str]:
+    clean = phrase.lower().replace(".", " ").strip()
+    return set(clean.split())
+
+
+def _is_redundant_skill(cand: str, user_skills: set[str]) -> bool:
+    """Return True if candidate is redundant with user's skills in either direction."""
+    cand_lower = cand.lower().strip()
+    cand_clean = cand_lower.replace(" ", "")
+    cand_words = _normalize_words(cand_lower)
+    for u in user_skills:
+        u_lower = u.lower().strip()
+        u_clean = u_lower.replace(" ", "")
+        if not u_clean or u_clean == cand_clean:
+            continue
+        # Direction 1: Candidate is user skill + generic word(s)
+        if cand_clean.startswith(u_clean) and cand_clean[len(u_clean):] in GENERIC_WORDS:
+            return True
+        if cand_clean.endswith(u_clean) and cand_clean[:-len(u_clean)] in GENERIC_WORDS:
+            return True
+        u_words = _normalize_words(u_lower)
+        if u_words and u_words.issubset(cand_words):
+            diff = cand_words - u_words
+            if diff and diff.issubset(GENERIC_WORDS):
+                return True
+        # Direction 2: Every word of candidate appears in a user skill
+        if cand_words and cand_words.issubset(u_words) and cand_words != u_words:
+            return True
+    return False
+
+
+def _load_display_names() -> dict[str, str]:
+    """Load display name mapping from skills_autocomplete.json and taxonomy/display_overrides.csv."""
+    display_names: dict[str, str] = {}
+    autocomplete_path = ARTIFACTS_DIR / "skills_autocomplete.json"
+    if autocomplete_path.exists():
+        try:
+            with open(autocomplete_path, "r", encoding="utf-8") as f:
+                for item in json.load(f):
+                    display_names[item["name"].lower()] = item.get("display", item["name"].title())
+        except (json.JSONDecodeError, OSError):
+            pass
+    overrides_path = TAXONOMY_DIR / "display_overrides.csv"
+    if overrides_path.exists():
+        try:
+            with open(overrides_path, "r", encoding="utf-8") as f:
+                reader = csv.reader(f)
+                next(reader, None)
+                for row in reader:
+                    if len(row) >= 2:
+                        k, v = row[0].strip().lower(), row[1].strip()
+                        if k and v:
+                            display_names[k] = v
+        except OSError:
+            pass
+    return display_names
+
+
+def get_display_name(skill_name: str, display_names: dict[str, str]) -> str:
+    s = skill_name.lower().strip()
+    return display_names.get(s, skill_name.title() if not skill_name.isupper() else skill_name)
 
 
 _CACHE: dict[str, Any] | None = None
@@ -66,11 +150,16 @@ def load_gap_artifacts() -> dict[str, Any]:
         except (FileNotFoundError, ValueError, OSError):
             rules_list = []
 
+    non_learnable = _load_non_learnable()
+    display_names = _load_display_names()
+
     return {
         "role_profiles": role_profiles,
         "skill_to_id": skill_to_id,
         "id_to_skill": id_to_skill,
         "rules_list": rules_list,
+        "non_learnable": non_learnable,
+        "display_names": display_names,
     }
 
 
@@ -115,6 +204,7 @@ def _find_companions(
     candidate_ids: set[int],
     rules_list: list[dict[str, Any]],
     id_to_skill: dict[int, str],
+    display_names: dict[str, str] | None = None,
     min_lift: float = 1.5,
 ) -> list[str]:
     """Other gap skills that co-occur with candidate_id at lift >= min_lift."""
@@ -140,6 +230,8 @@ def _find_companions(
             if other != candidate_id and other in candidate_ids and other not in companion_ids:
                 companion_ids.append(other)
 
+    if display_names is not None:
+        return [get_display_name(id_to_skill[i], display_names) for i in companion_ids[:2]]
     return [id_to_skill[i].title() for i in companion_ids[:2]]
 
 
@@ -179,9 +271,19 @@ def rank_gap(
 
     user_skills = _extract_user_skills(vector, skill_to_id, id_to_skill)
 
+    non_learnable = artifacts.get("non_learnable")
+    if non_learnable is None:
+        non_learnable = _load_non_learnable()
+
+    display_names = artifacts.get("display_names")
+    if display_names is None:
+        display_names = _load_display_names()
+
     candidates = [
         s for s in top_role_skills
-        if s.lower() not in user_skills and s.lower() not in NON_SKILLS
+        if s.lower() not in user_skills
+        and s.lower() not in non_learnable
+        and not _is_redundant_skill(s, user_skills)
     ]
 
     if not candidates:
@@ -212,11 +314,13 @@ def rank_gap(
 
         score = gain * base_coverage
 
-        learn_with = _find_companions(skill_id, candidate_ids, rules_list, id_to_skill, min_lift=1.5)
+        learn_with = _find_companions(
+            skill_id, candidate_ids, rules_list, id_to_skill, display_names=display_names, min_lift=1.5
+        )
 
         scored_recommendations.append(
             {
-                "skill": skill.title() if not skill.isupper() else skill,
+                "skill": get_display_name(skill, display_names),
                 "coverage_pct": base_coverage,
                 "readiness_gain": round(gain, 4),
                 "learn_with": learn_with,
