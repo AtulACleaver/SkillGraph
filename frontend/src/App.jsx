@@ -216,7 +216,7 @@ export default function App() {
                 <br />
                 <span className="text-gradient pb-[0.06em]">before you apply.</span>
               </h1>
-              <p className="mt-5 max-w-[40ch] text-[clamp(16px,2.6vw,19px)] leading-[1.55] text-ink-2 text-pretty">
+              <p className="mt-5 max-w-[40ch] font-['Inter'] text-[clamp(16px,2.6vw,19px)] leading-[1.55] text-ink-2 text-pretty">
                 See how your current skills line up with the roles Indian tech companies are hiring for, based on 12,872 labelled Indian tech job postings.
               </p>
             </section>
