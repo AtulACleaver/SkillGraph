@@ -1,51 +1,64 @@
 # SkillGraph: India Job Market Mining Engine
 
-**Live Web App**: https://skillgraph-exp.vercel.app  
-**Production API**: https://skillgraph-api-notionatul.vercel.app
+Live Application: https://skillgraph-exp.vercel.app
 
-A student types the skills they have and the job they want. They get back: the role that actually fits them, whether they are ready for the one they asked for, and the skills that would move them fastest.
+![Desktop View](docs/screenshots/persona1-desktop.png)
+![Mobile View](docs/screenshots/persona1-mobile.png)
+
+## What It Does
+- Extracts and normalizes skills from unstructured job postings.
+- Classifies user skills into one of 10 tech roles using a machine learning model.
+- Recommends skill gaps to learn next based on association rules mined from the tech posting subset.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    A[XLSX Data] --> B(ETL Pipeline)
+    B --> C(ML Training)
+    B --> D(Rule Mining)
+    C --> E[JSON Artifacts]
+    D --> E
+    E --> F[FastAPI on Vercel]
+    F --> G[React on Vercel]
+```
 
 ## Quick Start
 
 ```bash
-# Install Python dependencies
-pip install -r requirements.txt
-
-# Run the ETL pipeline (requires data/raw/ with the source xlsx)
-python -m etl.clean
-python -m etl.normalize
-
-# Start the API
-uvicorn api.main:app --reload
-
-# Frontend (separate terminal)
-cd frontend && npm install && npm run dev
+make setup
+make api
+make web
 ```
 
-## Project Structure
+## Full Rebuild
 
-```
-skillgraph/
-├── etl/           # Atul — cleaning, normalization, labelling
-├── ml/            # Aditya — features, training, prediction
-├── mining/        # Aryan — Apriori, FP-growth, gap ranking
-├── taxonomy/      # Aryan — hand-edited skill aliases & role families
-├── api/           # Archit — FastAPI serving layer
-├── frontend/      # Shashank — Vite + React UI
-├── tests/         # each person owns their module's tests
-├── docs/          # data audit, contracts, model writeup, deployment guide
-├── data/          # GITIGNORED: rebuilt by the pipeline
-└── artifacts/     # GITIGNORED: built artifacts shipped via GitHub Releases
+```bash
+make all
 ```
 
-## API Endpoints
+## Key Numbers
+- **Dataset**: 97,929 raw rows, 34,569 baskets
+- **Normalization**: 69.9% mapped mass
+- **Model**: 0.7499 Test Macro F1
+- **Mining**: 231 rules
+- **Engineering**: 2521.1 ms cold start latency, 454.4 ms p50 latency
 
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/health` | Status, artifacts loaded, row counts |
-| GET | `/roles` | Role families with posting counts |
-| GET | `/skills?q=` | Autocomplete over canonical names |
-| POST | `/match` | Top 3 roles with probabilities |
-| POST | `/readiness` | Probability, band, coverage for desired role |
-| POST | `/gap` | 5 ranked skills with reasons |
-| POST | `/analyze` | All three in one response |
+## Limitations
+- 8-tag cap per job posting input.
+- "Software Engineer (generic)" generic titles are excluded.
+- Data represents posted demand, not hired skills.
+- No usable posting dates in the source data, so a random split was used.
+- Short-input F1 drops significantly.
+- Overconfident top bin in the model calibration.
+- Covers India tech postings only.
+
+## Team
+
+| Name | GitHub | Role |
+| - | - | - |
+| Atul | AtulACleaver | ETL |
+| Aditya | | ML |
+| Aryan | eccentricAryan404 | Mining and Taxonomy |
+| Archit | Archit1302-wolf | API |
+| Shashank | ssp0009 | Frontend |
