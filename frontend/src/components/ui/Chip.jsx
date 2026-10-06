@@ -4,9 +4,9 @@ import { Check, X } from 'lucide-react';
 export default function Chip({ name, unrecognized = false, onRemove }) {
   return (
     <li
-      className={`flex min-h-11 max-w-full items-stretch border bg-surface ${
-        unrecognized ? 'border-dashed' : 'border-solid'
-      } border-line-2`}
+      className={`flex min-h-11 max-w-full items-stretch rounded-[10px] border bg-accent-tint text-accent-ink ${
+        unrecognized ? 'border-dashed border-accent-line' : 'border-solid border-accent-line'
+      }`}
     >
       <span
         title={name}
@@ -19,7 +19,7 @@ export default function Chip({ name, unrecognized = false, onRemove }) {
         type="button"
         onClick={onRemove}
         aria-label={`Remove ${name}`}
-        className="grid size-11 flex-none place-items-center text-ink-2 hover:bg-tint hover:text-ink focus-visible:outline-2"
+        className="grid size-11 flex-none place-items-center rounded-r-[10px] text-accent-ink hover:bg-accent-track focus-visible:outline-2"
       >
         <X size={15} strokeWidth={2.2} aria-hidden="true" />
       </button>

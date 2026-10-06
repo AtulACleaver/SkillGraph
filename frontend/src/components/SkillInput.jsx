@@ -185,7 +185,7 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
 
       <div className="mb-5 flex items-center gap-3">
         <StepNumber n="01" />
-        <label htmlFor={inputId} className="flex-1 text-[13px] font-bold uppercase tracking-[0.12em] text-ink-2">
+        <label htmlFor={inputId} className="flex-1 text-[14px] font-bold uppercase tracking-[1.5px] text-ink">
           Skills you already have
         </label>
         {value.length > 0 && (
@@ -222,7 +222,7 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
           onFocus={() => setOpen(true)}
           onBlur={() => setTimeout(() => setOpen(false), 120)}
           onKeyDown={onKeyDown}
-          className="min-h-[54px] w-full rounded-none border border-line-2 bg-surface py-3 pl-[46px] pr-3.5 text-base text-ink focus:border-accent"
+          className="min-h-[64px] w-full rounded-xl border border-line bg-surface py-3 pl-[50px] pr-4 text-[17px] font-medium text-ink transition-colors focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
         />
 
         {listOpen && (
@@ -231,7 +231,7 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
             id={listId}
             role="listbox"
             aria-label="Matching skills"
-            className="absolute inset-x-0 top-[calc(100%-1px)] z-30 max-h-[336px] overflow-auto border border-accent bg-surface shadow-card"
+            className="absolute inset-x-0 top-[calc(100%+8px)] z-30 max-h-[336px] overflow-auto rounded-xl border border-line bg-surface shadow-card"
           >
             {options.length === 0 && searchStatus === 'loading' && (
               <li role="presentation" className="px-4 py-3 text-sm text-ink-3">

@@ -2,28 +2,28 @@
 
 @theme {
   /* Type */
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* Neutrals */
-  --color-bg: #f8f8f6;
+  --color-bg: #fafaf8;
   --color-surface: #ffffff;
   --color-tint: #f0f5f4;
-  --color-line: #e3e8ea;
+  --color-line: #d9dfdc;
   --color-line-2: #cdd6db;
-  --color-ink: #13222e;
-  --color-ink-2: #3e4e5b;
-  --color-ink-3: #52606d;
+  --color-ink: #122333;
+  --color-ink-2: #526477;
+  --color-ink-3: #526477;
 
   /* Accent: green (readiness, skills, primary action) */
-  --color-accent: #1d7a52;
-  --color-accent-hover: #166443;
-  --color-accent-ink: #17684a;
+  --color-accent: #17804f;
+  --color-accent-hover: #146b42;
+  --color-accent-ink: #12633e;
   --color-accent-tint: #e5f1eb;
   --color-accent-track: #d6e6e0;
   --color-accent-line: #a9cfbd;
 
   /* Secondary: orange (role fit) */
-  --color-fit: #d06d1a;
+  --color-fit: #d9771d;
   --color-fit-ink: #9c4a0e;
   --color-fit-tint: #fcf1e6;
   --color-fit-track: #f0e5d9;
@@ -39,7 +39,7 @@
 }
 
 @utility text-gradient {
-  background-image: linear-gradient(90deg, #1d7a52 0%, #7f7a32 50%, #d06d1a 100%);
+  background-image: linear-gradient(90deg, #17804f 0%, #858d3a 50%, #d9771d 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

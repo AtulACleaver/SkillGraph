@@ -16,12 +16,12 @@ const AUTO_RETRY_SECONDS = 15;
 const WAKING_AFTER_SECONDS = 4;
 const SKILL_INPUT_ID = 'skill-search';
 
-const container = 'mx-auto max-w-[928px] px-5 sm:px-6';
-const eyebrow = 'mb-[18px] text-xs font-bold uppercase tracking-[0.16em] text-accent-ink';
+const container = 'mx-auto max-w-[1100px] px-5 sm:px-6';
+const eyebrow = 'mb-8 text-[13px] font-bold uppercase tracking-[2px] text-accent';
 const primaryBtn =
-  'inline-flex min-h-[46px] items-center gap-2 bg-accent px-[18px] text-[15px] font-semibold text-white hover:bg-accent-hover disabled:opacity-[.42]';
+  'inline-flex min-h-[56px] items-center gap-2 rounded-xl bg-accent px-6 text-[16px] font-bold text-white transition-all duration-200 hover:-translate-y-[1px] hover:bg-accent-hover hover:shadow-md disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none';
 const secondaryBtn =
-  'inline-flex min-h-[46px] flex-none items-center gap-2.5 whitespace-nowrap border border-line-2 bg-surface px-[18px] text-[15px] font-medium text-ink hover:border-ink-3 hover:bg-tint';
+  'inline-flex min-h-[56px] flex-none items-center gap-2.5 whitespace-nowrap rounded-xl border border-line-2 bg-surface px-6 text-[16px] font-bold text-ink transition-all duration-200 hover:-translate-y-[1px] hover:border-ink-3 hover:bg-tint hover:shadow-sm';
 
 function disabledReason(count, role) {
   const need = Math.max(0, MIN_SKILLS - count);
@@ -35,15 +35,15 @@ function disabledReason(count, role) {
 
 function Header() {
   return (
-    <header className="border-b border-line bg-[linear-gradient(90deg,#ffffff_55%,#fdf2e8_100%)]">
+    <header className="border-b border-line bg-surface">
       <div className={`${container} flex items-center gap-4 py-3`}>
-        <div className="flex flex-none items-center gap-2.5">
-          <span aria-hidden="true" className="grid size-[30px] place-items-center rounded-lg bg-[linear-gradient(160deg,#2a9466,#17654a)] text-[15px] font-bold text-white shadow-logo">
+        <div className="flex flex-none items-center gap-3">
+          <span aria-hidden="true" className="grid size-12 place-items-center rounded-xl bg-[linear-gradient(160deg,#2a9466,#17654a)] text-[22px] font-bold text-white shadow-logo">
             S
           </span>
-          <span className="text-xl font-bold tracking-[-0.035em]">SkillGraph</span>
+          <span className="text-xl font-bold tracking-tight text-ink">SkillGraph</span>
         </div>
-        <span className="ml-auto hidden text-[13px] font-medium text-ink-2 sm:block">Built from 12,872 labelled Indian tech job postings</span>
+        <span className="ml-auto hidden text-[14px] font-medium text-ink-2 sm:block">12,872 Indian tech jobs analyzed</span>
       </div>
     </header>
   );
@@ -209,14 +209,14 @@ export default function App() {
       <main className={container}>
         {view === 'input' && (
           <>
-            <section className="pb-[clamp(28px,5vw,44px)] pt-[clamp(40px,9vw,88px)]">
+            <section className="pb-[clamp(28px,5vw,44px)] pt-[clamp(32px,7vw,64px)]">
               <p className={eyebrow}>Placement prep, made honest</p>
-              <h1 className="text-[clamp(42px,10.5vw,72px)] font-semibold leading-[1.02] tracking-[-0.05em]">
+              <h1 className="text-[clamp(40px,6vw,68px)] font-extrabold leading-none tracking-tight md:tracking-tighter">
                 Know what to learn
                 <br />
                 <span className="text-gradient pb-[0.06em]">before you apply.</span>
               </h1>
-              <p className="mt-5 max-w-[40ch] font-['Inter'] text-[clamp(16px,2.6vw,19px)] leading-[1.55] text-ink-2 text-pretty">
+              <p className="mt-6 max-w-[640px] text-[18px] md:text-[19px] font-medium leading-[1.55] text-ink-2 text-pretty">
                 See how your current skills line up with the roles Indian tech companies are hiring for, based on 12,872 labelled Indian tech job postings.
               </p>
             </section>
@@ -243,14 +243,14 @@ export default function App() {
             )}
 
             <form onSubmit={handleSubmit} noValidate>
-              <div className="grid grid-cols-1 items-start gap-11 md:grid-cols-2 md:gap-x-14">
+              <div className="grid grid-cols-1 items-start gap-11 md:grid-cols-2 md:gap-x-[72px]">
                 <SkillInput value={selectedSkills} onChange={setSelectedSkills} inputId={SKILL_INPUT_ID} />
                 <RoleSelect roles={roles} status={rolesStatus} value={desiredRole} onChange={setDesiredRole} selectedNames={skillNames} />
               </div>
 
-              <div className="sticky bottom-0 z-20 mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-line-2 bg-bg pb-4 pt-3.5">
-                <p id="submit-reason" aria-live="polite" className="flex flex-[1_1_260px] items-start gap-2 text-sm leading-[1.45] text-ink-2 text-pretty">
-                  {reason && <Info size={16} strokeWidth={2} className="mt-0.5 flex-none" aria-hidden="true" />}
+              <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5 border-t border-line pb-8 pt-6">
+                <p id="submit-reason" aria-live="polite" className="flex flex-[1_1_260px] items-start gap-2 text-[15px] font-medium leading-[1.45] text-ink-2 text-pretty">
+                  {reason && <Info size={18} strokeWidth={2} className="mt-[3px] flex-none" aria-hidden="true" />}
                   <span>
                     {reason ||
                       (rolesStatus === 'ready'
@@ -262,10 +262,10 @@ export default function App() {
                   type="submit"
                   disabled={!canSubmit || status === 'loading'}
                   aria-describedby="submit-reason"
-                  className="flex min-h-[54px] max-w-[360px] flex-[1_1_260px] items-center justify-between gap-3 bg-accent px-[22px] text-base font-semibold text-white hover:bg-accent-hover disabled:opacity-[.42] disabled:hover:bg-accent"
+                  className="flex min-h-[56px] max-w-[360px] flex-[1_1_260px] items-center justify-between gap-3 rounded-xl bg-accent px-6 text-[16px] font-bold text-white transition-all duration-200 hover:-translate-y-[1px] hover:bg-accent-hover hover:shadow-md disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
                 >
                   Show my skill map
-                  <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
+                  <ArrowRight size={20} strokeWidth={2.5} aria-hidden="true" />
                 </button>
               </div>
             </form>
