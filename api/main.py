@@ -97,12 +97,18 @@ def validate_request(skills: list[str], desired_role: str | None = None):
 @api_router.get("/health", response_model=schemas.HealthResponse)
 def health():
     built_at = "2026-10-02T00:00:00Z"
+    model_version = artifacts.model_version
+    rules_version = artifacts.rules_version
     metrics_path = ARTIFACTS_DIR / "metrics.json"
     if metrics_path.exists():
         try:
             with open(metrics_path, "r") as f:
                 metrics = json.load(f)
             built_at = metrics.get("built_at") or time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(metrics_path.stat().st_mtime))
+            if "model_version" in metrics:
+                model_version = metrics["model_version"]
+            if "rules_version" in metrics:
+                rules_version = metrics["rules_version"]
         except OSError:
             pass
 
@@ -112,8 +118,8 @@ def health():
         n_postings=artifacts.n_postings,
         n_skills=artifacts.n_skills,
         built_at=built_at,
-        model=artifacts.model_version,
-        rules=artifacts.rules_version
+        model=model_version,
+        rules=rules_version,
     )
 
 @api_router.get("/roles", response_model=list[schemas.RoleResponse])

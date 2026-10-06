@@ -84,8 +84,8 @@ def full_report(model, test_df, le, width: int) -> dict:
                                            output_dict=True, zero_division=0),
         "confusion_matrix": confusion_matrix(y, pred).tolist(),
         "classes": list(le.classes_),
-        "calibration": {
-            "ece": round(ece, 4),
+        "test_calibration": {
+            "pooled_ovr_ece": round(ece, 4),
             "prob_true": prob_true,
             "prob_pred": prob_pred
         },
@@ -94,7 +94,9 @@ def full_report(model, test_df, le, width: int) -> dict:
             "lightgbm": lgb_ver
         },
         "band_thresholds": {"Ready": 0.60, "Close": 0.30, "Not yet": 0.0},
-        "data_release": "data-v3",
+        "data_release": "data-v4",
+        "model_version": "model-v4",
+        "rules_version": "rules-v2",
         "seed": 42
     }
 

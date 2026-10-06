@@ -47,3 +47,7 @@ fetch-data:
 
 reset:
 	rm -rf data/*.parquet data/*.csv data/stats artifacts/*.pkl artifacts/*.parquet
+
+stats:
+	PYTHONPATH=. $(PYTHON) scripts/collect_stats.py
+

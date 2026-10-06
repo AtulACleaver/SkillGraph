@@ -219,8 +219,8 @@
     "QA / Test",
     "Support / IT Ops"
   ],
-  "calibration": {
-    "ece": 0.012,
+  "test_calibration": {
+    "pooled_ovr_ece": 0.012,
     "prob_true": [
       0.015143992055610725,
       0.15781922525107603,
@@ -255,7 +255,9 @@
     "Close": 0.3,
     "Not yet": 0.0
   },
-  "data_release": "data-v3",
+  "data_release": "data-v4",
+  "model_version": "model-v4",
+  "rules_version": "rules-v2",
   "seed": 42,
   "model": "logreg",
   "val": {
@@ -270,244 +272,22 @@
       "top3_accuracy": 0.9306
     }
   },
+  "test_scores_both_models": {
+    "logreg": {
+      "accuracy": 0.7527,
+      "macro_f1": 0.7499,
+      "top3_accuracy": 0.9254
+    },
+    "lightgbm": {
+      "accuracy": 0.7632,
+      "macro_f1": 0.7648,
+      "top3_accuracy": 0.9306
+    }
+  },
   "n_train_raw": 8941,
   "n_train_aug": 26039,
   "n_dropped_no_skills": 98,
   "n_val": 1916,
   "n_test": 1917,
-  "built_at": "2026-10-05T18:39:35Z",
-  "band_cutoffs": {
-    "prob_ready": 0.6,
-    "prob_close": 0.3,
-    "cov_ready": 0.2,
-    "cov_close": 0.1
-  },
-  "band_percentiles": {
-    "prob": {
-      "pooled": {
-        "p10": 0.0785,
-        "p25": 0.3849,
-        "p50": 0.889,
-        "p75": 0.9923,
-        "p90": 0.9995
-      },
-      "Backend": {
-        "p10": 0.079,
-        "p25": 0.4341,
-        "p50": 0.8722,
-        "p75": 0.9802,
-        "p90": 0.998
-      },
-      "Data / BI Analyst": {
-        "p10": 0.1663,
-        "p25": 0.6555,
-        "p50": 0.9241,
-        "p75": 0.9869,
-        "p90": 0.9974
-      },
-      "Data Science / ML": {
-        "p10": 0.0747,
-        "p25": 0.4245,
-        "p50": 0.9677,
-        "p75": 0.9997,
-        "p90": 1.0
-      },
-      "DevOps / Cloud": {
-        "p10": 0.0226,
-        "p25": 0.1376,
-        "p50": 0.5719,
-        "p75": 0.9278,
-        "p90": 0.9909
-      },
-      "ERP / Enterprise": {
-        "p10": 0.1801,
-        "p25": 0.5544,
-        "p50": 0.9437,
-        "p75": 0.9964,
-        "p90": 0.9997
-      },
-      "Frontend": {
-        "p10": 0.0815,
-        "p25": 0.3667,
-        "p50": 0.827,
-        "p75": 0.9813,
-        "p90": 0.9957
-      },
-      "Full Stack": {
-        "p10": 0.1356,
-        "p25": 0.3548,
-        "p50": 0.7629,
-        "p75": 0.9652,
-        "p90": 0.9953
-      },
-      "Mobile": {
-        "p10": 0.236,
-        "p25": 0.9102,
-        "p50": 0.9992,
-        "p75": 1.0,
-        "p90": 1.0
-      },
-      "QA / Test": {
-        "p10": 0.1284,
-        "p25": 0.6339,
-        "p50": 0.9816,
-        "p75": 0.9988,
-        "p90": 0.9999
-      },
-      "Support / IT Ops": {
-        "p10": 0.0539,
-        "p25": 0.2841,
-        "p50": 0.8599,
-        "p75": 0.9911,
-        "p90": 0.9989
-      }
-    },
-    "cov": {
-      "pooled": {
-        "p10": 0.0,
-        "p25": 0.05,
-        "p50": 0.1,
-        "p75": 0.2,
-        "p90": 0.25
-      },
-      "Backend": {
-        "p10": 0.05,
-        "p25": 0.1,
-        "p50": 0.15,
-        "p75": 0.25,
-        "p90": 0.3
-      },
-      "Data / BI Analyst": {
-        "p10": 0.05,
-        "p25": 0.05,
-        "p50": 0.1,
-        "p75": 0.2,
-        "p90": 0.25
-      },
-      "Data Science / ML": {
-        "p10": 0.0,
-        "p25": 0.05,
-        "p50": 0.1,
-        "p75": 0.2,
-        "p90": 0.25
-      },
-      "DevOps / Cloud": {
-        "p10": 0.0,
-        "p25": 0.05,
-        "p50": 0.1,
-        "p75": 0.15,
-        "p90": 0.25
-      },
-      "ERP / Enterprise": {
-        "p10": 0.0,
-        "p25": 0.05,
-        "p50": 0.1,
-        "p75": 0.1,
-        "p90": 0.15
-      },
-      "Frontend": {
-        "p10": 0.1,
-        "p25": 0.1,
-        "p50": 0.15,
-        "p75": 0.2,
-        "p90": 0.25
-      },
-      "Full Stack": {
-        "p10": 0.05,
-        "p25": 0.1,
-        "p50": 0.15,
-        "p75": 0.25,
-        "p90": 0.3
-      },
-      "Mobile": {
-        "p10": 0.05,
-        "p25": 0.05,
-        "p50": 0.15,
-        "p75": 0.2,
-        "p90": 0.23
-      },
-      "QA / Test": {
-        "p10": 0.01,
-        "p25": 0.05,
-        "p50": 0.1,
-        "p75": 0.15,
-        "p90": 0.2
-      },
-      "Support / IT Ops": {
-        "p10": 0.0,
-        "p25": 0.05,
-        "p50": 0.05,
-        "p75": 0.1125,
-        "p90": 0.15
-      }
-    }
-  },
-  "test_scores_both_models": {
-    "logreg": {
-      "accuracy": 0.7401,
-      "macro_f1": 0.7388
-    },
-    "lightgbm": {
-      "accuracy": 0.7615,
-      "macro_f1": 0.7647
-    }
-  },
-  "test_band_split": {
-    "Backend": {
-      "Ready": 82,
-      "Close": 51,
-      "Not yet": 58
-    },
-    "Data / BI Analyst": {
-      "Ready": 52,
-      "Close": 74,
-      "Not yet": 78
-    },
-    "Data Science / ML": {
-      "Ready": 54,
-      "Close": 70,
-      "Not yet": 56
-    },
-    "DevOps / Cloud": {
-      "Ready": 54,
-      "Close": 107,
-      "Not yet": 179
-    },
-    "ERP / Enterprise": {
-      "Ready": 12,
-      "Close": 116,
-      "Not yet": 95
-    },
-    "Frontend": {
-      "Ready": 37,
-      "Close": 39,
-      "Not yet": 41
-    },
-    "Full Stack": {
-      "Ready": 90,
-      "Close": 47,
-      "Not yet": 57
-    },
-    "Mobile": {
-      "Ready": 18,
-      "Close": 26,
-      "Not yet": 21
-    },
-    "QA / Test": {
-      "Ready": 55,
-      "Close": 115,
-      "Not yet": 73
-    },
-    "Support / IT Ops": {
-      "Ready": 8,
-      "Close": 61,
-      "Not yet": 90
-    }
-  },
-  "test_calibration": {
-    "pooled_ovr_ece": 0.013340901893966282,
-    "top_label_ece": 0.06612274392132718,
-    "note": "The model is consistently overconfident in the upper probability bins."
-  },
-  "data_release_tag": "data-v3"
+  "built_at": "2026-10-06T04:14:21Z"
 }

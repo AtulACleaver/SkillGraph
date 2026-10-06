@@ -114,6 +114,14 @@ def main():
     report = evaluate.full_report(clf, test, le, width)
     report["model"] = best
     report["val"] = results
+    
+    # Compute test scores for both models
+    X_test = features.to_matrix(test["skill_ids"], width)
+    y_test = le.transform(test["role_family"])
+    report["test_scores_both_models"] = {}
+    for name, m_obj in fitted.items():
+        report["test_scores_both_models"][name] = evaluate.score(m_obj, X_test, y_test)
+        
     report["n_train_raw"], report["n_train_aug"] = len(train), int(X_tr.shape[0])
     report["n_dropped_no_skills"] = dropped_rows
     report["n_val"], report["n_test"] = len(val), len(test)
@@ -127,14 +135,6 @@ def main():
     with open(os.path.join(ARTIFACTS_DIR, "role_profiles.json"), "w") as f:
         json.dump(build_role_profiles(train, vocab), f, indent=2)
     metrics_path = os.path.join(ARTIFACTS_DIR, "metrics.json")
-    if os.path.exists(metrics_path):
-        try:
-            with open(metrics_path, "r") as f:
-                saved = json.load(f)
-            saved.update(report)
-            report = saved
-        except (json.JSONDecodeError, OSError) as e:
-            print(f"[warn] Could not load existing metrics.json: {e}")
     with open(metrics_path, "w") as f:
         json.dump(report, f, indent=2)
 

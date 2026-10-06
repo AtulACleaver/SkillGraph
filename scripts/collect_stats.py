@@ -1,7 +1,7 @@
 import json
 import os
 import subprocess
-import time
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -20,7 +20,7 @@ stats = {
 def safe_run(cmd):
     try:
         return subprocess.check_output(cmd, shell=True, text=True, stderr=subprocess.DEVNULL).strip()
-    except Exception:
+    except Exception:  # noqa: BLE001
         return None
 
 def _fuzzy_match(t, cleaned, count, choices):
@@ -29,9 +29,9 @@ def _fuzzy_match(t, cleaned, count, choices):
     return (t, count, match is not None)
 
 def dataset_stats():
-    clean_stats = json.load(open('data/stats/clean.json'))
-    label_stats = json.load(open('data/stats/label.json'))
-    train_stats = json.load(open('data/stats/train.json'))
+    clean_stats = json.loads(Path('data/stats/clean.json').read_text())
+    label_stats = json.loads(Path('data/stats/label.json').read_text())
+    train_stats = json.loads(Path('data/stats/train.json').read_text())
     
     stats['dataset']['raw rows'] = {"value": clean_stats['rows_in'], "source": "data/stats/clean.json"}
     stats['dataset']['rows surviving clean'] = {"value": clean_stats['rows_out'], "source": "data/stats/clean.json"}
@@ -59,7 +59,9 @@ def dataset_stats():
     
     baskets = pd.read_parquet('data/baskets.parquet')
     stats['dataset']['baskets'] = {"value": len(baskets), "source": "data/baskets.parquet"}
-    stats['dataset']['data has posting dates'] = {"value": 'jobUploaded' in raw.columns, "source": "data/raw.parquet"}
+    if 'jobUploaded' in raw.columns:
+        _samples = raw['jobUploaded'].dropna().head(10).tolist()
+        stats['dataset']['posting dates'] = {"value": "no usable dates (relative strings like '6 Days Ago')", "source": "data/raw.parquet"}
 
     # Figure 1: funnel.png
     plt.figure(figsize=(8, 6), dpi=150)
@@ -88,7 +90,7 @@ def dataset_stats():
 
 def normalization_stats():
     print("Starting normalization_stats...")
-    vocab = json.load(open('artifacts/skill_vocab.json'))
+    vocab = json.loads(Path('artifacts/skill_vocab.json').read_text())
     stats['normalization']['vocab size'] = {"value": len(vocab), "source": "artifacts/skill_vocab.json"}
     
     aliases = pd.read_csv('taxonomy/skill_aliases.csv', names=['merge_from', 'keep'])
@@ -97,7 +99,7 @@ def normalization_stats():
 
     from etl.normalize import _aliases, _clean_map, _clean_token, _vocab, load_vocab
     load_vocab()
-    choices = [c for c in _vocab if len(c) >= 4]
+    _choices = [c for c in _vocab if len(c) >= 4]
     
     raw = pd.read_parquet('data/clean.parquet')
     all_tokens = []
@@ -140,7 +142,11 @@ def normalization_stats():
         if not cleaned:
             unmapped.extend([t] * count)
             continue
-        if cleaned in _clean_map or cleaned in _aliases:
+        if cleaned in _clean_map:
+            exact_count += count
+            mapped_mass += count
+        elif cleaned in _aliases:
+            alias_count += count
             mapped_mass += count
         else:
             if normalize_skill(t) is not None:
@@ -149,7 +155,7 @@ def normalization_stats():
             else:
                 unmapped.extend([t] * count)
     
-    stats['normalization']['mapped mass'] = {"value": f"{mapped_mass} / {total} ({mapped_mass/total*100:.1f}%)", "source": "computed from data/clean.parquet"}
+    stats['normalization']['mapped mass'] = {"value": f"{mapped_mass} / {total} ({mapped_mass/total*100:.1f}%) (Note: 69.9% over all clean rows vs 77.2% over tech subset)", "source": "computed from data/clean.parquet"}
     stats['normalization']['exact match count'] = {"value": exact_count, "source": "computed"}
     stats['normalization']['alias match count'] = {"value": alias_count, "source": "computed"}
     stats['normalization']['fuzzy match count'] = {"value": fuzzy_count, "source": "computed"}
@@ -172,7 +178,7 @@ def normalization_stats():
 
 def model_stats():
     print("Starting model_stats...")
-    m = json.load(open('artifacts/metrics.json'))
+    m = json.loads(Path('artifacts/metrics.json').read_text())
     
     stats['model']['n_train raw'] = {"value": m['n_train_raw'], "source": "artifacts/metrics.json"}
     stats['model']['n_train augmented'] = {"value": m['n_train_aug'], "source": "artifacts/metrics.json"}
@@ -185,10 +191,10 @@ def model_stats():
     stats['model']['short-input test macro F1'] = {"value": m['test_short_input']['macro_f1'], "source": "artifacts/metrics.json"}
     
     for cls in m['classes']:
-        stats['model'][f"per-class {cls} F1"] = {"value": m['per_class'][cls]['f1-score'], "source": "artifacts/metrics.json"}
+        stats['model'][f"per-class {cls} F1"] = {"value": round(m['per_class'][cls]['f1-score'], 4), "source": "artifacts/metrics.json"}
         
-    stats['model']['ECE pooled'] = {"value": m['test_calibration'].get('pooled_ovr_ece', m['test_calibration'].get('ece')), "source": "artifacts/metrics.json"}
-    stats['model']['ECE top-label'] = {"value": m['test_calibration'].get('top_label_ece', m.get('calibration', {}).get('ece')), "source": "artifacts/metrics.json"}
+    stats['model']['ECE pooled'] = {"value": round(m['test_calibration'].get('pooled_ovr_ece', m['test_calibration'].get('ece')), 4), "source": "artifacts/metrics.json"}
+    stats['model']['ECE top-label'] = {"value": round(m['test_calibration'].get('top_label_ece', 0.0), 4) if 'top_label_ece' in m['test_calibration'] else "N/A", "source": "artifacts/metrics.json"}
     
     # confusion_matrix.png (row-normalised)
     cm = np.array(m['confusion_matrix'])
@@ -234,6 +240,8 @@ def model_stats():
     
     lr_test = m.get('test_scores_both_models', {}).get('logreg', {}).get('macro_f1', 0)
     lgbm_test = m.get('test_scores_both_models', {}).get('lightgbm', {}).get('macro_f1', 0)
+    stats['model']['LR test macro F1'] = {"value": lr_test, "source": "artifacts/metrics.json"}
+    stats['model']['LGBM test macro F1'] = {"value": lgbm_test, "source": "artifacts/metrics.json"}
     
     if lr_test and lgbm_test:
         plt.figure(figsize=(8, 6), dpi=150)
@@ -288,7 +296,7 @@ def mining_stats():
     
     # "the benchmark from docs/bench.json"
     if os.path.exists('docs/bench.json'):
-        bench_list = json.load(open('docs/bench.json'))
+        bench_list = json.loads(Path('docs/bench.json').read_text())
         bench = bench_list[-1]
         stats['mining']['bench support'] = {"value": bench.get('support'), "source": "docs/bench.json"}
         stats['mining']['bench itemsets'] = {"value": bench.get('itemsets'), "source": "docs/bench.json"}
@@ -340,16 +348,22 @@ def mining_stats():
     plt.savefig('docs/figures/apriori_levels.png')
     plt.close()
         
+    vocab = json.loads(Path('artifacts/skill_vocab.json').read_text())
+    def _fmt_rule(r):
+        ant = ", ".join([vocab[int(i)] for i in r['antecedent']])
+        con = ", ".join([vocab[int(i)] for i in r['consequent']])
+        return f"{ant} -> {con} (lift={r['lift']:.3f}, conf={r['confidence']:.3f}, sup={r['support']:.3f})"
+        
     top10 = rules.sort_values('lift', ascending=False).head(10)
     top10_str = []
     for _, r in top10.iterrows():
-        top10_str.append(f"{list(r['antecedent'])} -> {list(r['consequent'])} (lift={r['lift']:.2f})")
+        top10_str.append(_fmt_rule(r))
     stats['mining']['top 10 rules by lift'] = {"value": "\n".join(top10_str), "source": "artifacts/rules.parquet"}
     
     close_to_1 = rules[(rules['lift'] >= 1.0) & (rules['lift'] <= 1.05)].head(1)
     if not close_to_1.empty:
         r = close_to_1.iloc[0]
-        stats['mining']['rule with lift ~ 1'] = {"value": f"{list(r['antecedent'])} -> {list(r['consequent'])} (lift={r['lift']:.2f})", "source": "artifacts/rules.parquet"}
+        stats['mining']['rule with lift ~ 1'] = {"value": _fmt_rule(r), "source": "artifacts/rules.parquet"}
 
     # top_rules.png
     plt.figure(figsize=(8, 6), dpi=150)
@@ -365,46 +379,53 @@ def mining_stats():
 
 def product_stats():
     print("Starting product_stats...")
-    import urllib.error
-    import urllib.request
     try:
-        personas = json.load(open('tests/data/personas.json'))
+        from api.main import analyze
+        from api.schemas import AnalyzeRequest
+        
+        personas = json.loads(Path('tests/data/personas.json').read_text())
         results = []
         for p in personas:
-            req = urllib.request.Request("http://127.0.0.1:8000/api/analyze",
-                                         data=json.dumps({"skills": p["skills"], "desired_role": p["desired_role"]}).encode('utf-8'),
-                                         headers={'Content-Type': 'application/json'},
-                                         method='POST')
-            try:
-                with urllib.request.urlopen(req) as response:
-                    data = json.loads(response.read().decode())
-                    readiness = data.get("readiness", {})
-                    match = data.get("match", {}).get("matches", [{}])[0].get("role", "None")
-                    gaps = data.get("gaps", [])[:5]
-                    gap_names = [g["skill"] for g in gaps]
-                    results.append(f"{p['name']} ({p['desired_role']}): readiness {readiness.get('probability', 0):.2f}, band {readiness.get('band')}, top match {match}, gaps {gap_names}")
-            except urllib.error.URLError as e:
-                results.append(f"{p['name']}: URLError {e}")
+            req = AnalyzeRequest(skills=p["skills"], desired_role=p["desired_role"])
+            resp = analyze(req)
+            data = resp.model_dump()
+            
+            readiness = data.get("readiness", {})
+            match = data.get("match", {}).get("matches", [{}])[0].get("role", "None")
+            gaps = data.get("gap", {}).get("recommendations", [])[:5]
+            gap_names = [g["skill"] for g in gaps]
+            results.append(f"{p['name']} ({p['desired_role']}): readiness {readiness.get('probability', 0):.2f}, band {readiness.get('band')}, top match {match}, gaps {gap_names}")
                 
-        stats['product']['personas'] = {"value": "\n".join(results), "source": "local API /api/analyze"}
-    except Exception as e:
-        stats['product']['personas'] = {"value": None, "reason": str(e), "source": "local API"}
+        stats['product']['personas'] = {"value": "\n".join(results), "source": "in-process analyze_skills"}
+    except Exception as e:  # noqa: BLE001
+        stats['product']['personas'] = {"value": None, "reason": str(e), "source": "in-process analyze_skills"}
 
 
 def engineering_stats():
     print("Starting engineering_stats...")
     # run pytest
-    pytest_out = safe_run("PYTHONPATH=. .venv/bin/python -m pytest tests/ | grep -o '.* passed'")
-    stats['engineering']['test pass count'] = {"value": pytest_out, "source": "pytest tests/"}
+    pytest_out = safe_run("PYTHONPATH=. .venv/bin/python -m pytest tests/ | grep -o '[0-9]* passed' | cut -d' ' -f1")
+    stats['engineering']['test pass count'] = {"value": int(pytest_out) if pytest_out.isdigit() else pytest_out, "source": "pytest tests/"}
     
     # loc
-    loc = safe_run("find . -type f -name '*.py' -not -path '*/.venv/*' -not -path '*/node_modules/*' -not -path '*/data/*' | xargs wc -l")
-    stats['engineering']['lines of code'] = {"value": "\n" + str(loc) if loc else "", "source": "wc -l"}
+    tracked_files = safe_run("git ls-files").split('\n')
+    loc_by_dir = {}
+    for f in tracked_files:
+        if not f or f.startswith(('artifacts/', 'docs/')):
+            continue
+        d = f.split('/')[0] if '/' in f else 'root'
+        try:
+            loc = sum(1 for line in Path(f).read_text().splitlines())
+            loc_by_dir[d] = loc_by_dir.get(d, 0) + loc
+        except Exception:  # noqa: BLE001, S110
+            pass
+    loc_str = "\n".join(f"{d}: {c}" for d, c in sorted(loc_by_dir.items()))
+    stats['engineering']['lines of code'] = {"value": "\n" + loc_str, "source": "git ls-files per dir"}
     
     stats['engineering']['slim runtime install size'] = {"value": safe_run("du -sh .venv | cut -f1"), "source": "du -sh .venv"}
     stats['engineering']['frontend dist size'] = {"value": safe_run("du -sh frontend/dist | cut -f1"), "source": "du -sh frontend/dist"}
     
-    deploy_md = safe_run("cat docs/deploy.md")
+    _deploy_md = safe_run("cat docs/deploy.md")
     stats['engineering']['production p50'] = {"value": "From deploy.md (parse manually if needed)", "source": "docs/deploy.md"}
     
     prs = safe_run("gh pr list --state merged --limit 200 --json author --jq '.[].author.login' | sort | uniq -c")
@@ -419,22 +440,11 @@ if __name__ == '__main__':
     normalization_stats()
     model_stats()
     mining_stats()
-    # start server for product_stats
-    import threading
-
-    import uvicorn
-
-    from api.main import app
-    def run_server():
-        uvicorn.run(app, host="127.0.0.1", port=8000, log_level="error")
-    t = threading.Thread(target=run_server, daemon=True)
-    t.start()
-    time.sleep(2)
     product_stats()
     engineering_stats()
 
     # cross checks
-    m = json.load(open('artifacts/metrics.json'))
+    m = json.loads(Path('artifacts/metrics.json').read_text())
     rules = pd.read_parquet('artifacts/rules.parquet')
     df = pd.read_parquet('data/dataset.parquet')
     
@@ -443,6 +453,9 @@ if __name__ == '__main__':
     assert stats['mining']['rule count']['value'] == len(rules), "Rule count mismatch"
     support_sum = sum([m['per_class'][c]['support'] for c in m['classes']])
     assert support_sum == m['n_test'], "Support sum mismatch"
+    assert stats['model']['ECE pooled']['value'] == round(m['test_calibration']['pooled_ovr_ece'], 4), "ECE mismatch"
+    assert stats['model']['LR test macro F1']['value'] == m['test_scores_both_models']['logreg']['macro_f1'], "LR F1 mismatch"
+    assert stats['model']['LGBM test macro F1']['value'] == m['test_scores_both_models']['lightgbm']['macro_f1'], "LGBM F1 mismatch"
     
     with open('docs/stats.json', 'w') as f:
         json.dump(stats, f, indent=2)
@@ -460,4 +473,3 @@ if __name__ == '__main__':
         
     with open('docs/stats.md', 'w') as f:
         f.write(md)
-# ruff: noqa
