@@ -3,6 +3,8 @@ import Card from './ui/Card';
 import StepHeading from './ui/StepHeading';
 import ProbabilityBar from './ui/ProbabilityBar';
 import { CoveredChip } from './ui/Chip';
+import { useReveal } from '../hooks/useReveal';
+import { useCountUp } from '../hooks/useCountUp';
 
 const BAND_CUTOFFS = {
   close: 0.3,
@@ -82,8 +84,12 @@ export default function ReadinessPanel({ readiness, role }) {
   
   const [msgA, msgB, msgC] = band.message(role);
 
+  const [ref, isRevealed] = useReveal({ threshold: 0.1 });
+  const animatedPct = useCountUp(isRevealed ? pct : 0, 1000);
+  const animatedCoveragePct = useCountUp(isRevealed ? coveragePct : 0, 1000);
+
   return (
-    <Card tone="readiness" aria-labelledby="readiness-heading">
+    <Card ref={ref} tone="readiness" aria-labelledby="readiness-heading" className="animate-fade-in-up">
       <StepHeading n="01" id="readiness-heading" className="mb-6">
         Am I ready for {role}?
       </StepHeading>
@@ -91,7 +97,7 @@ export default function ReadinessPanel({ readiness, role }) {
       <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
         <div className="flex-[0_1_auto]">
           <p className="text-[clamp(88px,23vw,156px)] font-bold leading-[0.86] tracking-[-0.06em] tabular-nums">
-            {pct}
+            {animatedPct}
             <span className="tracking-[-0.04em]">%</span>
             <span className="sr-only"> readiness</span>
           </p>
@@ -114,8 +120,8 @@ export default function ReadinessPanel({ readiness, role }) {
             {msgC}
           </p>
           <div aria-hidden="true">
-            <div className="relative h-2 bg-line-2">
-              <div className={`absolute inset-y-0 left-0 ${band.fill}`} style={{ width: `${pct}%` }} />
+            <div className="relative h-2 bg-line-2 overflow-hidden">
+              <div className={`absolute inset-y-0 left-0 ${band.fill} transition-[width] duration-1000 ease-out`} style={{ width: isRevealed ? `${pct}%` : '0%' }} />
               <span className="absolute bottom-[-3px] top-[-3px] w-[3px] bg-tint" style={{ left: `${BAND_CUTOFFS.close * 100}%` }} />
               <span className="absolute bottom-[-3px] top-[-3px] w-[3px] bg-tint" style={{ left: `${BAND_CUTOFFS.ready * 100}%` }} />
             </div>
@@ -139,7 +145,7 @@ export default function ReadinessPanel({ readiness, role }) {
             </span>
             <span className="text-[15px] text-ink-2">core skills covered</span>
           </div>
-          <span className="text-[15px] font-semibold tabular-nums text-accent-ink">{coveragePct}% coverage</span>
+          <span className="text-[15px] font-semibold tabular-nums text-accent-ink">{animatedCoveragePct}% coverage</span>
         </div>
         <ProbabilityBar value={coverage} size="h-2" track="bg-accent-track" fill="bg-accent" />
         <p className="mb-3 mt-3.5 text-[15px] text-ink-2">

@@ -37,7 +37,7 @@ export default function RoleSelect({ roles, status, value, onChange, selectedNam
           )}
 
           {ready &&
-            roles.map((role) => {
+            roles.map((role, i) => {
               const checked = role.role_family === value;
               const hits = role.top_skills.filter((s) => have.has(s)).length;
               const roleInputId = `role-opt-${role.role_family.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
@@ -45,9 +45,10 @@ export default function RoleSelect({ roles, status, value, onChange, selectedNam
                 <label
                   key={role.role_family}
                   htmlFor={roleInputId}
-                  className={`flex min-h-[72px] cursor-pointer items-center gap-4 rounded-xl border p-4 transition-all duration-200 hover:-translate-y-[1px] hover:border-accent hover:shadow-sm ${
-                    checked ? 'border-accent bg-accent-tint' : 'border-line bg-surface'
+                  className={`flex min-h-[72px] cursor-pointer items-center gap-4 rounded-xl border p-4 transition-all duration-300 hover:-translate-y-[1px] hover:border-accent hover:shadow-sm animate-fade-in-up opacity-0 [animation-fill-mode:both] ${
+                    checked ? 'border-accent bg-accent-tint shadow-[0_2px_8px_-2px_rgba(23,128,79,0.15)]' : 'border-line bg-surface'
                   }`}
+                  style={{ animationDelay: `${350 + i * 70}ms` }}
                 >
                   <span className="min-w-0 flex-1">
                     <span className="block text-[17px] font-bold">{role.role_family}</span>
@@ -69,7 +70,7 @@ export default function RoleSelect({ roles, status, value, onChange, selectedNam
                     value={role.role_family}
                     checked={checked}
                     onChange={() => onChange(role.role_family)}
-                    className="m-0 size-5 flex-none cursor-pointer accent-accent"
+                    className="m-0 size-5 flex-none cursor-pointer accent-accent transition-all duration-300"
                   />
                 </label>
               );

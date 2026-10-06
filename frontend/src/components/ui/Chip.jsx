@@ -4,7 +4,7 @@ import { Check, X } from 'lucide-react';
 export default function Chip({ name, unrecognized = false, onRemove }) {
   return (
     <li
-      className={`flex min-h-11 max-w-full items-stretch rounded-[10px] border bg-accent-tint text-accent-ink ${
+      className={`animate-scale-in [animation-duration:200ms] flex min-h-11 max-w-full items-stretch rounded-[10px] border bg-accent-tint text-accent-ink ${
         unrecognized ? 'border-dashed border-accent-line' : 'border-solid border-accent-line'
       }`}
     >
@@ -30,7 +30,7 @@ export default function Chip({ name, unrecognized = false, onRemove }) {
 /** Static chip for skills the student already covers (result view). */
 export function CoveredChip({ name }) {
   return (
-    <li className="flex min-h-11 items-center gap-[7px] border border-line-2 bg-surface px-3 py-[7px] text-sm">
+    <li className="animate-scale-in [animation-duration:200ms] flex min-h-11 items-center gap-[7px] border border-line-2 bg-surface px-3 py-[7px] text-sm">
       <Check size={13} strokeWidth={3} className="flex-none text-accent" aria-hidden="true" />
       <span title={name} className="max-w-[240px] truncate">{name}</span>
     </li>

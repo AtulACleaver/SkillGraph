@@ -19,9 +19,9 @@ const SKILL_INPUT_ID = 'skill-search';
 const container = 'mx-auto max-w-[1100px] px-5 sm:px-6';
 const eyebrow = 'mb-8 text-[13px] font-bold uppercase tracking-[2px] text-accent';
 const primaryBtn =
-  'inline-flex min-h-[56px] items-center gap-2 rounded-xl bg-accent px-6 text-[16px] font-bold text-white transition-all duration-200 hover:-translate-y-[1px] hover:bg-accent-hover hover:shadow-md disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none';
+  'inline-flex min-h-[56px] items-center gap-2 rounded-xl bg-accent px-6 text-[16px] font-bold text-white transition-all duration-200 hover:-translate-y-[1px] hover:bg-accent-hover hover:shadow-md active:scale-[0.98] disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none disabled:active:scale-100';
 const secondaryBtn =
-  'inline-flex min-h-[56px] flex-none items-center gap-2.5 whitespace-nowrap rounded-xl border border-line-2 bg-surface px-6 text-[16px] font-bold text-ink transition-all duration-200 hover:-translate-y-[1px] hover:border-ink-3 hover:bg-tint hover:shadow-sm';
+  'inline-flex min-h-[56px] flex-none items-center gap-2.5 whitespace-nowrap rounded-xl border border-line-2 bg-surface px-6 text-[16px] font-bold text-ink transition-all duration-200 hover:-translate-y-[1px] hover:border-ink-3 hover:bg-tint hover:shadow-sm active:scale-[0.98]';
 
 function disabledReason(count, role) {
   const need = Math.max(0, MIN_SKILLS - count);
@@ -35,15 +35,15 @@ function disabledReason(count, role) {
 
 function Header() {
   return (
-    <header className="border-b border-line bg-surface">
-      <div className={`${container} flex items-center gap-4 py-3`}>
+    <header className="sticky top-0 z-40 border-b border-line bg-surface/95 backdrop-blur-[4px]">
+      <div className={`${container} flex items-center gap-4 py-2.5`}>
         <div className="flex flex-none items-center gap-3">
-          <span aria-hidden="true" className="grid size-12 place-items-center rounded-xl bg-[linear-gradient(160deg,#2a9466,#17654a)] text-[22px] font-bold text-white shadow-logo">
+          <span aria-hidden="true" className="grid size-10 place-items-center rounded-xl bg-[linear-gradient(160deg,#2a9466,#17654a)] text-[18px] font-bold text-white shadow-logo">
             S
           </span>
-          <span className="text-xl font-bold tracking-tight text-ink">SkillGraph</span>
+          <span className="text-[19px] font-bold tracking-tight text-ink">SkillGraph</span>
         </div>
-        <span className="ml-auto hidden text-[14px] font-medium text-ink-2 sm:block">12,872 Indian tech jobs analyzed</span>
+        <span className="ml-auto hidden text-[13px] font-medium text-ink-2 sm:block">12,872 Indian tech jobs analyzed</span>
       </div>
     </header>
   );
@@ -51,7 +51,7 @@ function Header() {
 
 function Footer() {
   return (
-    <footer className="flex flex-wrap justify-between gap-x-4 gap-y-1 border-t border-line pb-8 pt-5 text-xs leading-normal text-ink-3">
+    <footer className="flex flex-col sm:flex-row justify-between gap-x-4 gap-y-3 border-t border-line pb-12 pt-8 text-[13px] leading-normal text-ink-3">
       <span>Estimates from posting data, not hiring guarantees.</span>
       <span>12,872 labelled Indian tech job postings · 10 role families · India</span>
     </footer>
@@ -72,6 +72,11 @@ export default function App() {
   const [rolesStatus, setRolesStatus] = useState('loading'); // loading | ready | error
   const [retryIn, setRetryIn] = useState(0);
   const [healthFailed, setHealthFailed] = useState(false);
+
+  // Page Transition State
+  const [displayView, setDisplayView] = useState('input');
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const abortRef = useRef(null);
   const resultsHeadingRef = useRef(null);
@@ -95,7 +100,18 @@ export default function App() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     loadRoles();
     getHealth().catch(() => setHealthFailed(true));
-    return () => abortRef.current?.abort();
+
+    const handleScroll = () => {
+      const h = document.documentElement;
+      const progress = h.scrollTop / (h.scrollHeight - h.clientHeight) || 0;
+      setScrollProgress(progress);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      abortRef.current?.abort();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   // Auto-retry /roles with a visible countdown.
@@ -120,10 +136,23 @@ export default function App() {
 
   // Move focus to the results heading after submit and when results or error change.
   useEffect(() => {
-    if (view === 'results') {
+    if (view === 'results' && displayView === 'results') {
       resultsHeadingRef.current?.focus({ preventScroll: true });
     }
-  }, [view, status]);
+  }, [view, displayView, status]);
+
+  // Page Transition handler
+  useEffect(() => {
+    if (view !== displayView) {
+      setIsTransitioning(true);
+      const t = setTimeout(() => {
+        setDisplayView(view);
+        setIsTransitioning(false);
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }, 350); // duration of exit animation
+      return () => clearTimeout(t);
+    }
+  }, [view, displayView]);
 
   async function runAnalyze(payload) {
     if (isSubmittingRef.current) return;
@@ -136,7 +165,6 @@ export default function App() {
     setError(null);
     setStatus('loading');
     setView('results');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     try {
       const data = await analyze(payload, { signal: controller.signal });
       if (controller.signal.aborted) return;
@@ -165,8 +193,7 @@ export default function App() {
     abortRef.current?.abort();
     setStatus('idle');
     setView('input');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => document.getElementById(SKILL_INPUT_ID)?.focus({ preventScroll: true }), 50);
+    setTimeout(() => document.getElementById(SKILL_INPUT_ID)?.focus({ preventScroll: true }), 400);
   }
 
   function handleRetry() {
@@ -195,6 +222,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-bg text-ink">
+      <div 
+        className="fixed top-0 left-0 h-[2px] bg-accent z-50 transition-[width] duration-75 ease-out" 
+        style={{ width: `${scrollProgress * 100}%` }} 
+      />
       <p className="sr-only" aria-live="polite" aria-atomic="true">
         {liveMessage}
       </p>
@@ -206,17 +237,16 @@ export default function App() {
         </div>
       )}
 
-      <main className={container}>
-        {view === 'input' && (
-          <>
+      <main className={`${container} transition-all duration-350 ${isTransitioning ? 'opacity-0 -translate-y-2' : 'opacity-100 translate-y-0'}`}>
+        {displayView === 'input' && (
+          <div className="animate-fade-in-up">
             <section className="pb-[clamp(28px,5vw,44px)] pt-[clamp(32px,7vw,64px)]">
-              <p className={eyebrow}>Placement prep, made honest</p>
+              <p className={`${eyebrow} animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:0ms]`}>Placement prep, made honest</p>
               <h1 className="text-[clamp(40px,6vw,68px)] font-extrabold leading-none tracking-tight md:tracking-tighter">
-                Know what to learn
-                <br />
-                <span className="text-gradient pb-[0.06em]">before you apply.</span>
+                <span className="block animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:100ms]">Know what to learn</span>
+                <span className="text-gradient pb-[0.06em] block animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:150ms]">before you apply.</span>
               </h1>
-              <p className="mt-6 max-w-[640px] text-[18px] md:text-[19px] font-medium leading-[1.55] text-ink-2 text-pretty">
+              <p className="mt-6 max-w-[640px] text-[18px] md:text-[19px] font-medium leading-[1.55] text-ink-2 text-pretty animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:250ms]">
                 See how your current skills line up with the roles Indian tech companies are hiring for, based on 12,872 labelled Indian tech job postings.
               </p>
             </section>
@@ -242,7 +272,7 @@ export default function App() {
               </Card>
             )}
 
-            <form onSubmit={handleSubmit} noValidate>
+            <form onSubmit={handleSubmit} noValidate className="animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:350ms]">
               <div className="grid grid-cols-1 items-start gap-11 md:grid-cols-2 md:gap-x-[72px]">
                 <SkillInput value={selectedSkills} onChange={setSelectedSkills} inputId={SKILL_INPUT_ID} />
                 <RoleSelect roles={roles} status={rolesStatus} value={desiredRole} onChange={setDesiredRole} selectedNames={skillNames} />
@@ -262,42 +292,44 @@ export default function App() {
                   type="submit"
                   disabled={!canSubmit || status === 'loading'}
                   aria-describedby="submit-reason"
-                  className="flex min-h-[56px] max-w-[360px] flex-[1_1_260px] items-center justify-between gap-3 rounded-xl bg-accent px-6 text-[16px] font-bold text-white transition-all duration-200 hover:-translate-y-[1px] hover:bg-accent-hover hover:shadow-md disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                  className="flex min-h-[56px] max-w-[360px] flex-[1_1_260px] items-center justify-between gap-3 rounded-xl bg-accent px-6 text-[16px] font-bold text-white transition-all duration-300 hover:-translate-y-[1px] hover:bg-accent-hover hover:shadow-md active:scale-[0.98] disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none disabled:active:scale-100"
                 >
                   Show my skill map
-                  <ArrowRight size={20} strokeWidth={2.5} aria-hidden="true" />
+                  <ArrowRight size={20} strokeWidth={2.5} aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
               </div>
             </form>
-          </>
+          </div>
         )}
 
-        {view === 'results' && (
-          <div id="results-region" aria-live="polite">
+        {displayView === 'results' && (
+          <div id="results-region" aria-live="polite" className="animate-fade-in-up">
             <section className="flex flex-wrap items-end justify-between gap-x-6 gap-y-5 pb-7 pt-[clamp(40px,9vw,88px)]">
               <div className="min-w-0 flex-[1_1_420px]">
-                <p className={eyebrow}>{status === 'loading' ? 'Building your skill map' : 'Your skill map'}</p>
+                <p className={`${eyebrow} animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:0ms]`}>{status === 'loading' ? 'Building your skill map' : 'Your skill map'}</p>
                 <h1
                   ref={resultsHeadingRef}
                   tabIndex={-1}
-                  className="text-[clamp(40px,9vw,64px)] font-semibold leading-[1.03] tracking-[-0.05em] outline-none"
+                  className="text-[clamp(40px,9vw,64px)] font-semibold leading-[1.03] tracking-[-0.05em] outline-none animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:100ms]"
                 >
                   {status === 'loading' ? 'Reading the postings' : status === 'error' ? 'Almost there,' : 'Here’s your honest'}
                   <br />
                   <span className="text-gradient">{status === 'loading' ? 'for you.' : status === 'error' ? 'one more try.' : 'starting point.'}</span>
                 </h1>
-                <p className="mt-4 text-sm leading-normal text-ink-3 [overflow-wrap:anywhere]">
+                <p className="mt-4 text-sm leading-normal text-ink-3 [overflow-wrap:anywhere] animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:200ms]">
                   <strong className="font-semibold text-ink-2">{shownRole}</strong> · {shownSkills.length} skill{shownSkills.length === 1 ? '' : 's'}: {skillSummary}
                 </p>
               </div>
-              <button type="button" onClick={handleEdit} className={secondaryBtn}>
-                <ArrowLeft size={16} strokeWidth={2} aria-hidden="true" />
-                {status === 'loading' ? 'Cancel and edit' : 'Edit my answers'}
-              </button>
+              <div className="animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:300ms]">
+                <button type="button" onClick={handleEdit} className={secondaryBtn}>
+                  <ArrowLeft size={16} strokeWidth={2} aria-hidden="true" className="transition-transform duration-300 group-hover:-translate-x-1" />
+                  {status === 'loading' ? 'Cancel and edit' : 'Edit my answers'}
+                </button>
+              </div>
             </section>
 
             {status === 'loading' && (
-              <>
+              <div className="animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:400ms]">
                 <Card tone="status" shadow={false} role="status" className="grid grid-cols-[auto_minmax(0,1fr)] gap-4">
                   <Server size={24} strokeWidth={2} className="mt-0.5 text-accent-ink" aria-hidden="true" />
                   <div className="min-w-0">
@@ -335,7 +367,7 @@ export default function App() {
                     <SkeletonBarRow w="52%" tag="h-5 w-11" />
                   </div>
                 </div>
-              </>
+              </div>
             )}
 
             {status === 'error' && error && (

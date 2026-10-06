@@ -1,8 +1,12 @@
+import { useReveal } from '../../hooks/useReveal';
+
 export function StepNumber({ n }) {
+  const [ref, isRevealed] = useReveal({ threshold: 0 });
   return (
     <span
+      ref={ref}
       aria-hidden="true"
-      className="grid size-[38px] flex-none place-items-center rounded-full border-[2px] border-accent text-[15px] font-bold tracking-normal text-accent-ink"
+      className={`grid size-[38px] flex-none place-items-center rounded-full border-[2px] border-accent text-[15px] font-bold tracking-normal text-accent-ink transition-all duration-500 ease-out ${isRevealed ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
     >
       {n}
     </span>

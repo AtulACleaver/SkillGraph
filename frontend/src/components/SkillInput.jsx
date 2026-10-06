@@ -231,7 +231,7 @@ export default function SkillInput({ value, onChange, inputId = 'skill-search' }
             id={listId}
             role="listbox"
             aria-label="Matching skills"
-            className="absolute inset-x-0 top-[calc(100%+8px)] z-30 max-h-[336px] overflow-auto rounded-xl border border-line bg-surface shadow-card"
+            className="absolute inset-x-0 top-[calc(100%+8px)] z-30 max-h-[336px] overflow-auto rounded-xl border border-line bg-surface shadow-card animate-fade-in-up [animation-duration:200ms]"
           >
             {options.length === 0 && searchStatus === 'loading' && (
               <li role="presentation" className="px-4 py-3 text-sm text-ink-3">

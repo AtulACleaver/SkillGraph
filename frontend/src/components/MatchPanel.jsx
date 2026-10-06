@@ -2,17 +2,31 @@ import { ArrowRight, Check } from 'lucide-react';
 import Card from './ui/Card';
 import StepHeading from './ui/StepHeading';
 import ProbabilityBar from './ui/ProbabilityBar';
+import { useReveal } from '../hooks/useReveal';
+import { useCountUp } from '../hooks/useCountUp';
 
-const formatPct = (p) => (p < 0.01 ? '<1%' : `${Math.round(p * 100)}%`);
+const formatPct = (p) => (p < 0.01 ? '<1' : `${Math.round(p * 100)}`);
+
+function AnimatedPercent({ probability }) {
+  const [ref, isRevealed] = useReveal({ threshold: 0 });
+  const pct = Math.round(probability * 100);
+  const animatedPct = useCountUp(isRevealed ? pct : 0, 1000);
+  return (
+    <span ref={ref} className="text-[28px] font-bold leading-none tracking-[-0.03em] tabular-nums text-fit">
+      {probability < 0.01 ? '<1%' : `${animatedPct}%`}
+    </span>
+  );
+}
 
 export default function MatchPanel({ matches = [], desiredRole, onSwitchRole, className = '' }) {
   const top = matches.slice(0, 3);
   const chosenInTop = top.some((m) => m.role === desiredRole);
   const best = top[0]?.role;
   const notTopMatch = best && best !== desiredRole;
+  const [ref, isRevealed] = useReveal({ threshold: 0.1 });
 
   return (
-    <Card tone="fit" className={className} aria-labelledby="match-heading">
+    <Card ref={ref} tone="fit" className={`${className} animate-fade-in-up [animation-delay:150ms]`} aria-labelledby="match-heading">
       <StepHeading n="03" id="match-heading" className="mb-[18px]">
         Which roles fit me right now?
       </StepHeading>
@@ -30,10 +44,10 @@ export default function MatchPanel({ matches = [], desiredRole, onSwitchRole, cl
             <button
               type="button"
               onClick={() => onSwitchRole(best)}
-              className="inline-flex min-h-11 items-center gap-2 border border-fit bg-surface px-3.5 text-left text-sm font-semibold text-fit-ink hover:bg-bg"
+              className="group inline-flex min-h-11 items-center gap-2 border border-fit bg-surface px-3.5 text-left text-sm font-semibold text-fit-ink transition-all duration-200 hover:-translate-y-[1px] hover:shadow-sm active:scale-[0.98]"
             >
               <span>Check readiness for {best}</span>
-              <ArrowRight size={15} strokeWidth={2.2} className="flex-none" aria-hidden="true" />
+              <ArrowRight size={15} strokeWidth={2.2} className="flex-none transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
             </button>
           )}
         </div>
@@ -51,7 +65,11 @@ export default function MatchPanel({ matches = [], desiredRole, onSwitchRole, cl
             {top.map((m, i) => {
               const isPick = m.role === desiredRole;
               return (
-                <li key={m.role} className="grid grid-cols-[24px_minmax(0,1fr)] gap-x-2.5 border-b border-line py-5">
+                <li 
+                  key={m.role} 
+                  className={`grid grid-cols-[24px_minmax(0,1fr)] gap-x-2.5 border-b border-line py-5 transition-all duration-500 ease-out ${isRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
+                  style={{ transitionDelay: `${i * 100}ms` }}
+                >
                   <span className="pt-1 text-sm tabular-nums text-fit-ink">{i + 1}</span>
                   <div className="min-w-0">
                     <div className="flex items-baseline justify-between gap-3">
@@ -64,7 +82,7 @@ export default function MatchPanel({ matches = [], desiredRole, onSwitchRole, cl
                           </span>
                         )}
                       </span>
-                      <span className="text-[28px] font-bold leading-none tracking-[-0.03em] tabular-nums text-fit">{formatPct(m.probability)}</span>
+                      <AnimatedPercent probability={m.probability} />
                     </div>
                     <ProbabilityBar value={m.probability} minPercent={0.6} size="h-[5px]" track="bg-fit-track" fill="bg-fit" className="mt-3.5" />
                   </div>
