@@ -4,7 +4,7 @@ This document describes the Vercel production deployment setup for SkillGraph, r
 
 ## 1. Production URLs
 
-- Web application: https://skillgraph-two-delta.vercel.app (alias: https://skillgraph-notionatul.vercel.app)
+- Web application: https://skillgraph-exp.vercel.app (alias: https://skillgraph-notionatul.vercel.app)
 - API service: https://skillgraph-api-notionatul.vercel.app (alias: https://skillgraph-api-three.vercel.app)
 
 The web client sends all requests to its own origin under `/api/*`. `frontend/vercel.json` rewrites these paths to the API production domain.
@@ -49,7 +49,7 @@ Benchmarked `/api/analyze` using the payload:
 Recorded from command:
 ```bash
 for i in $(seq 1 20); do
-  curl -w "%{time_total}\n" -o /dev/null -s -X POST "https://skillgraph-two-delta.vercel.app/api/analyze" \
+  curl -w "%{time_total}\n" -o /dev/null -s -X POST "https://skillgraph-exp.vercel.app/api/analyze" \
     -H "Content-Type: application/json" \
     -d '{"skills":["python","sql","pandas"],"desired_role":"Data / BI Analyst"}'
 done
