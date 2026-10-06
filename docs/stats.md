@@ -33,9 +33,9 @@
 | vocab size | 800 | artifacts/skill_vocab.json |
 | alias count | 834 | taxonomy/skill_aliases.csv |
 | mapped mass | 189573 / 271108 (69.9%) (Note: 69.9% over all clean rows vs 77.2% over tech subset) | computed from data/clean.parquet |
-| exact match count | 0 | computed |
-| alias match count | 304442 | computed |
-| fuzzy match count | 37352 | computed |
+| exact match count | 159725 | computed |
+| alias match count | 179612 | computed |
+| fuzzy match count | 2457 | computed |
 | top 20 unmapped strings | {'design engineering': 213, 'simulation': 169, 'site engineering': 136, '3d modeling': 134, 'software development methodologies': 131, 'analyzing information': 120, 'software sales': 117, 'catia': 109, 'cobol': 105, 'business strategy': 103, 'hmi': 101, 'mechanical design': 101, 'electrical design': 100, 'rtos': 100, 'maintenance engineering': 98, 'sales engineering': 98, 'plm': 98, 'preventive maintenance': 96, 'equipment': 96, 'data entry operation': 94} | computed |
 
 ## Model
@@ -61,7 +61,7 @@
 | per-class QA / Test F1 | 0.8825 | artifacts/metrics.json |
 | per-class Support / IT Ops F1 | 0.6854 | artifacts/metrics.json |
 | ECE pooled | 0.012 | artifacts/metrics.json |
-| ECE top-label | N/A | artifacts/metrics.json |
+| ECE top-label | 0.0614 | artifacts/metrics.json |
 | LR val macro F1 | 0.7435 | artifacts/metrics.json |
 | LGBM val macro F1 | 0.7532 | artifacts/metrics.json |
 | LR test macro F1 | 0.7499 | artifacts/metrics.json |
@@ -82,20 +82,24 @@
 | bench identical | yes | docs/bench.json |
 | itemsets per level | L1: 104 (pruned 0)<br>L2: 47 (pruned 0)<br>L3: 4 (pruned 164) | run_apriori at 1% |
 | top 10 rules by lift | screening, hr generalist activities -> joining formalities (lift=125.665, conf=1.000, sup=0.007)<br>joining formalities -> screening, hr generalist activities (lift=125.665, conf=0.932, sup=0.007)<br>screening, joining formalities -> hr generalist activities (lift=112.415, conf=1.000, sup=0.007)<br>hr generalist activities -> screening, joining formalities (lift=112.415, conf=0.833, sup=0.007)<br>joining formalities -> hr generalist activities (lift=109.850, conf=0.977, sup=0.008)<br>hr generalist activities -> joining formalities (lift=109.850, conf=0.874, sup=0.008)<br>hr generalist activities, joining formalities -> screening (lift=92.125, conf=0.953, sup=0.007)<br>screening -> hr generalist activities, joining formalities (lift=92.125, conf=0.716, sup=0.007)<br>joining formalities -> screening (lift=90.023, conf=0.932, sup=0.007)<br>screening -> joining formalities (lift=90.023, conf=0.716, sup=0.007) | artifacts/rules.parquet |
+| top 10 rules by lift among tech skills | software, software development life cycle -> root cause analysis (lift=62.442, conf=0.720, sup=0.005)<br>root cause analysis -> software, software development life cycle (lift=62.442, conf=0.438, sup=0.005)<br>sap abap -> sap hana (lift=54.926, conf=0.538, sup=0.006)<br>sap hana -> sap abap (lift=54.926, conf=0.562, sup=0.006)<br>software, root cause analysis -> software development life cycle (lift=54.409, conf=0.960, sup=0.005)<br>design principles -> application design (lift=40.402, conf=0.539, sup=0.006)<br>application design -> design principles (lift=40.402, conf=0.438, sup=0.006)<br>root cause analysis -> software development life cycle (lift=28.568, conf=0.504, sup=0.006)<br>software development life cycle -> root cause analysis (lift=28.568, conf=0.329, sup=0.006)<br>python, application -> css, c# (lift=27.876, conf=0.671, sup=0.006) | artifacts/rules.parquet |
 
 ## Product
 | Metric | Value | Source |
 |---|---|---|
-| personas | None | in-process analyze_skills |
+| personas | Data / BI Analyst (Data / BI Analyst): readiness 0.11, band Not yet, top match Backend, gaps ['Power BI', 'Data Engineering', 'PySpark', 'Data Analysis', 'Snowflake']<br>Backend (Backend): readiness 0.75, band Close, top match Backend, gaps ['Microservices', 'Hibernate', 'Kafka', 'Python', 'Golang']<br>Full Stack (Full Stack): readiness 0.24, band Not yet, top match Frontend, gaps ['Java', 'Spring Boot', 'AWS', 'C#', 'Python']<br>Frontend (Frontend): readiness 0.85, band Ready, top match Frontend, gaps ['UI', 'Angular', 'Redux', 'Git', 'Bootstrap']<br>DevOps / Cloud (DevOps / Cloud): readiness 0.75, band Ready, top match DevOps / Cloud, gaps ['Terraform', 'Continuous Integration', 'Azure DevOps', 'CI/CD', 'Jenkins']<br>QA / Test (QA / Test): readiness 0.86, band Ready, top match QA / Test, gaps ['Test Cases', 'API Testing', 'Performance Testing', 'Automation Framework', 'Regression Testing']<br>ERP / Enterprise (ERP / Enterprise): readiness 0.94, band Close, top match ERP / Enterprise, gaps ['ServiceNow', 'JavaScript', 'Salesforce', 'SAP S/4HANA', 'Master Data']<br>Data Science / ML (Data Science / ML): readiness 0.92, band Close, top match Data Science / ML, gaps ['NLP', 'Generative AI', 'TensorFlow', 'Image Processing', 'Research']<br>Support / IT Ops (Support / IT Ops): readiness 0.86, band Ready, top match Support / IT Ops, gaps ['Network Engineering', 'Customer Service', 'WAN', 'DNS', 'Switching']<br>Mobile (Mobile): readiness 1.00, band Close, top match Mobile, gaps ['iOS', 'Flutter', 'React Native', 'Swift', 'MVVM'] | in-process analyze_skills |
 
 ## Engineering
 | Metric | Value | Source |
 |---|---|---|
 | test pass count | 30 | pytest tests/ |
-| lines of code | <br>.github: 41<br>api: 353<br>etl: 718<br>frontend: 5446<br>mining: 795<br>ml: 623<br>root: 167<br>scripts: 917<br>taxonomy: 987<br>tests: 703 | git ls-files per dir |
-| slim runtime install size | 449M | du -sh .venv |
+| lines of code | <br>.github: 41<br>api: 353<br>etl: 718<br>frontend: 5446<br>mining: 795<br>ml: 649<br>root: 167<br>scripts: 1007<br>taxonomy: 987<br>tests: 703 | git ls-files per dir |
+| slim runtime install size | 66M | fresh venv from requirements.txt |
 | frontend dist size | 276K | du -sh frontend/dist |
-| production p50 | From deploy.md (parse manually if needed) | docs/deploy.md |
+| Vercel function size | 39.1 MB | docs/deploy.md |
+| production latency (cold start ms) | 2521.1 | docs/deploy.md |
+| production latency (p50 ms) | 454.4 | docs/deploy.md |
+| production latency (p95 ms) | 728.8 | docs/deploy.md |
 | commits and merged PRs | <br>7 Archit1302-wolf<br>  17 AtulACleaver<br>   2 eccentricAryan404<br>   1 ssp0009 | gh pr list |
 | releases | <br>rules-v2	Latest	rules-v2	2026-10-05T19:34:48Z<br>model-v4		model-v4	2026-10-05T19:34:26Z<br>data-v4		data-v4	2026-10-05T19:34:17Z<br>rules-v1		rules-v1	2026-10-04T07:06:17Z<br>model-v3		model-v3	2026-10-04T04:16:41Z<br>data-v3		data-v3	2026-10-03T18:20:30Z<br>data-v2		data-v2	2026-10-03T17:13:22Z<br>model-v2		model-v2	2026-10-03T17:13:21Z<br>Data Handoff v1		data-v1	2026-10-02T07:47:18Z | gh release list |
 

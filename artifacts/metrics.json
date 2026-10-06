@@ -221,6 +221,7 @@
   ],
   "test_calibration": {
     "pooled_ovr_ece": 0.012,
+    "top_label_ece": 0.0614,
     "prob_true": [
       0.015143992055610725,
       0.15781922525107603,

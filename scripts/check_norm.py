@@ -1,6 +1,6 @@
+import time
 from collections import Counter
 from pathlib import Path
-import time
 
 import pandas as pd
 

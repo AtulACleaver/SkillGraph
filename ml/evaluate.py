@@ -69,6 +69,17 @@ def full_report(model, test_df, le, width: int) -> dict:
     short_x, short_y = short_x[len(test_df):], np.array(short_y[len(test_df):])
 
     ece, prob_true, prob_pred = ece_score(y, proba, 10)
+    
+    # Calculate top_label_ece
+    prob_max = proba.max(axis=1)
+    y_true_top = (pred == y).astype(int)
+    prob_true_top, prob_pred_top = calibration_curve(y_true_top, prob_max, n_bins=10)
+    bin_edges = np.linspace(0.0, 1.0, 11)
+    bin_indices = np.digitize(prob_max, bin_edges, right=True) - 1
+    bin_indices[bin_indices == -1] = 0
+    bin_counts = np.bincount(bin_indices, minlength=10)
+    valid_bins = bin_counts > 0
+    top_label_ece = float(np.sum(np.abs(prob_true_top - prob_pred_top) * bin_counts[valid_bins]) / len(y))
 
     try:
         import lightgbm
@@ -86,6 +97,7 @@ def full_report(model, test_df, le, width: int) -> dict:
         "classes": list(le.classes_),
         "test_calibration": {
             "pooled_ovr_ece": round(ece, 4),
+            "top_label_ece": round(top_label_ece, 4),
             "prob_true": prob_true,
             "prob_pred": prob_pred
         },
@@ -121,9 +133,23 @@ def main():
     with open(os.path.join(ARTIFACTS_DIR, "label_encoder.pkl"), "rb") as f:
         le = pickle.load(f)
     width = features.n_features(features.load_vocab())
-    _, _, test = split(load_dataset())
+    df, _ = load_dataset()
+    _, _, test = split(df)
     r = full_report(clf, test, le, width)
     print_report(r)
+    
+    metrics_path = os.path.join(ARTIFACTS_DIR, "metrics.json")
+    if os.path.exists(metrics_path):
+        import json
+        with open(metrics_path, "r") as f:
+            metrics = json.load(f)
+        metrics.update(r) # r contains 'test', 'test_short_input', 'test_calibration', etc.
+        with open(metrics_path, "w") as f:
+            json.dump(metrics, f, indent=2)
+    else:
+        import json
+        with open(metrics_path, "w") as f:
+            json.dump(r, f, indent=2)
 
 
 if __name__ == "__main__":

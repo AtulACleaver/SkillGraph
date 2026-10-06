@@ -137,15 +137,16 @@ def normalization_stats():
     unmapped = []
     mapped_mass = 0
     fuzzy_count = 0
+    import etl.normalize
     for t, count in token_counts.items():
         cleaned = _clean_token(t)
         if not cleaned:
             unmapped.extend([t] * count)
             continue
-        if cleaned in _clean_map:
+        if cleaned in etl.normalize._clean_map:
             exact_count += count
             mapped_mass += count
-        elif cleaned in _aliases:
+        elif cleaned in etl.normalize._aliases:
             alias_count += count
             mapped_mass += count
         else:
@@ -360,6 +361,19 @@ def mining_stats():
         top10_str.append(_fmt_rule(r))
     stats['mining']['top 10 rules by lift'] = {"value": "\n".join(top10_str), "source": "artifacts/rules.parquet"}
     
+    # Top tech skills (excluding HR terms)
+    exclude_terms = {'screening', 'joining formalities', 'hr generalist activities', 'hr', 'recruitment', 'sourcing', 'talent acquisition'}
+    top_tech_str = []
+    for _, r in rules.sort_values('lift', ascending=False).iterrows():
+        ant_terms = {vocab[int(i)] for i in r['antecedent']}
+        con_terms = {vocab[int(i)] for i in r['consequent']}
+        all_terms = ant_terms | con_terms
+        if not all_terms.intersection(exclude_terms):
+            top_tech_str.append(_fmt_rule(r))
+        if len(top_tech_str) == 10:
+            break
+    stats['mining']['top 10 rules by lift among tech skills'] = {"value": "\n".join(top_tech_str), "source": "artifacts/rules.parquet"}
+    
     close_to_1 = rules[(rules['lift'] >= 1.0) & (rules['lift'] <= 1.05)].head(1)
     if not close_to_1.empty:
         r = close_to_1.iloc[0]
@@ -386,7 +400,7 @@ def product_stats():
         personas = json.loads(Path('tests/data/personas.json').read_text())
         results = []
         for p in personas:
-            req = AnalyzeRequest(skills=p["skills"], desired_role=p["desired_role"])
+            req = AnalyzeRequest(skills=p["skills"], desired_role=p["role"])
             resp = analyze(req)
             data = resp.model_dump()
             
@@ -394,7 +408,7 @@ def product_stats():
             match = data.get("match", {}).get("matches", [{}])[0].get("role", "None")
             gaps = data.get("gap", {}).get("recommendations", [])[:5]
             gap_names = [g["skill"] for g in gaps]
-            results.append(f"{p['name']} ({p['desired_role']}): readiness {readiness.get('probability', 0):.2f}, band {readiness.get('band')}, top match {match}, gaps {gap_names}")
+            results.append(f"{p['name']} ({p['role']}): readiness {readiness.get('probability', 0):.2f}, band {readiness.get('band')}, top match {match}, gaps {gap_names}")
                 
         stats['product']['personas'] = {"value": "\n".join(results), "source": "in-process analyze_skills"}
     except Exception as e:  # noqa: BLE001
@@ -422,11 +436,19 @@ def engineering_stats():
     loc_str = "\n".join(f"{d}: {c}" for d, c in sorted(loc_by_dir.items()))
     stats['engineering']['lines of code'] = {"value": "\n" + loc_str, "source": "git ls-files per dir"}
     
-    stats['engineering']['slim runtime install size'] = {"value": safe_run("du -sh .venv | cut -f1"), "source": "du -sh .venv"}
+    safe_run("python3.12 -m venv /tmp/slim && /tmp/slim/bin/pip install -r requirements.txt")
+    stats['engineering']['slim runtime install size'] = {"value": safe_run("du -sh /tmp/slim | cut -f1"), "source": "fresh venv from requirements.txt"}
     stats['engineering']['frontend dist size'] = {"value": safe_run("du -sh frontend/dist | cut -f1"), "source": "du -sh frontend/dist"}
+    stats['engineering']['Vercel function size'] = {"value": "39.1 MB", "source": "docs/deploy.md"}
     
-    _deploy_md = safe_run("cat docs/deploy.md")
-    stats['engineering']['production p50'] = {"value": "From deploy.md (parse manually if needed)", "source": "docs/deploy.md"}
+    import re
+    deploy_md = Path("docs/deploy.md").read_text()
+    cold = re.search(r'Cold start.*?:\s*([\d.]+)\s*ms', deploy_md)
+    p50 = re.search(r'p50:\s*([\d.]+)\s*ms', deploy_md)
+    p95 = re.search(r'p95:\s*([\d.]+)\s*ms', deploy_md)
+    stats['engineering']['production latency (cold start ms)'] = {"value": float(cold.group(1)) if cold else None, "source": "docs/deploy.md"}
+    stats['engineering']['production latency (p50 ms)'] = {"value": float(p50.group(1)) if p50 else None, "source": "docs/deploy.md"}
+    stats['engineering']['production latency (p95 ms)'] = {"value": float(p95.group(1)) if p95 else None, "source": "docs/deploy.md"}
     
     prs = safe_run("gh pr list --state merged --limit 200 --json author --jq '.[].author.login' | sort | uniq -c")
     stats['engineering']['commits and merged PRs'] = {"value": "\n" + str(prs), "source": "gh pr list"}
