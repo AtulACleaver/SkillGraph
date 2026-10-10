@@ -368,7 +368,7 @@ export default function App() {
                       {status === 'loading' ? 'Reading the postings' : status === 'error' ? 'Almost there,' : 'Here’s your honest'}
                     </motion.span>
                   </span>
-                  <span className="block overflow-hidden pb-[0.1em]">
+                  <span className="block overflow-hidden pb-[0.1em] text-[0.85em]">
                     <motion.span variants={maskReveal} className="text-gradient block">
                       {status === 'loading' ? 'for you.' : status === 'error' ? 'one more try.' : 'starting point.'}
                     </motion.span>
