@@ -24,7 +24,7 @@ export function useCountUp(end, durationMs = 1000, start = 0) {
       const percentage = Math.min(progress / durationMs, 1);
       
       const easedProgress = easeOutExpo(percentage);
-      const currentCount = Math.floor(easedProgress * (end - start) + start);
+      const currentCount = Math.round(easedProgress * (end - start) + start);
       
       setCount(currentCount);
 
