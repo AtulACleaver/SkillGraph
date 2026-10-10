@@ -274,10 +274,10 @@ export default function App() {
               </motion.div>
               <h1 className="text-[clamp(44px,7vw,80px)] font-extrabold leading-[1] tracking-tight md:tracking-tighter">
                 <span className="block overflow-hidden"><motion.span variants={maskReveal} className="block">Know what to learn</motion.span></span>
-                <span className="block overflow-hidden pb-[0.06em]">
+                <span className="block overflow-hidden">
                   <motion.span 
                     variants={maskReveal} 
-                    className="text-gradient block bg-[length:200%_auto] animate-[bg-pan_8s_linear_infinite]"
+                    className="text-gradient block bg-[length:200%_auto] animate-[bg-pan_8s_linear_infinite] pb-[0.15em]"
                   >
                     before you apply.
                   </motion.span>
