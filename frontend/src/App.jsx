@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, CircleAlert, CloudOff, Info, RefreshCw, RotateCcw, Server } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Lenis from 'lenis';
 import { analyze, getRoles, getHealth, isCancelled, toFriendlyError } from './api/client';
 import SkillInput from './components/SkillInput';
 import RoleSelect from './components/RoleSelect';
@@ -10,6 +12,7 @@ import RoleSkillMix from './components/ui/RoleSkillMix';
 import Card from './components/ui/Card';
 import { SkeletonBarRow } from './components/ui/Skeleton';
 import Skeleton from './components/ui/Skeleton';
+import { fadeUp, staggerContainer, maskReveal, viewTransition } from './animations';
 
 const MIN_SKILLS = 2;
 const AUTO_RETRY_SECONDS = 15;
@@ -17,11 +20,11 @@ const WAKING_AFTER_SECONDS = 4;
 const SKILL_INPUT_ID = 'skill-search';
 
 const container = 'mx-auto max-w-[1100px] px-5 sm:px-6';
-const eyebrow = 'mb-8 text-[13px] font-bold uppercase tracking-[2px] text-accent';
+const eyebrow = 'mb-8 inline-flex items-center gap-2.5 rounded-full border border-accent-line/40 bg-accent-tint/50 px-3.5 py-1.5 text-[12.5px] font-bold uppercase tracking-[1.5px] text-accent-ink shadow-sm backdrop-blur-sm';
 const primaryBtn =
-  'inline-flex min-h-[56px] items-center gap-2 rounded-xl bg-accent px-6 text-[16px] font-bold text-white transition-all duration-200 hover:-translate-y-[1px] hover:bg-accent-hover hover:shadow-md active:scale-[0.98] disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none disabled:active:scale-100';
+  'group inline-flex min-h-[56px] items-center gap-2 rounded-xl btn-gradient px-6 text-[16px] font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-4px_rgba(28,167,236,0.4)] disabled:opacity-50 disabled:hover:shadow-none disabled:hover:translate-y-0';
 const secondaryBtn =
-  'inline-flex min-h-[56px] flex-none items-center gap-2.5 whitespace-nowrap rounded-xl border border-line-2 bg-surface px-6 text-[16px] font-bold text-ink transition-all duration-200 hover:-translate-y-[1px] hover:border-ink-3 hover:bg-tint hover:shadow-sm active:scale-[0.98]';
+  'group inline-flex min-h-[56px] flex-none items-center gap-2.5 whitespace-nowrap rounded-xl border border-line-2 bg-surface px-6 text-[16px] font-bold text-ink transition-all duration-200 hover:border-ink-3 hover:bg-tint hover:shadow-sm';
 
 function disabledReason(count, role) {
   const need = Math.max(0, MIN_SKILLS - count);
@@ -35,15 +38,25 @@ function disabledReason(count, role) {
 
 function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-surface/95 backdrop-blur-[4px]">
-      <div className={`${container} flex items-center gap-4 py-2.5`}>
-        <div className="flex flex-none items-center gap-3">
-          <span aria-hidden="true" className="grid size-10 place-items-center rounded-xl bg-[linear-gradient(160deg,#2a9466,#17654a)] text-[18px] font-bold text-white shadow-logo">
+    <header className="sticky top-0 z-40 border-b border-line" style={{ backgroundColor: 'rgba(255,255,255,0.78)', backdropFilter: 'blur(16px)' }}>
+      <div className={`${container} flex items-center gap-4 py-3`}>
+        <motion.div 
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="flex flex-none items-center gap-3 cursor-pointer"
+        >
+          <span aria-hidden="true" className="grid size-10 place-items-center rounded-xl btn-gradient text-[18px] font-bold text-white shadow-logo">
             S
           </span>
-          <span className="text-[19px] font-bold tracking-tight text-ink">SkillGraph</span>
-        </div>
-        <span className="ml-auto hidden text-[13px] font-medium text-ink-2 sm:block">12,872 Indian tech jobs analyzed</span>
+          <span className="text-[20px] font-bold tracking-tight text-ink">SkillGraph</span>
+        </motion.div>
+        <span className="ml-auto hidden items-center gap-2 rounded-full border border-line-2 bg-surface px-3 py-1 text-[13px] font-medium text-ink-2 shadow-sm sm:inline-flex">
+          <span className="relative flex size-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
+            <span className="relative inline-flex size-2 rounded-full bg-accent"></span>
+          </span>
+          12,872 Indian tech jobs analyzed
+        </span>
       </div>
     </header>
   );
@@ -72,10 +85,6 @@ export default function App() {
   const [rolesStatus, setRolesStatus] = useState('loading'); // loading | ready | error
   const [retryIn, setRetryIn] = useState(0);
   const [healthFailed, setHealthFailed] = useState(false);
-
-  // Page Transition State
-  const [displayView, setDisplayView] = useState('input');
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const abortRef = useRef(null);
@@ -101,6 +110,13 @@ export default function App() {
     loadRoles();
     getHealth().catch(() => setHealthFailed(true));
 
+    const lenis = new Lenis({ lerp: 0.05, wheelMultiplier: 0.8, smoothWheel: true });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
     const handleScroll = () => {
       const h = document.documentElement;
       const progress = h.scrollTop / (h.scrollHeight - h.clientHeight) || 0;
@@ -111,6 +127,7 @@ export default function App() {
     return () => {
       abortRef.current?.abort();
       window.removeEventListener('scroll', handleScroll);
+      lenis.destroy();
     };
   }, []);
 
@@ -136,23 +153,10 @@ export default function App() {
 
   // Move focus to the results heading after submit and when results or error change.
   useEffect(() => {
-    if (view === 'results' && displayView === 'results') {
-      resultsHeadingRef.current?.focus({ preventScroll: true });
+    if (view === 'results') {
+      // Focus handled via AnimatePresence onExitComplete below
     }
-  }, [view, displayView, status]);
-
-  // Page Transition handler
-  useEffect(() => {
-    if (view !== displayView) {
-      setIsTransitioning(true);
-      const t = setTimeout(() => {
-        setDisplayView(view);
-        setIsTransitioning(false);
-        window.scrollTo({ top: 0, behavior: 'auto' });
-      }, 350); // duration of exit animation
-      return () => clearTimeout(t);
-    }
-  }, [view, displayView]);
+  }, [view, status]);
 
   async function runAnalyze(payload) {
     if (isSubmittingRef.current) return;
@@ -193,7 +197,6 @@ export default function App() {
     abortRef.current?.abort();
     setStatus('idle');
     setView('input');
-    setTimeout(() => document.getElementById(SKILL_INPUT_ID)?.focus({ preventScroll: true }), 400);
   }
 
   function handleRetry() {
@@ -237,19 +240,53 @@ export default function App() {
         </div>
       )}
 
-      <main className={`${container} transition-all duration-350 ${isTransitioning ? 'opacity-0 -translate-y-2' : 'opacity-100 translate-y-0'}`}>
-        {displayView === 'input' && (
-          <div className="animate-fade-in-up">
-            <section className="pb-[clamp(28px,5vw,44px)] pt-[clamp(32px,7vw,64px)]">
-              <p className={`${eyebrow} animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:0ms]`}>Placement prep, made honest</p>
-              <h1 className="text-[clamp(40px,6vw,68px)] font-extrabold leading-none tracking-tight md:tracking-tighter">
-                <span className="block animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:100ms]">Know what to learn</span>
-                <span className="text-gradient pb-[0.06em] block animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:150ms]">before you apply.</span>
+      <main className={container}>
+        <AnimatePresence 
+          mode="wait" 
+          onExitComplete={() => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            if (view === 'results') {
+              setTimeout(() => resultsHeadingRef.current?.focus({ preventScroll: true }), 50);
+            } else {
+              setTimeout(() => document.getElementById(SKILL_INPUT_ID)?.focus({ preventScroll: true }), 50);
+            }
+          }}
+        >
+        {view === 'input' && (
+          <motion.div key="input" variants={viewTransition} initial="hidden" animate="visible" exit="exit" className="relative">
+            <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[600px] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]">
+              <div className="hero-orb w-[500px] h-[500px] top-[-100px] left-[-100px] bg-[radial-gradient(circle,rgba(123,213,245,0.25)_0%,transparent_70%)]" style={{ animationDuration: '25s' }} />
+              <div className="hero-orb w-[600px] h-[600px] top-[-50px] right-[-150px] bg-[radial-gradient(circle,rgba(120,127,246,0.18)_0%,transparent_70%)]" style={{ animationDuration: '22s', animationDelay: '-5s' }} />
+              <div className="hero-orb w-[400px] h-[400px] top-[20%] left-[30%] bg-[radial-gradient(circle,rgba(74,222,222,0.15)_0%,transparent_70%)]" style={{ animationDuration: '28s', animationDelay: '-10s' }} />
+            </div>
+            <motion.section 
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+              className="pb-[clamp(28px,5vw,44px)] pt-[clamp(36px,8vw,72px)]"
+            >
+              <motion.div variants={fadeUp}>
+                <span className={eyebrow}>
+                  <span className="size-1.5 rounded-full bg-accent inline-block animate-pulse" />
+                  Placement prep, made honest
+                </span>
+              </motion.div>
+              <h1 className="text-[clamp(44px,7vw,80px)] font-extrabold leading-[1] tracking-tight md:tracking-tighter">
+                <span className="block overflow-hidden"><motion.span variants={maskReveal} className="block">Know what to learn</motion.span></span>
+                <span className="block overflow-hidden pb-[0.06em]">
+                  <motion.span 
+                    variants={maskReveal} 
+                    className="text-gradient block bg-[length:200%_auto] animate-[bg-pan_8s_linear_infinite]"
+                  >
+                    before you apply.
+                  </motion.span>
+                </span>
               </h1>
-              <p className="mt-6 max-w-[640px] text-[18px] md:text-[19px] font-medium leading-[1.55] text-ink-2 text-pretty animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:250ms]">
+              <motion.p variants={fadeUp} className="mt-6 max-w-[640px] text-[18px] md:text-[19px] font-medium leading-[1.55] text-ink-2 text-pretty">
                 See how your current skills line up with the roles Indian tech companies are hiring for, based on 12,872 labelled Indian tech job postings.
-              </p>
-            </section>
+              </motion.p>
+            </motion.section>
 
             {rolesStatus === 'error' && (
               <Card as="section" tone="notice" shadow={false} role="alert" className="mb-9 grid grid-cols-[auto_minmax(0,1fr)] gap-3.5">
@@ -272,7 +309,14 @@ export default function App() {
               </Card>
             )}
 
-            <form onSubmit={handleSubmit} noValidate className="animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:350ms]">
+            <motion.form 
+              onSubmit={handleSubmit} 
+              noValidate
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+              variants={staggerContainer}
+            >
               <div className="grid grid-cols-1 items-start gap-11 md:grid-cols-2 md:gap-x-[72px]">
                 <SkillInput value={selectedSkills} onChange={setSelectedSkills} inputId={SKILL_INPUT_ID} />
                 <RoleSelect roles={roles} status={rolesStatus} value={desiredRole} onChange={setDesiredRole} selectedNames={skillNames} />
@@ -288,48 +332,62 @@ export default function App() {
                         : 'Waiting for the role list to load.')}
                   </span>
                 </p>
-                <button
+                <motion.button
+                  whileTap={{ scale: 0.97 }}
                   type="submit"
                   disabled={!canSubmit || status === 'loading'}
                   aria-describedby="submit-reason"
-                  className="flex min-h-[56px] max-w-[360px] flex-[1_1_260px] items-center justify-between gap-3 rounded-xl bg-accent px-6 text-[16px] font-bold text-white transition-all duration-300 hover:-translate-y-[1px] hover:bg-accent-hover hover:shadow-md active:scale-[0.98] disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none disabled:active:scale-100"
+                  className={`${primaryBtn} max-w-[360px] flex-[1_1_260px] justify-between`}
                 >
                   Show my skill map
                   <ArrowRight size={20} strokeWidth={2.5} aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1" />
-                </button>
+                </motion.button>
               </div>
-            </form>
-          </div>
+            </motion.form>
+          </motion.div>
         )}
 
-        {displayView === 'results' && (
-          <div id="results-region" aria-live="polite" className="animate-fade-in-up">
-            <section className="flex flex-wrap items-end justify-between gap-x-6 gap-y-5 pb-7 pt-[clamp(40px,9vw,88px)]">
+        {view === 'results' && (
+          <motion.div id="results-region" key="results" aria-live="polite" variants={viewTransition} initial="hidden" animate="visible" exit="exit">
+            <motion.section 
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+              className="flex flex-wrap items-end justify-between gap-x-6 gap-y-5 pb-7 pt-[clamp(40px,9vw,88px)]"
+            >
               <div className="min-w-0 flex-[1_1_420px]">
-                <p className={`${eyebrow} animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:0ms]`}>{status === 'loading' ? 'Building your skill map' : 'Your skill map'}</p>
+                <motion.p variants={fadeUp} className={eyebrow}>{status === 'loading' ? 'Building your skill map' : 'Your skill map'}</motion.p>
                 <h1
                   ref={resultsHeadingRef}
                   tabIndex={-1}
-                  className="text-[clamp(40px,9vw,64px)] font-semibold leading-[1.03] tracking-[-0.05em] outline-none animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:100ms]"
+                  className="text-[clamp(40px,9vw,64px)] font-semibold leading-[1.03] tracking-[-0.05em] outline-none"
                 >
-                  {status === 'loading' ? 'Reading the postings' : status === 'error' ? 'Almost there,' : 'Here’s your honest'}
-                  <br />
-                  <span className="text-gradient">{status === 'loading' ? 'for you.' : status === 'error' ? 'one more try.' : 'starting point.'}</span>
+                  <span className="block overflow-hidden">
+                    <motion.span variants={maskReveal} className="block">
+                      {status === 'loading' ? 'Reading the postings' : status === 'error' ? 'Almost there,' : 'Here’s your honest'}
+                    </motion.span>
+                  </span>
+                  <span className="block overflow-hidden pb-[0.1em]">
+                    <motion.span variants={maskReveal} className="text-gradient block">
+                      {status === 'loading' ? 'for you.' : status === 'error' ? 'one more try.' : 'starting point.'}
+                    </motion.span>
+                  </span>
                 </h1>
-                <p className="mt-4 text-sm leading-normal text-ink-3 [overflow-wrap:anywhere] animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:200ms]">
+                <motion.p variants={fadeUp} className="mt-4 text-sm leading-normal text-ink-3 [overflow-wrap:anywhere]">
                   <strong className="font-semibold text-ink-2">{shownRole}</strong> · {shownSkills.length} skill{shownSkills.length === 1 ? '' : 's'}: {skillSummary}
-                </p>
+                </motion.p>
               </div>
-              <div className="animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:300ms]">
-                <button type="button" onClick={handleEdit} className={secondaryBtn}>
+              <motion.div variants={fadeUp}>
+                <motion.button whileTap={{ scale: 0.97 }} type="button" onClick={handleEdit} className={secondaryBtn}>
                   <ArrowLeft size={16} strokeWidth={2} aria-hidden="true" className="transition-transform duration-300 group-hover:-translate-x-1" />
                   {status === 'loading' ? 'Cancel and edit' : 'Edit my answers'}
-                </button>
-              </div>
-            </section>
+                </motion.button>
+              </motion.div>
+            </motion.section>
 
             {status === 'loading' && (
-              <div className="animate-fade-in-up opacity-0 [animation-fill-mode:both] [animation-delay:400ms]">
+              <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
                 <Card tone="status" shadow={false} role="status" className="grid grid-cols-[auto_minmax(0,1fr)] gap-4">
                   <Server size={24} strokeWidth={2} className="mt-0.5 text-accent-ink" aria-hidden="true" />
                   <div className="min-w-0">
@@ -367,7 +425,7 @@ export default function App() {
                     <SkeletonBarRow w="52%" tag="h-5 w-11" />
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {status === 'error' && error && (
@@ -385,8 +443,8 @@ export default function App() {
                     Your {shownSkills.length} skills and {shownRole} are still here.
                   </p>
                   <div className="flex flex-wrap gap-2.5">
-                    <button type="button" onClick={handleRetry} className={primaryBtn}>
-                      <RefreshCw size={16} strokeWidth={2} aria-hidden="true" />
+                    <button type="button" onClick={handleRetry} className={`${primaryBtn} group`}>
+                      <RefreshCw size={16} strokeWidth={2} aria-hidden="true" className="transition-transform duration-500 group-hover:rotate-180" />
                       Try again
                     </button>
                     <button type="button" onClick={handleEdit} className={secondaryBtn}>
@@ -431,16 +489,16 @@ export default function App() {
                 <RoleSkillMix role={roleInfo} covered={result.readiness.covered || []} />
 
                 <div className="mb-14 mt-7 flex flex-wrap gap-2.5">
-                  <button type="button" onClick={handleEdit} className={secondaryBtn}>
-                    <RotateCcw size={16} strokeWidth={2} aria-hidden="true" />
+                  <motion.button whileTap={{ scale: 0.97 }} type="button" onClick={handleEdit} className={secondaryBtn}>
+                    <RotateCcw size={16} strokeWidth={2} aria-hidden="true" className="transition-transform duration-500 group-hover:-rotate-[360deg]" />
                     Analyze again
-                  </button>
+                  </motion.button>
                 </div>
               </>
             )}
-          </div>
+          </motion.div>
         )}
-
+        </AnimatePresence>
         <Footer />
       </main>
     </div>
