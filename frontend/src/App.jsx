@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, CircleAlert, CloudOff, Info, RefreshCw, RotateCcw, Server } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Lenis from 'lenis';
+import { motion, AnimatePresence, MotionConfig, useScroll } from 'framer-motion';
 import { analyze, getRoles, getHealth, isCancelled, toFriendlyError } from './api/client';
 import SkillInput from './components/SkillInput';
 import RoleSelect from './components/RoleSelect';
@@ -22,7 +21,7 @@ const SKILL_INPUT_ID = 'skill-search';
 const container = 'mx-auto max-w-[1100px] px-5 sm:px-6';
 const eyebrow = 'mb-8 inline-flex items-center gap-2.5 rounded-full border border-accent-line/40 bg-accent-tint/50 px-3.5 py-1.5 text-[12.5px] font-bold uppercase tracking-[1.5px] text-accent-ink shadow-sm backdrop-blur-sm';
 const primaryBtn =
-  'group inline-flex min-h-[56px] items-center gap-2 rounded-xl btn-gradient px-6 text-[16px] font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-4px_rgba(28,167,236,0.4)] disabled:opacity-50 disabled:hover:shadow-none disabled:hover:translate-y-0';
+  'group inline-flex min-h-[56px] items-center gap-2 rounded-xl btn-gradient px-6 text-[16px] font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-4px_rgba(23,128,79,0.35)] disabled:opacity-50 disabled:hover:shadow-none disabled:hover:translate-y-0';
 const secondaryBtn =
   'group inline-flex min-h-[56px] flex-none items-center gap-2.5 whitespace-nowrap rounded-xl border border-line-2 bg-surface px-6 text-[16px] font-bold text-ink transition-all duration-200 hover:border-ink-3 hover:bg-tint hover:shadow-sm';
 
@@ -85,11 +84,10 @@ export default function App() {
   const [rolesStatus, setRolesStatus] = useState('loading'); // loading | ready | error
   const [retryIn, setRetryIn] = useState(0);
   const [healthFailed, setHealthFailed] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-
   const abortRef = useRef(null);
   const resultsHeadingRef = useRef(null);
   const isSubmittingRef = useRef(false);
+  const { scrollYProgress } = useScroll();
 
   function loadRoles() {
     setRolesStatus('loading');
@@ -109,25 +107,8 @@ export default function App() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     loadRoles();
     getHealth().catch(() => setHealthFailed(true));
-
-    const lenis = new Lenis({ lerp: 0.05, wheelMultiplier: 0.8, smoothWheel: true });
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    const handleScroll = () => {
-      const h = document.documentElement;
-      const progress = h.scrollTop / (h.scrollHeight - h.clientHeight) || 0;
-      setScrollProgress(progress);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
     return () => {
       abortRef.current?.abort();
-      window.removeEventListener('scroll', handleScroll);
-      lenis.destroy();
     };
   }, []);
 
@@ -146,15 +127,18 @@ export default function App() {
     if (status !== 'loading') return undefined;
     const started = Date.now();
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setElapsed(0);
+    setElapsed(0); // safe: this is the first render of this effect cycle, not an async update
     const id = setInterval(() => setElapsed((Date.now() - started) / 1000), 250);
     return () => clearInterval(id);
   }, [status, lastPayload]);
 
-  // Move focus to the results heading after submit and when results or error change.
+  // Move focus when the *incoming* view settles (not the exiting one).
+  // onExitComplete handles the animation case; this handles instant transitions.
   useEffect(() => {
     if (view === 'results' && status !== 'loading') {
       resultsHeadingRef.current?.focus({ preventScroll: true });
+    } else if (view === 'input') {
+      document.getElementById(SKILL_INPUT_ID)?.focus({ preventScroll: true });
     }
   }, [view, status]);
 
@@ -224,10 +208,11 @@ export default function App() {
   const unrecognized = result?.match?.unrecognized || [];
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="min-h-screen bg-bg text-ink">
-      <div 
-        className="fixed top-0 left-0 h-[2px] bg-accent z-50 transition-[width] duration-75 ease-out" 
-        style={{ width: `${scrollProgress * 100}%` }} 
+      <motion.div
+        className="fixed top-0 left-0 h-[2px] bg-accent z-50 origin-left"
+        style={{ scaleX: scrollYProgress }}
       />
       <p className="sr-only" aria-live="polite" aria-atomic="true">
         {liveMessage}
@@ -255,9 +240,9 @@ export default function App() {
         {view === 'input' && (
           <motion.div key="input" variants={viewTransition} initial="hidden" animate="visible" exit="exit" className="relative">
             <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[600px] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]">
-              <div className="hero-orb w-[500px] h-[500px] top-[-100px] left-[-100px] bg-[radial-gradient(circle,rgba(123,213,245,0.25)_0%,transparent_70%)]" style={{ animationDuration: '25s' }} />
-              <div className="hero-orb w-[600px] h-[600px] top-[-50px] right-[-150px] bg-[radial-gradient(circle,rgba(120,127,246,0.18)_0%,transparent_70%)]" style={{ animationDuration: '22s', animationDelay: '-5s' }} />
-              <div className="hero-orb w-[400px] h-[400px] top-[20%] left-[30%] bg-[radial-gradient(circle,rgba(74,222,222,0.15)_0%,transparent_70%)]" style={{ animationDuration: '28s', animationDelay: '-10s' }} />
+              <div className="hero-orb w-[500px] h-[500px] top-[-100px] left-[-100px] bg-[radial-gradient(circle,rgba(23,128,79,0.18)_0%,transparent_70%)]" style={{ animationDuration: '25s' }} />
+              <div className="hero-orb w-[600px] h-[600px] top-[-50px] right-[-150px] bg-[radial-gradient(circle,rgba(217,119,29,0.14)_0%,transparent_70%)]" style={{ animationDuration: '22s', animationDelay: '-5s' }} />
+              <div className="hero-orb w-[400px] h-[400px] top-[20%] left-[30%] bg-[radial-gradient(circle,rgba(23,128,79,0.10)_0%,transparent_70%)]" style={{ animationDuration: '28s', animationDelay: '-10s' }} />
             </div>
             <motion.section 
               variants={staggerContainer}
@@ -322,7 +307,7 @@ export default function App() {
                 <RoleSelect roles={roles} status={rolesStatus} value={desiredRole} onChange={setDesiredRole} selectedNames={skillNames} />
               </div>
 
-              <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5 border-t border-line pb-8 pt-6">
+              <div className="sticky bottom-0 z-20 mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-line-2 bg-bg pb-4 pt-3.5 md:static md:z-auto md:gap-y-5 md:border-line md:bg-transparent md:pb-8 md:pt-6">
                 <p id="submit-reason" aria-live="polite" className="flex flex-[1_1_260px] items-start gap-2 text-[15px] font-medium leading-[1.45] text-ink-2 text-pretty">
                   {reason && <Info size={18} strokeWidth={2} className="mt-[3px] flex-none" aria-hidden="true" />}
                   <span>
@@ -502,5 +487,6 @@ export default function App() {
         <Footer />
       </main>
     </div>
+    </MotionConfig>
   );
 }
