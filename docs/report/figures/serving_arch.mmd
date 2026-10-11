@@ -1,0 +1,10 @@
+flowchart LR
+    Browser["User Browser"] --> Client["React UI (Vercel)"]
+    Client --> Rewrite["Vercel Rewrite (/api/*)"]
+    Rewrite --> API["FastAPI (Vercel Serverless)"]
+    API --> NormRuntime["Normalize Skills"]
+    NormRuntime --> Predict["NumPy Softmax (model.json)"]
+    NormRuntime --> Gap["Gap Ranking (rules.json)"]
+    Predict --> Response["JSON Response"]
+    Gap --> Response
+    Response --> Client
