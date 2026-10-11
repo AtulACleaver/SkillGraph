@@ -7,13 +7,12 @@ function easeOutExpo(x) {
 export function useCountUp(end, durationMs = 1000, start = 0) {
   const [count, setCount] = useState(start);
 
+  const prefersReducedMotion =
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const shouldSkip = prefersReducedMotion || durationMs === 0;
+
   useEffect(() => {
-    // Optional: respect reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion || durationMs === 0) {
-      setCount(end);
-      return;
-    }
+    if (shouldSkip) return;
 
     let startTime = null;
     let animationFrameId;
@@ -42,7 +41,7 @@ export function useCountUp(end, durationMs = 1000, start = 0) {
         window.cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [end, durationMs, start]);
+  }, [end, durationMs, start, shouldSkip]);
 
-  return count;
+  return shouldSkip ? end : count;
 }

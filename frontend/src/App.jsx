@@ -153,8 +153,8 @@ export default function App() {
 
   // Move focus to the results heading after submit and when results or error change.
   useEffect(() => {
-    if (view === 'results') {
-      // Focus handled via AnimatePresence onExitComplete below
+    if (view === 'results' && status !== 'loading') {
+      resultsHeadingRef.current?.focus({ preventScroll: true });
     }
   }, [view, status]);
 
@@ -443,7 +443,7 @@ export default function App() {
                     Your {shownSkills.length} skills and {shownRole} are still here.
                   </p>
                   <div className="flex flex-wrap gap-2.5">
-                    <button type="button" onClick={handleRetry} className={`${primaryBtn} group`}>
+                    <button type="button" onClick={handleRetry} className={primaryBtn}>
                       <RefreshCw size={16} strokeWidth={2} aria-hidden="true" className="transition-transform duration-500 group-hover:rotate-180" />
                       Try again
                     </button>

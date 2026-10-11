@@ -5,8 +5,6 @@ import ProbabilityBar from './ui/ProbabilityBar';
 import { useReveal } from '../hooks/useReveal';
 import { useCountUp } from '../hooks/useCountUp';
 
-const formatPct = (p) => (p < 0.01 ? '<1' : `${Math.round(p * 100)}`);
-
 function AnimatedPercent({ probability }) {
   const [ref, isRevealed] = useReveal({ threshold: 0 });
   const pct = Math.round(probability * 100);
