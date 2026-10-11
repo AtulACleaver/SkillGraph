@@ -1,0 +1,25 @@
+flowchart TD
+    subgraph ETL["ETL Pipeline (Atul)"]
+        Raw["Raw Data (XLSX)"] --> Clean["Clean Postings"]
+        Clean --> Norm["Normalize Skills (800 Vocab)"]
+        Norm --> Label["Role Labelling (10 Families)"]
+        Norm --> Baskets["Market Baskets"]
+    end
+
+    subgraph ML["Machine Learning (Aditya)"]
+        Label --> Split["Stratified Split (8,941 Train)"]
+        Split --> Aug["Data Augmentation (26,039 Rows)"]
+        Aug --> Train["L2 Logistic Regression"]
+        Train --> Export["Export model.json"]
+    end
+
+    subgraph Mining["Association Mining (Aryan)"]
+        Baskets --> FPG["FP-Growth (Support 0.5%)"]
+        FPG --> Rules["Rule Mining (231 Rules)"]
+        Rules --> ExportRules["Export rules.json"]
+    end
+
+    Export --> Artifacts["Committed Artifacts"]
+    ExportRules --> Artifacts
+    Norm --> ExportVocab["Export skill_vocab.json"]
+    ExportVocab --> Artifacts

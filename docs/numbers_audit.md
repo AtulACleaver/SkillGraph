@@ -111,3 +111,35 @@ Numbers on screen match live `/api/analyze` responses. Per user instruction, REA
 - `docs/contracts.md`: Carries v4 numbers.
 - `tests/test_runtime.py`: Carries v4 numbers.
 - `scripts/smoke.sh`: Verified with v4 numbers and passes all checks against `https://skillgraph-exp.vercel.app`.
+
+### Item 9: Report Baselines, Deltas, and Audit Numbers
+- **Data audit nulls and percentages** (`docs/data_audit.md`): tagsAndSkills null count 571 (0.58%), experience null count 2,105 (2.15%), ReviewsCount and AggregateRating null count 35,252 (36.00%). Non-empty baskets: 32,949.
+- **Role exclusions**: Unmatched titles 16,142 plus generic Software Engineer titles 5,555 sum to 21,697 excluded postings.
+- **Taxonomy v3 baselines and deltas** (`docs/taxonomy_v4.md`):
+  - v3 vocabulary size: 800, v4: 800 (delta: 0).
+  - v3 duplicate groups: 28, v4: 0 (delta: -28).
+  - v3 rules count: 336, v4: 231 (delta: -105).
+  - v3 full-input test accuracy: 0.7463, v4: 0.7527 (delta: +0.0064).
+  - v3 full-input test macro F1: 0.7424, v4: 0.7499 (delta: +0.0075).
+  - v3 short-input test accuracy: 0.6269, v4: 0.6215 (delta: -0.0054).
+  - v3 short-input test macro F1: 0.6234, v4: 0.6116 (delta: -0.0118).
+  - v3 top-3 test accuracy: 0.9248, v4: 0.9254 (delta: +0.0006).
+  - v3 test ECE: 0.0133, v4: 0.0120 (delta: -0.0013).
+  - v3 raw training postings: 8,938, v4: 8,941 (delta: +3).
+  - v3 augmented training rows: 25,990, v4: 26,039 (delta: +49).
+  - v3 postings dropped with 0 skills: 103, v4: 98 (delta: -5).
+- **Model evaluation deltas**:
+  - LightGBM test macro F1 (0.7648) minus Logistic Regression test macro F1 (0.7499) equals 0.0149 (or 1.49 percentage points).
+  - Majority baseline improvement: test accuracy 0.7527 minus majority baseline 0.1774 equals 0.5753 (or 57.53 percentage points).
+  - Short-input degradation: test macro F1 0.7499 minus short-input macro F1 0.6116 equals 0.1383 (or 13.83 percentage points).
+- **Normalization token shares**: exact matches 159,725 (58.92% of 271,108 clean tokens), in-vocab alias matches 15,238 (5.62%), fuzzy matches 2,469 (0.91%), total mapped mentions 177,432 (65.45% or 65.4%), unmapped tokens 93,676 (34.55%). Among mapped mass: exact matches form 90.02%, alias matches form 8.59%, fuzzy matches form 1.39% (total 100.00%).
+
+### Item 10: Group 8 Team Roster and Registration Numbers
+- Group: Group 8
+- Shashank Shekhar Pandey (Group Coordinator): Roll No. 2405382
+- Atul Anand: Roll No. 2405339
+- Aditya Kumar: Roll No. 24156038
+- Aryan: Roll No. 2405005
+- Archit Kumar: Roll No. 24052551
+
+

@@ -1,6 +1,6 @@
 PYTHON := $(if $(wildcard .venv/bin/python),.venv/bin/python,python)
 
-.PHONY: all setup raw clean-data label train rules export all bench test api web fetch-data reset
+.PHONY: all setup raw clean-data label train rules export all bench test api web fetch-data reset stats report
 
 setup:
 	@if [ ! -d .venv ]; then python3.12 -m venv .venv 2>/dev/null || python3 -m venv .venv; fi
@@ -50,4 +50,13 @@ reset:
 
 stats:
 	PYTHONPATH=. $(PYTHON) scripts/collect_stats.py
+
+report:
+	@mkdir -p docs/report/figures
+	npx -y @mermaid-js/mermaid-cli -i docs/report/figures/pipeline_arch.mmd -o docs/report/figures/pipeline_arch.png -b white -s 2
+	npx -y @mermaid-js/mermaid-cli -i docs/report/figures/serving_arch.mmd -o docs/report/figures/serving_arch.png -b white -s 2
+	@if [ -f docs/report/template.docx ]; then $(PYTHON) scripts/tune_template.py; fi
+	pandoc docs/report/report.md -o docs/report/report.docx --resource-path=docs/report --toc --number-sections $$(if [ -f docs/report/template.docx ]; then echo "--reference-doc=docs/report/template.docx"; fi)
+	soffice --headless --convert-to pdf --outdir docs/report docs/report/report.docx
+
 
