@@ -211,7 +211,8 @@ export default function App() {
     <MotionConfig reducedMotion="user">
     <div className="min-h-screen bg-bg text-ink">
       <motion.div
-        className="fixed top-0 left-0 h-[2px] bg-accent z-50 origin-left"
+        aria-hidden="true"
+        className="fixed inset-x-0 top-0 z-50 h-[2px] origin-left bg-accent"
         style={{ scaleX: scrollYProgress }}
       />
       <p className="sr-only" aria-live="polite" aria-atomic="true">

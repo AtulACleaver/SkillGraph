@@ -48,7 +48,7 @@ export default function RoleSelect({ roles, status, value, onChange, selectedNam
                   className={`flex min-h-[72px] cursor-pointer items-center gap-4 rounded-xl border p-4 transition-all duration-300 hover:-translate-y-[1px] hover:border-accent hover:shadow-sm animate-fade-in-up opacity-0 [animation-fill-mode:both] ${
                     checked ? 'border-accent bg-accent-tint shadow-[0_2px_8px_-2px_rgba(23,128,79,0.15)]' : 'border-line bg-surface'
                   }`}
-                  style={{ animationDelay: `${350 + i * 70}ms` }}
+                  style={{ animationDelay: `${350 + Math.min(i, 5) * 50}ms` }}
                 >
                   <span className="min-w-0 flex-1">
                     <span className="block text-[17px] font-bold">{role.role_family}</span>
