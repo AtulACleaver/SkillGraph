@@ -97,9 +97,8 @@ def normalization_stats():
     stats['normalization']['alias count'] = {"value": len(aliases), "source": "taxonomy/skill_aliases.csv"}
     
 
-    from etl.normalize import _aliases, _clean_map, _clean_token, _vocab, load_vocab
-    load_vocab()
-    _choices = [c for c in _vocab if len(c) >= 4]
+    import etl.normalize as norm
+    norm.load_vocab()
     
     raw = pd.read_parquet('data/clean.parquet')
     all_tokens = []
@@ -114,49 +113,27 @@ def normalization_stats():
     alias_count = 0
     fuzzy_count = 0
     unmapped = []
-    
-    # We can get mapped mass directly from label pipeline output, but let's approximate
-    for t, count in token_counts.items():
-        cleaned = _clean_token(t)
-        if not cleaned: 
-            unmapped.extend([t] * count)
-        elif cleaned in _clean_map:
-            exact_count += count
-        elif cleaned in _aliases:
-            alias_count += count
-        else:
-            unmapped.extend([t] * count)
-            
-    # From pipeline logs: Mapped mass is 77917 out of 100912
-    # So fuzzy_count = 77917 - exact_count - alias_count
-    # Wait, the pipeline only keeps counts for tokens in _vocab (which is top 800)
-    # Our unmapped list is technically those that didn't match exactly or alias.
-    # Actually, we can just use normalize_skill WITHOUT multiprocessing, but with the built-in fuzzy_cache!
-    # Let's just use normalize_skill!
-    from etl.normalize import normalize_skill
-    unmapped = []
     mapped_mass = 0
-    fuzzy_count = 0
-    import etl.normalize
+
     for t, count in token_counts.items():
-        cleaned = _clean_token(t)
+        cleaned = norm._clean_token(t)
         if not cleaned:
             unmapped.extend([t] * count)
             continue
-        if cleaned in etl.normalize._clean_map:
+        if cleaned in norm._clean_map:
             exact_count += count
             mapped_mass += count
-        elif cleaned in etl.normalize._aliases:
+        elif cleaned in norm._aliases and norm._aliases[cleaned] in norm._clean_map:
             alias_count += count
             mapped_mass += count
         else:
-            if normalize_skill(t) is not None:
+            if norm.normalize_skill(t) is not None:
                 fuzzy_count += count
                 mapped_mass += count
             else:
                 unmapped.extend([t] * count)
     
-    stats['normalization']['mapped mass'] = {"value": f"{mapped_mass} / {total} ({mapped_mass/total*100:.1f}%) (Note: 69.9% over all clean rows vs 77.2% over tech subset)", "source": "computed from data/clean.parquet"}
+    stats['normalization']['mapped mass'] = {"value": f"{mapped_mass} / {total} ({mapped_mass/total*100:.1f}%)", "source": "computed from data/clean.parquet"}
     stats['normalization']['exact match count'] = {"value": exact_count, "source": "computed"}
     stats['normalization']['alias match count'] = {"value": alias_count, "source": "computed"}
     stats['normalization']['fuzzy match count'] = {"value": fuzzy_count, "source": "computed"}
@@ -408,7 +385,15 @@ def product_stats():
             match = data.get("match", {}).get("matches", [{}])[0].get("role", "None")
             gaps = data.get("gap", {}).get("recommendations", [])[:5]
             gap_names = [g["skill"] for g in gaps]
-            results.append(f"{p['name']} ({p['role']}): readiness {readiness.get('probability', 0):.2f}, band {readiness.get('band')}, top match {match}, gaps {gap_names}")
+            prob = readiness.get("probability", 0)
+            cov = readiness.get("coverage", 0)
+            band = readiness.get("band")
+
+            p_val = 2 if prob >= 0.60 else (1 if prob >= 0.30 else 0)
+            c_val = 2 if cov >= 0.20 else (1 if cov >= 0.10 else 0)
+            limiter = "Coverage" if c_val < p_val else ("Probability" if p_val < c_val else "Both equal")
+
+            results.append(f"{p['name']} ({p['role']}): readiness {prob:.2f}, band {band}, limiter {limiter}, top match {match}, gaps {gap_names}")
                 
         stats['product']['personas'] = {"value": "\n".join(results), "source": "in-process analyze_skills"}
     except Exception as e:  # noqa: BLE001
@@ -451,7 +436,10 @@ def engineering_stats():
     stats['engineering']['production latency (p95 ms)'] = {"value": float(p95.group(1)) if p95 else None, "source": "docs/deploy.md"}
     
     prs = safe_run("gh pr list --state merged --limit 200 --json author --jq '.[].author.login' | sort | uniq -c")
-    stats['engineering']['commits and merged PRs'] = {"value": "\n" + str(prs), "source": "gh pr list"}
+    prs_str = str(prs) if prs else ""
+    if "real-aditya-kumar" not in prs_str:
+        prs_str += "\n   0 real-aditya-kumar"
+    stats['engineering']['commits and merged PRs'] = {"value": "\n" + prs_str.strip(), "source": "gh pr list"}
     
     releases = safe_run("gh release list")
     stats['engineering']['releases'] = {"value": "\n" + str(releases), "source": "gh release list"}

@@ -1,0 +1,184 @@
+{
+  "info": {
+    "name": "SkillGraph API",
+    "description": "Production API endpoints for SkillGraph job market mining engine",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://skillgraph-api-notionatul.vercel.app",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        },
+        "description": "Verify API service health and loaded artifact versions"
+      }
+    },
+    {
+      "name": "List Roles",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/roles",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "roles"
+          ]
+        },
+        "description": "Get all 10 role families, posting counts, and top 20 skills"
+      }
+    },
+    {
+      "name": "Search Skills Autocomplete",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/skills?q=react",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "skills"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "react"
+            }
+          ]
+        },
+        "description": "Prefix search over canonical skill names and aliases"
+      }
+    },
+    {
+      "name": "Match Roles",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"skills\": [\"python\", \"sql\", \"machine learning\"]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/match",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "match"
+          ]
+        },
+        "description": "Predict top 3 role matches for input skills"
+      }
+    },
+    {
+      "name": "Check Readiness",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"skills\": [\"python\", \"sql\", \"machine learning\"],\n  \"desired_role\": \"Data Science / ML\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/readiness",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "readiness"
+          ]
+        },
+        "description": "Compute role readiness probability, band, and coverage"
+      }
+    },
+    {
+      "name": "Recommend Skill Gaps",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"skills\": [\"python\", \"sql\", \"machine learning\"],\n  \"desired_role\": \"Data Science / ML\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/gap",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "gap"
+          ]
+        },
+        "description": "Rank top 5 skills to learn next with companion skills"
+      }
+    },
+    {
+      "name": "Analyze Skills (All-in-One)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"skills\": [\"python\", \"sql\", \"pandas\"],\n  \"desired_role\": \"Data / BI Analyst\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/analyze",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "analyze"
+          ]
+        },
+        "description": "Perform role match, readiness scoring, and gap analysis in a single call"
+      }
+    }
+  ]
+}
