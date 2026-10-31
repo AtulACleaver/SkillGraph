@@ -8,6 +8,23 @@ SkillGraph maps applicant skill profiles to Indian technology roles, predicts re
 [![Vite](https://img.shields.io/badge/Vite-6.0.7-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com/)
 [![Live App](https://img.shields.io/badge/Live-skillgraph--exp.vercel.app-17804F?style=flat-square)](https://skillgraph-exp.vercel.app)
+[![Video Walkthrough](https://img.shields.io/badge/Video-Tella-EA4335?style=flat-square&logo=youtube&logoColor=white)](https://www.tella.tv/video/skillgraph-are-you-ready-for-your-tech-role-f2uz)
+
+---
+
+## 🎬 Video Walkthrough
+
+<p align="center">
+  <a href="https://www.tella.tv/video/skillgraph-are-you-ready-for-your-tech-role-f2uz" target="_blank" rel="noopener noreferrer">
+    <img src="docs/screenshots/video-walkthrough.png" alt="SkillGraph: Are You Ready for Your Tech Role? Video Walkthrough" width="850" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://www.tella.tv/video/skillgraph-are-you-ready-for-your-tech-role-f2uz" target="_blank" rel="noopener noreferrer">
+    ▶️ <b>Watch the video walkthrough on Tella</b>
+  </a>
+</p>
 
 ---
 
@@ -16,6 +33,7 @@ SkillGraph maps applicant skill profiles to Indian technology roles, predicts re
 | Service | URL |
 |---|---|
 | **Web Application** | [skillgraph-exp.vercel.app](https://skillgraph-exp.vercel.app) |
+| **Video Walkthrough** | [tella.tv/video/skillgraph-are-you-ready-for-your-tech-role-f2uz](https://www.tella.tv/video/skillgraph-are-you-ready-for-your-tech-role-f2uz) |
 | **API Health** | [skillgraph-api-notionatul.vercel.app/api/health](https://skillgraph-api-notionatul.vercel.app/api/health) |
 | **API Documentation** | [skillgraph-api-notionatul.vercel.app/docs](https://skillgraph-api-notionatul.vercel.app/docs) |
 | **Data Release** | [GitHub Release data-v4](https://github.com/AtulACleaver/SkillGraph/releases/tag/data-v4) |
